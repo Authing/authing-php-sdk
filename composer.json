@@ -1,14 +1,17 @@
 {
     "name": "authing/authing-php-sdk",
     "description": "authing-php-sdk",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4"
+    },
+    "license": "MIT",
     "authors": [
         {
             "name": "dirklu",
             "email": "buct.luhao@gmail.com"
         }
     ],
-    "require": {
-    },
     "autoload": {
         "psr-4": {
             "Authing\\": "src/"
