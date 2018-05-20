@@ -1,0 +1,17 @@
+{
+    "name": "authing/authing-php-sdk",
+    "description": "authing-php-sdk",
+    "authors": [
+        {
+            "name": "dirklu",
+            "email": "buct.luhao@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Authing\\": "src/"
+        }
+    }
+}
