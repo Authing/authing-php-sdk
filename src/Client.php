@@ -345,7 +345,7 @@ QUERY;
      * @throws \Authing\InvalidArgumentException
      * @throws \Exception
      */
-    public function checkLoginStatus()
+    public function checkLoginStatus($token='')
     {
         if ( empty($this->_userToken) ) {
             throw new InvalidArgumentException("user Token is null , please login first");
@@ -362,7 +362,9 @@ QUERY;
 QUERY;
         $body = [
             "query"     => $query,
-            "variables" => [],
+            "variables" => [
+                'token' => $token
+            ],
         ];
         $header = [
             'Authorization' => "Bearer {$this->_userToken}",
