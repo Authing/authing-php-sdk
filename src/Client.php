@@ -352,13 +352,13 @@ QUERY;
         }
 
         $query = <<<'QUERY'
-    query checkLoginStatus {
-    checkLoginStatus {
-        status
-        code
-        message
-    }
-}
+            query checkLoginStatus($token: String) {
+                checkLoginStatus(token: $token) {
+                    status
+                    code
+                    message
+                }
+            }  
 QUERY;
         $body = [
             "query"     => $query,
