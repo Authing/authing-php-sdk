@@ -156,8 +156,8 @@ QUERY;
             ],
         ];
         $res    = $this->getHttp($this->_usersUrl, $body);
-        if ( !empty($res['data']['token']) ) {
-            $this->_userToken = $res['data']['token'];
+        if ( !empty($res['data']['login']['token']) ) {
+            $this->_userToken = $res['data']['login']['token'];
         }
         return $res;
 
