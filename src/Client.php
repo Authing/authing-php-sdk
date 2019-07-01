@@ -89,6 +89,60 @@ QUERY;
         }
         throw new InvalidArgumentException("Invalid type for client options.");
     }
+    
+    
+    
+    /**
+     * assignUserToRole
+     * @param array $params
+     *                     ['user']             String,
+     *                     ['group']            String,
+     * @return mixed
+     * @throws \Authing\InvalidArgumentException
+     * @throws \Exception
+     */
+    public function assignUserToRole($params){
+        $params = $this->checkParams($params, 'user');
+        $query = <<<'QUERY'
+        mutation AssignUserToRole(
+          $group: String!
+          $client: String!
+          $user: String!
+        ) {
+          assignUserToRole(
+            group: $group
+            client: $client
+            user: $user
+          ) {
+            totalCount,
+            list {
+              _id,
+              client {
+                _id
+              },
+              user {
+                _id
+              },
+              createdAt
+            }
+          }
+        }
+QUERY;
+        $params['group'] = $params['group'];
+        $params['user'] = $params['user'];
+        $params['client'] = $this->options['clientId'];
+
+        $body = [
+            "query"     => $query,
+            "variables" => $params,
+        ];
+        $header = [
+            'Authorization' => "Bearer {$this->_ownerToken}",
+        ];
+        $res  = $this->getHttp($this->_usersUrl, $body,$header);
+        return $res;
+    }
+
 
     /**
      * @param $params
