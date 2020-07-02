@@ -699,9 +699,9 @@ QUERY;
             curl_close($ch);
             return $return;
         } else {
-            curl_close($ch);
             $code  = curl_errno($ch);
             $error = curl_error($ch);
+            curl_close($ch);
             throw new \Exception(
                 "curl internal error, curlErrorCode is {$code},errorMsg: {$error}"
 
