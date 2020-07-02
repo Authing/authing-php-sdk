@@ -6,7 +6,8 @@
  * Time: 下午11:12
  */
 
-require __DIR__.'/../vendor/autoload.php';
+// require __DIR__.'/../vendor/autoload.php';
+require_once(__DIR__.'/../src/Client.php');
 
 use Authing\Client;
 

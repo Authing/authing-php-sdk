@@ -8,6 +8,7 @@
 
 namespace Authing;
 
+require_once(__DIR__.'/InvalidArgumentException.php');
 
 class Client
 {
