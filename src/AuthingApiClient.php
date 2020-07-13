@@ -45,7 +45,7 @@ PUBLICKKEY;
     {
         $this->options = $this->createOptions($options);
         // obtain accessToken
-        $this->_accessToken = $this->getAccessToken();
+        $this->getAccessToken();
     }
 
     /**
@@ -211,7 +211,8 @@ PUBLICKKEY;
         $param->clientId = $this->options["clientId"];
         $param->secret = $this->options["secret"];
 
-        return $this->request($param->createRequest())->getAccessTokenByAppSecret;
+        $this->_accessToken = $this->request($param->createRequest())->getAccessTokenByAppSecret;
+        return $this->_accessToken;
     }
 
     /**
@@ -390,7 +391,7 @@ PUBLICKKEY;
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function decodeToken(DecodeJwtTokenParam $param)
+    public function decodeJwtToken(DecodeJwtTokenParam $param)
     {
         $this->checkParams($param, 'token');
 

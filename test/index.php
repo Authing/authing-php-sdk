@@ -83,7 +83,7 @@ $client->sendVerifyEmail($param);
  */
 $param = new Authing\DecodeJwtTokenParam();
 $param->token = $token;
-$client->decodeToken($param);
+$client->decodeJwtToken($param);
 /**
  * 检查用户是否存在
  */
