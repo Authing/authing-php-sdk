@@ -17,7 +17,7 @@ class AuthingApiClient
     /**
      * @var int[]
      */
-    private $options = [];
+    protected $options = [];
 
     private $_accessToken = '';
 
@@ -72,7 +72,7 @@ PUBLICKKEY;
      * @param string $password
      * @return string
      */
-    private static function passwordEncrypt($password)
+    protected static function passwordEncrypt($password)
     {
         $newPassword = '';
         openssl_public_encrypt($password, $newPassword, self::PUBLIC_KEY);
@@ -98,7 +98,7 @@ PUBLICKKEY;
      * @return mixed
      * @throws Exception
      */
-    private function request($data, $isUserHost = true)
+    protected function request($data, $isUserHost = true)
     {
         $url = $isUserHost ? $this->_usersUrl : $this->_oauthUrl;
         $result = $this->send($url, $data);
@@ -192,7 +192,7 @@ PUBLICKKEY;
      * @param $param
      * @throws InvalidArgumentException
      */
-    private function checkParams($param)
+    protected function checkParams($param)
     {
         $arr = (array) $param;
         foreach (func_get_args() as $k => $v) {
