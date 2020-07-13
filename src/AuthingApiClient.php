@@ -25,8 +25,12 @@ class AuthingApiClient
 
     private $_usersUrl = 'https://users.authing.cn/graphql';
 
+    private $_type = "SDK";
+
+    private $_version = "php:1.0.0";
+
     const PUBLIC_KEY
-        = <<<PUBLICKKEY
+    = <<<PUBLICKKEY
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb
 5KIofVthEopwrXFkp8OCeocaTHt9ICjTT2QeJh6cZaDaArfZ873GPUn00eOIZ7Ae
@@ -116,7 +120,7 @@ PUBLICKKEY;
             }
         }
 
-        return (object)$arr;
+        return (object) $arr;
     }
 
     /**
@@ -142,6 +146,9 @@ PUBLICKKEY;
         $h = [
             "content-type: application/json",
             "Authorization: Bearer {$this->_accessToken}",
+            "x-authing-userpool-id： {$this->options['clientId']}",
+            "x-authing-request-from: {$this->_type}",
+            "x-authing-sdk-version: {$this->_version}",
         ];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $h);
 
@@ -187,7 +194,7 @@ PUBLICKKEY;
      */
     private function checkParams($param)
     {
-        $arr = (array)$param;
+        $arr = (array) $param;
         foreach (func_get_args() as $k => $v) {
             if ($k != 0) {
                 if (!isset($arr[$v])) {
@@ -368,7 +375,6 @@ PUBLICKKEY;
 
         return $this->request($param->createRequest());
     }
-
 
     /**
      * @param RefreshSignInTokenParam $param
@@ -759,7 +765,6 @@ PUBLICKKEY;
 
         return $this->request($param->createRequest());
     }
-
 
     /**
      * assignUserToRole
