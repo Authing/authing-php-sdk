@@ -21,9 +21,7 @@ class AuthingApiClient
 
     private $_accessToken = '';
 
-    private $_oauthUrl = 'https://oauth.authing.cn/graphql';
-
-    private $_usersUrl = 'https://users.authing.cn/graphql';
+    private $_endpoint = 'https://core.authing.cn/graphql';
 
     private $_type = "SDK";
 
@@ -48,8 +46,6 @@ PUBLICKKEY;
     public function __construct($options)
     {
         $this->options = $this->createOptions($options);
-        // obtain accessToken
-        $this->getAccessToken();
     }
 
     /**
@@ -94,14 +90,12 @@ PUBLICKKEY;
     /**
      * Make a http request and return response data.
      * @param $data        array request data
-     * @param $isUserHost  bool   userHost or oAuthHost
      * @return mixed
      * @throws Exception
      */
-    protected function request($data, $isUserHost = true)
+    protected function request($data)
     {
-        $url = $isUserHost ? $this->_usersUrl : $this->_oauthUrl;
-        $result = $this->send($url, $data);
+        $result = $this->send($this->_endpoint, $data);
         $this->checkResult($result);
         return $this->arrayToObject($result['data']);
     }
@@ -207,7 +201,7 @@ PUBLICKKEY;
     }
 
     /**
-     * Check the right of the options
+     * Get admin's access token
      * @return string
      * @throws Exception
      */
