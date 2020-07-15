@@ -12,7 +12,7 @@ Authing SDK for PHP 支持 PHP 5.4+。
 
 ```shell
 # latest stable
-$ composer require authing/php-sdk
+$ composer require authing-sdk/php
 ```
 
 #### no-composer

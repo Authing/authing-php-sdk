@@ -1,5 +1,5 @@
 {
-  "name": "authing/php-sdk",
+  "name": "authing-sdk/php",
   "description": "authing-php-sdk",
   "minimum-stability": "stable",
   "version": "1.0.0",
