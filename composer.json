@@ -1,24 +1,24 @@
 {
-    "name": "authing/authing-php-sdk",
-    "description": "authing-php-sdk",
-    "minimum-stability": "stable",
-    "version": "1.0.0",
-    "require": {
-        "php": ">=5.4",
-        "ext-curl": "*",
-        "ext-json": "*",
-        "ext-openssl": "*"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "dirklu",
-            "email": "buct.luhao@gmail.com"
-        }
-    ],
-    "autoload": {
-        "psr-4": {
-            "Authing\\": "src/"
-        }
+  "name": "authing-sdk/php",
+  "description": "authing-php-sdk",
+  "minimum-stability": "stable",
+  "version": "1.0.0",
+  "require": {
+    "php": ">=5.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-openssl": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "authing",
+      "email": "sunxu@authing.cn"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Authing\\": "src/"
+    }
+  }
 }

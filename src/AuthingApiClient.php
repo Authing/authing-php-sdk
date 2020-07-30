@@ -18,19 +18,19 @@ class AuthingApiClient
     /**
      * @var int[]
      */
-    private $options = [];
+    protected $options = [];
 
-    private $_accessToken = '';
+    private $accessToken = '';
 
-    private $_oauthUrl = 'https://oauth.authing.cn/graphql';
+    private $host = 'https://core.authing.cn';
 
-    private $_usersUrl = 'https://users.authing.cn/graphql';
+    private $_endpoint = 'https://core.authing.cn/graphql';
 
     private $_type = "SDK";
 
-    private $_version = "php:1.0.0";
+    private $_version = "php:1.0.1";
 
-    const PUBLIC_KEY
+    private $publicKey
     = <<<PUBLICKKEY
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb
@@ -49,9 +49,8 @@ PUBLICKKEY;
     public function __construct($options)
     {
         $this->options = $this->createOptions($options);
-        // obtain accessToken
-        $this->getAccessToken();
     }
+
 
     /**
      * @param $options
@@ -73,10 +72,10 @@ PUBLICKKEY;
      * @param string $password
      * @return string
      */
-    private static function passwordEncrypt($password)
+    protected function passwordEncrypt($password)
     {
         $newPassword = '';
-        openssl_public_encrypt($password, $newPassword, self::PUBLIC_KEY);
+        openssl_public_encrypt($password, $newPassword, $this->publicKey);
         return base64_encode($newPassword);
     }
 
@@ -84,7 +83,7 @@ PUBLICKKEY;
      * @param $result
      * @throws Exception
      */
-    private function checkResult($result)
+    protected function checkResult($result)
     {
         $errors = $result['errors'];
         if (!empty($errors) && count($errors) > 0) {
@@ -95,14 +94,12 @@ PUBLICKKEY;
     /**
      * Make a http request and return response data.
      * @param $data        array request data
-     * @param $isUserHost  bool   userHost or oAuthHost
      * @return mixed
      * @throws Exception
      */
-    private function request($data, $isUserHost = true)
+    protected function request($data)
     {
-        $url = $isUserHost ? $this->_usersUrl : $this->_oauthUrl;
-        $result = $this->send($url, $data);
+        $result = $this->send($this->host . '/graphql', $data);
         $this->checkResult($result);
         return $this->arrayToObject($result['data']);
     }
@@ -146,7 +143,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "content-type: application/json",
-            "Authorization: Bearer {$this->_accessToken}",
+            "Authorization: Bearer {$this->accessToken}",
             "x-authing-userpool-id： {$this->options['clientId']}",
             "x-authing-request-from: {$this->_type}",
             "x-authing-sdk-version: {$this->_version}",
@@ -193,7 +190,7 @@ PUBLICKKEY;
      * @param $param
      * @throws InvalidArgumentException
      */
-    private function checkParams($param)
+    protected function checkParams($param)
     {
         $arr = (array) $param;
         foreach (func_get_args() as $k => $v) {
@@ -208,72 +205,113 @@ PUBLICKKEY;
     }
 
     /**
-     * Check the right of the options
-     * @return string
+     * 设置 AccessToken
+     * @param $token string
+     */
+    public function setAccessToken($token) {
+        $this->accessToken = $token;
+    }
+
+    /**
+     * 设置加密公钥
+     * @param $publicKey string
+     */
+    public function setPublicKey($publicKey) {
+        $this->publicKey = $publicKey;
+    }
+
+    /**
+     * 设置后端通信地址
+     * @param $host string
+     */
+    public function setHost($host) {
+        $this->host = $host;
+    }
+
+    /**
+     * Login with admin's secret
+     * @return string      admin's accessToken
      * @throws Exception
      */
-    public function getAccessToken()
+    public function loginBySecret()
     {
-        $param = new GetAccessTokenByAppSecretParam();
+        $param = new LoginBySecretParam();
 
         $param->clientId = $this->options["clientId"];
         $param->secret = $this->options["secret"];
 
-        $this->_accessToken = $this->request($param->createRequest())->getAccessTokenByAppSecret;
-        return $this->_accessToken;
+        return $this->accessToken = $this->request($param->createRequest())->getAccessTokenByAppSecret;
     }
 
     /**
      * Login use email
-     * @param LoginParam
-     * @return LoginResponse
+     * @param LoginByEmailParam
+     * @return LoginByEmailResponse
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function loginByEmail(LoginParam $param)
+    public function loginByEmail(LoginByEmailParam $param)
     {
         // check params is contain Specified key
         $this->checkParams($param, 'email', 'password');
 
         // set client id and encrypt password
-        $param->registerInClient = $this->options['clientId'];
+        $param->clientId = $this->options['clientId'];
         $param->password = self::passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
 
     /**
-     * Login use phone
-     * @param LoginParam
-     * @return LoginResponse
+     * Login use phone and password
+     * @param LoginByPhonePasswordParam
+     * @return LoginByPhonePasswordResponse
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function loginByPhone(LoginParam $param)
+    public function loginByPhonePassword(LoginByPhonePasswordParam $param)
+    {
+        // check params is contain Specified key
+        $this->checkParams($param, 'phone', 'password');
+
+        // set client id
+        $param->clientId = $this->options['clientId'];
+
+        return $this->request($param->createRequest());
+    }
+
+    /**
+     * Login use phone code
+     * @param LoginByPhoneCodeParam
+     * @return LoginByPhoneCodeResponse
+     * @throws InvalidArgumentException
+     * @throws Exception
+     */
+    public function loginByPhoneCode(LoginByPhoneCodeParam $param)
     {
         // check params is contain Specified key
         $this->checkParams($param, 'phone', 'phoneCode');
 
         // set client id
-        $param->registerInClient = $this->options['clientId'];
+        $param->clientId = $this->options['clientId'];
 
         return $this->request($param->createRequest());
     }
 
     /**
      * Login use username
-     * @param LoginParam
-     * @return LoginResponse
+     * @param LoginByUsernameParam
+     * @return LoginByUsernameResponse
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function loginByUsername(LoginParam $param)
+    public function loginByUsername(LoginByUsernameParam $param)
     {
         // check params is contain Specified key
         $this->checkParams($param, 'username', 'password');
 
         // set client id and encrypt password
-        $param->registerInClient = $this->options['clientId'];
+        $param->clientId = $this->options['clientId'];
         $param->password = self::passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
@@ -343,7 +381,7 @@ PUBLICKKEY;
      */
     public function sendPhoneCode($phone)
     {
-        $url = "https://users.authing.cn/send_smscode/$phone/{$this->options['clientId']})";
+        $url = "$this->host/send_smscode/$phone/{$this->options['clientId']})";
         return $this->arrayToObject($this->send($url));
     }
 
@@ -355,41 +393,8 @@ PUBLICKKEY;
      */
     public function sendRegisterPhoneCode($phone)
     {
-        $url = "https://users.authing.cn/notification/send_register_smscode/$phone/{$this->options['clientId']})";
+        $url = "$this->host/notification/send_register_smscode/$phone/{$this->options['clientId']})";
         return $this->arrayToObject($this->send($url));
-    }
-
-    /**
-     * @param SignInParam $param
-     * @return SignInResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function signIn(SignInParam $param)
-    {
-        $this->checkParams($param, 'oidcAppId');
-
-        $param->userPoolId = $this->options["clientId"];
-        if ($param->password != null) {
-            $param->password = self::passwordEncrypt($param->password);
-        }
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param RefreshSignInTokenParam $param
-     * @return RefreshSignInTokenResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function refreshSignInToken(RefreshSignInTokenParam $param)
-    {
-        $this->checkParams($param, 'refreshToken', 'oidcAppId');
-
-        $param->userPoolId = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
     }
 
     /**
