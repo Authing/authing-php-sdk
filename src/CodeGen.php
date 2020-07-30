@@ -14436,6 +14436,7 @@ class DeleteRBACPermissionBatchResult
     public $deletedCount;
 }
 
+
 class AddEmailProviderResponse
 {
 
@@ -14455,12 +14456,12 @@ class AddEmailProviderParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddEmailProviderDocument,
             "operationName" => "AddEmailProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14495,6 +14496,7 @@ mutation AddEmailProvider(\$options: EmailProviderListInput) {
 }
 EOF;
 }
+
 
 class AddLdapServerResponse
 {
@@ -14585,12 +14587,12 @@ class AddLdapServerParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddLdapServerDocument,
             "operationName" => "AddLDAPServer",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14616,6 +14618,7 @@ mutation AddLDAPServer(\$name: String!, \$clientId: String!, \$userId: String!, 
 }
 EOF;
 }
+
 
 class AddOAuthListResponse
 {
@@ -14643,12 +14646,12 @@ class AddOAuthListParam
      */
     public $fields;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddOAuthListDocument,
             "operationName" => "AddOAuthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14691,6 +14694,7 @@ mutation AddOAuthList(\$options: OAuthListUpdateInput, \$fields: [OAuthListField
 EOF;
 }
 
+
 class AddSystemPricingResponse
 {
 
@@ -14710,12 +14714,12 @@ class AddSystemPricingParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddSystemPricingDocument,
             "operationName" => "AddSystemPricing",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14734,6 +14738,7 @@ mutation AddSystemPricing(\$options: PricingFieldsInput) {
 }
 EOF;
 }
+
 
 class ClearAvatarSrcResponse
 {
@@ -14768,12 +14773,12 @@ class ClearAvatarSrcParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ClearAvatarSrcDocument,
             "operationName" => "ClearAvatarSrc",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14816,6 +14821,7 @@ mutation ClearAvatarSrc(\$client: String, \$oauth: String, \$user: String) {
 EOF;
 }
 
+
 class ContinuePayResponse
 {
 
@@ -14835,12 +14841,12 @@ class ContinuePayParam
      */
     public $order;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ContinuePayDocument,
             "operationName" => "ContinuePay",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14854,6 +14860,7 @@ mutation ContinuePay(\$order: String!) {
 }
 EOF;
 }
+
 
 class CreateDefaultSamlIdentityProviderSettingsResponse
 {
@@ -14895,12 +14902,12 @@ class CreateDefaultSamlIdentityProviderSettingsParam
      */
     public $mappings;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateDefaultSamlIdentityProviderSettingsDocument,
             "operationName" => "CreateDefaultSAMLIdentityProviderSettings",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -14924,6 +14931,7 @@ mutation CreateDefaultSAMLIdentityProviderSettings(\$name: String!, \$image: Str
 }
 EOF;
 }
+
 
 class CreateOAuthProviderResponse
 {
@@ -15000,12 +15008,12 @@ class CreateOAuthProviderParam
      */
     public $casExpire;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateOAuthProviderDocument,
             "operationName" => "CreateOAuthProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15032,6 +15040,7 @@ mutation CreateOAuthProvider(\$name: String!, \$domain: String!, \$redirectUris:
 }
 EOF;
 }
+
 
 class CreateOidcAppResponse
 {
@@ -15262,12 +15271,12 @@ class CreateOidcAppParam
      */
     public $customStyles;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateOidcAppDocument,
             "operationName" => "CreateOIDCApp",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15326,6 +15335,7 @@ mutation CreateOIDCApp(\$name: String!, \$domain: String!, \$redirect_uris: [Str
 }
 EOF;
 }
+
 
 class CreateSamlIdentityProviderResponse
 {
@@ -15388,12 +15398,12 @@ class CreateSamlIdentityProviderParam
      */
     public $IdPMetadata;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateSamlIdentityProviderDocument,
             "operationName" => "CreateSAMLIdentityProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15436,6 +15446,7 @@ mutation CreateSAMLIdentityProvider(\$name: String!, \$domain: String!, \$client
 }
 EOF;
 }
+
 
 class CreateSamlServiceProviderResponse
 {
@@ -15519,12 +15530,12 @@ class CreateSamlServiceProviderParam
      */
     public $defaultIdPMapId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateSamlServiceProviderDocument,
             "operationName" => "CreateSAMLServiceProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15590,6 +15601,7 @@ mutation CreateSAMLServiceProvider(\$name: String!, \$domain: String!, \$clientI
 EOF;
 }
 
+
 class EnableSamlIdentityProviderResponse
 {
 
@@ -15623,12 +15635,12 @@ class EnableSamlIdentityProviderParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EnableSamlIdentityProviderDocument,
             "operationName" => "EnableSAMLIdentityProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15672,6 +15684,7 @@ mutation EnableSAMLIdentityProvider(\$appId: String!, \$clientId: String!, \$ena
 EOF;
 }
 
+
 class EnableSamlServiceProviderResponse
 {
 
@@ -15705,12 +15718,12 @@ class EnableSamlServiceProviderParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EnableSamlServiceProviderDocument,
             "operationName" => "EnableSAMLServiceProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15776,6 +15789,7 @@ mutation EnableSAMLServiceProvider(\$appId: String!, \$clientId: String!, \$enab
 EOF;
 }
 
+
 class IncClientFlowNumberResponse
 {
 
@@ -15816,12 +15830,12 @@ class IncClientFlowNumberParam
      */
     public $number;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IncClientFlowNumberDocument,
             "operationName" => "IncClientFlowNumber",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15835,6 +15849,7 @@ mutation IncClientFlowNumber(\$user: String, \$userInvitied: String, \$client: S
 }
 EOF;
 }
+
 
 class LoginByLdapResponse
 {
@@ -15876,12 +15891,12 @@ class LoginByLdapParam
      */
     public $browser;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::LoginByLdapDocument,
             "operationName" => "LoginByLDAP",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -15946,6 +15961,7 @@ mutation LoginByLDAP(\$username: String!, \$password: String!, \$clientId: Strin
 EOF;
 }
 
+
 class RemoveEmailProviderResponse
 {
 
@@ -15965,12 +15981,12 @@ class RemoveEmailProviderParam
      */
     public $_ids;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveEmailProviderDocument,
             "operationName" => "RemoveEmailProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16006,6 +16022,7 @@ mutation RemoveEmailProvider(\$_ids: [String]!) {
 EOF;
 }
 
+
 class RemoveLdapServerResponse
 {
 
@@ -16032,12 +16049,12 @@ class RemoveLdapServerParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveLdapServerDocument,
             "operationName" => "RemoveLDAPServer",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16064,6 +16081,7 @@ mutation RemoveLDAPServer(\$ldapId: String!, \$clientId: String!) {
 EOF;
 }
 
+
 class RemoveOAuthListResponse
 {
 
@@ -16083,12 +16101,12 @@ class RemoveOAuthListParam
      */
     public $ids;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveOAuthListDocument,
             "operationName" => "RemoveOAuthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16098,6 +16116,7 @@ mutation RemoveOAuthList(\$ids: [String]) {
 }
 EOF;
 }
+
 
 class RemoveOAuthProviderResponse
 {
@@ -16125,12 +16144,12 @@ class RemoveOAuthProviderParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveOAuthProviderDocument,
             "operationName" => "RemoveOAuthProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16158,6 +16177,7 @@ mutation RemoveOAuthProvider(\$appId: String!, \$clientId: String!) {
 EOF;
 }
 
+
 class RemoveOidcAppResponse
 {
 
@@ -16184,12 +16204,12 @@ class RemoveOidcAppParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveOidcAppDocument,
             "operationName" => "RemoveOIDCApp",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16249,6 +16269,7 @@ mutation RemoveOIDCApp(\$appId: String!, \$clientId: String!) {
 EOF;
 }
 
+
 class RemoveSamlIdentityProviderResponse
 {
 
@@ -16275,12 +16296,12 @@ class RemoveSamlIdentityProviderParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveSamlIdentityProviderDocument,
             "operationName" => "RemoveSAMLIdentityProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16324,6 +16345,7 @@ mutation RemoveSAMLIdentityProvider(\$appId: String!, \$clientId: String!) {
 EOF;
 }
 
+
 class RemoveSamlServiceProviderResponse
 {
 
@@ -16350,12 +16372,12 @@ class RemoveSamlServiceProviderParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveSamlServiceProviderDocument,
             "operationName" => "RemoveSAMLServiceProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16421,6 +16443,7 @@ mutation RemoveSAMLServiceProvider(\$appId: String!, \$clientId: String!) {
 EOF;
 }
 
+
 class RevokeUserAuthorizedAppResponse
 {
 
@@ -16454,12 +16477,12 @@ class RevokeUserAuthorizedAppParam
      */
     public $userId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RevokeUserAuthorizedAppDocument,
             "operationName" => "RevokeUserAuthorizedApp",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16477,6 +16500,7 @@ mutation RevokeUserAuthorizedApp(\$appId: String, \$userPoolId: String, \$userId
 }
 EOF;
 }
+
 
 class SaveEmailProviderWithClientResponse
 {
@@ -16497,12 +16521,12 @@ class SaveEmailProviderWithClientParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SaveEmailProviderWithClientDocument,
             "operationName" => "SaveEmailProviderWithClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16531,6 +16555,7 @@ mutation SaveEmailProviderWithClient(\$options: EmailProviderWithClientAddInput)
 }
 EOF;
 }
+
 
 class SendEmailResponse
 {
@@ -16614,12 +16639,12 @@ class SendEmailParam
      */
     public $secret;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendEmailDocument,
             "operationName" => "SendEmail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16641,6 +16666,7 @@ mutation SendEmail(\$receivers: [String]!, \$subject: String!, \$client: String!
 }
 EOF;
 }
+
 
 class SendEmailByTypeResponse
 {
@@ -16689,12 +16715,12 @@ class SendEmailByTypeParam
      */
     public $meta_data;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendEmailByTypeDocument,
             "operationName" => "SendEmailByType",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16717,6 +16743,7 @@ mutation SendEmailByType(\$user: String!, \$type: String!, \$client: String!, \$
 EOF;
 }
 
+
 class SendWebhookTestResponse
 {
 
@@ -16736,12 +16763,12 @@ class SendWebhookTestParam
      */
     public $id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendWebhookTestDocument,
             "operationName" => "SendWebhookTest",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16751,6 +16778,7 @@ mutation SendWebhookTest(\$id: String!) {
 }
 EOF;
 }
+
 
 class SetApplicationOAuthEnableOrDisableResponse
 {
@@ -16792,12 +16820,12 @@ class SetApplicationOAuthEnableOrDisableParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SetApplicationOAuthEnableOrDisableDocument,
             "operationName" => "SetApplicationOAuthEnableOrDisable",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16839,6 +16867,7 @@ mutation SetApplicationOAuthEnableOrDisable(\$client: String, \$oauth: String, \
 }
 EOF;
 }
+
 
 class UpdateApplicationOAuthResponse
 {
@@ -16887,12 +16916,12 @@ class UpdateApplicationOAuthParam
      */
     public $fields;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateApplicationOAuthDocument,
             "operationName" => "UpdateApplicationOAuth",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16935,6 +16964,7 @@ mutation UpdateApplicationOAuth(\$client: String, \$oauth: String, \$user: Strin
 EOF;
 }
 
+
 class UpdateEmailProviderResponse
 {
 
@@ -16954,12 +16984,12 @@ class UpdateEmailProviderParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateEmailProviderDocument,
             "operationName" => "UpdateEmailProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -16995,6 +17025,7 @@ mutation UpdateEmailProvider(\$options: EmailProviderListInput) {
 EOF;
 }
 
+
 class UpdateEmailTemplateResponse
 {
 
@@ -17014,12 +17045,12 @@ class UpdateEmailTemplateParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateEmailTemplateDocument,
             "operationName" => "UpdateEmailTemplate",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17040,6 +17071,7 @@ mutation UpdateEmailTemplate(\$options: EmailTemplateInput!) {
 EOF;
 }
 
+
 class UpdateEmailTemplateWithClientResponse
 {
 
@@ -17059,12 +17091,12 @@ class UpdateEmailTemplateWithClientParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateEmailTemplateWithClientDocument,
             "operationName" => "UpdateEmailTemplateWithClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17093,6 +17125,7 @@ mutation UpdateEmailTemplateWithClient(\$options: EmailTemplateWithClientInput!)
 }
 EOF;
 }
+
 
 class UpdateLdapServerResponse
 {
@@ -17190,12 +17223,12 @@ class UpdateLdapServerParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateLdapServerDocument,
             "operationName" => "UpdateLDAPServer",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17221,6 +17254,7 @@ mutation UpdateLDAPServer(\$ldapId: String!, \$name: String!, \$clientId: String
 }
 EOF;
 }
+
 
 class UpdateOAuthListResponse
 {
@@ -17248,12 +17282,12 @@ class UpdateOAuthListParam
      */
     public $fields;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateOAuthListDocument,
             "operationName" => "UpdateOAuthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17295,6 +17329,7 @@ mutation UpdateOAuthList(\$options: OAuthListUpdateInput, \$fields: [OAuthListFi
 }
 EOF;
 }
+
 
 class UpdateOAuthProviderResponse
 {
@@ -17378,12 +17413,12 @@ class UpdateOAuthProviderParam
      */
     public $casExpire;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateOAuthProviderDocument,
             "operationName" => "UpdateOAuthProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17410,6 +17445,7 @@ mutation UpdateOAuthProvider(\$appId: String!, \$domain: String, \$name: String,
 }
 EOF;
 }
+
 
 class UpdateOidcAppResponse
 {
@@ -17633,12 +17669,12 @@ class UpdateOidcAppParam
      */
     public $customStyles;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateOidcAppDocument,
             "operationName" => "UpdateOIDCApp",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17697,6 +17733,7 @@ mutation UpdateOIDCApp(\$appId: String!, \$domain: String, \$name: String, \$ima
 }
 EOF;
 }
+
 
 class UpdateSamlIdentityProviderResponse
 {
@@ -17899,12 +17936,12 @@ class UpdateSamlIdentityProviderParam
      */
     public $css;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateSamlIdentityProviderDocument,
             "operationName" => "UpdateSAMLIdentityProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -17947,6 +17984,7 @@ mutation UpdateSAMLIdentityProvider(\$appId: String!, \$clientId: String!, \$dom
 }
 EOF;
 }
+
 
 class UpdateSamlServiceProviderResponse
 {
@@ -18170,12 +18208,12 @@ class UpdateSamlServiceProviderParam
      */
     public $reqSignPublicKey;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateSamlServiceProviderDocument,
             "operationName" => "UpdateSAMLServiceProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18241,6 +18279,7 @@ mutation UpdateSAMLServiceProvider(\$appId: String!, \$name: String!, \$domain: 
 EOF;
 }
 
+
 class UpdateSystemPricingResponse
 {
 
@@ -18260,12 +18299,12 @@ class UpdateSystemPricingParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateSystemPricingDocument,
             "operationName" => "UpdateSystemPricing",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18284,6 +18323,7 @@ mutation UpdateSystemPricing(\$options: PricingFieldsInput) {
 }
 EOF;
 }
+
 
 class UseDefaultEmailProviderResponse
 {
@@ -18311,12 +18351,12 @@ class UseDefaultEmailProviderParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UseDefaultEmailProviderDocument,
             "operationName" => "UseDefaultEmailProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18326,6 +18366,7 @@ mutation UseDefaultEmailProvider(\$user: String!, \$client: String!) {
 }
 EOF;
 }
+
 
 class AddClientWebhookResponse
 {
@@ -18388,12 +18429,12 @@ class AddClientWebhookParam
      */
     public $isLastTimeSuccess;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddClientWebhookDocument,
             "operationName" => "addClientWebhook",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18416,6 +18457,7 @@ mutation addClientWebhook(\$client: String!, \$events: [String!]!, \$url: String
 }
 EOF;
 }
+
 
 class AddCollaboratorResponse
 {
@@ -18450,12 +18492,12 @@ class AddCollaboratorParam
      */
     public $permissionDescriptors;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddCollaboratorDocument,
             "operationName" => "addCollaborator",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18467,6 +18509,60 @@ mutation addCollaborator(\$userPoolId: String!, \$collaboratorUserId: String!, \
 }
 EOF;
 }
+
+
+class AddGroupMetadataResponse
+{
+
+    /**
+     * @var GroupMetadata[]
+     */
+    public $addGroupMetadata;
+}
+
+class AddGroupMetadataParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $groupId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $value;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AddGroupMetadataDocument,
+            "operationName" => "addGroupMetadata",
+            "variables" => $this
+        ];
+    }
+
+    const AddGroupMetadataDocument = <<<EOF
+mutation addGroupMetadata(\$groupId: String!, \$key: String!, \$value: String!) {
+  addGroupMetadata(groupId: \$groupId, key: \$key, value: \$value) {
+    key
+    value
+  }
+}
+EOF;
+}
+
 
 class AddOrgNodeResponse
 {
@@ -18487,12 +18583,12 @@ class AddOrgNodeParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddOrgNodeDocument,
             "operationName" => "addOrgNode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18513,6 +18609,7 @@ mutation addOrgNode(\$input: AddOrgNodeInput!) {
 }
 EOF;
 }
+
 
 class AddPermissionResponse
 {
@@ -18540,12 +18637,12 @@ class AddPermissionParam
      */
     public $description;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddPermissionDocument,
             "operationName" => "addPermission",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18560,6 +18657,7 @@ mutation addPermission(\$name: String!, \$description: String) {
 }
 EOF;
 }
+
 
 class AddPermissionToRbacRoleResponse
 {
@@ -18601,12 +18699,12 @@ class AddPermissionToRbacRoleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddPermissionToRbacRoleDocument,
             "operationName" => "addPermissionToRBACRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18629,6 +18727,7 @@ mutation addPermissionToRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int
 }
 EOF;
 }
+
 
 class AddPermissionToRbacRoleBatchResponse
 {
@@ -18670,12 +18769,12 @@ class AddPermissionToRbacRoleBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddPermissionToRbacRoleBatchDocument,
             "operationName" => "addPermissionToRBACRoleBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18698,6 +18797,7 @@ mutation addPermissionToRBACRoleBatch(\$sortBy: SortByEnum, \$page: Int, \$count
 }
 EOF;
 }
+
 
 class AddRoleToRbacGroupResponse
 {
@@ -18739,12 +18839,12 @@ class AddRoleToRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddRoleToRbacGroupDocument,
             "operationName" => "addRoleToRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18770,6 +18870,7 @@ mutation addRoleToRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$i
 }
 EOF;
 }
+
 
 class AddRoleToRbacGroupBatchResponse
 {
@@ -18811,12 +18912,12 @@ class AddRoleToRbacGroupBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddRoleToRbacGroupBatchDocument,
             "operationName" => "addRoleToRBACGroupBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18843,6 +18944,7 @@ mutation addRoleToRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int
 EOF;
 }
 
+
 class AddSuperAdminUserResponse
 {
 
@@ -18862,12 +18964,12 @@ class AddSuperAdminUserParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddSuperAdminUserDocument,
             "operationName" => "addSuperAdminUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18882,6 +18984,7 @@ mutation addSuperAdminUser(\$options: SuperAdminUpdateInput!) {
 }
 EOF;
 }
+
 
 class AddToInvitationResponse
 {
@@ -18909,12 +19012,12 @@ class AddToInvitationParam
      */
     public $phone;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddToInvitationDocument,
             "operationName" => "addToInvitation",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -18930,6 +19033,7 @@ mutation addToInvitation(\$client: String!, \$phone: String) {
 }
 EOF;
 }
+
 
 class AddUserToRbacGroupResponse
 {
@@ -18971,12 +19075,12 @@ class AddUserToRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddUserToRbacGroupDocument,
             "operationName" => "addUserToRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19002,6 +19106,7 @@ mutation addUserToRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$i
 }
 EOF;
 }
+
 
 class AddUserToRbacGroupBatchResponse
 {
@@ -19043,12 +19148,12 @@ class AddUserToRbacGroupBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AddUserToRbacGroupBatchDocument,
             "operationName" => "addUserToRBACGroupBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19074,6 +19179,7 @@ mutation addUserToRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int
 }
 EOF;
 }
+
 
 class AssignRbacRoleToUserResponse
 {
@@ -19115,12 +19221,12 @@ class AssignRbacRoleToUserParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AssignRbacRoleToUserDocument,
             "operationName" => "assignRBACRoleToUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19143,6 +19249,7 @@ mutation assignRBACRoleToUser(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \
 }
 EOF;
 }
+
 
 class AssignRbacRoleToUserBatchResponse
 {
@@ -19184,12 +19291,12 @@ class AssignRbacRoleToUserBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AssignRbacRoleToUserBatchDocument,
             "operationName" => "assignRBACRoleToUserBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19212,6 +19319,7 @@ mutation assignRBACRoleToUserBatch(\$sortBy: SortByEnum, \$page: Int, \$count: I
 }
 EOF;
 }
+
 
 class AssignUserToRoleResponse
 {
@@ -19246,12 +19354,12 @@ class AssignUserToRoleParam
      */
     public $group;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AssignUserToRoleDocument,
             "operationName" => "assignUserToRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19267,6 +19375,7 @@ mutation assignUserToRole(\$client: String!, \$user: String!, \$group: String!) 
 }
 EOF;
 }
+
 
 class BindOtherOAuthResponse
 {
@@ -19315,12 +19424,12 @@ class BindOtherOAuthParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::BindOtherOAuthDocument,
             "operationName" => "bindOtherOAuth",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19338,6 +19447,7 @@ mutation bindOtherOAuth(\$type: String!, \$unionid: String!, \$userInfo: String!
 }
 EOF;
 }
+
 
 class ChangeMfaResponse
 {
@@ -19386,12 +19496,12 @@ class ChangeMfaParam
      */
     public $refreshKey;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ChangeMfaDocument,
             "operationName" => "changeMFA",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19407,6 +19517,7 @@ mutation changeMFA(\$enable: Boolean!, \$userId: String, \$userPoolId: String, \
 }
 EOF;
 }
+
 
 class ChangePasswordResponse
 {
@@ -19448,12 +19559,12 @@ class ChangePasswordParam
      */
     public $verifyCode;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ChangePasswordDocument,
             "operationName" => "changePassword",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19547,6 +19658,7 @@ mutation changePassword(\$password: String!, \$email: String!, \$client: String!
 EOF;
 }
 
+
 class CreateAdConnectorResponse
 {
 
@@ -19580,12 +19692,12 @@ class CreateAdConnectorParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateAdConnectorDocument,
             "operationName" => "createAdConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19605,6 +19717,7 @@ mutation createAdConnector(\$name: String!, \$logo: String, \$userPoolId: String
 }
 EOF;
 }
+
 
 class CreateCustomMfaResponse
 {
@@ -19653,12 +19766,12 @@ class CreateCustomMfaParam
      */
     public $remark;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateCustomMfaDocument,
             "operationName" => "createCustomMFA",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19695,6 +19808,75 @@ mutation createCustomMFA(\$userIdInMiniLogin: String!, \$userPoolId: String!, \$
 EOF;
 }
 
+
+class CreateInterConnectionResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $createInterConnection;
+}
+
+class CreateInterConnectionParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $sourceUserPoolId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $sourceUserId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetUserPoolId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetUserId;
+
+    /**
+     * Required
+     *
+     * @var int
+     */
+    public $maxAge;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::CreateInterConnectionDocument,
+            "operationName" => "createInterConnection",
+            "variables" => $this
+        ];
+    }
+
+    const CreateInterConnectionDocument = <<<EOF
+mutation createInterConnection(\$sourceUserPoolId: String!, \$sourceUserId: String!, \$targetUserPoolId: String!, \$targetUserId: String!, \$maxAge: Int!) {
+  createInterConnection(sourceUserPoolId: \$sourceUserPoolId, sourceUserId: \$sourceUserId, targetUserId: \$targetUserId, targetUserPoolId: \$targetUserPoolId, maxAge: \$maxAge) {
+    message
+    code
+    status
+  }
+}
+EOF;
+}
+
+
 class CreateOrgResponse
 {
 
@@ -19714,12 +19896,12 @@ class CreateOrgParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateOrgDocument,
             "operationName" => "createOrg",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19741,6 +19923,7 @@ mutation createOrg(\$input: CreateOrgInput!) {
 EOF;
 }
 
+
 class CreateRbacGroupResponse
 {
 
@@ -19760,12 +19943,12 @@ class CreateRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateRbacGroupDocument,
             "operationName" => "createRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19782,6 +19965,7 @@ mutation createRBACGroup(\$input: CreateRBACGroupInput!) {
 }
 EOF;
 }
+
 
 class CreateRbacPermissionResponse
 {
@@ -19802,12 +19986,12 @@ class CreateRbacPermissionParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateRbacPermissionDocument,
             "operationName" => "createRBACPermission",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19824,6 +20008,7 @@ mutation createRBACPermission(\$input: CreateRBACPermissionInput!) {
 }
 EOF;
 }
+
 
 class CreateRbacRoleResponse
 {
@@ -19865,12 +20050,12 @@ class CreateRbacRoleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateRbacRoleDocument,
             "operationName" => "createRBACRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19893,6 +20078,7 @@ mutation createRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input
 }
 EOF;
 }
+
 
 class CreateRoleResponse
 {
@@ -19927,12 +20113,12 @@ class CreateRoleParam
      */
     public $descriptions;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateRoleDocument,
             "operationName" => "createRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19949,6 +20135,7 @@ mutation createRole(\$client: String!, \$name: String!, \$descriptions: String) 
 }
 EOF;
 }
+
 
 class CreateRuleResponse
 {
@@ -19969,12 +20156,12 @@ class CreateRuleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateRuleDocument,
             "operationName" => "createRule",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -19997,6 +20184,7 @@ mutation createRule(\$input: CreateRuleInput!) {
 }
 EOF;
 }
+
 
 class CreateUserResponse
 {
@@ -20031,12 +20219,12 @@ class CreateUserParam
      */
     public $keepPassword;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CreateUserDocument,
             "operationName" => "createUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20130,6 +20318,103 @@ mutation createUser(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$
 EOF;
 }
 
+
+class CreateUserWithoutAuthenticationResponse
+{
+
+    /**
+     * @var User
+     */
+    public $createUserWithoutAuthentication;
+}
+
+class CreateUserWithoutAuthenticationParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userPoolId;
+
+    /**
+     * Required
+     *
+     * @var UserRegisterInput
+     */
+    public $userInfo;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $forceLogin;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::CreateUserWithoutAuthenticationDocument,
+            "operationName" => "createUserWithoutAuthentication",
+            "variables" => $this
+        ];
+    }
+
+    const CreateUserWithoutAuthenticationDocument = <<<EOF
+mutation createUserWithoutAuthentication(\$userPoolId: String!, \$userInfo: UserRegisterInput!, \$forceLogin: Boolean) {
+  createUserWithoutAuthentication(userPoolId: \$userPoolId, userInfo: \$userInfo, forceLogin: \$forceLogin) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    metadata
+  }
+}
+EOF;
+}
+
+
 class DeleteClientWebhookResponse
 {
 
@@ -20149,12 +20434,12 @@ class DeleteClientWebhookParam
      */
     public $id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteClientWebhookDocument,
             "operationName" => "deleteClientWebhook",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20178,6 +20463,7 @@ mutation deleteClientWebhook(\$id: String!) {
 EOF;
 }
 
+
 class DeleteOrgResponse
 {
 
@@ -20197,12 +20483,12 @@ class DeleteOrgParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteOrgDocument,
             "operationName" => "deleteOrg",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20216,6 +20502,7 @@ mutation deleteOrg(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DeleteRbacGroupResponse
 {
@@ -20236,12 +20523,12 @@ class DeleteRbacGroupParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacGroupDocument,
             "operationName" => "deleteRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20255,6 +20542,7 @@ mutation deleteRBACGroup(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DeleteRbacGroupBatchResponse
 {
@@ -20275,12 +20563,12 @@ class DeleteRbacGroupBatchParam
      */
     public $idList;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacGroupBatchDocument,
             "operationName" => "deleteRBACGroupBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20294,6 +20582,7 @@ mutation deleteRBACGroupBatch(\$idList: [String!]!) {
 }
 EOF;
 }
+
 
 class DeleteRbacPermissionResponse
 {
@@ -20314,12 +20603,12 @@ class DeleteRbacPermissionParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacPermissionDocument,
             "operationName" => "deleteRBACPermission",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20333,6 +20622,7 @@ mutation deleteRBACPermission(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DeleteRbacPermissionBatchResponse
 {
@@ -20353,12 +20643,12 @@ class DeleteRbacPermissionBatchParam
      */
     public $idList;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacPermissionBatchDocument,
             "operationName" => "deleteRBACPermissionBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20372,6 +20662,7 @@ mutation deleteRBACPermissionBatch(\$idList: [String!]!) {
 }
 EOF;
 }
+
 
 class DeleteRbacRoleResponse
 {
@@ -20392,12 +20683,12 @@ class DeleteRbacRoleParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacRoleDocument,
             "operationName" => "deleteRBACRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20411,6 +20702,7 @@ mutation deleteRBACRole(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DeleteRbacRoleBatchResponse
 {
@@ -20431,12 +20723,12 @@ class DeleteRbacRoleBatchParam
      */
     public $idList;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRbacRoleBatchDocument,
             "operationName" => "deleteRBACRoleBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20450,6 +20742,7 @@ mutation deleteRBACRoleBatch(\$idList: [String!]!) {
 }
 EOF;
 }
+
 
 class DeleteRuleResponse
 {
@@ -20470,12 +20763,12 @@ class DeleteRuleParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DeleteRuleDocument,
             "operationName" => "deleteRule",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20489,6 +20782,7 @@ mutation deleteRule(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DisableAdConnectorResponse
 {
@@ -20509,12 +20803,12 @@ class DisableAdConnectorParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DisableAdConnectorDocument,
             "operationName" => "disableAdConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20524,6 +20818,7 @@ mutation disableAdConnector(\$_id: String!) {
 }
 EOF;
 }
+
 
 class DisableAdConnectorForProviderResponse
 {
@@ -20551,12 +20846,12 @@ class DisableAdConnectorForProviderParam
      */
     public $adConnectorId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DisableAdConnectorForProviderDocument,
             "operationName" => "disableAdConnectorForProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20566,6 +20861,7 @@ mutation disableAdConnectorForProvider(\$providerId: String!, \$adConnectorId: S
 }
 EOF;
 }
+
 
 class EnableAdConnectorResponse
 {
@@ -20586,12 +20882,12 @@ class EnableAdConnectorParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EnableAdConnectorDocument,
             "operationName" => "enableAdConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20601,6 +20897,7 @@ mutation enableAdConnector(\$_id: String!) {
 }
 EOF;
 }
+
 
 class EnableAdConnectorForProviderResponse
 {
@@ -20635,12 +20932,12 @@ class EnableAdConnectorForProviderParam
      */
     public $adConnectorId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EnableAdConnectorForProviderDocument,
             "operationName" => "enableAdConnectorForProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20650,6 +20947,7 @@ mutation enableAdConnectorForProvider(\$providerType: providerType!, \$providerI
 }
 EOF;
 }
+
 
 class EnablePasswordFaasResponse
 {
@@ -20677,12 +20975,12 @@ class EnablePasswordFaasParam
      */
     public $enable;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EnablePasswordFaasDocument,
             "operationName" => "enablePasswordFaas",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20701,6 +20999,7 @@ mutation enablePasswordFaas(\$client: String!, \$enable: Boolean!) {
 }
 EOF;
 }
+
 
 class EncryptPasswordResponse
 {
@@ -20735,12 +21034,12 @@ class EncryptPasswordParam
      */
     public $isTest;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EncryptPasswordDocument,
             "operationName" => "encryptPassword",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20761,6 +21060,7 @@ mutation encryptPassword(\$password: String!, \$client: String!, \$isTest: Boole
 }
 EOF;
 }
+
 
 class GenerateInvitationCodeResponse
 {
@@ -20788,12 +21088,12 @@ class GenerateInvitationCodeParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GenerateInvitationCodeDocument,
             "operationName" => "generateInvitationCode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -20809,6 +21109,7 @@ mutation generateInvitationCode(\$user: String!, \$client: String!) {
 }
 EOF;
 }
+
 
 class LoginResponse
 {
@@ -20920,12 +21221,12 @@ class LoginParam
      */
     public $browser;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::LoginDocument,
             "operationName" => "login",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21019,6 +21320,7 @@ mutation login(\$registerInClient: String!, \$phone: String, \$phoneCode: Int, \
 EOF;
 }
 
+
 class LoginByAdResponse
 {
 
@@ -21052,12 +21354,12 @@ class LoginByAdParam
      */
     public $password;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::LoginByAdDocument,
             "operationName" => "loginByAd",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21122,6 +21424,539 @@ mutation loginByAd(\$adConnectorId: String!, \$username: String!, \$password: St
 EOF;
 }
 
+
+class LoginByEmailResponse
+{
+
+    /**
+     * @var ExtendUser
+     */
+    public $loginByEmail;
+}
+
+class LoginByEmailParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $password;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::LoginByEmailDocument,
+            "operationName" => "loginByEmail",
+            "variables" => $this
+        ];
+    }
+
+    const LoginByEmailDocument = <<<EOF
+mutation loginByEmail(\$clientId: String!, \$email: String, \$password: String) {
+  login(registerInClient: \$clientId, email: \$email, password: \$password) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    group {
+      _id
+      name
+      descriptions
+      client
+      permissions
+      createdAt
+    }
+    clientType {
+      _id
+      name
+      description
+      image
+      example
+    }
+    userLocation {
+      _id
+      when
+      where
+    }
+    userLoginHistory {
+      totalCount
+    }
+    systemApplicationType {
+      _id
+      name
+      descriptions
+      price
+    }
+    thirdPartyIdentity {
+      provider
+      refreshToken
+      accessToken
+      expiresIn
+      updatedAt
+    }
+    customData
+    metadata
+  }
+}
+EOF;
+}
+
+
+class LoginByPhoneCodeResponse
+{
+
+    /**
+     * @var ExtendUser
+     */
+    public $loginByPhoneCode;
+}
+
+class LoginByPhoneCodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $phone;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $phoneCode;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::LoginByPhoneCodeDocument,
+            "operationName" => "loginByPhoneCode",
+            "variables" => $this
+        ];
+    }
+
+    const LoginByPhoneCodeDocument = <<<EOF
+mutation loginByPhoneCode(\$clientId: String!, \$phone: String, \$phoneCode: Int) {
+  login(registerInClient: \$clientId, phone: \$phone, phoneCode: \$phoneCode) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    group {
+      _id
+      name
+      descriptions
+      client
+      permissions
+      createdAt
+    }
+    clientType {
+      _id
+      name
+      description
+      image
+      example
+    }
+    userLocation {
+      _id
+      when
+      where
+    }
+    userLoginHistory {
+      totalCount
+    }
+    systemApplicationType {
+      _id
+      name
+      descriptions
+      price
+    }
+    thirdPartyIdentity {
+      provider
+      refreshToken
+      accessToken
+      expiresIn
+      updatedAt
+    }
+    customData
+    metadata
+  }
+}
+EOF;
+}
+
+
+class LoginByPhonePasswordResponse
+{
+
+    /**
+     * @var ExtendUser
+     */
+    public $loginByPhonePassword;
+}
+
+class LoginByPhonePasswordParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $phone;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $password;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::LoginByPhonePasswordDocument,
+            "operationName" => "loginByPhonePassword",
+            "variables" => $this
+        ];
+    }
+
+    const LoginByPhonePasswordDocument = <<<EOF
+mutation loginByPhonePassword(\$clientId: String!, \$phone: String, \$password: String) {
+  login(registerInClient: \$clientId, phone: \$phone, password: \$password) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    group {
+      _id
+      name
+      descriptions
+      client
+      permissions
+      createdAt
+    }
+    clientType {
+      _id
+      name
+      description
+      image
+      example
+    }
+    userLocation {
+      _id
+      when
+      where
+    }
+    userLoginHistory {
+      totalCount
+    }
+    systemApplicationType {
+      _id
+      name
+      descriptions
+      price
+    }
+    thirdPartyIdentity {
+      provider
+      refreshToken
+      accessToken
+      expiresIn
+      updatedAt
+    }
+    customData
+    metadata
+  }
+}
+EOF;
+}
+
+
+class LoginByUsernameResponse
+{
+
+    /**
+     * @var ExtendUser
+     */
+    public $loginByUsername;
+}
+
+class LoginByUsernameParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $username;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $password;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::LoginByUsernameDocument,
+            "operationName" => "loginByUsername",
+            "variables" => $this
+        ];
+    }
+
+    const LoginByUsernameDocument = <<<EOF
+mutation loginByUsername(\$clientId: String!, \$username: String, \$password: String) {
+  login(registerInClient: \$clientId, username: \$username, password: \$password) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    group {
+      _id
+      name
+      descriptions
+      client
+      permissions
+      createdAt
+    }
+    clientType {
+      _id
+      name
+      description
+      image
+      example
+    }
+    userLocation {
+      _id
+      when
+      where
+    }
+    userLoginHistory {
+      totalCount
+    }
+    systemApplicationType {
+      _id
+      name
+      descriptions
+      price
+    }
+    thirdPartyIdentity {
+      provider
+      refreshToken
+      accessToken
+      expiresIn
+      updatedAt
+    }
+    customData
+    metadata
+  }
+}
+EOF;
+}
+
+
 class NewClientResponse
 {
 
@@ -21141,12 +21976,12 @@ class NewClientParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::NewClientDocument,
             "operationName" => "newClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21264,6 +22099,7 @@ mutation newClient(\$client: NewUserClientInput!) {
 EOF;
 }
 
+
 class OauthPasswordLoginResponse
 {
 
@@ -21325,12 +22161,12 @@ class OauthPasswordLoginParam
      */
     public $verifyCode;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OauthPasswordLoginDocument,
             "operationName" => "oauthPasswordLogin",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21424,6 +22260,7 @@ mutation oauthPasswordLogin(\$registerInClient: String!, \$phone: String, \$unio
 EOF;
 }
 
+
 class OrderResponse
 {
 
@@ -21443,12 +22280,12 @@ class OrderParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrderDocument,
             "operationName" => "order",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21462,6 +22299,96 @@ mutation order(\$options: OrderAddInput!) {
 }
 EOF;
 }
+
+
+class PasswordLessForceLoginResponse
+{
+
+    /**
+     * @var User
+     */
+    public $passwordLessForceLogin;
+}
+
+class PasswordLessForceLoginParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userPoolId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userId;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::PasswordLessForceLoginDocument,
+            "operationName" => "passwordLessForceLogin",
+            "variables" => $this
+        ];
+    }
+
+    const PasswordLessForceLoginDocument = <<<EOF
+mutation passwordLessForceLogin(\$userPoolId: String!, \$userId: String!) {
+  passwordLessForceLogin(userPoolId: \$userPoolId, userId: \$userId) {
+    _id
+    email
+    unionid
+    openid
+    emailVerified
+    phone
+    phoneVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    device
+    password
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    country
+    updatedAt
+    metadata
+  }
+}
+EOF;
+}
+
 
 class RecordAuthAuditResponse
 {
@@ -21517,12 +22444,12 @@ class RecordAuthAuditParam
      */
     public $message;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RecordAuthAuditDocument,
             "operationName" => "recordAuthAudit",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21536,6 +22463,7 @@ mutation recordAuthAudit(\$userPoolId: String!, \$appType: String!, \$appId: Str
 }
 EOF;
 }
+
 
 class RecordRequestResponse
 {
@@ -21584,12 +22512,12 @@ class RecordRequestParam
      */
     public $from;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RecordRequestDocument,
             "operationName" => "recordRequest",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21603,6 +22531,7 @@ mutation recordRequest(\$when: String!, \$ip: String!, \$responseTime: Int!, \$s
 }
 EOF;
 }
+
 
 class RefreshAdConnectorSecretResponse
 {
@@ -21623,12 +22552,12 @@ class RefreshAdConnectorSecretParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RefreshAdConnectorSecretDocument,
             "operationName" => "refreshAdConnectorSecret",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21649,6 +22578,7 @@ mutation refreshAdConnectorSecret(\$_id: String) {
 EOF;
 }
 
+
 class RefreshAppSecretResponse
 {
 
@@ -21668,12 +22598,12 @@ class RefreshAppSecretParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RefreshAppSecretDocument,
             "operationName" => "refreshAppSecret",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21791,6 +22721,7 @@ mutation refreshAppSecret(\$client: UpdateUserClientInput!) {
 EOF;
 }
 
+
 class RefreshSignInTokenResponse
 {
 
@@ -21824,12 +22755,12 @@ class RefreshSignInTokenParam
      */
     public $refreshToken;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RefreshSignInTokenDocument,
             "operationName" => "refreshSignInToken",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21845,6 +22776,7 @@ mutation refreshSignInToken(\$oidcAppId: String, \$userPoolId: String, \$refresh
 }
 EOF;
 }
+
 
 class RefreshThirdPartyTokenResponse
 {
@@ -21872,12 +22804,12 @@ class RefreshThirdPartyTokenParam
      */
     public $userId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RefreshThirdPartyTokenDocument,
             "operationName" => "refreshThirdPartyToken",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21894,6 +22826,7 @@ mutation refreshThirdPartyToken(\$userPoolId: String!, \$userId: String!) {
 }
 EOF;
 }
+
 
 class RefreshTokenResponse
 {
@@ -21921,12 +22854,12 @@ class RefreshTokenParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RefreshTokenDocument,
             "operationName" => "refreshToken",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -21940,6 +22873,7 @@ mutation refreshToken(\$client: String!, \$user: String!) {
 }
 EOF;
 }
+
 
 class RegisterResponse
 {
@@ -21974,12 +22908,12 @@ class RegisterParam
      */
     public $keepPassword;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RegisterDocument,
             "operationName" => "register",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22036,6 +22970,7 @@ mutation register(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$ke
 EOF;
 }
 
+
 class RemoveAdConnectorResponse
 {
 
@@ -22055,12 +22990,12 @@ class RemoveAdConnectorParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveAdConnectorDocument,
             "operationName" => "removeAdConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22070,6 +23005,7 @@ mutation removeAdConnector(\$_id: String!) {
 }
 EOF;
 }
+
 
 class RemoveCollaboratorResponse
 {
@@ -22090,12 +23026,12 @@ class RemoveCollaboratorParam
      */
     public $collaborationId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveCollaboratorDocument,
             "operationName" => "removeCollaborator",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22230,6 +23166,7 @@ mutation removeCollaborator(\$collaborationId: String!) {
 EOF;
 }
 
+
 class RemoveCustomMfaResponse
 {
 
@@ -22249,12 +23186,12 @@ class RemoveCustomMfaParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveCustomMfaDocument,
             "operationName" => "removeCustomMFA",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22291,6 +23228,7 @@ mutation removeCustomMFA(\$_id: String!) {
 EOF;
 }
 
+
 class RemoveFromInvitationResponse
 {
 
@@ -22317,12 +23255,12 @@ class RemoveFromInvitationParam
      */
     public $phone;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveFromInvitationDocument,
             "operationName" => "removeFromInvitation",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22338,6 +23276,7 @@ mutation removeFromInvitation(\$client: String!, \$phone: String) {
 }
 EOF;
 }
+
 
 class RemoveOrgNodeResponse
 {
@@ -22358,12 +23297,12 @@ class RemoveOrgNodeParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveOrgNodeDocument,
             "operationName" => "removeOrgNode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22384,6 +23323,7 @@ mutation removeOrgNode(\$input: RemoveOrgNodeInput!) {
 }
 EOF;
 }
+
 
 class RemovePermissionFromRbacRoleResponse
 {
@@ -22425,12 +23365,12 @@ class RemovePermissionFromRbacRoleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemovePermissionFromRbacRoleDocument,
             "operationName" => "removePermissionFromRBACRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22453,6 +23393,7 @@ mutation removePermissionFromRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count
 }
 EOF;
 }
+
 
 class RemovePermissionFromRbacRoleBatchResponse
 {
@@ -22494,12 +23435,12 @@ class RemovePermissionFromRbacRoleBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemovePermissionFromRbacRoleBatchDocument,
             "operationName" => "removePermissionFromRBACRoleBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22522,6 +23463,7 @@ mutation removePermissionFromRBACRoleBatch(\$sortBy: SortByEnum, \$page: Int, \$
 }
 EOF;
 }
+
 
 class RemoveRoleFromRbacGroupResponse
 {
@@ -22563,12 +23505,12 @@ class RemoveRoleFromRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveRoleFromRbacGroupDocument,
             "operationName" => "removeRoleFromRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22594,6 +23536,7 @@ mutation removeRoleFromRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int
 }
 EOF;
 }
+
 
 class RemoveRoleFromRbacGroupBatchResponse
 {
@@ -22635,12 +23578,12 @@ class RemoveRoleFromRbacGroupBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveRoleFromRbacGroupBatchDocument,
             "operationName" => "removeRoleFromRBACGroupBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22667,6 +23610,7 @@ mutation removeRoleFromRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count
 EOF;
 }
 
+
 class RemoveRuleEnvResponse
 {
 
@@ -22686,12 +23630,12 @@ class RemoveRuleEnvParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveRuleEnvDocument,
             "operationName" => "removeRuleEnv",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22707,6 +23651,7 @@ mutation removeRuleEnv(\$input: RemoveRuleEnvInput!) {
 }
 EOF;
 }
+
 
 class RemoveSuperAdminUserResponse
 {
@@ -22734,12 +23679,12 @@ class RemoveSuperAdminUserParam
      */
     public $username;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveSuperAdminUserDocument,
             "operationName" => "removeSuperAdminUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22754,6 +23699,7 @@ mutation removeSuperAdminUser(\$_id: String!, \$username: String!) {
 }
 EOF;
 }
+
 
 class RemoveUserClientsResponse
 {
@@ -22774,12 +23720,12 @@ class RemoveUserClientsParam
      */
     public $ids;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUserClientsDocument,
             "operationName" => "removeUserClients",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -22897,6 +23843,7 @@ mutation removeUserClients(\$ids: [String]) {
 EOF;
 }
 
+
 class RemoveUserFromGroupResponse
 {
 
@@ -22930,12 +23877,12 @@ class RemoveUserFromGroupParam
      */
     public $group;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUserFromGroupDocument,
             "operationName" => "removeUserFromGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23025,6 +23972,7 @@ mutation removeUserFromGroup(\$client: String!, \$user: String!, \$group: String
 EOF;
 }
 
+
 class RemoveUserFromRbacGroupResponse
 {
 
@@ -23065,12 +24013,12 @@ class RemoveUserFromRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUserFromRbacGroupDocument,
             "operationName" => "removeUserFromRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23096,6 +24044,7 @@ mutation removeUserFromRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int
 }
 EOF;
 }
+
 
 class RemoveUserFromRbacGroupBatchResponse
 {
@@ -23137,12 +24086,12 @@ class RemoveUserFromRbacGroupBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUserFromRbacGroupBatchDocument,
             "operationName" => "removeUserFromRBACGroupBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23169,6 +24118,7 @@ mutation removeUserFromRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count
 EOF;
 }
 
+
 class RemoveUserMetadataResponse
 {
 
@@ -23188,12 +24138,12 @@ class RemoveUserMetadataParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUserMetadataDocument,
             "operationName" => "removeUserMetadata",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23209,6 +24159,7 @@ mutation removeUserMetadata(\$input: RemoveUserMetadataInput!) {
 }
 EOF;
 }
+
 
 class RemoveUsersResponse
 {
@@ -23243,12 +24194,12 @@ class RemoveUsersParam
      */
     public $operator;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RemoveUsersDocument,
             "operationName" => "removeUsers",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23260,6 +24211,84 @@ mutation removeUsers(\$ids: [String], \$registerInClient: String, \$operator: St
 }
 EOF;
 }
+
+
+class ResetPasswordResponse
+{
+
+    /**
+     * @var ExtendUser
+     */
+    public $resetPassword;
+}
+
+class ResetPasswordParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $password;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $verifyCode;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::ResetPasswordDocument,
+            "operationName" => "resetPassword",
+            "variables" => $this
+        ];
+    }
+
+    const ResetPasswordDocument = <<<EOF
+mutation resetPassword(\$email: String!, \$clientId: String!, \$password: String!, \$verifyCode: String!) {
+  changePassword(email: \$email, client: \$clientId, password: \$password, verifyCode: \$verifyCode) {
+    _id
+    email
+    emailVerified
+    username
+    nickname
+    company
+    photo
+    browser
+    registerInClient
+    registerMethod
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+  }
+}
+EOF;
+}
+
 
 class ResetUserPoolFromWechatResponse
 {
@@ -23294,12 +24323,12 @@ class ResetUserPoolFromWechatParam
      */
     public $limit;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ResetUserPoolFromWechatDocument,
             "operationName" => "resetUserPoolFromWechat",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23360,6 +24389,7 @@ mutation resetUserPoolFromWechat(\$client: String!, \$registerMethod: String!, \
 EOF;
 }
 
+
 class RevokeRbacRoleFromUserResponse
 {
 
@@ -23400,12 +24430,12 @@ class RevokeRbacRoleFromUserParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RevokeRbacRoleFromUserDocument,
             "operationName" => "revokeRBACRoleFromUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23428,6 +24458,7 @@ mutation revokeRBACRoleFromUser(\$sortBy: SortByEnum, \$page: Int, \$count: Int,
 }
 EOF;
 }
+
 
 class RevokeRbacRoleFromUserBatchResponse
 {
@@ -23469,12 +24500,12 @@ class RevokeRbacRoleFromUserBatchParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RevokeRbacRoleFromUserBatchDocument,
             "operationName" => "revokeRBACRoleFromUserBatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23497,6 +24528,7 @@ mutation revokeRBACRoleFromUserBatch(\$sortBy: SortByEnum, \$page: Int, \$count:
 }
 EOF;
 }
+
 
 class SendChangeEmailVerifyCodeResponse
 {
@@ -23524,12 +24556,12 @@ class SendChangeEmailVerifyCodeParam
      */
     public $email;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendChangeEmailVerifyCodeDocument,
             "operationName" => "sendChangeEmailVerifyCode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23543,6 +24575,7 @@ mutation sendChangeEmailVerifyCode(\$userPoolId: String!, \$email: String!) {
 }
 EOF;
 }
+
 
 class SendResetPasswordEmailResponse
 {
@@ -23570,12 +24603,12 @@ class SendResetPasswordEmailParam
      */
     public $email;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendResetPasswordEmailDocument,
             "operationName" => "sendResetPasswordEmail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23589,6 +24622,7 @@ mutation sendResetPasswordEmail(\$client: String!, \$email: String!) {
 }
 EOF;
 }
+
 
 class SendVerifyEmailResponse
 {
@@ -23623,12 +24657,12 @@ class SendVerifyEmailParam
      */
     public $token;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SendVerifyEmailDocument,
             "operationName" => "sendVerifyEmail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23642,6 +24676,7 @@ mutation sendVerifyEmail(\$email: String!, \$client: String!, \$token: String) {
 }
 EOF;
 }
+
 
 class SetInvitationStateResponse
 {
@@ -23669,12 +24704,12 @@ class SetInvitationStateParam
      */
     public $enablePhone;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SetInvitationStateDocument,
             "operationName" => "setInvitationState",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23689,6 +24724,7 @@ mutation setInvitationState(\$client: String!, \$enablePhone: Boolean) {
 }
 EOF;
 }
+
 
 class SetRuleEnvResponse
 {
@@ -23709,12 +24745,12 @@ class SetRuleEnvParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SetRuleEnvDocument,
             "operationName" => "setRuleEnv",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23730,6 +24766,7 @@ mutation setRuleEnv(\$input: SetRuleEnvInput!) {
 }
 EOF;
 }
+
 
 class SetUserMetadataResponse
 {
@@ -23750,12 +24787,12 @@ class SetUserMetadataParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SetUserMetadataDocument,
             "operationName" => "setUserMetadata",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23771,6 +24808,7 @@ mutation setUserMetadata(\$input: SetUserMetadataInput!) {
 }
 EOF;
 }
+
 
 class SignInResponse
 {
@@ -23833,12 +24871,12 @@ class SignInParam
      */
     public $username;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SignInDocument,
             "operationName" => "signIn",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23888,6 +24926,7 @@ mutation signIn(\$oidcAppId: String, \$userPoolId: String, \$email: String, \$pa
 EOF;
 }
 
+
 class UnbindEmailResponse
 {
 
@@ -23914,12 +24953,12 @@ class UnbindEmailParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UnbindEmailDocument,
             "operationName" => "unbindEmail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -23984,6 +25023,7 @@ mutation unbindEmail(\$user: String, \$client: String) {
 EOF;
 }
 
+
 class UnbindOtherOAuthResponse
 {
 
@@ -24017,12 +25057,12 @@ class UnbindOtherOAuthParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UnbindOtherOAuthDocument,
             "operationName" => "unbindOtherOAuth",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24040,6 +25080,7 @@ mutation unbindOtherOAuth(\$type: String!, \$client: String, \$user: String) {
 }
 EOF;
 }
+
 
 class UpdateAdConnectorResponse
 {
@@ -24074,12 +25115,12 @@ class UpdateAdConnectorParam
      */
     public $logo;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateAdConnectorDocument,
             "operationName" => "updateAdConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24099,6 +25140,7 @@ mutation updateAdConnector(\$_id: String!, \$name: String, \$logo: String) {
 }
 EOF;
 }
+
 
 class UpdateClientWebhookResponse
 {
@@ -24161,12 +25203,12 @@ class UpdateClientWebhookParam
      */
     public $isLastTimeSuccess;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateClientWebhookDocument,
             "operationName" => "updateClientWebhook",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24189,6 +25231,7 @@ mutation updateClientWebhook(\$id: String!, \$events: [String!]!, \$url: String!
 }
 EOF;
 }
+
 
 class UpdateCollaboratorResponse
 {
@@ -24216,12 +25259,12 @@ class UpdateCollaboratorParam
      */
     public $permissionDescriptors;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateCollaboratorDocument,
             "operationName" => "updateCollaborator",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24356,6 +25399,7 @@ mutation updateCollaborator(\$collaborationId: String!, \$permissionDescriptors:
 EOF;
 }
 
+
 class UpdateEmailResponse
 {
 
@@ -24403,12 +25447,12 @@ class UpdateEmailParam
      */
     public $oldEmailCode;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateEmailDocument,
             "operationName" => "updateEmail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24473,6 +25517,7 @@ mutation updateEmail(\$userPoolId: String!, \$email: String!, \$emailCode: Strin
 EOF;
 }
 
+
 class UpdatePasswordStrengthSettingsByUserPoolIdResponse
 {
 
@@ -24499,12 +25544,12 @@ class UpdatePasswordStrengthSettingsByUserPoolIdParam
      */
     public $pwdStrength;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdatePasswordStrengthSettingsByUserPoolIdDocument,
             "operationName" => "updatePasswordStrengthSettingsByUserPoolId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24517,6 +25562,7 @@ mutation updatePasswordStrengthSettingsByUserPoolId(\$userPoolId: String!, \$pwd
 }
 EOF;
 }
+
 
 class UpdatePermissionsResponse
 {
@@ -24551,12 +25597,12 @@ class UpdatePermissionsParam
      */
     public $permissions;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdatePermissionsDocument,
             "operationName" => "updatePermissions",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24573,6 +25619,7 @@ mutation updatePermissions(\$role: String!, \$client: String!, \$permissions: St
 }
 EOF;
 }
+
 
 class UpdatePhoneResponse
 {
@@ -24621,12 +25668,12 @@ class UpdatePhoneParam
      */
     public $oldPhoneCode;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdatePhoneDocument,
             "operationName" => "updatePhone",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24691,6 +25738,7 @@ mutation updatePhone(\$userPoolId: String!, \$phone: String!, \$phoneCode: Strin
 EOF;
 }
 
+
 class UpdateRbacGroupResponse
 {
 
@@ -24731,12 +25779,12 @@ class UpdateRbacGroupParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRbacGroupDocument,
             "operationName" => "updateRBACGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24763,6 +25811,7 @@ mutation updateRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$inpu
 EOF;
 }
 
+
 class UpdateRbacPermissionResponse
 {
 
@@ -24782,12 +25831,12 @@ class UpdateRbacPermissionParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRbacPermissionDocument,
             "operationName" => "updateRBACPermission",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24804,6 +25853,7 @@ mutation updateRBACPermission(\$input: UpdateRBACPermissionInput!) {
 }
 EOF;
 }
+
 
 class UpdateRbacRoleResponse
 {
@@ -24845,12 +25895,12 @@ class UpdateRbacRoleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRbacRoleDocument,
             "operationName" => "updateRBACRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24873,6 +25923,7 @@ mutation updateRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input
 }
 EOF;
 }
+
 
 class UpdateRoleResponse
 {
@@ -24921,12 +25972,12 @@ class UpdateRoleParam
      */
     public $permissions;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRoleDocument,
             "operationName" => "updateRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24943,6 +25994,7 @@ mutation updateRole(\$_id: String!, \$client: String!, \$name: String!, \$descri
 }
 EOF;
 }
+
 
 class UpdateRuleResponse
 {
@@ -24963,12 +26015,12 @@ class UpdateRuleParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRuleDocument,
             "operationName" => "updateRule",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -24992,6 +26044,7 @@ mutation updateRule(\$input: UpdateRuleInput!) {
 EOF;
 }
 
+
 class UpdateRuleOrderResponse
 {
 
@@ -25011,12 +26064,12 @@ class UpdateRuleOrderParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateRuleOrderDocument,
             "operationName" => "updateRuleOrder",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25030,6 +26083,7 @@ mutation updateRuleOrder(\$input: UpdateRuleOrderInput!) {
 }
 EOF;
 }
+
 
 class UpdateSuperAdminUserResponse
 {
@@ -25050,12 +26104,12 @@ class UpdateSuperAdminUserParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateSuperAdminUserDocument,
             "operationName" => "updateSuperAdminUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25070,6 +26124,7 @@ mutation updateSuperAdminUser(\$options: SuperAdminUpdateInput!) {
 }
 EOF;
 }
+
 
 class UpdateUserResponse
 {
@@ -25090,12 +26145,12 @@ class UpdateUserParam
      */
     public $options;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateUserDocument,
             "operationName" => "updateUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25160,6 +26215,7 @@ mutation updateUser(\$options: UserUpdateInput!) {
 EOF;
 }
 
+
 class UpdateUserClientResponse
 {
 
@@ -25179,12 +26235,12 @@ class UpdateUserClientParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UpdateUserClientDocument,
             "operationName" => "updateUserClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25302,6 +26358,7 @@ mutation updateUserClient(\$client: UpdateUserClientInput!) {
 EOF;
 }
 
+
 class VerifyResetPasswordVerifyCodeResponse
 {
 
@@ -25335,12 +26392,12 @@ class VerifyResetPasswordVerifyCodeParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::VerifyResetPasswordVerifyCodeDocument,
             "operationName" => "verifyResetPasswordVerifyCode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25354,6 +26411,7 @@ mutation verifyResetPasswordVerifyCode(\$verifyCode: String!, \$email: String!, 
 }
 EOF;
 }
+
 
 class GetOidcAppInfoResponse
 {
@@ -25374,12 +26432,12 @@ class GetOidcAppInfoParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetOidcAppInfoDocument,
             "operationName" => "GetOIDCAppInfo",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25439,6 +26497,7 @@ query GetOIDCAppInfo(\$appId: String!) {
 EOF;
 }
 
+
 class GetOidcAppListResponse
 {
 
@@ -25472,12 +26531,12 @@ class GetOidcAppListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetOidcAppListDocument,
             "operationName" => "GetOIDCAppList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25528,6 +26587,7 @@ query GetOIDCAppList(\$clientId: String, \$page: Int, \$count: Int) {
 EOF;
 }
 
+
 class GetSamlIdentityProviderInfoResponse
 {
 
@@ -25547,12 +26607,12 @@ class GetSamlIdentityProviderInfoParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetSamlIdentityProviderInfoDocument,
             "operationName" => "GetSAMLIdentityProviderInfo",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25596,6 +26656,7 @@ query GetSAMLIdentityProviderInfo(\$appId: String!) {
 EOF;
 }
 
+
 class GetSamlIdentityProviderListResponse
 {
 
@@ -25629,12 +26690,12 @@ class GetSamlIdentityProviderListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetSamlIdentityProviderListDocument,
             "operationName" => "GetSAMLIdentityProviderList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25681,6 +26742,7 @@ query GetSAMLIdentityProviderList(\$clientId: String, \$page: Int, \$count: Int)
 EOF;
 }
 
+
 class GetSamlServiceProviderInfoResponse
 {
 
@@ -25700,12 +26762,12 @@ class GetSamlServiceProviderInfoParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetSamlServiceProviderInfoDocument,
             "operationName" => "GetSAMLServiceProviderInfo",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25771,6 +26833,7 @@ query GetSAMLServiceProviderInfo(\$appId: String!) {
 EOF;
 }
 
+
 class GetSamlServiceProviderListResponse
 {
 
@@ -25804,12 +26867,12 @@ class GetSamlServiceProviderListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetSamlServiceProviderListDocument,
             "operationName" => "GetSAMLServiceProviderList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25858,6 +26921,7 @@ query GetSAMLServiceProviderList(\$clientId: String, \$page: Int, \$count: Int) 
 EOF;
 }
 
+
 class GetUserAuthorizedAppsResponse
 {
 
@@ -25898,12 +26962,12 @@ class GetUserAuthorizedAppsParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetUserAuthorizedAppsDocument,
             "operationName" => "GetUserAuthorizedApps",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -25972,6 +27036,7 @@ query GetUserAuthorizedApps(\$clientId: String, \$userId: String, \$page: Int, \
 EOF;
 }
 
+
 class PreviewEmailByTypeResponse
 {
 
@@ -26005,12 +27070,12 @@ class PreviewEmailByTypeParam
      */
     public $meta_data;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::PreviewEmailByTypeDocument,
             "operationName" => "PreviewEmailByType",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26020,6 +27085,7 @@ query PreviewEmailByType(\$type: String!, \$client: String!, \$meta_data: String
 }
 EOF;
 }
+
 
 class QueryAppInfoByAppIdResponse
 {
@@ -26054,12 +27120,12 @@ class QueryAppInfoByAppIdParam
      */
     public $redirectUrl;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryAppInfoByAppIdDocument,
             "operationName" => "QueryAppInfoByAppID",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26087,6 +27153,7 @@ query QueryAppInfoByAppID(\$appId: String, \$responseType: String, \$redirectUrl
 EOF;
 }
 
+
 class QueryAppInfoByDomainResponse
 {
 
@@ -26106,12 +27173,12 @@ class QueryAppInfoByDomainParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryAppInfoByDomainDocument,
             "operationName" => "QueryAppInfoByDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26139,6 +27206,7 @@ query QueryAppInfoByDomain(\$domain: String) {
 EOF;
 }
 
+
 class QueryClientHasLdapConfigsResponse
 {
 
@@ -26158,12 +27226,12 @@ class QueryClientHasLdapConfigsParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryClientHasLdapConfigsDocument,
             "operationName" => "QueryClientHasLDAPConfigs",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26175,6 +27243,7 @@ query QueryClientHasLDAPConfigs(\$clientId: String) {
 }
 EOF;
 }
+
 
 class QueryClientIdByAppIdResponse
 {
@@ -26195,12 +27264,12 @@ class QueryClientIdByAppIdParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryClientIdByAppIdDocument,
             "operationName" => "QueryClientIdByAppId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26228,6 +27297,7 @@ query QueryClientIdByAppId(\$appId: String) {
 EOF;
 }
 
+
 class QueryDefaultSamlIdentityProviderSettingsListResponse
 {
 
@@ -26254,12 +27324,12 @@ class QueryDefaultSamlIdentityProviderSettingsListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryDefaultSamlIdentityProviderSettingsListDocument,
             "operationName" => "QueryDefaultSAMLIdentityProviderSettingsList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26278,6 +27348,7 @@ query QueryDefaultSAMLIdentityProviderSettingsList(\$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class QueryLdapServerListResponse
 {
@@ -26312,12 +27383,12 @@ class QueryLdapServerListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryLdapServerListDocument,
             "operationName" => "QueryLDAPServerList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26346,6 +27417,7 @@ query QueryLDAPServerList(\$clientId: String!, \$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class QueryOidcAppInfoByAppIdResponse
 {
@@ -26380,12 +27452,12 @@ class QueryOidcAppInfoByAppIdParam
      */
     public $redirectUrl;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryOidcAppInfoByAppIdDocument,
             "operationName" => "QueryOIDCAppInfoByAppID",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26445,6 +27517,7 @@ query QueryOIDCAppInfoByAppID(\$appId: String, \$responseType: String, \$redirec
 EOF;
 }
 
+
 class QueryOidcAppInfoByDomainResponse
 {
 
@@ -26464,12 +27537,12 @@ class QueryOidcAppInfoByDomainParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryOidcAppInfoByDomainDocument,
             "operationName" => "QueryOIDCAppInfoByDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26529,6 +27602,7 @@ query QueryOIDCAppInfoByDomain(\$domain: String) {
 EOF;
 }
 
+
 class QuerySamlIdentityProviderInfoByAppIdResponse
 {
 
@@ -26548,12 +27622,12 @@ class QuerySamlIdentityProviderInfoByAppIdParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QuerySamlIdentityProviderInfoByAppIdDocument,
             "operationName" => "QuerySAMLIdentityProviderInfoByAppID",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26597,6 +27671,7 @@ query QuerySAMLIdentityProviderInfoByAppID(\$appId: String) {
 EOF;
 }
 
+
 class QuerySamlIdentityProviderInfoByDomainResponse
 {
 
@@ -26616,12 +27691,12 @@ class QuerySamlIdentityProviderInfoByDomainParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QuerySamlIdentityProviderInfoByDomainDocument,
             "operationName" => "QuerySAMLIdentityProviderInfoByDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26665,6 +27740,7 @@ query QuerySAMLIdentityProviderInfoByDomain(\$domain: String) {
 EOF;
 }
 
+
 class QuerySamlServiceProviderInfoByAppIdResponse
 {
 
@@ -26684,12 +27760,12 @@ class QuerySamlServiceProviderInfoByAppIdParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QuerySamlServiceProviderInfoByAppIdDocument,
             "operationName" => "QuerySAMLServiceProviderInfoByAppID",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26755,6 +27831,7 @@ query QuerySAMLServiceProviderInfoByAppID(\$appId: String!) {
 EOF;
 }
 
+
 class QuerySamlServiceProviderInfoByDomainResponse
 {
 
@@ -26774,12 +27851,12 @@ class QuerySamlServiceProviderInfoByDomainParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QuerySamlServiceProviderInfoByDomainDocument,
             "operationName" => "QuerySAMLServiceProviderInfoByDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26845,6 +27922,7 @@ query QuerySAMLServiceProviderInfoByDomain(\$domain: String!) {
 EOF;
 }
 
+
 class ReadEmailProviderResponse
 {
 
@@ -26864,12 +27942,12 @@ class ReadEmailProviderParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailProviderDocument,
             "operationName" => "ReadEmailProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26905,6 +27983,7 @@ query ReadEmailProvider(\$clientId: String) {
 EOF;
 }
 
+
 class ReadEmailProviderByClientAndNameResponse
 {
 
@@ -26924,12 +28003,12 @@ class ReadEmailProviderByClientAndNameParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailProviderByClientAndNameDocument,
             "operationName" => "ReadEmailProviderByClientAndName",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -26959,6 +28038,7 @@ query ReadEmailProviderByClientAndName(\$clientId: String) {
 EOF;
 }
 
+
 class ReadEmailProviderWithClientResponse
 {
 
@@ -26971,12 +28051,13 @@ class ReadEmailProviderWithClientResponse
 class ReadEmailProviderWithClientParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailProviderWithClientDocument,
             "operationName" => "ReadEmailProviderWithClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27005,6 +28086,7 @@ query ReadEmailProviderWithClient {
 }
 EOF;
 }
+
 
 class ReadEmailSentListResponse
 {
@@ -27039,12 +28121,12 @@ class ReadEmailSentListParam
      */
     public $sortBy;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailSentListDocument,
             "operationName" => "ReadEmailSentList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27064,6 +28146,7 @@ query ReadEmailSentList(\$page: Int, \$count: Int, \$sortBy: String) {
 }
 EOF;
 }
+
 
 class ReadEmailSentListByClientResponse
 {
@@ -27098,12 +28181,12 @@ class ReadEmailSentListByClientParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailSentListByClientDocument,
             "operationName" => "ReadEmailSentListByClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27128,6 +28211,7 @@ query ReadEmailSentListByClient(\$client: String!, \$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class ReadEmailTemplateByClientAndTypeResponse
 {
@@ -27155,12 +28239,12 @@ class ReadEmailTemplateByClientAndTypeParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailTemplateByClientAndTypeDocument,
             "operationName" => "ReadEmailTemplateByClientAndType",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27181,6 +28265,7 @@ query ReadEmailTemplateByClientAndType(\$type: String!, \$client: String!) {
 EOF;
 }
 
+
 class ReadEmailTemplatesByClientResponse
 {
 
@@ -27200,12 +28285,12 @@ class ReadEmailTemplatesByClientParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailTemplatesByClientDocument,
             "operationName" => "ReadEmailTemplatesByClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27239,6 +28324,7 @@ query ReadEmailTemplatesByClient(\$clientId: String!) {
 EOF;
 }
 
+
 class ReadEmailTemplatesBySystemResponse
 {
 
@@ -27251,12 +28337,13 @@ class ReadEmailTemplatesBySystemResponse
 class ReadEmailTemplatesBySystemParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::ReadEmailTemplatesBySystemDocument,
             "operationName" => "ReadEmailTemplatesBySystem",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27289,6 +28376,7 @@ query ReadEmailTemplatesBySystem {
 }
 EOF;
 }
+
 
 class ReadOauthListResponse
 {
@@ -27323,12 +28411,12 @@ class ReadOauthListParam
      */
     public $useGuard;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadOauthListDocument,
             "operationName" => "ReadOauthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27371,6 +28459,7 @@ query ReadOauthList(\$clientId: String, \$dontGetURL: Boolean, \$useGuard: Boole
 EOF;
 }
 
+
 class ReadOrdersResponse
 {
 
@@ -27404,12 +28493,12 @@ class ReadOrdersParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadOrdersDocument,
             "operationName" => "ReadOrders",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27434,6 +28523,7 @@ query ReadOrders(\$user: String, \$page: Int, \$count: Int) {
 EOF;
 }
 
+
 class ReadSamlspListResponse
 {
 
@@ -27453,12 +28543,12 @@ class ReadSamlspListParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadSamlspListDocument,
             "operationName" => "ReadSAMLSPList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27473,6 +28563,7 @@ query ReadSAMLSPList(\$clientId: String!) {
 EOF;
 }
 
+
 class ReadSystemPricingResponse
 {
 
@@ -27485,12 +28576,13 @@ class ReadSystemPricingResponse
 class ReadSystemPricingParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::ReadSystemPricingDocument,
             "operationName" => "ReadSystemPricing",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27509,6 +28601,7 @@ query ReadSystemPricing {
 }
 EOF;
 }
+
 
 class ReadUserPricingResponse
 {
@@ -27536,12 +28629,12 @@ class ReadUserPricingParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ReadUserPricingDocument,
             "operationName" => "ReadUserPricing",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27559,6 +28652,7 @@ query ReadUserPricing(\$userId: String, \$clientId: String) {
 }
 EOF;
 }
+
 
 class TestLdapServerResponse
 {
@@ -27649,12 +28743,12 @@ class TestLdapServerParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::TestLdapServerDocument,
             "operationName" => "TestLDAPServer",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27666,6 +28760,7 @@ query TestLDAPServer(\$name: String!, \$clientId: String!, \$userId: String!, \$
 }
 EOF;
 }
+
 
 class TestLdapUserResponse
 {
@@ -27770,12 +28865,12 @@ class TestLdapUserParam
      */
     public $enabled;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::TestLdapUserDocument,
             "operationName" => "TestLDAPUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27787,6 +28882,7 @@ query TestLDAPUser(\$testUsername: String!, \$testPassword: String!, \$name: Str
 }
 EOF;
 }
+
 
 class AdConnectorByProviderResponse
 {
@@ -27814,12 +28910,12 @@ class AdConnectorByProviderParam
      */
     public $providerType;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AdConnectorByProviderDocument,
             "operationName" => "adConnectorByProvider",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27834,6 +28930,7 @@ query adConnectorByProvider(\$providerId: String!, \$providerType: providerType!
 }
 EOF;
 }
+
 
 class AdConnectorListResponse
 {
@@ -27861,12 +28958,12 @@ class AdConnectorListParam
      */
     public $providerType;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::AdConnectorListDocument,
             "operationName" => "adConnectorList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27886,6 +28983,7 @@ query adConnectorList(\$userPoolId: String!, \$providerType: providerType) {
 }
 EOF;
 }
+
 
 class BindedOAuthListResponse
 {
@@ -27913,12 +29011,12 @@ class BindedOAuthListParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::BindedOAuthListDocument,
             "operationName" => "bindedOAuthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27936,6 +29034,7 @@ query bindedOAuthList(\$client: String!, \$user: String) {
 }
 EOF;
 }
+
 
 class CheckAdConnectorStatusResponse
 {
@@ -27956,12 +29055,12 @@ class CheckAdConnectorStatusParam
      */
     public $adConnectorId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CheckAdConnectorStatusDocument,
             "operationName" => "checkAdConnectorStatus",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -27971,6 +29070,7 @@ query checkAdConnectorStatus(\$adConnectorId: String!) {
 }
 EOF;
 }
+
 
 class CheckIsReservedDomainResponse
 {
@@ -27991,12 +29091,12 @@ class CheckIsReservedDomainParam
      */
     public $domainValue;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CheckIsReservedDomainDocument,
             "operationName" => "checkIsReservedDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28009,6 +29109,7 @@ query checkIsReservedDomain(\$domainValue: String!) {
 }
 EOF;
 }
+
 
 class CheckLoginStatusResponse
 {
@@ -28029,12 +29130,12 @@ class CheckLoginStatusParam
      */
     public $token;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CheckLoginStatusDocument,
             "operationName" => "checkLoginStatus",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28052,6 +29153,7 @@ query checkLoginStatus(\$token: String) {
 }
 EOF;
 }
+
 
 class CheckPhoneCodeResponse
 {
@@ -28086,12 +29188,12 @@ class CheckPhoneCodeParam
      */
     public $phoneCode;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::CheckPhoneCodeDocument,
             "operationName" => "checkPhoneCode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28105,6 +29207,7 @@ query checkPhoneCode(\$userPoolId: String!, \$phone: String!, \$phoneCode: Strin
 }
 EOF;
 }
+
 
 class ClientResponse
 {
@@ -28126,7 +29229,7 @@ class ClientParam
     public $id;
 
     /**
-     * Required
+     * Optional
      *
      * @var string
      */
@@ -28139,17 +29242,17 @@ class ClientParam
      */
     public $fromAdmin;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ClientDocument,
             "operationName" => "client",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
     const ClientDocument = <<<EOF
-query client(\$id: String!, \$userId: String!, \$fromAdmin: Boolean) {
+query client(\$id: String!, \$userId: String, \$fromAdmin: Boolean) {
   client(id: \$id, userId: \$userId, fromAdmin: \$fromAdmin) {
     _id
     user {
@@ -28262,6 +29365,7 @@ query client(\$id: String!, \$userId: String!, \$fromAdmin: Boolean) {
 EOF;
 }
 
+
 class ClientRolesResponse
 {
 
@@ -28295,12 +29399,12 @@ class ClientRolesParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ClientRolesDocument,
             "operationName" => "clientRoles",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28321,6 +29425,7 @@ query clientRoles(\$client: String!, \$page: Int, \$count: Int) {
 EOF;
 }
 
+
 class DecodeJwtTokenResponse
 {
 
@@ -28340,12 +29445,12 @@ class DecodeJwtTokenParam
      */
     public $token;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::DecodeJwtTokenDocument,
             "operationName" => "decodeJwtToken",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28370,6 +29475,7 @@ query decodeJwtToken(\$token: String) {
 EOF;
 }
 
+
 class EmailDomainTopNListResponse
 {
 
@@ -28389,12 +29495,12 @@ class EmailDomainTopNListParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::EmailDomainTopNListDocument,
             "operationName" => "emailDomainTopNList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28407,6 +29513,7 @@ query emailDomainTopNList(\$userPoolId: String!) {
 }
 EOF;
 }
+
 
 class FindClientsByIdArrayResponse
 {
@@ -28427,12 +29534,12 @@ class FindClientsByIdArrayParam
      */
     public $clientsId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::FindClientsByIdArrayDocument,
             "operationName" => "findClientsByIdArray",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28450,6 +29557,7 @@ query findClientsByIdArray(\$clientsId: [String]) {
 }
 EOF;
 }
+
 
 class GetAccessTokenByAppSecretResponse
 {
@@ -28505,12 +29613,12 @@ class GetAccessTokenByAppSecretParam
      */
     public $nonce;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetAccessTokenByAppSecretDocument,
             "operationName" => "getAccessTokenByAppSecret",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28520,6 +29628,7 @@ query getAccessTokenByAppSecret(\$secret: String, \$clientId: String, \$retUserI
 }
 EOF;
 }
+
 
 class GetAllWebhooksResponse
 {
@@ -28540,12 +29649,12 @@ class GetAllWebhooksParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetAllWebhooksDocument,
             "operationName" => "getAllWebhooks",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28568,6 +29677,7 @@ query getAllWebhooks(\$client: String!) {
 }
 EOF;
 }
+
 
 class GetAppSecretByClientIdResponse
 {
@@ -28595,12 +29705,12 @@ class GetAppSecretByClientIdParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetAppSecretByClientIdDocument,
             "operationName" => "getAppSecretByClientId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28613,6 +29723,7 @@ query getAppSecretByClientId(\$token: String, \$clientId: String) {
 }
 EOF;
 }
+
 
 class GetClientWhenSdkInitResponse
 {
@@ -28668,12 +29779,12 @@ class GetClientWhenSdkInitParam
      */
     public $nonce;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetClientWhenSdkInitDocument,
             "operationName" => "getClientWhenSdkInit",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28705,6 +29816,7 @@ query getClientWhenSdkInit(\$secret: String, \$clientId: String, \$retUserId: Bo
 }
 EOF;
 }
+
 
 class GetCustomMfaResponse
 {
@@ -28739,12 +29851,12 @@ class GetCustomMfaParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetCustomMfaDocument,
             "operationName" => "getCustomMFA",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28763,6 +29875,7 @@ query getCustomMFA(\$userIdInMiniLogin: String!, \$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class GetOAuthedAppInfoResponse
 {
@@ -28783,12 +29896,12 @@ class GetOAuthedAppInfoParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetOAuthedAppInfoDocument,
             "operationName" => "getOAuthedAppInfo",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28815,6 +29928,7 @@ query getOAuthedAppInfo(\$appId: String!) {
 }
 EOF;
 }
+
 
 class GetOAuthedAppListResponse
 {
@@ -28849,12 +29963,12 @@ class GetOAuthedAppListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetOAuthedAppListDocument,
             "operationName" => "getOAuthedAppList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28884,6 +29998,7 @@ query getOAuthedAppList(\$clientId: String, \$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class GetUserLoginAreaStatisticOfClientResponse
 {
@@ -28918,12 +30033,12 @@ class GetUserLoginAreaStatisticOfClientParam
      */
     public $end;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetUserLoginAreaStatisticOfClientDocument,
             "operationName" => "getUserLoginAreaStatisticOfClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -28933,6 +30048,7 @@ query getUserLoginAreaStatisticOfClient(\$userPool: String!, \$start: String, \$
 }
 EOF;
 }
+
 
 class GetUserPoolSettingsResponse
 {
@@ -28953,12 +30069,12 @@ class GetUserPoolSettingsParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetUserPoolSettingsDocument,
             "operationName" => "getUserPoolSettings",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29076,6 +30192,7 @@ query getUserPoolSettings(\$userPoolId: String!) {
 EOF;
 }
 
+
 class GetWebhookDetailResponse
 {
 
@@ -29095,12 +30212,12 @@ class GetWebhookDetailParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetWebhookDetailDocument,
             "operationName" => "getWebhookDetail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29124,6 +30241,7 @@ query getWebhookDetail(\$client: String!) {
 EOF;
 }
 
+
 class GetWebhookLogDetailResponse
 {
 
@@ -29143,12 +30261,12 @@ class GetWebhookLogDetailParam
      */
     public $id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetWebhookLogDetailDocument,
             "operationName" => "getWebhookLogDetail",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29175,6 +30293,7 @@ query getWebhookLogDetail(\$id: String!) {
 EOF;
 }
 
+
 class GetWebhookLogsResponse
 {
 
@@ -29194,12 +30313,12 @@ class GetWebhookLogsParam
      */
     public $webhook;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::GetWebhookLogsDocument,
             "operationName" => "getWebhookLogs",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29226,6 +30345,7 @@ query getWebhookLogs(\$webhook: String!) {
 EOF;
 }
 
+
 class GetWebhookSettingOptionsResponse
 {
 
@@ -29238,12 +30358,13 @@ class GetWebhookSettingOptionsResponse
 class GetWebhookSettingOptionsParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::GetWebhookSettingOptionsDocument,
             "operationName" => "getWebhookSettingOptions",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29264,6 +30385,50 @@ query getWebhookSettingOptions {
 EOF;
 }
 
+
+class InterConnectionsResponse
+{
+
+    /**
+     * @var InterConnection[]
+     */
+    public $interConnections;
+}
+
+class InterConnectionsParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userPoolId;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::InterConnectionsDocument,
+            "operationName" => "interConnections",
+            "variables" => $this
+        ];
+    }
+
+    const InterConnectionsDocument = <<<EOF
+query interConnections(\$userPoolId: String!) {
+  interConnections(userPoolId: \$userPoolId) {
+    sourceUserId
+    sourceUserPoolId
+    targetUserId
+    targetUserPoolId
+    enabled
+    expiresdAt
+  }
+}
+EOF;
+}
+
+
 class IsAdConnectorAliveResponse
 {
 
@@ -29283,12 +30448,12 @@ class IsAdConnectorAliveParam
      */
     public $adConnectorId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsAdConnectorAliveDocument,
             "operationName" => "isAdConnectorAlive",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29300,6 +30465,7 @@ query isAdConnectorAlive(\$adConnectorId: String) {
 }
 EOF;
 }
+
 
 class IsAppAuthorizedByUserResponse
 {
@@ -29327,12 +30493,12 @@ class IsAppAuthorizedByUserParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsAppAuthorizedByUserDocument,
             "operationName" => "isAppAuthorizedByUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29344,6 +30510,7 @@ query isAppAuthorizedByUser(\$userId: String, \$appId: String) {
 }
 EOF;
 }
+
 
 class IsClientBelongToUserResponse
 {
@@ -29378,12 +30545,12 @@ class IsClientBelongToUserParam
      */
     public $permissionDescriptors;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsClientBelongToUserDocument,
             "operationName" => "isClientBelongToUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29393,6 +30560,7 @@ query isClientBelongToUser(\$userId: String, \$clientId: String, \$permissionDes
 }
 EOF;
 }
+
 
 class IsClientOfUserResponse
 {
@@ -29427,12 +30595,12 @@ class IsClientOfUserParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsClientOfUserDocument,
             "operationName" => "isClientOfUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29442,6 +30610,7 @@ query isClientOfUser(\$email: String, \$password: String, \$clientId: String) {
 }
 EOF;
 }
+
 
 class IsDomainAvaliableResponse
 {
@@ -29462,12 +30631,12 @@ class IsDomainAvaliableParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsDomainAvaliableDocument,
             "operationName" => "isDomainAvaliable",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29477,6 +30646,7 @@ query isDomainAvaliable(\$domain: String!) {
 }
 EOF;
 }
+
 
 class IsLoginExpiredResponse
 {
@@ -29497,12 +30667,12 @@ class IsLoginExpiredParam
      */
     public $id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsLoginExpiredDocument,
             "operationName" => "isLoginExpired",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29512,6 +30682,7 @@ query isLoginExpired(\$id: String!) {
 }
 EOF;
 }
+
 
 class IsRootNodeOfOrgResponse
 {
@@ -29532,12 +30703,12 @@ class IsRootNodeOfOrgParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::IsRootNodeOfOrgDocument,
             "operationName" => "isRootNodeOfOrg",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29547,6 +30718,93 @@ query isRootNodeOfOrg(\$input: IsRootNodeOfOrgInput!) {
 }
 EOF;
 }
+
+
+class IsUserInGroupResponse
+{
+
+    /**
+     * @var bool
+     */
+    public $isUserInGroup;
+}
+
+class IsUserInGroupParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $groupId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userId;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::IsUserInGroupDocument,
+            "operationName" => "isUserInGroup",
+            "variables" => $this
+        ];
+    }
+
+    const IsUserInGroupDocument = <<<EOF
+query isUserInGroup(\$groupId: String!, \$userId: String!) {
+  isUserInGroup(groupId: \$groupId, userId: \$userId)
+}
+EOF;
+}
+
+
+class LoginBySecretResponse
+{
+
+    /**
+     * @var string
+     */
+    public $loginBySecret;
+}
+
+class LoginBySecretParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $clientId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $secret;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::LoginBySecretDocument,
+            "operationName" => "loginBySecret",
+            "variables" => $this
+        ];
+    }
+
+    const LoginBySecretDocument = <<<EOF
+query loginBySecret(\$clientId: String, \$secret: String) {
+  getAccessTokenByAppSecret(clientId: \$clientId, secret: \$secret)
+}
+EOF;
+}
+
 
 class LoginCountResponse
 {
@@ -29581,12 +30839,12 @@ class LoginCountParam
      */
     public $month;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::LoginCountDocument,
             "operationName" => "loginCount",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29603,6 +30861,7 @@ query loginCount(\$userId: String, \$clientId: String, \$month: String) {
 }
 EOF;
 }
+
 
 class LoginHotDotPicDataResponse
 {
@@ -29623,12 +30882,12 @@ class LoginHotDotPicDataParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::LoginHotDotPicDataDocument,
             "operationName" => "loginHotDotPicData",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29640,6 +30899,7 @@ query loginHotDotPicData(\$client: String) {
 }
 EOF;
 }
+
 
 class NotBindOAuthListResponse
 {
@@ -29667,12 +30927,12 @@ class NotBindOAuthListParam
      */
     public $user;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::NotBindOAuthListDocument,
             "operationName" => "notBindOAuthList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29688,6 +30948,7 @@ query notBindOAuthList(\$client: String, \$user: String) {
 }
 EOF;
 }
+
 
 class OrgResponse
 {
@@ -29708,12 +30969,12 @@ class OrgParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrgDocument,
             "operationName" => "org",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29735,6 +30996,7 @@ query org(\$_id: String!) {
 EOF;
 }
 
+
 class OrgChildrenNodesResponse
 {
 
@@ -29754,12 +31016,12 @@ class OrgChildrenNodesParam
      */
     public $input;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrgChildrenNodesDocument,
             "operationName" => "orgChildrenNodes",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29779,6 +31041,7 @@ query orgChildrenNodes(\$input: OrgChildrenNodesInput!) {
 }
 EOF;
 }
+
 
 class OrgNodeUserListResponse
 {
@@ -29827,12 +31090,12 @@ class OrgNodeUserListParam
      */
     public $includeChildrenNodes;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrgNodeUserListDocument,
             "operationName" => "orgNodeUserList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29893,6 +31156,7 @@ query orgNodeUserList(\$orgId: String!, \$nodeId: String!, \$page: Int, \$count:
 EOF;
 }
 
+
 class OrgRootNodeResponse
 {
 
@@ -29933,12 +31197,12 @@ class OrgRootNodeParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrgRootNodeDocument,
             "operationName" => "orgRootNode",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29965,6 +31229,7 @@ query orgRootNode(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$_id: String
 EOF;
 }
 
+
 class OrgsResponse
 {
 
@@ -29984,12 +31249,12 @@ class OrgsParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::OrgsDocument,
             "operationName" => "orgs",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -29999,11 +31264,22 @@ query orgs(\$userPoolId: String!) {
     totalCount
     list {
       _id
+      logo
+      nodes {
+        _id
+        name
+        description
+        createdAt
+        updatedAt
+        children
+        root
+      }
     }
   }
 }
 EOF;
 }
+
 
 class PlatformUserGrowthTrendResponse
 {
@@ -30024,12 +31300,12 @@ class PlatformUserGrowthTrendParam
      */
     public $today;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::PlatformUserGrowthTrendDocument,
             "operationName" => "platformUserGrowthTrend",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30042,6 +31318,7 @@ query platformUserGrowthTrend(\$today: String) {
 }
 EOF;
 }
+
 
 class PreviewEmailTemplateResponse
 {
@@ -30069,12 +31346,12 @@ class PreviewEmailTemplateParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::PreviewEmailTemplateDocument,
             "operationName" => "previewEmailTemplate",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30088,6 +31365,7 @@ query previewEmailTemplate(\$type: String, \$client: String) {
 }
 EOF;
 }
+
 
 class ProviderListByAdConnectorResponse
 {
@@ -30108,12 +31386,12 @@ class ProviderListByAdConnectorParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ProviderListByAdConnectorDocument,
             "operationName" => "providerListByADConnector",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30128,6 +31406,7 @@ query providerListByADConnector(\$_id: String!) {
 }
 EOF;
 }
+
 
 class QiNiuUploadTokenResponse
 {
@@ -30148,12 +31427,12 @@ class QiNiuUploadTokenParam
      */
     public $type;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QiNiuUploadTokenDocument,
             "operationName" => "qiNiuUploadToken",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30163,6 +31442,7 @@ query qiNiuUploadToken(\$type: String) {
 }
 EOF;
 }
+
 
 class QpsByTimeResponse
 {
@@ -30197,12 +31477,12 @@ class QpsByTimeParam
      */
     public $currentTime;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QpsByTimeDocument,
             "operationName" => "qpsByTime",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30215,6 +31495,7 @@ query qpsByTime(\$startTime: String, \$endTime: String, \$currentTime: String) {
 }
 EOF;
 }
+
 
 class QueryAuthAuditRecordsResponse
 {
@@ -30256,12 +31537,12 @@ class QueryAuthAuditRecordsParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryAuthAuditRecordsDocument,
             "operationName" => "queryAuthAuditRecords",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30281,6 +31562,7 @@ query queryAuthAuditRecords(\$userPoolId: String!, \$sortBy: String, \$page: Int
 }
 EOF;
 }
+
 
 class QueryAuthorizedUserPoolResponse
 {
@@ -30329,12 +31611,12 @@ class QueryAuthorizedUserPoolParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryAuthorizedUserPoolDocument,
             "operationName" => "queryAuthorizedUserPool",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30349,6 +31631,7 @@ query queryAuthorizedUserPool(\$unionid: String, \$phone: String, \$openid: Stri
 }
 EOF;
 }
+
 
 class QueryClientResponse
 {
@@ -30369,12 +31652,12 @@ class QueryClientParam
      */
     public $id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryClientDocument,
             "operationName" => "queryClient",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30492,6 +31775,7 @@ query queryClient(\$id: String!) {
 EOF;
 }
 
+
 class QueryCollaborationByUserPoolIdAndUserIdResponse
 {
 
@@ -30518,12 +31802,12 @@ class QueryCollaborationByUserPoolIdAndUserIdParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryCollaborationByUserPoolIdAndUserIdDocument,
             "operationName" => "queryCollaborationByUserPoolIdAndUserId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30658,6 +31942,7 @@ query queryCollaborationByUserPoolIdAndUserId(\$userId: String!, \$userPoolId: S
 EOF;
 }
 
+
 class QueryCollaborativeUserPoolByUserIdResponse
 {
 
@@ -30691,12 +31976,12 @@ class QueryCollaborativeUserPoolByUserIdParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryCollaborativeUserPoolByUserIdDocument,
             "operationName" => "queryCollaborativeUserPoolByUserId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30712,6 +31997,7 @@ query queryCollaborativeUserPoolByUserId(\$userId: String!, \$page: Int, \$count
 }
 EOF;
 }
+
 
 class QueryCollaboratorPermissionsResponse
 {
@@ -30739,12 +32025,12 @@ class QueryCollaboratorPermissionsParam
      */
     public $collaborationId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryCollaboratorPermissionsDocument,
             "operationName" => "queryCollaboratorPermissions",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30809,6 +32095,7 @@ query queryCollaboratorPermissions(\$userId: String, \$collaborationId: String) 
 EOF;
 }
 
+
 class QueryCollaboratorsByUserPoolIdResponse
 {
 
@@ -30842,12 +32129,12 @@ class QueryCollaboratorsByUserPoolIdParam
      */
     public $page;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryCollaboratorsByUserPoolIdDocument,
             "operationName" => "queryCollaboratorsByUserPoolId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30863,6 +32150,7 @@ query queryCollaboratorsByUserPoolId(\$userPoolId: String!, \$count: Int, \$page
 }
 EOF;
 }
+
 
 class QueryInvitationResponse
 {
@@ -30883,12 +32171,12 @@ class QueryInvitationParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryInvitationDocument,
             "operationName" => "queryInvitation",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30904,6 +32192,7 @@ query queryInvitation(\$client: String!) {
 }
 EOF;
 }
+
 
 class QueryInvitationStateResponse
 {
@@ -30924,12 +32213,12 @@ class QueryInvitationStateParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryInvitationStateDocument,
             "operationName" => "queryInvitationState",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30944,6 +32233,7 @@ query queryInvitationState(\$client: String!) {
 }
 EOF;
 }
+
 
 class QueryMfaResponse
 {
@@ -30978,12 +32268,12 @@ class QueryMfaParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryMfaDocument,
             "operationName" => "queryMFA",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -30999,6 +32289,7 @@ query queryMFA(\$_id: String, \$userId: String, \$userPoolId: String) {
 }
 EOF;
 }
+
 
 class QueryOperationLogsResponse
 {
@@ -31040,12 +32331,12 @@ class QueryOperationLogsParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryOperationLogsDocument,
             "operationName" => "queryOperationLogs",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31072,6 +32363,7 @@ query queryOperationLogs(\$userPoolId: String!, \$coll: String!, \$page: Int, \$
 EOF;
 }
 
+
 class QueryPasswordFaasEnabledResponse
 {
 
@@ -31091,12 +32383,12 @@ class QueryPasswordFaasEnabledParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryPasswordFaasEnabledDocument,
             "operationName" => "queryPasswordFaasEnabled",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31115,6 +32407,7 @@ query queryPasswordFaasEnabled(\$client: String!) {
 }
 EOF;
 }
+
 
 class QueryPasswordStrengthSettingsByUserPoolIdResponse
 {
@@ -31135,12 +32428,12 @@ class QueryPasswordStrengthSettingsByUserPoolIdParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryPasswordStrengthSettingsByUserPoolIdDocument,
             "operationName" => "queryPasswordStrengthSettingsByUserPoolId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31154,6 +32447,7 @@ query queryPasswordStrengthSettingsByUserPoolId(\$userPoolId: String!) {
 EOF;
 }
 
+
 class QueryPermissionListResponse
 {
 
@@ -31166,12 +32460,13 @@ class QueryPermissionListResponse
 class QueryPermissionListParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::QueryPermissionListDocument,
             "operationName" => "queryPermissionList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31189,6 +32484,7 @@ query queryPermissionList {
 }
 EOF;
 }
+
 
 class QueryProviderInfoByAppIdResponse
 {
@@ -31209,12 +32505,12 @@ class QueryProviderInfoByAppIdParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryProviderInfoByAppIdDocument,
             "operationName" => "queryProviderInfoByAppId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31235,6 +32531,7 @@ query queryProviderInfoByAppId(\$appId: String) {
 EOF;
 }
 
+
 class QueryProviderInfoByDomainResponse
 {
 
@@ -31254,12 +32551,12 @@ class QueryProviderInfoByDomainParam
      */
     public $domain;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryProviderInfoByDomainDocument,
             "operationName" => "queryProviderInfoByDomain",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31279,6 +32576,92 @@ query queryProviderInfoByDomain(\$domain: String) {
 }
 EOF;
 }
+
+
+class QueryRbacGroupUserListResponse
+{
+
+    /**
+     * @var RBACGroup
+     */
+    public $QueryRBACGroupUserList;
+}
+
+class QueryRbacGroupUserListParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $_id;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $count;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::QueryRbacGroupUserListDocument,
+            "operationName" => "QueryRBACGroupUserList",
+            "variables" => $this
+        ];
+    }
+
+    const QueryRbacGroupUserListDocument = <<<EOF
+query QueryRBACGroupUserList(\$_id: String!, \$sortBy: SortByEnum = CREATEDAT_DESC, \$page: Int = 0, \$count: Int = 10) {
+  rbacGroup(_id: \$_id) {
+    users(sortBy: \$sortBy, page: \$page, count: \$count) {
+      totalCount
+      list {
+        _id
+        unionid
+        email
+        emailVerified
+        username
+        nickname
+        company
+        photo
+        phone
+        browser
+        registerInClient
+        registerMethod
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        metadata
+      }
+    }
+  }
+}
+EOF;
+}
+
 
 class QueryRoleByUserIdResponse
 {
@@ -31306,12 +32689,12 @@ class QueryRoleByUserIdParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryRoleByUserIdDocument,
             "operationName" => "queryRoleByUserId",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31327,6 +32710,7 @@ query queryRoleByUserId(\$user: String!, \$client: String!) {
 }
 EOF;
 }
+
 
 class QuerySmsSendCountResponse
 {
@@ -31347,12 +32731,12 @@ class QuerySmsSendCountParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QuerySmsSendCountDocument,
             "operationName" => "querySMSSendCount",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31366,6 +32750,7 @@ query querySMSSendCount(\$userPoolId: String!) {
 EOF;
 }
 
+
 class QuerySystemOAuthSettingResponse
 {
 
@@ -31378,12 +32763,13 @@ class QuerySystemOAuthSettingResponse
 class QuerySystemOAuthSettingParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::QuerySystemOAuthSettingDocument,
             "operationName" => "querySystemOAuthSetting",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31426,6 +32812,7 @@ query querySystemOAuthSetting {
 EOF;
 }
 
+
 class QueryUserPoolCommonInfoResponse
 {
 
@@ -31445,12 +32832,12 @@ class QueryUserPoolCommonInfoParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::QueryUserPoolCommonInfoDocument,
             "operationName" => "queryUserPoolCommonInfo",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31469,77 +32856,6 @@ query queryUserPoolCommonInfo(\$userPoolId: String!) {
 EOF;
 }
 
-class RbacGroupResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $rbacGroup;
-}
-
-class RbacGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    public function createRequest()
-    {
-        return [
-            "query" => self::RbacGroupDocument,
-            "operationName" => "rbacGroup",
-            "variables" => $this,
-        ];
-    }
-
-    const RbacGroupDocument = <<<EOF
-query rbacGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$_id: String!) {
-  rbacGroup(_id: \$_id) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
 
 class RbacGroupListResponse
 {
@@ -31581,12 +32897,12 @@ class RbacGroupListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RbacGroupListDocument,
             "operationName" => "rbacGroupList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31607,6 +32923,7 @@ query rbacGroupList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: Int, \$
 EOF;
 }
 
+
 class RbacPermissionResponse
 {
 
@@ -31626,12 +32943,12 @@ class RbacPermissionParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RbacPermissionDocument,
             "operationName" => "rbacPermission",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31648,6 +32965,7 @@ query rbacPermission(\$_id: String!) {
 }
 EOF;
 }
+
 
 class RbacPermissionListResponse
 {
@@ -31689,12 +33007,12 @@ class RbacPermissionListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RbacPermissionListDocument,
             "operationName" => "rbacPermissionList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31714,6 +33032,7 @@ query rbacPermissionList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: In
 }
 EOF;
 }
+
 
 class RbacRoleResponse
 {
@@ -31755,12 +33074,12 @@ class RbacRoleParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RbacRoleDocument,
             "operationName" => "rbacRole",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31783,6 +33102,7 @@ query rbacRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$_id: String!) 
 }
 EOF;
 }
+
 
 class RbacRoleListResponse
 {
@@ -31824,12 +33144,12 @@ class RbacRoleListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RbacRoleListDocument,
             "operationName" => "rbacRoleList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31850,6 +33170,7 @@ query rbacRoleList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: Int, \$c
 EOF;
 }
 
+
 class RecentServiceCallResponse
 {
 
@@ -31869,12 +33190,12 @@ class RecentServiceCallParam
      */
     public $today;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RecentServiceCallDocument,
             "operationName" => "recentServiceCall",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31902,6 +33223,7 @@ query recentServiceCall(\$today: String) {
 EOF;
 }
 
+
 class RegisterEveryDayCountResponse
 {
 
@@ -31921,12 +33243,12 @@ class RegisterEveryDayCountParam
      */
     public $client;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RegisterEveryDayCountDocument,
             "operationName" => "registerEveryDayCount",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31938,6 +33260,7 @@ query registerEveryDayCount(\$client: String) {
 }
 EOF;
 }
+
 
 class RegisterMethodTopListResponse
 {
@@ -31958,12 +33281,12 @@ class RegisterMethodTopListParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RegisterMethodTopListDocument,
             "operationName" => "registerMethodTopList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -31976,6 +33299,7 @@ query registerMethodTopList(\$userPoolId: String!) {
 }
 EOF;
 }
+
 
 class RequestListResponse
 {
@@ -32003,12 +33327,12 @@ class RequestListParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RequestListDocument,
             "operationName" => "requestList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32030,6 +33354,7 @@ query requestList(\$page: Int, \$count: Int) {
 EOF;
 }
 
+
 class RuleByIdResponse
 {
 
@@ -32049,12 +33374,12 @@ class RuleByIdParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RuleByIdDocument,
             "operationName" => "ruleById",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32078,6 +33403,7 @@ query ruleById(\$_id: String!) {
 EOF;
 }
 
+
 class RuleEnvResponse
 {
 
@@ -32097,12 +33423,12 @@ class RuleEnvParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RuleEnvDocument,
             "operationName" => "ruleEnv",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32118,6 +33444,7 @@ query ruleEnv(\$userPoolId: String!) {
 }
 EOF;
 }
+
 
 class RulesResponse
 {
@@ -32138,12 +33465,12 @@ class RulesParam
      */
     public $userPoolId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::RulesDocument,
             "operationName" => "rules",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32169,6 +33496,63 @@ query rules(\$userPoolId: String!) {
 }
 EOF;
 }
+
+
+class SearchOrgNodesResponse
+{
+
+    /**
+     * @var RBACGroup[]
+     */
+    public $searchOrgNodes;
+}
+
+class SearchOrgNodesParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Optional
+     *
+     * @var KeyValuePair
+     */
+    public $metadata;
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SearchOrgNodesDocument,
+            "operationName" => "searchOrgNodes",
+            "variables" => $this
+        ];
+    }
+
+    const SearchOrgNodesDocument = <<<EOF
+query searchOrgNodes(\$orgId: String!, \$name: String, \$metadata: [KeyValuePair!]) {
+  searchOrgNodes(orgId: \$orgId, name: \$name, metadata: \$metadata) {
+    _id
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
 
 class SearchUserResponse
 {
@@ -32217,12 +33601,12 @@ class SearchUserParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SearchUserDocument,
             "operationName" => "searchUser",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32283,6 +33667,7 @@ query searchUser(\$type: String!, \$value: String!, \$registerInClient: String!,
 EOF;
 }
 
+
 class SearchUserBasicInfoByIdResponse
 {
 
@@ -32302,12 +33687,12 @@ class SearchUserBasicInfoByIdParam
      */
     public $userId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::SearchUserBasicInfoByIdDocument,
             "operationName" => "searchUserBasicInfoById",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32322,6 +33707,7 @@ query searchUserBasicInfoById(\$userId: String) {
 }
 EOF;
 }
+
 
 class StatisticResponse
 {
@@ -32356,12 +33742,12 @@ class StatisticParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::StatisticDocument,
             "operationName" => "statistic",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32382,6 +33768,7 @@ query statistic(\$sortBy: String, \$page: Int, \$count: Int) {
 EOF;
 }
 
+
 class TodayGeoDistributionResponse
 {
 
@@ -32401,12 +33788,12 @@ class TodayGeoDistributionParam
      */
     public $today;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::TodayGeoDistributionDocument,
             "operationName" => "todayGeoDistribution",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32420,6 +33807,7 @@ query todayGeoDistribution(\$today: String) {
 }
 EOF;
 }
+
 
 class UserResponse
 {
@@ -32475,12 +33863,12 @@ class UserParam
      */
     public $userLoginHistoryCount;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserDocument,
             "operationName" => "user",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32537,6 +33925,7 @@ query user(\$id: String, \$registerInClient: String, \$token: String, \$auth: Bo
 EOF;
 }
 
+
 class UserAnalyticsResponse
 {
 
@@ -32556,12 +33945,12 @@ class UserAnalyticsParam
      */
     public $clientId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserAnalyticsDocument,
             "operationName" => "userAnalytics",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32586,6 +33975,7 @@ query userAnalytics(\$clientId: String) {
 }
 EOF;
 }
+
 
 class UserClientListResponse
 {
@@ -32620,12 +34010,12 @@ class UserClientListParam
      */
     public $sortBy;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserClientListDocument,
             "operationName" => "userClientList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32644,6 +34034,7 @@ query userClientList(\$page: Int, \$count: Int, \$sortBy: String) {
 EOF;
 }
 
+
 class UserClientTypesResponse
 {
 
@@ -32656,12 +34047,13 @@ class UserClientTypesResponse
 class UserClientTypesParam
 {
 
-    public function createRequest()
+
+    function createRequest()
     {
         return [
             "query" => self::UserClientTypesDocument,
             "operationName" => "userClientTypes",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32677,6 +34069,7 @@ query userClientTypes {
 }
 EOF;
 }
+
 
 class UserClientsResponse
 {
@@ -32718,12 +34111,12 @@ class UserClientsParam
      */
     public $computeUsersCount;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserClientsDocument,
             "operationName" => "userClients",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32755,6 +34148,7 @@ query userClients(\$userId: String!, \$page: Int, \$count: Int, \$computeUsersCo
 }
 EOF;
 }
+
 
 class UserExistResponse
 {
@@ -32796,12 +34190,12 @@ class UserExistParam
      */
     public $username;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserExistDocument,
             "operationName" => "userExist",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32811,6 +34205,7 @@ query userExist(\$userPoolId: String!, \$email: String, \$phone: String, \$usern
 }
 EOF;
 }
+
 
 class UserGroupResponse
 {
@@ -32852,12 +34247,12 @@ class UserGroupParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserGroupDocument,
             "operationName" => "userGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32873,6 +34268,7 @@ query userGroup(\$group: String!, \$client: String!, \$page: Int, \$count: Int) 
 }
 EOF;
 }
+
 
 class UserGroupListResponse
 {
@@ -32893,12 +34289,12 @@ class UserGroupListParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserGroupListDocument,
             "operationName" => "userGroupList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32920,6 +34316,7 @@ query userGroupList(\$_id: String!) {
 EOF;
 }
 
+
 class UserMetadataResponse
 {
 
@@ -32939,12 +34336,12 @@ class UserMetadataParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserMetadataDocument,
             "operationName" => "userMetadata",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32960,6 +34357,7 @@ query userMetadata(\$_id: String!) {
 }
 EOF;
 }
+
 
 class UserOAuthCountResponse
 {
@@ -32980,12 +34378,12 @@ class UserOAuthCountParam
      */
     public $userIds;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserOAuthCountDocument,
             "operationName" => "userOAuthCount",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -32995,6 +34393,7 @@ query userOAuthCount(\$userIds: [String]) {
 }
 EOF;
 }
+
 
 class UserPatchResponse
 {
@@ -33015,12 +34414,12 @@ class UserPatchParam
      */
     public $ids;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserPatchDocument,
             "operationName" => "userPatch",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33081,6 +34480,7 @@ query userPatch(\$ids: String) {
 EOF;
 }
 
+
 class UserPermissionListResponse
 {
 
@@ -33100,12 +34500,12 @@ class UserPermissionListParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserPermissionListDocument,
             "operationName" => "userPermissionList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33127,6 +34527,7 @@ query userPermissionList(\$_id: String!) {
 EOF;
 }
 
+
 class UserRoleListResponse
 {
 
@@ -33146,12 +34547,12 @@ class UserRoleListParam
      */
     public $_id;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UserRoleListDocument,
             "operationName" => "userRoleList",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33172,6 +34573,7 @@ query userRoleList(\$_id: String!) {
 }
 EOF;
 }
+
 
 class UsersResponse
 {
@@ -33213,12 +34615,12 @@ class UsersParam
      */
     public $populate;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UsersDocument,
             "operationName" => "users",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33279,6 +34681,7 @@ query users(\$registerInClient: String, \$page: Int, \$count: Int, \$populate: B
 EOF;
 }
 
+
 class UsersByOidcAppResponse
 {
 
@@ -33319,12 +34722,12 @@ class UsersByOidcAppParam
      */
     public $appId;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UsersByOidcAppDocument,
             "operationName" => "usersByOidcApp",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33337,6 +34740,7 @@ query usersByOidcApp(\$userPoolId: String, \$page: Int, \$count: Int, \$appId: S
 }
 EOF;
 }
+
 
 class UsersInGroupResponse
 {
@@ -33371,12 +34775,12 @@ class UsersInGroupParam
      */
     public $count;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::UsersInGroupDocument,
             "operationName" => "usersInGroup",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33394,6 +34798,7 @@ query usersInGroup(\$group: String, \$page: Int, \$count: Int) {
 }
 EOF;
 }
+
 
 class ValidatePasswordResponse
 {
@@ -33428,12 +34833,12 @@ class ValidatePasswordParam
      */
     public $encryptedPassword;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::ValidatePasswordDocument,
             "operationName" => "validatePassword",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 
@@ -33445,6 +34850,7 @@ query validatePassword(\$userPool: String!, \$password: String!, \$encryptedPass
 }
 EOF;
 }
+
 
 class WxQrCodeLogResponse
 {
@@ -33486,12 +34892,12 @@ class WxQrCodeLogParam
      */
     public $sortBy;
 
-    public function createRequest()
+    function createRequest()
     {
         return [
             "query" => self::WxQrCodeLogDocument,
             "operationName" => "wxQRCodeLog",
-            "variables" => $this,
+            "variables" => $this
         ];
     }
 

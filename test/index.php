@@ -21,6 +21,10 @@ $email = 'email';
 $password = '12345678';
 
 /**
+ * 以用户池管理员身份登录
+ */
+$client->loginBySecret();
+/**
  * 注册用户 支持多个参数
  */
 $param = new Authing\RegisterParam();
@@ -32,7 +36,7 @@ $client->register($param);
 /**
  * 邮箱登录接口
  */
-$param = new Authing\LoginParam();
+$param = new Authing\LoginByEmailParam();
 $param->email = $email;
 $param->password = $password;
 $res = $client->loginByEmail($param);
@@ -41,7 +45,7 @@ $id = $res->login->_id;
 /**
  * 用户名登录接口
  */
-$param = new Authing\LoginParam();
+$param = new Authing\LoginByUsernameParam();
 $param->username = $username;
 $param->password = $password;
 $res = $client->loginByUsername($param);
