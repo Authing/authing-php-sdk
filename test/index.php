@@ -174,3 +174,10 @@ $client->sendResetPasswordEmail($param);
 $param = new Authing\RemoveUsersParam();
 $param->ids = $id;
 $client->removeUsers($param);
+/**
+ * 将用户加入到组中
+ */
+$param = new Authing\AssignUserToRoleParam();
+$param->user = $id;
+$param->group = "group id";
+$client->assignUserToRole($param);
