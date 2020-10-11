@@ -27,7 +27,7 @@ class AuthingApiClient
 
     private $_type = "SDK";
 
-    private $_version = "php:1.0.1";
+    private $_version = "php:1.0.2";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -98,9 +98,23 @@ PUBLICKKEY;
      */
     protected function request($data)
     {
-        $result = $this->send($this->host . '/graphql', $data);
+        $result = $this->send($this->host . '/graphql', $this->objectToArray($data));
         $this->checkResult($result);
         return $this->arrayToObject($result['data']);
+    }
+
+    /**
+     * 对象 转 数组
+     */
+    private function objectToArray($data)
+    {
+        $arr = array_filter((array) $data);
+        foreach ($arr as $k => $v) {
+            if (gettype($v) == 'array' || getType($v) == 'object') {
+                $arr[$k] = $this->objectToArray($v);
+            }
+        }
+        return $arr;
     }
 
     /**
@@ -256,7 +270,7 @@ PUBLICKKEY;
 
         // set client id and encrypt password
         $param->clientId = $this->options['clientId'];
-        $param->password = self::passwordEncrypt($param->password);
+        $param->password = $this->passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
@@ -311,7 +325,7 @@ PUBLICKKEY;
 
         // set client id and encrypt password
         $param->clientId = $this->options['clientId'];
-        $param->password = self::passwordEncrypt($param->password);
+        $param->password = $this->passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
@@ -329,7 +343,7 @@ PUBLICKKEY;
         $this->checkParams($param, 'adConnectorId', 'username', 'password');
 
         // encrypt password
-        $param->password = self::passwordEncrypt($param->password);
+        $param->password = $this->passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
@@ -348,7 +362,7 @@ PUBLICKKEY;
 
         // set client id and encrypt password
         $param->clientId = $this->options['clientId'];
-        $param->password = self::passwordEncrypt($param->password);
+        $param->password = $this->passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
@@ -367,7 +381,7 @@ PUBLICKKEY;
 
         // set client id and encrypt password
         $param->userInfo->registerInClient = $this->options['clientId'];
-        $param->userInfo->password = self::passwordEncrypt($param->userInfo->password);
+        $param->userInfo->password = $this->passwordEncrypt($param->userInfo->password);
 
         return $this->request($param->createRequest());
     }
@@ -450,7 +464,7 @@ PUBLICKKEY;
         $this->checkParams($param, 'email', 'password', 'verifyCode');
 
         $param->client = $this->options["clientId"];
-        $param->password = self::passwordEncrypt($param->password);
+        $param->password = $this->passwordEncrypt($param->password);
 
         return $this->request($param->createRequest());
     }
