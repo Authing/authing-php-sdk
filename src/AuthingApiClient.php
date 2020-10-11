@@ -27,7 +27,7 @@ class AuthingApiClient
 
     private $_type = "SDK";
 
-    private $_version = "php:1.0.2";
+    private $_version = "php:1.1.0";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -610,182 +610,6 @@ PUBLICKKEY;
     }
 
     /**
-     * @param NotBindOAuthListParam $param
-     * @return NotBindOAuthListResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function userOAuthList(NotBindOAuthListParam $param)
-    {
-        $this->checkParams($param, 'user');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param BindOtherOAuthParam $param
-     * @return BindOtherOAuthResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function bindOtherOAuth(BindOtherOAuthParam $param)
-    {
-        $this->checkParams($param, 'user');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param UnbindOtherOAuthParam $param
-     * @return UnbindOtherOAuthResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function unBindOtherOAuth(UnbindOtherOAuthParam $param)
-    {
-        $this->checkParams($param, 'user');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param SetInvitationStateParam $param
-     * @return SetInvitationStateResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function setInvitationState(SetInvitationStateParam $param)
-    {
-        $this->checkParams($param, 'enablePhone');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param QueryInvitationStateParam $param
-     * @return QueryInvitationStateResponse
-     * @throws Exception
-     */
-    public function queryInvitationState(QueryInvitationStateParam $param)
-    {
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param AddToInvitationParam $param
-     * @return AddToInvitationResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function addToInvitation(AddToInvitationParam $param)
-    {
-        $this->checkParams($param, 'phone');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param RemoveFromInvitationParam $param
-     * @return RemoveFromInvitationResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function removeFromInvitation(RemoveFromInvitationParam $param)
-    {
-        $this->checkParams($param, 'phone');
-
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param QueryInvitationParam $param
-     * @return QueryInvitationResponse
-     * @throws Exception
-     */
-    public function queryInvitation(QueryInvitationParam $param)
-    {
-        $param->client = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * 通过 _id(MFA ID) 或者 userId & UserPoolId 来查询 MFA 信息
-     * @param QueryMfaParam $param
-     * @return QueryMfaResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function queryMfa(QueryMfaParam $param)
-    {
-        $this->checkParams($param);
-
-        $param->userPoolId = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * 通过 _id(MFA ID) 或者 userId & UserPoolId 来修改 MFA 信息
-     * @param ChangeMfaParam $param
-     * @return ChangeMfaResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function changeMfa(ChangeMfaParam $param)
-    {
-        $this->checkParams($param);
-
-        $param->userPoolId = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param GetUserAuthorizedAppsParam $param
-     * @return GetUserAuthorizedAppsResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function getUserAuthorizedApps(GetUserAuthorizedAppsParam $param)
-    {
-        $this->checkParams($param, 'userId');
-
-        $param->clientId = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     * @param RevokeUserAuthorizedAppParam $param
-     * @return RevokeUserAuthorizedAppResponse
-     * @throws InvalidArgumentException
-     * @throws Exception
-     */
-    public function revokeUserAuthorizedApp(RevokeUserAuthorizedAppParam $param)
-    {
-        $this->checkParams($param, 'userId');
-
-        $param->userPoolId = $this->options["clientId"];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
      * assignUserToRole
      * @param AssignUserToRoleParam
      * @return AssignUserToRoleResponse
@@ -797,19 +621,6 @@ PUBLICKKEY;
         $this->checkParams($param, 'user');
 
         $param->client = $this->options['clientId'];
-
-        return $this->request($param->createRequest());
-    }
-
-    /**
-     *  readOAuthList
-     * @param ReadOauthListParam $param
-     * @return ReadOauthListResponse
-     * @throws Exception
-     */
-    public function readOAuthList(ReadOauthListParam $param)
-    {
-        $param->clientId = $this->options['clientId'];
 
         return $this->request($param->createRequest());
     }

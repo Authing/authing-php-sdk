@@ -52,10 +52,51 @@ $res = $client->loginByUsername($param);
 $token = $res->login->token;
 $id = $res->login->_id;
 /**
- * oauth 列表
+ * LDAP 登录接口
  */
-$param = new Authing\ReadOauthListParam();
-$client->readOAuthList($param);
+$param = new Authing\LoginByLdapParam();
+$param->username = $username;
+$param->password = $password;
+$res = $client->loginByLdap($param);
+$token = $res->login->token;
+$id = $res->login->_id;
+/**
+ * AD 登录接口
+ */
+// $param = new Authing\LoginByAdParam();
+// $param->adConnectorId = "";
+// $param->username = $username;
+// $param->password = $password;
+// $res = $client->loginByAd($param);
+// $token = $res->login->token;
+// $id = $res->login->_id;
+/**
+ * 修改用户信息
+ */
+$param = new Authing\UpdateUserParam();
+$param->options = new Authing\UserUpdateInput();
+$param->options->_id = $id;
+$param->options->nickname = "hello world";
+$param->options->phone = "15369318656";
+$client->updateUser($param);
+/**
+ * 用户名登录接口
+ */
+$param = new Authing\LoginByPhonePasswordParam();
+$param->phone = "15369318656";
+$param->password = $password;
+$res = $client->loginByPhonePassword($param);
+$token = $res->login->token;
+$id = $res->login->_id;
+/**
+ * 手机号验证码登录接口
+ */
+// $param = new Authing\LoginByPhoneCodeParam();
+// $param->phone = "15369318656";
+// $param->phoneCode = 1234;
+// $res = $client->loginByPhoneCode($param);
+// $token = $res->login->token;
+// $id = $res->login->_id;
 /**
  * 查看指定用户
  */
@@ -122,19 +163,11 @@ $client->sendResetPasswordEmail($param);
 /**
  * 修改密码
  */
-//    $param = new Authing\ChangePasswordParam();
-//    $param->email = $email;
-//    $param->verifyCode = "";
-//    $param->password = "123456";
-//    $client->changePassword($param);
-/**
- * 修改用户信息
- */
-$param = new Authing\UpdateUserParam();
-$param->options = new Authing\UserUpdateInput();
-$param->options->_id = $id;
-$param->options->nickname = "hello world";
-$client->updateUser($param);
+// $param = new Authing\ChangePasswordParam();
+// $param->email = $email;
+// $param->verifyCode = "";
+// $param->password = "123456";
+// $client->changePassword($param);
 /**
  * 删除用户
  */
