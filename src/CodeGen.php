@@ -7,858 +7,10 @@ class Query
     /**
      * Optional
      *
-     * @var Email
-     *
-     */
-    public $ReadEmailSentList;
-
-    /**
-     * Optional
-     *
-     * @var EmailListPaged
-     *
-     */
-    public $ReadEmailSentListByClient;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderList[]
-     *
-     */
-    public $ReadEmailProvider;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderWithClientList[]
-     *
-     */
-    public $ReadEmailProviderByClientAndName;
-
-    /**
-     * Optional
-     *
-     * @var EmailTemplateWithClient[]
-     *
-     */
-    public $ReadEmailTemplatesByClient;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderWithClientList[]
-     *
-     */
-    public $ReadEmailProviderWithClient;
-
-    /**
-     * Optional
-     *
-     * @var EmailTemplate
-     *
-     */
-    public $ReadEmailTemplateByClientAndType;
-
-    /**
-     * Optional
-     *
      * @var string
      *
      */
-    public $PreviewEmailByType;
-
-    /**
-     * Optional
-     *
-     * @var EmailTemplateWithClient[]
-     *
-     */
-    public $ReadEmailTemplatesBySystem;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList[]
-     *
-     */
-    public $ReadOauthList;
-
-    /**
-     * Optional
-     *
-     * @var SAMLSPListItem[]
-     *
-     */
-    public $ReadSAMLSPList;
-
-    /**
-     * Optional
-     *
-     * @var int[]
-     *
-     */
-    public $userOAuthCount;
-
-    /**
-     * Optional
-     *
-     * @var WxQRCodeLog
-     *
-     */
-    public $wxQRCodeLog;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList[]
-     *
-     */
-    public $querySystemOAuthSetting;
-
-    /**
-     * Optional
-     *
-     * @var NotBindOAuth[]
-     *
-     */
-    public $notBindOAuthList;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $QueryClientIdByAppId;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $getOAuthedAppInfo;
-
-    /**
-     * Optional
-     *
-     * @var OAuthAppPagedList
-     *
-     */
-    public $getOAuthedAppList;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $GetOIDCAppInfo;
-
-    /**
-     * Optional
-     *
-     * @var OIDCAppPagedList
-     *
-     */
-    public $GetOIDCAppList;
-
-    /**
-     * Optional
-     *
-     * @var ProviderGeneralInfo
-     *
-     */
-    public $queryProviderInfoByDomain;
-
-    /**
-     * Optional
-     *
-     * @var ProviderGeneralInfo
-     *
-     */
-    public $queryProviderInfoByAppId;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $QueryAppInfoByAppID;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $QueryAppInfoByDomain;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $QueryOIDCAppInfoByDomain;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $QueryOIDCAppInfoByAppID;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $QuerySAMLServiceProviderInfoByAppID;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $QuerySAMLServiceProviderInfoByDomain;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $QuerySAMLIdentityProviderInfoByAppID;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $QuerySAMLIdentityProviderInfoByDomain;
-
-    /**
-     * Optional
-     *
-     * @var SAMLDefaultIdentityProviderSettingsList
-     *
-     */
-    public $QueryDefaultSAMLIdentityProviderSettingsList;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderAppPagedList
-     *
-     */
-    public $GetSAMLServiceProviderList;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $GetSAMLServiceProviderInfo;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $GetSAMLIdentityProviderInfo;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderAppPagedList
-     *
-     */
-    public $GetSAMLIdentityProviderList;
-
-    /**
-     * Optional
-     *
-     * @var LDAPServerList
-     *
-     */
-    public $QueryLDAPServerList;
-
-    /**
-     * Optional
-     *
-     * @var LDAPServerTesterType
-     *
-     */
-    public $TestLDAPServer;
-
-    /**
-     * Optional
-     *
-     * @var LDAPUserTesterType
-     *
-     */
-    public $TestLDAPUser;
-
-    /**
-     * Optional
-     *
-     * @var ClientHasLDAPConfigs
-     *
-     */
-    public $QueryClientHasLDAPConfigs;
-
-    /**
-     * Optional
-     *
-     * @var UserAuthorizedAppPagedList
-     *
-     */
-    public $GetUserAuthorizedApps;
-
-    /**
-     * Optional
-     *
-     * @var IsAppAuthorizedByUser
-     *
-     */
-    public $isAppAuthorizedByUser;
-
-    /**
-     * Optional
-     *
-     * @var IsReservedDomain
-     *
-     */
-    public $checkIsReservedDomain;
-
-    /**
-     * Optional
-     *
-     * @var PricingList[]
-     *
-     */
-    public $ReadSystemPricing;
-
-    /**
-     * Optional
-     *
-     * @var PagedOrders
-     *
-     */
-    public $ReadOrders;
-
-    /**
-     * Optional
-     *
-     * @var UserPricingType
-     *
-     */
-    public $ReadUserPricing;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $users;
-
-    /**
-     * Optional
-     *
-     * @var UserIds
-     *
-     */
-    public $usersByOidcApp;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var UserAnalytics
-     *
-     */
-    public $userAnalytics;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isLoginExpired;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserClients
-     *
-     */
-    public $userClients;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $searchUser;
-
-    /**
-     * Optional
-     *
-     * @var UserClientType[]
-     *
-     */
-    public $userClientTypes;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isClientOfUser;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $getAccessTokenByAppSecret;
-
-    /**
-     * Optional
-     *
-     * @var UserLoginCount
-     *
-     */
-    public $loginCount;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $qiNiuUploadToken;
-
-    /**
-     * Optional
-     *
-     * @var JwtDecodedData
-     *
-     */
-    public $decodeJwtToken;
-
-    /**
-     * Optional
-     *
-     * @var JWTDecodedDataCheckLogin
-     *
-     */
-    public $checkLoginStatus;
-
-    /**
-     * Optional
-     *
-     * @var AppSecretByClientId
-     *
-     */
-    public $getAppSecretByClientId;
-
-    /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $previewEmailTemplate;
-
-    /**
-     * Optional
-     *
-     * @var LoginHotDotPicData
-     *
-     */
-    public $loginHotDotPicData;
-
-    /**
-     * Optional
-     *
-     * @var RegisterEveryDayCount
-     *
-     */
-    public $registerEveryDayCount;
-
-    /**
-     * Optional
-     *
-     * @var Statistic
-     *
-     */
-    public $statistic;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserClientList
-     *
-     */
-    public $userClientList;
-
-    /**
-     * Optional
-     *
-     * @var UsersInGroup
-     *
-     */
-    public $usersInGroup;
-
-    /**
-     * Optional
-     *
-     * @var QpsByTime[]
-     *
-     */
-    public $qpsByTime;
-
-    /**
-     * Optional
-     *
-     * @var GeographicalDistributionList[]
-     *
-     */
-    public $todayGeoDistribution;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserClientList
-     *
-     */
-    public $findClientsByIdArray;
-
-    /**
-     * Optional
-     *
-     * @var DayServiceCallListOfAllServices
-     *
-     */
-    public $recentServiceCall;
-
-    /**
-     * Optional
-     *
-     * @var DayUserGrowth[]
-     *
-     */
-    public $platformUserGrowthTrend;
-
-    /**
-     * Optional
-     *
-     * @var PagedRequestList
-     *
-     */
-    public $requestList;
-
-    /**
-     * Optional
-     *
-     * @var UserOAuthBind[]
-     *
-     */
-    public $bindedOAuthList;
-
-    /**
-     * Optional
-     *
-     * @var PatchExtendUser
-     *
-     */
-    public $userPatch;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isClientBelongToUser;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $queryClient;
-
-    /**
-     * Optional
-     *
-     * @var PagedRoles
-     *
-     */
-    public $clientRoles;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserGroup
-     *
-     */
-    public $userGroup;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserGroup
-     *
-     */
-    public $queryRoleByUserId;
-
-    /**
-     * Optional
-     *
-     * @var ClientInfoAndAccessToken
-     *
-     */
-    public $getClientWhenSdkInit;
-
-    /**
-     * Optional
-     *
-     * @var ClientWebhook
-     *
-     */
-    public $getWebhookDetail;
-
-    /**
-     * Optional
-     *
-     * @var ClientWebhook[]
-     *
-     */
-    public $getAllWebhooks;
-
-    /**
-     * Optional
-     *
-     * @var WebhookLog
-     *
-     */
-    public $getWebhookLogDetail;
-
-    /**
-     * Optional
-     *
-     * @var WebhookLog[]
-     *
-     */
-    public $getWebhookLogs;
-
-    /**
-     * Optional
-     *
-     * @var WebhookSettingOptions
-     *
-     */
-    public $getWebhookSettingOptions;
-
-    /**
-     * Optional
-     *
-     * @var CollaborativeUserPoolList
-     *
-     */
-    public $queryCollaborativeUserPoolByUserId;
-
-    /**
-     * Optional
-     *
-     * @var Collaborators
-     *
-     */
-    public $queryCollaboratorsByUserPoolId;
-
-    /**
-     * Optional
-     *
-     * @var CollaboratorPermissions
-     *
-     */
-    public $queryCollaboratorPermissions;
-
-    /**
-     * Optional
-     *
-     * @var PasswordStrengthSettings
-     *
-     */
-    public $queryPasswordStrengthSettingsByUserPoolId;
-
-    /**
-     * Optional
-     *
-     * @var Collaboration
-     *
-     */
-    public $queryCollaborationByUserPoolIdAndUserId;
-
-    /**
-     * Optional
-     *
-     * @var PermissionList
-     *
-     */
-    public $queryPermissionList;
-
-    /**
-     * Optional
-     *
-     * @var BasicUserInfo
-     *
-     */
-    public $searchUserBasicInfoById;
-
-    /**
-     * Optional
-     *
-     * @var PaaswordFaas
-     *
-     */
-    public $queryPasswordFaasEnabled;
-
-    /**
-     * Optional
-     *
-     * @var LoginTopEmailList[]
-     *
-     */
-    public $emailDomainTopNList;
-
-    /**
-     * Optional
-     *
-     * @var RegisterMethodList[]
-     *
-     */
-    public $registerMethodTopList;
-
-    /**
-     * Optional
-     *
-     * @var SMSCountInfo
-     *
-     */
-    public $querySMSSendCount;
-
-    /**
-     * Optional
-     *
-     * @var Invitation[]
-     *
-     */
-    public $queryInvitation;
-
-    /**
-     * Optional
-     *
-     * @var InvitationState
-     *
-     */
-    public $queryInvitationState;
-
-    /**
-     * Optional
-     *
-     * @var MFA
-     *
-     */
-    public $queryMFA;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserPoolWithMFA
-     *
-     */
-    public $queryAuthorizedUserPool;
-
-    /**
-     * Optional
-     *
-     * @var PagedCustomMFAList
-     *
-     */
-    public $getCustomMFA;
-
-    /**
-     * Optional
-     *
-     * @var ValidateResult
-     *
-     */
-    public $validatePassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $getUserLoginAreaStatisticOfClient;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $getUserPoolSettings;
-
-    /**
-     * Optional
-     *
-     * @var AuthAuditRecordsList
-     *
-     */
-    public $queryAuthAuditRecords;
-
-    /**
-     * Optional
-     *
-     * @var UserPoolCommonInfo
-     *
-     */
-    public $queryUserPoolCommonInfo;
+    public $qiniuUptoken;
 
     /**
      * Optional
@@ -869,150 +21,126 @@ class Query
     public $isDomainAvaliable;
 
     /**
+     * 获取社会化登录定义
      * Optional
      *
-     * @var CommonMessage
+     * @var SocialConnection
      *
      */
-    public $checkPhoneCode;
+    public $socialConnection;
 
     /**
-     * Optional
+     * 获取所有社会化登录定义
+     * Required
      *
-     * @var bool
+     * @var SocialConnection[]
      *
      */
-    public $userExist;
+    public $socialConnections;
 
     /**
-     * Optional
+     * 获取当前用户池的社会化登录配置
+     * Required
      *
-     * @var ADConnctorCommonInfo
+     * @var SocialConnectionInstance
      *
      */
-    public $adConnectorByProvider;
+    public $socialConnectionInstance;
 
     /**
-     * Optional
+     * 获取当前用户池的所有社会化登录配置
+     * Required
      *
-     * @var isAdConenctorAlive
-     *
-     */
-    public $isAdConnectorAlive;
-
-    /**
-     * Optional
-     *
-     * @var ADConnector[]
+     * @var SocialConnectionInstance[]
      *
      */
-    public $adConnectorList;
-
-    /**
-     * Optional
-     *
-     * @var ADConnectorEnabledProvider[]
-     *
-     */
-    public $providerListByADConnector;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $checkAdConnectorStatus;
+    public $socialConnectionInstances;
 
     /**
      * Required
      *
-     * @var SAMLFieldMappings[]
+     * @var EmailTemplate[]
      *
      */
-    public $samlIdPFieldMappings;
+    public $emailTemplates;
 
     /**
      * Required
      *
-     * @var SAMLAvaliableFieldMappings[]
+     * @var string
      *
      */
-    public $supportedSAMLFieldMappings;
+    public $previewEmail;
+
+    /**
+     * 获取函数模版
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $templateCode;
 
     /**
      * Optional
      *
-     * @var RBACRole
+     * @var Function
      *
      */
-    public $rbacRole;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACRole
-     *
-     */
-    public $rbacRoleList;
-
-    /**
-     * Optional
-     *
-     * @var RBACGroup
-     *
-     */
-    public $rbacGroup;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACGroup
-     *
-     */
-    public $rbacGroupList;
-
-    /**
-     * Optional
-     *
-     * @var RBACPermission
-     *
-     */
-    public $rbacPermission;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACPermission
-     *
-     */
-    public $rbacPermissionList;
+    public $function;
 
     /**
      * Required
      *
-     * @var UserPermissionList
+     * @var PaginatedFunctions
      *
      */
-    public $userPermissionList;
+    public $functions;
+
+    /**
+     * Optional
+     *
+     * @var Group
+     *
+     */
+    public $group;
 
     /**
      * Required
      *
-     * @var UserGroupList
+     * @var PaginatedGroups
      *
      */
-    public $userGroupList;
+    public $groups;
 
     /**
-     * Required
+     * 查询 MFA 信息
+     * Optional
      *
-     * @var UserRoleList
+     * @var Mfa
      *
      */
-    public $userRoleList;
+    public $queryMfa;
 
     /**
+     * Optional
+     *
+     * @var Node
+     *
+     */
+    public $nodeById;
+
+    /**
+     * 通过 code 查询节点
+     * Optional
+     *
+     * @var Node
+     *
+     */
+    public $nodeByCode;
+
+    /**
+     * 查询组织机构详情
      * Required
      *
      * @var Org
@@ -1021,28 +149,30 @@ class Query
     public $org;
 
     /**
+     * 查询用户池组织机构列表
      * Required
      *
-     * @var PagedOrg
+     * @var PaginatedOrgs
      *
      */
     public $orgs;
 
     /**
+     * 查询子节点列表
      * Required
      *
-     * @var RBACGroup
+     * @var Node[]
      *
      */
-    public $orgRootNode;
+    public $childrenNodes;
 
     /**
      * Required
      *
-     * @var OrgChildNode[]
+     * @var Node
      *
      */
-    public $orgChildrenNodes;
+    public $rootNode;
 
     /**
      * Optional
@@ -1050,232 +180,91 @@ class Query
      * @var bool
      *
      */
-    public $isRootNodeOfOrg;
+    public $isRootNode;
 
     /**
      * Required
      *
-     * @var GroupMetadata[]
+     * @var CheckPasswordStrengthResult
      *
      */
-    public $groupMetadata;
+    public $checkPasswordStrength;
 
     /**
      * Required
-     *
-     * @var PagedRBACGroup
-     *
-     */
-    public $searchGroupByMetadata;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup[]
-     *
-     */
-    public $searchOrgNodes;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $orgNodeUserList;
-
-    /**
-     * Optional
      *
      * @var bool
      *
      */
-    public $isUserInGroup;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $searchOrgNodeUser;
-
-    /**
-     * Optional
-     *
-     * @var DingTalkCorp
-     *
-     */
-    public $DingTalkCorp;
-
-    /**
-     * Optional
-     *
-     * @var WechatWorkCorp
-     *
-     */
-    public $wechatWorkCorp;
+    public $isActionAllowed;
 
     /**
      * Required
      *
-     * @var Rule
+     * @var bool
      *
      */
-    public $ruleById;
+    public $isActionDenied;
+
+    /**
+     * Optional
+     *
+     * @var Policy
+     *
+     */
+    public $policy;
 
     /**
      * Required
      *
-     * @var PagedRules
+     * @var PaginatedPolicies
      *
      */
-    public $rules;
+    public $policies;
 
     /**
      * Required
      *
-     * @var PagedRuleEnvVariable
+     * @var PaginatedPolicyAssignment
      *
      */
-    public $ruleEnv;
+    public $policyAssignments;
 
     /**
+     * 通过 **code** 查询角色详情
      * Optional
      *
-     * @var OperationLogsList
+     * @var Role
      *
      */
-    public $queryOperationLogs;
+    public $role;
 
     /**
-     * Optional
-     *
-     * @var UserPoolCommonInfo
-     *
-     */
-    public $getUserPoolByDomain;
-
-    /**
+     * 获取角色列表
      * Required
      *
-     * @var InterConnection[]
+     * @var PaginatedRoles
      *
      */
-    public $interConnections;
+    public $roles;
 
     /**
+     * 查询某个实体定义的自定义数据
      * Required
      *
-     * @var UserMetaDataList
+     * @var UserDefinedData[]
      *
      */
-    public $userMetadata;
-}
-
-class Email
-{
-    /**
-     * Optional
-     *
-     * @var PopulatedEmailSentList[]
-     *
-     */
-    public $list;
+    public $udv;
 
     /**
-     * Optional
+     * 查询用户池定义的自定义字段
+     * Required
      *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class PopulatedEmailSentList
-{
-    /**
-     * Optional
-     *
-     * @var string
+     * @var UserDefinedField[]
      *
      */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $subject;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $receivers;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var Client
-     *
-     */
-    public $client;
-}
-
-class Client
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
+    public $udf;
 
     /**
      * Optional
@@ -1284,9 +273,149 @@ class Client
      *
      */
     public $user;
+
+    /**
+     * Required
+     *
+     * @var User[]
+     *
+     */
+    public $userBatch;
+
+    /**
+     * Required
+     *
+     * @var PaginatedUsers
+     *
+     */
+    public $users;
+
+    /**
+     * Required
+     *
+     * @var PaginatedUsers
+     *
+     */
+    public $searchUser;
+
+    /**
+     * Optional
+     *
+     * @var JWTTokenStatus
+     *
+     */
+    public $checkLoginStatus;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $isUserExists;
+
+    /**
+     * Optional
+     *
+     * @var User
+     *
+     */
+    public $findUser;
+
+    /**
+     * 查询用户池详情
+     * Required
+     *
+     * @var UserPool
+     *
+     */
+    public $userpool;
+
+    /**
+     * 查询用户池列表
+     * Required
+     *
+     * @var PaginatedUserpool
+     *
+     */
+    public $userpools;
+
+    /**
+     * Required
+     *
+     * @var UserPoolType[]
+     *
+     */
+    public $userpoolTypes;
+
+    /**
+     * 获取 accessToken ，如 SDK 初始化
+     * Required
+     *
+     * @var AccessTokenRes
+     *
+     */
+    public $accessToken;
+
+    /**
+     * 用户池注册白名单列表
+     * Required
+     *
+     * @var WhiteList[]
+     *
+     */
+    public $whitelist;
 }
 
-class User
+class SocialConnection
+{
+    /**
+     * 社会化登录服务商唯一标志
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $provider;
+
+    /**
+     * 名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
+
+    /**
+     * logo
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $logo;
+
+    /**
+     * 描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 表单字段
+     * Optional
+     *
+     * @var SocialConnectionField[]
+     *
+     */
+    public $fields;
+}
+
+class SocialConnectionField
 {
     /**
      * Optional
@@ -1294,9 +423,373 @@ class User
      * @var string
      *
      */
-    public $_id;
+    public $key;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $label;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $type;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $placeholder;
+
+    /**
+     * Optional
+     *
+     * @var SocialConnectionField[]
+     *
+     */
+    public $children;
+}
+
+class SocialConnectionInstance
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $provider;
+
+    /**
+     * Required
+     *
+     * @var bool
+     *
+     */
+    public $enabled;
+
+    /**
+     * Optional
+     *
+     * @var SocialConnectionInstanceField[]
+     *
+     */
+    public $fields;
+}
+
+class SocialConnectionInstanceField
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $value;
+}
+
+class EmailTemplate
+{
+    /**
+     * 邮件模版类型
+     * Required
+     *
+     * @var EmailTemplateType
+     *
+     */
+    public $type;
+
+    /**
+     * 模版名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
+
+    /**
+     * 邮件主题
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $subject;
+
+    /**
+     * 显示的邮件发送人
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $sender;
+
+    /**
+     * 邮件模版内容
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $content;
+
+    /**
+     * 重定向链接，操作成功后，用户将被重定向到此 URL。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $redirectTo;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $hasURL;
+
+    /**
+     * 验证码过期时间（单位为秒）
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $expiresIn;
+
+    /**
+     * 是否开启（自定义模版）
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $enabled;
+
+    /**
+     * 是否是系统默认模版
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $isSystem;
+}
+
+class EmailTemplateType
+{
+    const RESET_PASSWORD = 'RESET_PASSWORD';
+    const PASSWORD_RESETED_NOTIFICATION = 'PASSWORD_RESETED_NOTIFICATION';
+    const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+    const WELCOME = 'WELCOME';
+    const VERIFY_EMAIL = 'VERIFY_EMAIL';
+    const CHANGE_EMAIL = 'CHANGE_EMAIL';
+}
+
+/**
+ * 函数
+ */
+class FunctionType
+{
+    /**
+     * ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * 函数名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
+
+    /**
+     * 源代码
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $sourceCode;
+
+    /**
+     * 描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 云函数链接
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $url;
+}
+
+class SortByEnum
+{
+    const CREATEDAT_DESC = 'CREATEDAT_DESC';
+    const CREATEDAT_ASC = 'CREATEDAT_ASC';
+    const UPDATEDAT_DESC = 'UPDATEDAT_DESC';
+    const UPDATEDAT_ASC = 'UPDATEDAT_ASC';
+}
+
+class PaginatedFunctions
+{
+    /**
+     * Required
+     *
+     * @var Function[]
+     *
+     */
+    public $list;
+
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+}
+
+class Group
+{
+    /**
+     * 唯一标志 code
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * 名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
+
+    /**
+     * 描述
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 创建时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $createdAt;
+
+    /**
+     * 修改时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $updatedAt;
+
+    /**
+     * 包含的用户列表
+     * Required
+     *
+     * @var PaginatedUsers
+     *
+     */
+    public $users;
+}
+
+class PaginatedUsers
+{
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var User[]
+     *
+     */
+    public $list;
+}
+
+class User
+{
+    /**
+     * 用户 ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $arn;
+
+    /**
+     * 用户池 ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $userPoolId;
+
+    /**
+     * 用户名，用户池内唯一
      * Optional
      *
      * @var string
@@ -1305,12 +798,40 @@ class User
     public $username;
 
     /**
+     * 邮箱，用户池内唯一
      * Optional
      *
      * @var string
      *
      */
     public $email;
+
+    /**
+     * 邮箱是否已验证
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $emailVerified;
+
+    /**
+     * 手机号，用户池内唯一
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $phone;
+
+    /**
+     * 手机号是否已验证
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $phoneVerified;
 
     /**
      * Optional
@@ -1329,30 +850,16 @@ class User
     public $openid;
 
     /**
+     * 用户的身份信息
      * Optional
      *
-     * @var bool
+     * @var Identity[]
      *
      */
-    public $emailVerified;
+    public $identities;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $phoneVerified;
-
-    /**
+     * 昵称，该字段不唯一。
      * Optional
      *
      * @var string
@@ -1361,12 +868,112 @@ class User
     public $nickname;
 
     /**
+     * 注册方式
+     * Required
+     *
+     * @var string[]
+     *
+     */
+    public $registerSource;
+
+    /**
+     * 头像链接，默认为 https://usercontents.authing.cn/authing-avatar.png
      * Optional
      *
      * @var string
      *
      */
-    public $company;
+    public $photo;
+
+    /**
+     * 用户密码，数据库使用密钥加 salt 进行加密，非原文密码。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * 用户社会化登录第三方身份提供商返回的原始用户信息，非社会化登录方式注册的用户此字段为空。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $oauth;
+
+    /**
+     * 用户登录凭证，开发者可以在后端检验该 token 的合法性，从而验证用户身份。详细文档请见：[验证 Token](https://docs.authing.co/advanced/verify-jwt-token.html)
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $token;
+
+    /**
+     * token 过期时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $tokenExpiredAt;
+
+    /**
+     * 用户登录总次数
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $loginsCount;
+
+    /**
+     * 用户最近一次登录时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $lastLogin;
+
+    /**
+     * 用户上一次登录时使用的 IP
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $lastIP;
+
+    /**
+     * 用户注册时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $signedUp;
+
+    /**
+     * 该账号是否被禁用
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $blocked;
+
+    /**
+     * 账号是否被软删除
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $isDeleted;
 
     /**
      * Optional
@@ -1374,7 +981,7 @@ class User
      * @var string
      *
      */
-    public $photo;
+    public $device;
 
     /**
      * Optional
@@ -1390,103 +997,7 @@ class User
      * @var string
      *
      */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $registerInClient;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $registerMethod;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $tokenExpiredAt;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $loginsCount;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $lastLogin;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $lastIP;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $signedUp;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $blocked;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $device;
+    public $company;
 
     /**
      * Optional
@@ -1630,6 +1141,22 @@ class User
      * @var string
      *
      */
+    public $city;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $province;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
     public $country;
 
     /**
@@ -1638,66 +1165,7 @@ class User
      * @var string
      *
      */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var ThirdPartyIdentity
-     *
-     */
-    public $thirdPartyIdentity;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oldPassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $metadata;
-}
-
-class ThirdPartyIdentity
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $provider;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $refreshToken;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $accessToken;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $expiresIn;
+    public $createdAt;
 
     /**
      * Optional
@@ -1706,1042 +1174,26 @@ class ThirdPartyIdentity
      *
      */
     public $updatedAt;
+
+    /**
+     * Optional
+     *
+     * @var PaginatedRoles
+     *
+     */
+    public $roles;
+
+    /**
+     * Optional
+     *
+     * @var PaginatedGroups
+     *
+     */
+    public $groups;
 }
 
-class EmailListPaged
+class Identity
 {
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var EmailSentList[]
-     *
-     */
-    public $list;
-}
-
-class EmailSentList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $subject;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $receivers;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $post;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $rejected;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-}
-
-class EmailProviderList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderForm[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderChildrenList
-     *
-     */
-    public $provider;
-}
-
-class EmailProviderForm
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $help;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $options;
-}
-
-class EmailProviderChildrenList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderForm[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderChildrenList
-     *
-     */
-    public $provider;
-}
-
-class EmailProviderWithClientList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderWithClientForm[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderWithClient
-     *
-     */
-    public $provider;
-}
-
-class EmailProviderWithClientForm
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $help;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $options;
-}
-
-class EmailProviderWithClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class EmailTemplateWithClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var EmailTemplate
-     *
-     */
-    public $template;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $object;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hasURL;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $URLExpireTime;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $redirectTo;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-}
-
-class EmailTemplate
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $object;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hasURL;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $URLExpireTime;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $redirectTo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-}
-
-class OAuthList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $alias;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oAuthUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $wxappLogo;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsForm[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
-     *
-     * @var ChildrenOAuthList
-     *
-     */
-    public $oauth;
-}
-
-class OAuthListFieldsForm
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormRecursion[]
-     *
-     */
-    public $children;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $checked;
-}
-
-class OAuthListFieldsFormRecursion
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormRecursion[]
-     *
-     */
-    public $children;
-}
-
-class ChildrenOAuthList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $alias;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oAuthUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $wxappLogo;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsForm[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
-     *
-     * @var ChildrenOAuthList
-     *
-     */
-    public $oauth;
-}
-
-class SAMLSPListItem
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $providerName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-}
-
-class WxQRCodeLog
-{
-    /**
-     * Optional
-     *
-     * @var WxQRCodeLogList[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class WxQRCodeLogList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $random;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $expiredAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $success;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $qrcode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $used;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $accessToken;
-
     /**
      * Optional
      *
@@ -2756,1669 +1208,7 @@ class WxQRCodeLogList
      * @var string
      *
      */
-    public $userInfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $redirect;
-
-    /**
-     * Optional
-     *
-     * @var ClientInWxQRCodeLogList
-     *
-     */
-    public $client;
-}
-
-class ClientInWxQRCodeLogList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var UserInClientInWxQRCodeLogList
-     *
-     */
-    public $user;
-}
-
-class UserInClientInWxQRCodeLogList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-}
-
-class NotBindOAuth
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oAuthUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $binded;
-}
-
-class OAuthProviderClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $redirectUris;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appSecret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $grants;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $css;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $loginUrl;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $casExpire;
-}
-
-class OAuthAppPagedList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient[]
-     *
-     */
-    public $list;
-}
-
-class OIDCProviderClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $redirect_uris;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client_secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token_endpoint_auth_method;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userinfo_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userinfo_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userinfo_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $request_object_signing_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $request_object_encryption_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $request_object_encryption_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $custom_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $grant_types;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $response_types;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDefault;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $css;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $authorization_code_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $access_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $cas_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $loginUrl;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderCustomStyles
-     *
-     */
-    public $customStyles;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isForTeamory;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $confirmAuthorization;
-}
-
-class OIDCProviderCustomStyles
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $forceLogin;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideQRCode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideUP;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideUsername;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideRegister;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hidePhone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideSocial;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideClose;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hidePhonePassword;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderCustomStylesPlaceholder
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderCustomStylesQrcodeScanning
-     *
-     */
-    public $qrcodeScanning;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderDefaultLoginMethod
-     *
-     */
-    public $defaultLoginMethod;
-}
-
-class OIDCProviderCustomStylesPlaceholder
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $confirmPassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $verfiyCode;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $newPassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phoneCode;
-}
-
-class OIDCProviderCustomStylesQrcodeScanning
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $redirect;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $interval;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $tips;
-}
-
-class OIDCProviderDefaultLoginMethod
-{
-    const PHONE = 'PHONE';
-    const PASSWORD = 'PASSWORD';
-    const QRCODE = 'QRCODE';
-}
-
-class OIDCAppPagedList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient[]
-     *
-     */
-    public $list;
-}
-
-class ProviderGeneralInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $css;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $redirect_uris;
-}
-
-class SAMLServiceProviderClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appSecret;
-
-    /**
-     * Optional
-     *
-     * @var SAMLDefaultIdentityProviderSettings
-     *
-     */
-    public $defaultIdPMap;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $defaultIdPMapId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $IdPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $IdPEntityID;
-
-    /**
-     * Optional
-     *
-     * @var AssertionConsumeService[]
-     *
-     */
-    public $assertionConsumeService;
-
-    /**
-     * Optional
-     *
-     * @var AssertionMap
-     *
-     */
-    public $mappings;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $redirectUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $loginUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $logoutUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $nameId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableSignRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hasResEncrypted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resEncryptAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resDecryptPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resDecryptPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resEncryptPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableSignReq;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqSignAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqSignPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqSignPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $SPUrl;
-}
-
-class SAMLDefaultIdentityProviderSettings
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var AssertionMap
-     *
-     */
-    public $mappings;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-}
-
-class AssertionMap
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $nickname;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $photo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $company;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $providerName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-}
-
-class AssertionConsumeService
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $binding;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDefault;
-}
-
-class SAMLIdentityProviderClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appSecret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $attributeNameFormat;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $customAttributes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $emailDomainTransformation;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $authnContextClassRef;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $IdPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $assertionConsumerUrl;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $bindings;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $nameIds;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $attributes;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableSignRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resSignAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resSignPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resSignPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableSignReq;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $reqSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableEncryptRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $resEncryptPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $css;
-}
-
-class SAMLDefaultIdentityProviderSettingsList
-{
-    /**
-     * Optional
-     *
-     * @var SAMLDefaultIdentityProviderSettings[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class SAMLServiceProviderAppPagedList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient[]
-     *
-     */
-    public $list;
-}
-
-class SAMLIdentityProviderAppPagedList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient[]
-     *
-     */
-    public $list;
-}
-
-class LDAPServerList
-{
-    /**
-     * Optional
-     *
-     * @var LDAPSingleServer[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class LDAPSingleServer
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
+    public $userIdInIdp;
 
     /**
      * Optional
@@ -4434,7 +1224,15 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $ldapLink;
+    public $connectionId;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $isSocial;
 
     /**
      * Optional
@@ -4442,7 +1240,7 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $baseDN;
+    public $provider;
 
     /**
      * Optional
@@ -4450,7 +1248,259 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $searchStandard;
+    public $userPoolId;
+}
+
+class PaginatedRoles
+{
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var Role[]
+     *
+     */
+    public $list;
+}
+
+class Role
+{
+    /**
+     * 唯一标志 code
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * 资源描述符 arn
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $arn;
+
+    /**
+     * 角色描述
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 是否为系统内建，系统内建的角色不能删除
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $isSystem;
+
+    /**
+     * 创建时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $createdAt;
+
+    /**
+     * 修改时间
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $updatedAt;
+
+    /**
+     * 被授予此角色的用户列表
+     * Required
+     *
+     * @var PaginatedUsers
+     *
+     */
+    public $users;
+
+    /**
+     * 父角色
+     * Optional
+     *
+     * @var Role
+     *
+     */
+    public $parent;
+}
+
+class PaginatedGroups
+{
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var Group[]
+     *
+     */
+    public $list;
+}
+
+class Mfa
+{
+    /**
+     * MFA ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * 用户 ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $userId;
+
+    /**
+     * 用户池 ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $userPoolId;
+
+    /**
+     * 是否开启 MFA
+     * Required
+     *
+     * @var bool
+     *
+     */
+    public $enable;
+
+    /**
+     * 密钥
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $secret;
+}
+
+class Node
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * 节点名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
+
+    /**
+     * 多语言名称，**key** 为标准 **i18n** 语言编码，**value** 为对应语言的名称。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $nameI18n;
+
+    /**
+     * 描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 多语言描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $descriptionI18n;
+
+    /**
+     * 在父节点中的次序值。**order** 值大的排序靠前。有效的值范围是[0, 2^32)
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $order;
+
+    /**
+     * 节点唯一标志码，可以通过 code 进行搜索
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * 是否为根节点
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $root;
+
+    /**
+     * 距离父节点的深度（如果是查询整棵树，返回的 **depth** 为距离根节点的深度，如果是查询某个节点的子节点，返回的 **depath** 指的是距离该节点的深度。）
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $depth;
+
+    /**
+     * Required
+     *
+     * @var string[]
+     *
+     */
+    public $path;
 
     /**
      * Optional
@@ -4458,7 +1508,7 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $emailPostfix;
+    public $createdAt;
 
     /**
      * Optional
@@ -4466,7 +1516,85 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $username;
+    public $updatedAt;
+
+    /**
+     * 该节点的子节点 **ID** 列表
+     * Optional
+     *
+     * @var string[]
+     *
+     */
+    public $children;
+
+    /**
+     * 节点的用户列表
+     * Required
+     *
+     * @var PaginatedUsers
+     *
+     */
+    public $users;
+}
+
+class Org
+{
+    /**
+     * 组织机构 ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * 根节点
+     * Required
+     *
+     * @var Node
+     *
+     */
+    public $rootNode;
+
+    /**
+     * 组织机构节点列表
+     * Required
+     *
+     * @var Node[]
+     *
+     */
+    public $nodes;
+}
+
+class PaginatedOrgs
+{
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var Org[]
+     *
+     */
+    public $list;
+}
+
+class CheckPasswordStrengthResult
+{
+    /**
+     * Required
+     *
+     * @var bool
+     *
+     */
+    public $valid;
 
     /**
      * Optional
@@ -4474,7 +1602,26 @@ class LDAPSingleServer
      * @var string
      *
      */
-    public $password;
+    public $message;
+}
+
+class Policy
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * Required
+     *
+     * @var bool
+     *
+     */
+    public $isDefault;
 
     /**
      * Optional
@@ -4485,20 +1632,12 @@ class LDAPSingleServer
     public $description;
 
     /**
-     * Optional
+     * Required
      *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var bool
+     * @var PolicyStatement[]
      *
      */
-    public $isDeleted;
+    public $statements;
 
     /**
      * Optional
@@ -4515,175 +1654,94 @@ class LDAPSingleServer
      *
      */
     public $updatedAt;
-}
 
-class LDAPServerTesterType
-{
     /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $result;
-}
-
-class LDAPUserTesterType
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $result;
-}
-
-class ClientHasLDAPConfigs
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $result;
-}
-
-class UserAuthorizedAppPagedList
-{
-    /**
-     * Optional
+     * 被授权次数
+     * Required
      *
      * @var int
      *
      */
-    public $totalCount;
+    public $assignmentsCount;
 
     /**
-     * Optional
+     * 授权记录
+     * Required
      *
-     * @var OAuthProviderClient[]
-     *
-     */
-    public $OAuthApps;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient[]
+     * @var PolicyAssignment[]
      *
      */
-    public $OIDCApps;
+    public $assignments;
 }
 
-class IsAppAuthorizedByUser
+class PolicyStatement
 {
     /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $authorized;
-}
-
-class IsReservedDomain
-{
-    /**
-     * Optional
+     * Required
      *
      * @var string
      *
      */
-    public $domainValue;
+    public $resource;
 
     /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isReserved;
-}
-
-class PricingList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $startNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $freeNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $startPrice;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $maxNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $d;
-
-    /**
-     * Optional
+     * Required
      *
      * @var string[]
      *
      */
-    public $features;
-}
+    public $actions;
 
-class PagedOrders
-{
     /**
      * Optional
      *
-     * @var OrderList[]
+     * @var PolicyEffect
      *
      */
-    public $list;
+    public $effect;
+}
 
+class PolicyEffect
+{
+    const ALLOW = 'ALLOW';
+    const DENY = 'DENY';
+}
+
+class PolicyAssignment
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * Required
+     *
+     * @var PolicyAssignmentTargetType
+     *
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $targetIdentifier;
+}
+
+class PolicyAssignmentTargetType
+{
+    const USER = 'USER';
+    const ROLE = 'ROLE';
+}
+
+class PaginatedPolicies
+{
     /**
      * Required
      *
@@ -4691,65 +1749,134 @@ class PagedOrders
      *
      */
     public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var Policy[]
+     *
+     */
+    public $list;
 }
 
-class OrderList
+class PaginatedPolicyAssignment
+{
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $totalCount;
+
+    /**
+     * Required
+     *
+     * @var PolicyAssignment[]
+     *
+     */
+    public $list;
+}
+
+class UDFTargetType
+{
+    const NODE = 'NODE';
+    const ORG = 'ORG';
+    const USER = 'USER';
+    const USERPOOL = 'USERPOOL';
+    const ROLE = 'ROLE';
+    const PERMISSION = 'PERMISSION';
+    const APPLICATION = 'APPLICATION';
+}
+
+class UserDefinedData
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var UdfDataType
+     *
+     */
+    public $dataType;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $value;
+}
+
+class UDFDataType
+{
+    const STRING = 'STRING';
+    const NUMBER = 'NUMBER';
+    const DATETIME = 'DATETIME';
+    const BOOLEAN = 'BOOLEAN';
+    const OBJECT = 'OBJECT';
+}
+
+class UserDefinedField
+{
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     *
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var UdfDataType
+     *
+     */
+    public $dataType;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $label;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $options;
+}
+
+class JWTTokenStatus
 {
     /**
      * Optional
      *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
      * @var int
      *
      */
-    public $timeOfPurchase;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $flowNumber;
-
-    /**
-     * Optional
-     *
-     * @var float
-     *
-     */
-    public $price;
-
-    /**
-     * Optional
-     *
-     * @var OrderPricing
-     *
-     */
-    public $pricing;
+    public $code;
 
     /**
      * Optional
@@ -4757,7 +1884,7 @@ class OrderList
      * @var string
      *
      */
-    public $createdAt;
+    public $message;
 
     /**
      * Optional
@@ -4765,34 +1892,34 @@ class OrderList
      * @var bool
      *
      */
-    public $completed;
+    public $status;
 
     /**
      * Optional
      *
-     * @var string
+     * @var int
      *
      */
-    public $payMethod;
+    public $exp;
 
     /**
      * Optional
      *
-     * @var string
+     * @var int
      *
      */
-    public $endAt;
+    public $iat;
 
     /**
      * Optional
      *
-     * @var OrderClient
+     * @var JWTTokenStatusDetail
      *
      */
-    public $clientInfo;
+    public $data;
 }
 
-class OrderPricing
+class JWTTokenStatusDetail
 {
     /**
      * Optional
@@ -4800,7 +1927,7 @@ class OrderPricing
      * @var string
      *
      */
-    public $_id;
+    public $id;
 
     /**
      * Optional
@@ -4808,69 +1935,29 @@ class OrderPricing
      * @var string
      *
      */
-    public $type;
+    public $userPoolId;
 
     /**
      * Optional
      *
-     * @var int
+     * @var string
      *
      */
-    public $startNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $freeNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $startPrice;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $maxNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $d;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $features;
+    public $arn;
 }
 
-class OrderClient
+class UserPool
 {
     /**
-     * Optional
+     * Required
      *
      * @var string
      *
      */
-    public $_id;
+    public $id;
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      *
@@ -4878,7 +1965,23 @@ class OrderClient
     public $name;
 
     /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $domain;
+
+    /**
      * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * Required
      *
      * @var string
      *
@@ -4886,20 +1989,28 @@ class OrderClient
     public $secret;
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      *
      */
-    public $descriptions;
+    public $jwtSecret;
 
     /**
      * Optional
      *
-     * @var int
+     * @var UserPoolType[]
      *
      */
-    public $jwtExpired;
+    public $userpoolTypes;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $logo;
 
     /**
      * Optional
@@ -4908,434 +2019,6 @@ class OrderClient
      *
      */
     public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-}
-
-class UserPricingType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isFree;
-
-    /**
-     * Optional
-     *
-     * @var UserPricingNotFreeType
-     *
-     */
-    public $pricing;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $freeNumber;
-}
-
-class UserPricingNotFreeType
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $number;
-}
-
-class PagedUsers
-{
-    /**
-     * Optional
-     *
-     * @var ExtendUser[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class ExtendUser
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $unionid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $openid;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $emailVerified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $phoneVerified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $nickname;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $company;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $photo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $browser;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $device;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $registerInClient;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $registerMethod;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $tokenExpiredAt;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $loginsCount;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $lastLogin;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $lastIP;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $signedUp;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $blocked;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $givenName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $familyName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $middleName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $profile;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $preferredUsername;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $website;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $gender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $birthdate;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $zoneinfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $locale;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $address;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $formatted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $streetAddress;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $locality;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $region;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $postalCode;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $country;
 
     /**
      * Optional
@@ -5346,79 +2029,143 @@ class ExtendUser
     public $updatedAt;
 
     /**
-     * Optional
+     * 用户邮箱是否验证（用户的 emailVerified 字段）默认值，默认为 false
+     * Required
      *
-     * @var Group
-     *
-     */
-    public $group;
-
-    /**
-     * Optional
-     *
-     * @var UserClientType
+     * @var bool
      *
      */
-    public $clientType;
+    public $emailVerifiedDefault;
 
     /**
-     * Optional
+     * 用户注册之后是否发送欢迎邮件
+     * Required
      *
-     * @var UserLocation[]
+     * @var bool
      *
      */
-    public $userLocation;
+    public $sendWelcomeEmail;
 
     /**
-     * Optional
+     * 是否关闭注册
+     * Required
      *
-     * @var PagedUserLoginHistory
+     * @var bool
      *
      */
-    public $userLoginHistory;
+    public $registerDisabled;
 
     /**
+     * 用户池禁止注册后，是否还显示微信小程序扫码登录。当 **showWXMPQRCode** 为 **true** 时，
+     * 前端显示小程序码，此时只有以前允许注册时，扫码登录过的用户可以继续登录；新用户扫码无法登录。
      * Optional
      *
-     * @var SystemApplicationType
+     * @var bool
      *
      */
-    public $systemApplicationType;
+    public $showWxQRCodeWhenRegisterDisabled;
 
     /**
-     * Optional
-     *
-     * @var ThirdPartyIdentity
-     *
-     */
-    public $thirdPartyIdentity;
-
-    /**
+     * 前端跨域请求白名单
      * Optional
      *
      * @var string
      *
      */
-    public $customData;
+    public $allowedOrigins;
 
     /**
+     * 用户 **token** 有效时间，单位为秒，默认为 15 天。
      * Optional
      *
-     * @var string
+     * @var int
      *
      */
-    public $metadata;
+    public $tokenExpiresAfter;
 
     /**
+     * 是否已删除
      * Optional
      *
-     * @var string
+     * @var bool
      *
      */
-    public $salt;
+    public $isDeleted;
+
+    /**
+     * 注册频繁检测
+     * Optional
+     *
+     * @var FrequentRegisterCheckConfig
+     *
+     */
+    public $frequentRegisterCheck;
+
+    /**
+     * 登录失败检测
+     * Optional
+     *
+     * @var LoginFailCheckConfig
+     *
+     */
+    public $loginFailCheck;
+
+    /**
+     * 手机号修改策略
+     * Optional
+     *
+     * @var ChangePhoneStrategy
+     *
+     */
+    public $changePhoneStrategy;
+
+    /**
+     * 邮箱修改策略
+     * Optional
+     *
+     * @var ChangeEmailStrategy
+     *
+     */
+    public $changeEmailStrategy;
+
+    /**
+     * APP 扫码登录配置
+     * Optional
+     *
+     * @var QrcodeLoginStrategy
+     *
+     */
+    public $qrcodeLoginStrategy;
+
+    /**
+     * APP 拉起小程序登录配置
+     * Optional
+     *
+     * @var App2WxappLoginStrategy
+     *
+     */
+    public $app2WxappLoginStrategy;
+
+    /**
+     * 注册白名单配置
+     * Optional
+     *
+     * @var RegisterWhiteListConfig
+     *
+     */
+    public $whitelist;
+
+    /**
+     * 自定义短信服务商配置
+     * Optional
+     *
+     * @var CustomSMSProvider
+     *
+     */
+    public $customSMSProvider;
 }
 
-class Group
+class UserPoolType
 {
     /**
      * Optional
@@ -5426,58 +2173,7 @@ class Group
      * @var string
      *
      */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $descriptions;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $permissions;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class UserClientType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
+    public $code;
 
     /**
      * Optional
@@ -5506,302 +2202,10 @@ class UserClientType
     /**
      * Optional
      *
-     * @var string
+     * @var string[]
      *
      */
-    public $example;
-}
-
-class UserLocation
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $userPool;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $where;
-}
-
-class UserClient
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var IamType
-     *
-     */
-    public $iamType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var UserClientType
-     *
-     */
-    public $clientType;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $userLimit;
-
-    /**
-     * Optional
-     *
-     * @var UserClientType[]
-     *
-     */
-    public $userPoolTypes;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $usersCount;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $emailVerifiedDefault;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $sendWelcomeEmail;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $registerDisabled;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $showWXMPQRCode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $useMiniLogin;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $useSelfWxapp;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $allowedOrigins;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $descriptions;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $jwtExpired;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var FrequentRegisterCheckConfig
-     *
-     */
-    public $frequentRegisterCheck;
-
-    /**
-     * Optional
-     *
-     * @var LoginFailCheckConfig
-     *
-     */
-    public $loginFailCheck;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableEmail;
-
-    /**
-     * Optional
-     *
-     * @var ChangePhoneStrategy
-     *
-     */
-    public $changePhoneStrategy;
-
-    /**
-     * Optional
-     *
-     * @var ChangeEmailStrategy
-     *
-     */
-    public $changeEmailStrategy;
-
-    /**
-     * Optional
-     *
-     * @var QrcodeLoginStrategy
-     *
-     */
-    public $qrcodeLoginStrategy;
-
-    /**
-     * Optional
-     *
-     * @var App2WxappLoginStrategy
-     *
-     */
-    public $app2WxappLoginStrategy;
-}
-
-class IAMType
-{
-    const EIAM = 'EIAM';
-    const CIAM = 'CIAM';
+    public $sdks;
 }
 
 class FrequentRegisterCheckConfig
@@ -5828,7 +2232,7 @@ class FrequentRegisterCheckConfig
      * @var bool
      *
      */
-    public $enable;
+    public $enabled;
 }
 
 class LoginFailCheckConfig
@@ -5855,7 +2259,7 @@ class LoginFailCheckConfig
      * @var bool
      *
      */
-    public $enable;
+    public $enabled;
 }
 
 class ChangePhoneStrategy
@@ -5934,1986 +2338,37 @@ class App2WxappLoginStrategy
     public $ticketExchangeUserInfoNeedSecret;
 }
 
-class PagedUserLoginHistory
+class RegisterWhiteListConfig
 {
     /**
-     * Optional
-     *
-     * @var UserLoginHistory[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class UserLoginHistory
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $client;
-
-    /**
+     * 是否开启手机号注册白名单
      * Optional
      *
      * @var bool
      *
      */
-    public $success;
+    public $phoneEnabled;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $ip;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $result;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $device;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $browser;
-}
-
-class SystemApplicationType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $descriptions;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $price;
-}
-
-class UserIds
-{
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class UserAnalytics
-{
-    /**
-     * Optional
-     *
-     * @var UserAnalyticsItem
-     *
-     */
-    public $usersAddedToday;
-
-    /**
-     * Optional
-     *
-     * @var UserAnalyticsItem
-     *
-     */
-    public $usersAddedLastWeek;
-
-    /**
-     * Optional
-     *
-     * @var UserAnalyticsItem
-     *
-     */
-    public $usersLoginLastWeek;
-
-    /**
-     * Optional
-     *
-     * @var UserAnalyticsItem
-     *
-     */
-    public $totalUsers;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $allUsers;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalApps;
-}
-
-class UserAnalyticsItem
-{
-    /**
-     * Optional
-     *
-     * @var User[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $length;
-}
-
-class PagedUserClients
-{
-    /**
-     * Optional
-     *
-     * @var UserClient[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class UserLoginCount
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $month;
-
-    /**
+     * 是否开启邮箱注册白名单
      * Optional
      *
      * @var bool
      *
      */
-    public $isError;
+    public $emailEnabled;
 
     /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalNumber;
-}
-
-class JwtDecodedData
-{
-    /**
-     * Optional
-     *
-     * @var JwtPayloadData
-     *
-     */
-    public $data;
-
-    /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $iat;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $exp;
-}
-
-class JwtPayloadData
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $unionid;
-}
-
-class CommonMessage
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $message;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $code;
-
-    /**
+     * 是否开用户名注册白名单
      * Optional
      *
      * @var bool
      *
      */
-    public $status;
+    public $usernameEnabled;
 }
 
-class JWTDecodedDataCheckLogin
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $message;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $code;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var TokenWholeInfo
-     *
-     */
-    public $token;
-}
-
-class TokenWholeInfo
-{
-    /**
-     * Optional
-     *
-     * @var TokenMoreInfo
-     *
-     */
-    public $data;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $iat;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $exp;
-}
-
-class TokenMoreInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $unionid;
-}
-
-class AppSecretByClientId
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientId;
-}
-
-class LoginHotDotPicData
-{
-    /**
-     * Optional
-     *
-     * @var string[][]
-     *
-     */
-    public $list;
-}
-
-class RegisterEveryDayCount
-{
-    /**
-     * Optional
-     *
-     * @var string[][]
-     *
-     */
-    public $list;
-}
-
-class Statistic
-{
-    /**
-     * Optional
-     *
-     * @var StatisticInfo[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class StatisticInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $loginsCount;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $appsCount;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $OAuthCount;
-}
-
-class PagedUserClientList
-{
-    /**
-     * Optional
-     *
-     * @var PagedUserClientListItem[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class PagedUserClientListItem
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $usersCount;
-
-    /**
-     * Optional
-     *
-     * @var UserBrief
-     *
-     */
-    public $user;
-}
-
-class UserBrief
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-}
-
-class UsersInGroup
-{
-    /**
-     * Optional
-     *
-     * @var UsersInGroupListItem[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class UsersInGroupListItem
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $upgrade;
-}
-
-class QpsByTime
-{
-    /**
-     * Optional
-     *
-     * @var float
-     *
-     */
-    public $qps;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $time;
-}
-
-class GeographicalDistributionList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $city;
-
-    /**
-     * Optional
-     *
-     * @var float
-     *
-     */
-    public $size;
-
-    /**
-     * Optional
-     *
-     * @var float[]
-     *
-     */
-    public $point;
-}
-
-class DayServiceCallListOfAllServices
-{
-    /**
-     * Optional
-     *
-     * @var DayServiceCallList[]
-     *
-     */
-    public $userService;
-
-    /**
-     * Optional
-     *
-     * @var DayServiceCallList[]
-     *
-     */
-    public $emailService;
-
-    /**
-     * Optional
-     *
-     * @var DayServiceCallList[]
-     *
-     */
-    public $oAuthService;
-
-    /**
-     * Optional
-     *
-     * @var DayServiceCallList[]
-     *
-     */
-    public $payService;
-}
-
-class DayServiceCallList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $day;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-}
-
-class DayUserGrowth
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $day;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-}
-
-class PagedRequestList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var Request[]
-     *
-     */
-    public $list;
-}
-
-class Request
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $where;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $ip;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $size;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $responseTime;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $service;
-}
-
-class UserOAuthBind
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $unionid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userInfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class PatchExtendUser
-{
-    /**
-     * Optional
-     *
-     * @var ExtendUser[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class PermissionDescriptorsListInputType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $permissionId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $operationAllow;
-}
-
-class PagedRoles
-{
-    /**
-     * Optional
-     *
-     * @var Group[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class PagedUserGroup
-{
-    /**
-     * Optional
-     *
-     * @var UserGroup[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class UserGroup
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var Group
-     *
-     */
-    public $group;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class ClientInfoAndAccessToken
-{
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $clientInfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $accessToken;
-}
-
-class ClientWebhook
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var WebhookEvent[]
-     *
-     */
-    public $events;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isLastTimeSuccess;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $contentType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $enable;
-}
-
-class WebhookEvent
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class WebhookLog
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $webhook;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $event;
-
-    /**
-     * Optional
-     *
-     * @var WebhookRequestType
-     *
-     */
-    public $request;
-
-    /**
-     * Optional
-     *
-     * @var WebhookResponseType
-     *
-     */
-    public $response;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $errorMessage;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-}
-
-class WebhookRequestType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $headers;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $payload;
-}
-
-class WebhookResponseType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $headers;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $body;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $statusCode;
-}
-
-class WebhookSettingOptions
-{
-    /**
-     * Required
-     *
-     * @var WebhookEvent[]
-     *
-     */
-    public $webhookEvents;
-
-    /**
-     * Required
-     *
-     * @var WebhookContentType[]
-     *
-     */
-    public $contentTypes;
-}
-
-class WebhookContentType
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $label;
-}
-
-class CollaborativeUserPoolList
-{
-    /**
-     * Optional
-     *
-     * @var Collaboration[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class Collaboration
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $owner;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $collaborator;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $userPool;
-
-    /**
-     * Optional
-     *
-     * @var PermissionDescriptors[]
-     *
-     */
-    public $permissionDescriptors;
-}
-
-class PermissionDescriptors
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $permissionId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $operationAllow;
-}
-
-class Collaborators
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $collaborationId;
-
-    /**
-     * Optional
-     *
-     * @var Collaboration[]
-     *
-     */
-    public $list;
-}
-
-class CollaboratorPermissions
-{
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $collaborator;
-
-    /**
-     * Optional
-     *
-     * @var PermissionDescriptors[]
-     *
-     */
-    public $list;
-}
-
-class PasswordStrengthSettings
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $pwdStrength;
-}
-
-class PermissionList
-{
-    /**
-     * Optional
-     *
-     * @var Permission[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class Permission
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $affect;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class BasicUserInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $photo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-}
-
-class PaaswordFaas
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $encryptUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $decryptUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logs;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-}
-
-class LoginTopEmailList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-}
-
-class RegisterMethodList
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $method;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-}
-
-class SMSCountInfo
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $limitCount;
-}
-
-class Invitation
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-}
-
-class InvitationState
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enablePhone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-}
-
-class MFA
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $shareKey;
-}
-
-class PagedUserPoolWithMFA
-{
-    /**
-     * Optional
-     *
-     * @var UserPoolWithMFA[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $total;
-}
-
-class UserPoolWithMFA
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $userPool;
-
-    /**
-     * Optional
-     *
-     * @var MFA
-     *
-     */
-    public $MFA;
-}
-
-class PagedCustomMFAList
-{
-    /**
-     * Optional
-     *
-     * @var CustomMFA[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $total;
-}
-
-class CustomMFA
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userIdInMiniLogin;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $remark;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
-}
-
-class ValidateResult
+class CustomSMSProvider
 {
     /**
      * Optional
@@ -7921,37 +2376,7 @@ class ValidateResult
      * @var bool
      *
      */
-    public $isValid;
-}
-
-class AuthAuditRecordsList
-{
-    /**
-     * Optional
-     *
-     * @var AuthAuditRecord[]
-     *
-     */
-    public $list;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-}
-
-class AuthAuditRecord
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
+    public $enabled;
 
     /**
      * Optional
@@ -7959,10 +2384,29 @@ class AuthAuditRecord
      * @var string
      *
      */
-    public $appType;
+    public $provider;
 
     /**
      * Optional
+     *
+     * @var SMSConfig253
+     *
+     */
+    public $config253;
+}
+
+class SMSConfig253
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $sendSmsApi;
+
+    /**
+     * Required
      *
      * @var string
      *
@@ -7970,865 +2414,6 @@ class AuthAuditRecord
     public $appId;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $event;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class UserPoolCommonInfo
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $domain;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $logo;
-
-    /**
-     * Optional
-     *
-     * @var IamType
-     *
-     */
-    public $iamType;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $userLimit;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var ChangePhoneStrategy
-     *
-     */
-    public $changePhoneStrategy;
-
-    /**
-     * Optional
-     *
-     * @var ChangeEmailStrategy
-     *
-     */
-    public $changeEmailStrategy;
-
-    /**
-     * Optional
-     *
-     * @var QrcodeLoginStrategy
-     *
-     */
-    public $qrcodeLoginStrategy;
-
-    /**
-     * Optional
-     *
-     * @var App2WxappLoginStrategy
-     *
-     */
-    public $app2WxappLoginStrategy;
-}
-
-class providerType
-{
-    const OIDC = 'OIDC';
-    const OAuth = 'OAuth';
-}
-
-class ADConnctorCommonInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-}
-
-class isAdConenctorAlive
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isAlive;
-}
-
-class ADConnector
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $salt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class ADConnectorEnabledProvider
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $providerType;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $providerId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $adConnectorId;
-}
-
-class SAMLFieldMappings
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $sourceExpression;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $targetField;
-}
-
-class SAMLAvaliableFieldMappings
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $editable;
-}
-
-class RBACRole
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACPermission
-     *
-     */
-    public $permissions;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $users;
-}
-
-class PagedRBACPermission
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACPermission[]
-     *
-     */
-    public $list;
-}
-
-class RBACPermission
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class SortByEnum
-{
-    const CREATEDAT_DESC = 'CREATEDAT_DESC';
-    const CREATEDAT_ASC = 'CREATEDAT_ASC';
-    const UPDATEDAT_DESC = 'UPDATEDAT_DESC';
-    const UPDATEDAT_ASC = 'UPDATEDAT_ASC';
-}
-
-class PagedRBACRole
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACRole[]
-     *
-     */
-    public $list;
-}
-
-class RBACGroup
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACRole
-     *
-     */
-    public $roles;
-
-    /**
-     * Optional
-     *
-     * @var PagedRBACPermission
-     *
-     */
-    public $permissions;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $users;
-}
-
-class PagedRBACGroup
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup[]
-     *
-     */
-    public $list;
-}
-
-class UserPermissionList
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACPermission[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $rawList;
-}
-
-class UserGroupList
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $rawList;
-}
-
-class UserRoleList
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RBACRole[]
-     *
-     */
-    public $list;
-
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $rawList;
-}
-
-class Org
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-
-    /**
-     * Required
-     *
-     * @var OrgNode[]
-     *
-     */
-    public $nodes;
-}
-
-class OrgNode
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $children;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $root;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $depth;
-}
-
-class PagedOrg
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var Org[]
-     *
-     */
-    public $list;
-}
-
-class OrgChildrenNodesInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-}
-
-class OrgChildNode
-{
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $group;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $depth;
-}
-
-class IsRootNodeOfOrgInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-}
-
-class GroupMetadata
-{
-    /**
      * Required
      *
      * @var string
@@ -8842,46 +2427,72 @@ class GroupMetadata
      * @var string
      *
      */
-    public $value;
+    public $template;
+
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $ttl;
 }
 
-class KeyValuePair
+class PaginatedUserpool
 {
     /**
      * Required
      *
-     * @var string
+     * @var int
      *
      */
-    public $key;
+    public $totalCount;
 
     /**
      * Required
      *
-     * @var string
+     * @var UserPool[]
      *
      */
-    public $value;
+    public $list;
 }
 
-class DingTalkCorp
+class AccessTokenRes
 {
     /**
-     * Required
+     * Optional
      *
      * @var string
      *
      */
-    public $corpId;
+    public $accessToken;
 
     /**
-     * Required
+     * Optional
      *
-     * @var bool
+     * @var int
      *
      */
-    public $twoWaySynchronizationOn;
+    public $exp;
 
+    /**
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $iat;
+}
+
+class WhitelistType
+{
+    const USERNAME = 'USERNAME';
+    const EMAIL = 'EMAIL';
+    const PHONE = 'PHONE';
+}
+
+class WhiteList
+{
     /**
      * Optional
      *
@@ -8897,468 +2508,6 @@ class DingTalkCorp
      *
      */
     public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $AESKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-}
-
-class WechatWorkCorp
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $corpId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $corpName;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperSecret;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperToken;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperEncodingAESKey;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $twoWaySynchronizationOn;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-}
-
-class Rule
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Required
-     *
-     * @var RuleTypes
-     *
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $faasUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $code;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $order;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $async;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-}
-
-class RuleTypes
-{
-    const PRE_REGISTER = 'PRE_REGISTER';
-    const POST_REGISTER = 'POST_REGISTER';
-    const POST_AUTHENTICATION = 'POST_AUTHENTICATION';
-    const PRE_OIDCTOKENISSUED = 'PRE_OIDCTOKENISSUED';
-}
-
-class PagedRules
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var Rule[]
-     *
-     */
-    public $list;
-}
-
-class PagedRuleEnvVariable
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var RuleEnvVariable[]
-     *
-     */
-    public $list;
-}
-
-class RuleEnvVariable
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $key;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $value;
-}
-
-class OperationLogsList
-{
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Optional
-     *
-     * @var OperationLog[]
-     *
-     */
-    public $list;
-}
-
-class OperationLog
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $operatorId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $operatorName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $operatorAvatar;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isAdmin;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isCollaborator;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isOwner;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $operationType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedFields;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $removedFields;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $operateAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $fullDocument;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $coll;
-}
-
-class InterConnection
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $sourceUserPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $sourceUserId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $targetUserPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $targetUserId;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $expiresdAt;
-}
-
-class UserMetaDataList
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $totalCount;
-
-    /**
-     * Required
-     *
-     * @var UserMetaData[]
-     *
-     */
-    public $list;
-}
-
-class UserMetaData
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $key;
 
     /**
      * Required
@@ -9372,572 +2521,432 @@ class UserMetaData
 class Mutation
 {
     /**
-     * Optional
+     * 创建社会化登录服务商
+     * Required
      *
-     * @var EmailSentList
-     *
-     */
-    public $SendEmail;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderList
+     * @var SocialConnection
      *
      */
-    public $AddEmailProvider;
+    public $createSocialConnection;
 
     /**
-     * Optional
+     * 配置社会化登录
+     * Required
      *
-     * @var EmailProviderList[]
+     * @var SocialConnectionInstance
      *
      */
-    public $RemoveEmailProvider;
+    public $createSocialConnectionInstance;
 
     /**
-     * Optional
+     * 开启社会化登录
+     * Required
      *
-     * @var EmailProviderList
+     * @var SocialConnectionInstance
      *
      */
-    public $UpdateEmailProvider;
+    public $enableSocialConnectionInstance;
 
     /**
-     * Optional
+     * 关闭社会化登录
+     * Required
      *
-     * @var EmailProviderWithClientList
+     * @var SocialConnectionInstance
      *
      */
-    public $SaveEmailProviderWithClient;
+    public $disableSocialConnectionInstance;
 
     /**
-     * Optional
-     *
-     * @var EmailProviderWithClientList
-     *
-     */
-    public $UpdateEmailTemplateWithClient;
-
-    /**
-     * Optional
-     *
-     * @var EmailSentList
-     *
-     */
-    public $SendEmailByType;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $UseDefaultEmailProvider;
-
-    /**
-     * Optional
+     * 配置自定义邮件模版
+     * Required
      *
      * @var EmailTemplate
      *
      */
-    public $UpdateEmailTemplate;
+    public $configEmailTemplate;
 
     /**
-     * Optional
+     * 启用自定义邮件模版
+     * Required
      *
-     * @var OAuthList
+     * @var EmailTemplate
      *
      */
-    public $AddOAuthList;
+    public $enableEmailTemplate;
 
     /**
-     * Optional
+     * 停用自定义邮件模版（将会使用系统默认邮件模版）
+     * Required
      *
-     * @var string[]
+     * @var EmailTemplate
      *
      */
-    public $RemoveOAuthList;
+    public $disableEmailTemplate;
 
     /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $RemoveOAuthProvider;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList
-     *
-     */
-    public $UpdateOAuthList;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList
-     *
-     */
-    public $UpdateApplicationOAuth;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList
-     *
-     */
-    public $SetApplicationOAuthEnableOrDisable;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $CreateOAuthProvider;
-
-    /**
-     * Optional
-     *
-     * @var OAuthProviderClient
-     *
-     */
-    public $UpdateOAuthProvider;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $CreateOIDCApp;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $UpdateOIDCApp;
-
-    /**
-     * Optional
-     *
-     * @var OIDCProviderClient
-     *
-     */
-    public $RemoveOIDCApp;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $CreateSAMLServiceProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $UpdateSAMLServiceProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $RemoveSAMLServiceProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLServiceProviderClient
-     *
-     */
-    public $EnableSAMLServiceProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $CreateSAMLIdentityProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $UpdateSAMLIdentityProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $RemoveSAMLIdentityProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLIdentityProviderClient
-     *
-     */
-    public $EnableSAMLIdentityProvider;
-
-    /**
-     * Optional
-     *
-     * @var SAMLDefaultIdentityProviderSettings
-     *
-     */
-    public $CreateDefaultSAMLIdentityProviderSettings;
-
-    /**
-     * Optional
-     *
-     * @var LDAPSingleServer
-     *
-     */
-    public $AddLDAPServer;
-
-    /**
-     * Optional
-     *
-     * @var LDAPSingleServer
-     *
-     */
-    public $UpdateLDAPServer;
-
-    /**
-     * Optional
-     *
-     * @var LDAPSingleServer
-     *
-     */
-    public $RemoveLDAPServer;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $LoginByLDAP;
-
-    /**
-     * Optional
-     *
-     * @var OAuthList
-     *
-     */
-    public $ClearAvatarSrc;
-
-    /**
-     * Optional
-     *
-     * @var UserAuthorizedApp
-     *
-     */
-    public $RevokeUserAuthorizedApp;
-
-    /**
-     * Optional
-     *
-     * @var PricingList
-     *
-     */
-    public $UpdateSystemPricing;
-
-    /**
-     * Optional
-     *
-     * @var PricingList
-     *
-     */
-    public $AddSystemPricing;
-
-    /**
-     * Optional
-     *
-     * @var OrderSuccess
-     *
-     */
-    public $order;
-
-    /**
-     * Optional
-     *
-     * @var OrderSuccess
-     *
-     */
-    public $ContinuePay;
-
-    /**
-     * Optional
-     *
-     * @var OrderSuccess
-     *
-     */
-    public $IncClientFlowNumber;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $register;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $createUser;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $login;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $updateUser;
-
-    /**
-     * Optional
-     *
-     * @var User[]
-     *
-     */
-    public $removeUsers;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $newClient;
-
-    /**
-     * Optional
-     *
-     * @var UserClient[]
-     *
-     */
-    public $removeUserClients;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $updateUserClient;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $changePassword;
-
-    /**
-     * Optional
+     * 发送邮件
+     * Required
      *
      * @var CommonMessage
      *
      */
-    public $sendResetPasswordEmail;
+    public $sendEmail;
 
     /**
+     * 创建函数
      * Optional
+     *
+     * @var Function
+     *
+     */
+    public $createFunction;
+
+    /**
+     * 修改函数
+     * Required
+     *
+     * @var Function
+     *
+     */
+    public $updateFunction;
+
+    /**
+     * Required
      *
      * @var CommonMessage
      *
      */
-    public $verifyResetPasswordVerifyCode;
+    public $deleteFunction;
 
     /**
-     * Optional
+     * Required
      *
      * @var CommonMessage
      *
      */
-    public $sendVerifyEmail;
+    public $addUserToGroup;
 
     /**
-     * Optional
-     *
-     * @var InvitationCode
-     *
-     */
-    public $generateInvitationCode;
-
-    /**
-     * Optional
-     *
-     * @var UserClient
-     *
-     */
-    public $refreshAppSecret;
-
-    /**
-     * Optional
-     *
-     * @var UsersInGroupListItem
-     *
-     */
-    public $updateSuperAdminUser;
-
-    /**
-     * Optional
-     *
-     * @var UsersInGroupListItem
-     *
-     */
-    public $addSuperAdminUser;
-
-    /**
-     * Optional
-     *
-     * @var UsersInGroupListItem
-     *
-     */
-    public $removeSuperAdminUser;
-
-    /**
-     * Optional
+     * Required
      *
      * @var CommonMessage
-     *
-     */
-    public $recordRequest;
-
-    /**
-     * Optional
-     *
-     * @var UserOAuthBind
-     *
-     */
-    public $bindOtherOAuth;
-
-    /**
-     * Optional
-     *
-     * @var UserOAuthBind
-     *
-     */
-    public $unbindOtherOAuth;
-
-    /**
-     * Optional
-     *
-     * @var User
-     *
-     */
-    public $unbindEmail;
-
-    /**
-     * Optional
-     *
-     * @var ExtendUser
-     *
-     */
-    public $oauthPasswordLogin;
-
-    /**
-     * Optional
-     *
-     * @var Group
-     *
-     */
-    public $createRole;
-
-    /**
-     * Optional
-     *
-     * @var Group
-     *
-     */
-    public $updateRole;
-
-    /**
-     * Optional
-     *
-     * @var Group
-     *
-     */
-    public $updatePermissions;
-
-    /**
-     * Optional
-     *
-     * @var PagedUserGroup
-     *
-     */
-    public $assignUserToRole;
-
-    /**
-     * Optional
-     *
-     * @var UserGroup
      *
      */
     public $removeUserFromGroup;
 
     /**
-     * Optional
+     * 创建角色
+     * Required
      *
-     * @var ClientWebhook
+     * @var Group
      *
      */
-    public $addClientWebhook;
+    public $createGroup;
+
+    /**
+     * 修改角色
+     * Required
+     *
+     * @var Group
+     *
+     */
+    public $updateGroup;
+
+    /**
+     * 批量删除角色
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deleteGroups;
 
     /**
      * Optional
      *
-     * @var ClientWebhook
+     * @var User
      *
      */
-    public $updateClientWebhook;
+    public $loginByEmail;
 
     /**
      * Optional
      *
-     * @var ClientWebhook
+     * @var User
      *
      */
-    public $deleteClientWebhook;
+    public $loginByUsername;
 
     /**
      * Optional
      *
-     * @var bool
+     * @var User
      *
      */
-    public $SendWebhookTest;
+    public $loginByPhoneCode;
+
+    /**
+     * Optional
+     *
+     * @var User
+     *
+     */
+    public $loginByPhonePassword;
+
+    /**
+     * 修改 MFA 信息
+     * Optional
+     *
+     * @var Mfa
+     *
+     */
+    public $changeMfa;
+
+    /**
+     * 创建组织机构
+     * Required
+     *
+     * @var Org
+     *
+     */
+    public $createOrg;
+
+    /**
+     * 删除组织机构
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deleteOrg;
+
+    /**
+     * 添加子节点
+     * Required
+     *
+     * @var Org
+     *
+     */
+    public $addNode;
+
+    /**
+     * 修改节点
+     * Required
+     *
+     * @var Node
+     *
+     */
+    public $updateNode;
+
+    /**
+     * 删除节点（会一并删掉子节点）
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deleteNode;
+
+    /**
+     * （批量）将成员添加到节点中
+     * Required
+     *
+     * @var Node
+     *
+     */
+    public $addMember;
+
+    /**
+     * （批量）将成员从节点中移除
+     * Required
+     *
+     * @var Node
+     *
+     */
+    public $removeMember;
+
+    /**
+     * Required
+     *
+     * @var Org
+     *
+     */
+    public $moveNode;
+
+    /**
+     * Optional
+     *
+     * @var CommonMessage
+     *
+     */
+    public $resetPassword;
+
+    /**
+     * Required
+     *
+     * @var Policy
+     *
+     */
+    public $createPolicy;
+
+    /**
+     * Required
+     *
+     * @var Policy
+     *
+     */
+    public $updatePolicy;
+
+    /**
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deletePolicy;
+
+    /**
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deletePolicies;
+
+    /**
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $addPolicyAssignments;
+
+    /**
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $removePolicyAssignments;
+
+    /**
+     * 允许操作某个资源
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $allow;
+
+    /**
+     * Optional
+     *
+     * @var User
+     *
+     */
+    public $registerByUsername;
+
+    /**
+     * Optional
+     *
+     * @var User
+     *
+     */
+    public $registerByEmail;
+
+    /**
+     * Optional
+     *
+     * @var User
+     *
+     */
+    public $registerByPhoneCode;
+
+    /**
+     * 创建角色
+     * Required
+     *
+     * @var Role
+     *
+     */
+    public $createRole;
+
+    /**
+     * 修改角色
+     * Required
+     *
+     * @var Role
+     *
+     */
+    public $updateRole;
+
+    /**
+     * 删除角色
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deleteRole;
+
+    /**
+     * 批量删除角色
+     * Required
+     *
+     * @var BatchOperationResult
+     *
+     */
+    public $deleteRoles;
+
+    /**
+     * 给用户授权角色
+     * Optional
+     *
+     * @var CommonMessage
+     *
+     */
+    public $assignRole;
+
+    /**
+     * 撤销角色
+     * Optional
+     *
+     * @var CommonMessage
+     *
+     */
+    public $revokeRole;
+
+    /**
+     * Required
+     *
+     * @var UserDefinedField
+     *
+     */
+    public $addUdf;
+
+    /**
+     * Optional
+     *
+     * @var CommonMessage
+     *
+     */
+    public $removeUdf;
+
+    /**
+     * Optional
+     *
+     * @var UserDefinedData[]
+     *
+     */
+    public $setUdv;
+
+    /**
+     * Optional
+     *
+     * @var UserDefinedData[]
+     *
+     */
+    public $removeUdv;
 
     /**
      * Optional
@@ -9948,623 +2957,53 @@ class Mutation
     public $refreshToken;
 
     /**
-     * Optional
-     *
-     * @var Collaboration
-     *
-     */
-    public $addCollaborator;
-
-    /**
-     * Optional
-     *
-     * @var Collaboration
-     *
-     */
-    public $removeCollaborator;
-
-    /**
-     * Optional
-     *
-     * @var Collaboration
-     *
-     */
-    public $updateCollaborator;
-
-    /**
-     * Optional
-     *
-     * @var Permission
-     *
-     */
-    public $addPermission;
-
-    /**
-     * Optional
-     *
-     * @var PasswordStrengthSettings
-     *
-     */
-    public $updatePasswordStrengthSettingsByUserPoolId;
-
-    /**
-     * Optional
-     *
-     * @var PagedUsers
-     *
-     */
-    public $resetUserPoolFromWechat;
-
-    /**
-     * Optional
-     *
-     * @var EncryptPassword
-     *
-     */
-    public $encryptPassword;
-
-    /**
-     * Optional
-     *
-     * @var PaaswordFaas
-     *
-     */
-    public $enablePasswordFaas;
-
-    /**
-     * Optional
-     *
-     * @var Invitation
-     *
-     */
-    public $addToInvitation;
-
-    /**
-     * Optional
-     *
-     * @var Invitation
-     *
-     */
-    public $removeFromInvitation;
-
-    /**
-     * Optional
-     *
-     * @var InvitationState
-     *
-     */
-    public $setInvitationState;
-
-    /**
-     * Optional
-     *
-     * @var MFA
-     *
-     */
-    public $changeMFA;
-
-    /**
-     * Optional
-     *
-     * @var CustomMFA
-     *
-     */
-    public $createCustomMFA;
-
-    /**
-     * Optional
-     *
-     * @var CustomMFA
-     *
-     */
-    public $removeCustomMFA;
-
-    /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $recordAuthAudit;
-
-    /**
-     * Required
-     *
-     * @var RefreshAccessTokenData
-     *
-     */
-    public $refreshAccessToken;
-
-    /**
+     * 创建用户。此接口需要管理员权限，普通用户注册请使用 **register** 接口。
      * Required
      *
      * @var User
      *
      */
-    public $passwordLessForceLogin;
+    public $createUser;
 
     /**
+     * 更新用户信息。
      * Required
      *
      * @var User
      *
      */
-    public $createUserWithoutAuthentication;
+    public $updateUser;
 
     /**
-     * Optional
-     *
-     * @var RefreshThirdPartyIdentityResult
-     *
-     */
-    public $refreshThirdPartyToken;
-
-    /**
-     * Optional
-     *
-     * @var OidcPasswordModeUserInfo
-     *
-     */
-    public $signIn;
-
-    /**
-     * Optional
-     *
-     * @var RefreshedSignInToken
-     *
-     */
-    public $refreshSignInToken;
-
-    /**
-     * Optional
-     *
-     * @var ADConnector
-     *
-     */
-    public $createAdConnector;
-
-    /**
-     * Optional
-     *
-     * @var ADConnector
-     *
-     */
-    public $updateAdConnector;
-
-    /**
-     * Optional
-     *
-     * @var ADConnector
-     *
-     */
-    public $refreshAdConnectorSecret;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $removeAdConnector;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableAdConnector;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $disableAdConnector;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableAdConnectorForProvider;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $disableAdConnectorForProvider;
-
-    /**
-     * Optional
+     * 修改用户密码，此接口需要验证原始密码，管理员直接修改请使用 **updateUser** 接口。
+     * Required
      *
      * @var User
      *
      */
-    public $loginByAd;
+    public $updatePassword;
 
     /**
+     * 绑定手机号，调用此接口需要当前用户未绑定手机号
      * Required
      *
-     * @var SAMLFieldMappings
+     * @var User
      *
      */
-    public $setSAMLIdPFieldMapping;
+    public $bindPhone;
 
     /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $removeSAMLIdpFieldMapping;
-
-    /**
-     * Optional
-     *
-     * @var RBACPermission
-     *
-     */
-    public $createRBACPermission;
-
-    /**
-     * Optional
-     *
-     * @var RBACPermission
-     *
-     */
-    public $updateRBACPermission;
-
-    /**
+     * 解绑定手机号，调用此接口需要当前用户已绑定手机号并且绑定了其他登录方式
      * Required
      *
-     * @var CommonMessage
+     * @var User
      *
      */
-    public $deleteRBACPermission;
+    public $unbindPhone;
 
     /**
+     * 修改手机号。此接口需要验证手机号验证码，管理员直接修改请使用 **updateUser** 接口。
      * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRBACPermissionBatch;
-
-    /**
-     * Optional
-     *
-     * @var RBACRole
-     *
-     */
-    public $createRBACRole;
-
-    /**
-     * Optional
-     *
-     * @var RBACRole
-     *
-     */
-    public $updateRBACRole;
-
-    /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRBACRole;
-
-    /**
-     * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRBACRoleBatch;
-
-    /**
-     * Optional
-     *
-     * @var RBACGroup
-     *
-     */
-    public $createRBACGroup;
-
-    /**
-     * Optional
-     *
-     * @var RBACGroup
-     *
-     */
-    public $updateRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRBACGroupBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $assignRBACRoleToUser;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $assignRBACRoleToUserBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $revokeRBACRoleFromUser;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $revokeRBACRoleFromUserBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $addPermissionToRBACRole;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $addPermissionToRBACRoleBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $removePermissionFromRBACRole;
-
-    /**
-     * Required
-     *
-     * @var RBACRole
-     *
-     */
-    public $removePermissionFromRBACRoleBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $addRoleToRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $addRoleToRBACGroupBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $removeRoleFromRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $removeRoleFromRBACGroupBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $addUserToRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $addUserToRBACGroupBatch;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $removeUserFromRBACGroup;
-
-    /**
-     * Required
-     *
-     * @var RBACGroup
-     *
-     */
-    public $removeUserFromRBACGroupBatch;
-
-    /**
-     * Required
-     *
-     * @var Org
-     *
-     */
-    public $createOrg;
-
-    /**
-     * Required
-     *
-     * @var Org
-     *
-     */
-    public $updateOrg;
-
-    /**
-     * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteOrg;
-
-    /**
-     * Required
-     *
-     * @var Org
-     *
-     */
-    public $addOrgNode;
-
-    /**
-     * Required
-     *
-     * @var Org
-     *
-     */
-    public $removeOrgNode;
-
-    /**
-     * Required
-     *
-     * @var GroupMetadata[]
-     *
-     */
-    public $addGroupMetadata;
-
-    /**
-     * Required
-     *
-     * @var GroupMetadata[]
-     *
-     */
-    public $removeGroupMetadata;
-
-    /**
-     * Optional
-     *
-     * @var DingTalkCorp
-     *
-     */
-    public $addDingTalkCorp;
-
-    /**
-     * Optional
-     *
-     * @var CorpSyncResult
-     *
-     */
-    public $startDingTalkCorpInitialSync;
-
-    /**
-     * Optional
-     *
-     * @var WechatWorkCorp
-     *
-     */
-    public $addWechatWorkCorp;
-
-    /**
-     * Optional
-     *
-     * @var CorpSyncResult
-     *
-     */
-    public $startWechatWorkCorpInitialSync;
-
-    /**
-     * Required
-     *
-     * @var Rule
-     *
-     */
-    public $createRule;
-
-    /**
-     * Required
-     *
-     * @var Rule
-     *
-     */
-    public $updateRule;
-
-    /**
-     * Required
-     *
-     * @var CommonMessage
-     *
-     */
-    public $deleteRule;
-
-    /**
-     * Required
-     *
-     * @var PagedRuleEnvVariable
-     *
-     */
-    public $setRuleEnv;
-
-    /**
-     * Required
-     *
-     * @var PagedRuleEnvVariable
-     *
-     */
-    public $removeRuleEnv;
-
-    /**
-     * Optional
-     *
-     * @var CommonMessage
-     *
-     */
-    public $updateRuleOrder;
-
-    /**
-     * Optional
      *
      * @var User
      *
@@ -10572,7 +3011,8 @@ class Mutation
     public $updatePhone;
 
     /**
-     * Optional
+     * 修改邮箱。此接口需要验证邮箱验证码，管理员直接修改请使用 updateUser 接口。
+     * Required
      *
      * @var User
      *
@@ -10580,412 +3020,105 @@ class Mutation
     public $updateEmail;
 
     /**
+     * 解绑定邮箱
+     * Required
+     *
+     * @var User
+     *
+     */
+    public $unbindEmail;
+
+    /**
+     * 删除用户
      * Optional
      *
      * @var CommonMessage
      *
      */
-    public $sendChangeEmailVerifyCode;
+    public $deleteUser;
 
     /**
+     * 批量删除用户
      * Optional
      *
      * @var CommonMessage
      *
      */
-    public $createInterConnection;
+    public $deleteUsers;
+
+    /**
+     * 创建用户池
+     * Required
+     *
+     * @var UserPool
+     *
+     */
+    public $createUserpool;
 
     /**
      * Required
      *
-     * @var UserMetaDataList
+     * @var UserPool
      *
      */
-    public $setUserMetadata;
+    public $updateUserpool;
 
     /**
      * Required
      *
-     * @var UserMetaDataList
+     * @var string
      *
      */
-    public $removeUserMetadata;
+    public $refreshUserpoolSecret;
+
+    /**
+     * Required
+     *
+     * @var CommonMessage
+     *
+     */
+    public $deleteUserpool;
+
+    /**
+     * Required
+     *
+     * @var RefreshAccessTokenRes
+     *
+     */
+    public $refreshAccessToken;
+
+    /**
+     * Required
+     *
+     * @var WhiteList[]
+     *
+     */
+    public $addWhitelist;
+
+    /**
+     * Required
+     *
+     * @var WhiteList[]
+     *
+     */
+    public $removeWhitelist;
 }
 
-class EmailProviderListInput
+/**
+ * CreateSocialConnectionInput
+ */
+class CreateSocialConnectionInput
 {
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderFormInput[]
-     *
-     */
-    public $fields;
-}
-
-class EmailProviderFormInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $help;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $options;
-}
-
-class EmailProviderWithClientAddInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderFormAddInput[]
-     *
-     */
-    public $fields;
-
-    /**
-     * Optional
+     * Required
      *
      * @var string
      *
      */
     public $provider;
-}
-
-class EmailProviderFormAddInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $label;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $help;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $options;
-}
-
-class EmailTemplateWithClientInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $template;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $object;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hasURL;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $URLExpireTime;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $redirectTo;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-}
-
-class EmailTemplateInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $object;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hasURL;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $URLExpireTime;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $status;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $redirectTo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $content;
-}
-
-class OAuthListUpdateInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
+     * Required
      *
      * @var string
      *
@@ -10993,20 +3126,12 @@ class OAuthListUpdateInput
     public $name;
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      *
      */
-    public $alias;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $image;
+    public $logo;
 
     /**
      * Optional
@@ -11019,54 +3144,59 @@ class OAuthListUpdateInput
     /**
      * Optional
      *
-     * @var bool
+     * @var SocialConnectionFieldInput[]
      *
      */
-    public $enabled;
+    public $fields;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $provider string provider
+     * @param $name string name
+     * @param $logo string logo
      */
-    public $url;
+
+    public function __construct($provider, $name, $logo)
+    {
+        $this->provider = $provider;
+        $this->name = $name;
+        $this->logo = $logo;
+    }
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $description string description
+     * @return CreateSocialConnectionInput
      */
-    public $client;
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $fields SocialConnectionFieldInput[] fields
+     * @return CreateSocialConnectionInput
      */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $oAuthUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $wxappLogo;
+    public function withFields($fields)
+    {
+        $this->fields = $fields;
+        return $this;
+    }
 }
 
-class OAuthListFieldsFormUpdateInput
+
+/**
+ * SocialConnectionFieldInput
+ */
+class SocialConnectionFieldInput
 {
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $key;
+
     /**
      * Optional
      *
@@ -11094,530 +3224,335 @@ class OAuthListFieldsFormUpdateInput
     /**
      * Optional
      *
+     * @var SocialConnectionFieldInput[]
+     *
+     */
+    public $children;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $key string key
+     * @return SocialConnectionFieldInput
+     */
+    public function withKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+    /**
+     * @param $label string label
+     * @return SocialConnectionFieldInput
+     */
+    public function withLabel($label)
+    {
+        $this->label = $label;
+        return $this;
+    }
+
+    /**
+     * @param $type string type
+     * @return SocialConnectionFieldInput
+     */
+    public function withType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param $placeholder string placeholder
+     * @return SocialConnectionFieldInput
+     */
+    public function withPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
+        return $this;
+    }
+
+    /**
+     * @param $children SocialConnectionFieldInput[] children
+     * @return SocialConnectionFieldInput
+     */
+    public function withChildren($children)
+    {
+        $this->children = $children;
+        return $this;
+    }
+}
+
+
+/**
+ * CreateSocialConnectionInstanceInput
+ */
+class CreateSocialConnectionInstanceInput
+{
+    /**
+     * 社会化登录 provider
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $provider;
+
+    /**
+     * Optional
+     *
+     * @var CreateSocialConnectionInstanceFieldInput[]
+     *
+     */
+    public $fields;
+
+    /**
+     * @param $provider string 社会化登录 provider
+     */
+
+    public function __construct($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @param $fields CreateSocialConnectionInstanceFieldInput[] fields
+     * @return CreateSocialConnectionInstanceInput
+     */
+    public function withFields($fields)
+    {
+        $this->fields = $fields;
+        return $this;
+    }
+}
+
+
+/**
+ * CreateSocialConnectionInstanceFieldInput
+ */
+class CreateSocialConnectionInstanceFieldInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
      * @var string
      *
      */
     public $value;
 
     /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormRecursionInput[]
-     *
+     * @param $key string key
+     * @param $value string value
      */
-    public $children;
 
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $checked;
+    public function __construct($key, $value)
+    {
+        $this->key = $key;
+        $this->value = $value;
+    }
+
 }
 
-class OAuthListFieldsFormRecursionInput
+
+/**
+ * ConfigEmailTemplateInput
+ */
+class ConfigEmailTemplateInput
 {
     /**
-     * Optional
+     * 邮件模版类型
+     * Required
      *
-     * @var string
-     *
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
+     * @var EmailTemplateType
      *
      */
     public $type;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $value;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormRecursionInput[]
-     *
-     */
-    public $children;
-}
-
-class OidcProviderCustomStylesInput
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $forceLogin;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideQRCode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideUP;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideUsername;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideRegister;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hidePhone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideSocial;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hideClose;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $hidePhonePassword;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderCustomStylesPlaceholderInput
-     *
-     */
-    public $placeholder;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderCustomStylesQrcodeScanningInput
-     *
-     */
-    public $qrcodeScanning;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderDefaultLoginMethod
-     *
-     */
-    public $defaultLoginMethod;
-}
-
-class OidcProviderCustomStylesPlaceholderInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $confirmPassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $verfiyCode;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $newPassword;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phoneCode;
-}
-
-class OidcProviderCustomStylesQrcodeScanningInput
-{
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $redirect;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $interval;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $tips;
-}
-
-class AssertionMapInputType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $nickname;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $photo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $company;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $providerName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-}
-
-class AssertionConsumeServiceInputType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $binding;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $url;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $isDefault;
-}
-
-class UserAuthorizedApp
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $scope;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $isRevoked;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $when;
-}
-
-class PricingFieldsInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $startNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $freeNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $startPrice;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $maxNumber;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $d;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $features;
-}
-
-class OrderAddInput
-{
-    /**
+     * 模版名称
      * Required
      *
      * @var string
      *
      */
-    public $user;
+    public $name;
 
     /**
+     * 邮件主题
      * Required
      *
      * @var string
      *
      */
-    public $client;
+    public $subject;
 
     /**
+     * 显示的邮件发送人
      * Required
      *
      * @var string
      *
      */
-    public $pricing;
+    public $sender;
 
     /**
+     * 邮件模版内容
      * Required
+     *
+     * @var string
+     *
+     */
+    public $content;
+
+    /**
+     * 重定向链接，操作成功后，用户将被重定向到此 URL。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $redirectTo;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $hasURL;
+
+    /**
+     * 验证码过期时间（单位为秒）
+     * Optional
      *
      * @var int
      *
      */
-    public $flowNumber;
+    public $expiresIn;
 
     /**
-     * Required
-     *
-     * @var float
-     *
+     * @param $type EmailTemplateType 邮件模版类型
+     * @param $name string 模版名称
+     * @param $subject string 邮件主题
+     * @param $sender string 显示的邮件发送人
+     * @param $content string 邮件模版内容
      */
-    public $price;
+
+    public function __construct($type, $name, $subject, $sender, $content)
+    {
+        $this->type = $type;
+        $this->name = $name;
+        $this->subject = $subject;
+        $this->sender = $sender;
+        $this->content = $content;
+    }
 
     /**
-     * Required
-     *
-     * @var int
-     *
+     * @param $redirectTo string 重定向链接，操作成功后，用户将被重定向到此 URL。
+     * @return ConfigEmailTemplateInput
      */
-    public $timeOfPurchase;
+    public function withRedirectTo($redirectTo)
+    {
+        $this->redirectTo = $redirectTo;
+        return $this;
+    }
+
+    /**
+     * @param $hasURL bool hasURL
+     * @return ConfigEmailTemplateInput
+     */
+    public function withHasUrl($hasURL)
+    {
+        $this->hasURL = $hasURL;
+        return $this;
+    }
+
+    /**
+     * @param $expiresIn int 验证码过期时间（单位为秒）
+     * @return ConfigEmailTemplateInput
+     */
+    public function withExpiresIn($expiresIn)
+    {
+        $this->expiresIn = $expiresIn;
+        return $this;
+    }
 }
 
-class OrderSuccess
+
+class EmailScene
+{
+    const RESET_PASSWORD = 'RESET_PASSWORD';
+    const VERIFY_EMAIL = 'VERIFY_EMAIL';
+    const CHANGE_EMAIL = 'CHANGE_EMAIL';
+}
+
+class CommonMessage
 {
     /**
+     * 可读的接口响应说明，请以业务状态码 code 作为判断业务是否成功的标志
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $message;
+
+    /**
+     * 业务状态码（与 HTTP 响应码不同），但且仅当为 200 的时候表示操作成功表示，详细说明请见：
+     * [Authing 错误代码列表](https://docs.authing.co/advanced/error-code.html)
      * Optional
      *
      * @var int
      *
      */
     public $code;
+}
+
+/**
+ * CreateFunctionInput
+ */
+class CreateFunctionInput
+{
+    /**
+     * 函数名称
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $name;
 
     /**
+     * 源代码
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $sourceCode;
+
+    /**
+     * 描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 云函数链接
      * Optional
      *
      * @var string
@@ -11626,18 +3561,146 @@ class OrderSuccess
     public $url;
 
     /**
+     * @param $name string 函数名称
+     * @param $sourceCode string 源代码
+     */
+
+    public function __construct($name, $sourceCode)
+    {
+        $this->name = $name;
+        $this->sourceCode = $sourceCode;
+    }
+
+    /**
+     * @param $description string 描述信息
+     * @return CreateFunctionInput
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $url string 云函数链接
+     * @return CreateFunctionInput
+     */
+    public function withUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+}
+
+
+/**
+ * UpdateFunctionInput
+ */
+class UpdateFunctionInput
+{
+    /**
+     * ID
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $id;
+
+    /**
+     * 函数名称
      * Optional
      *
      * @var string
      *
      */
-    public $charge;
+    public $name;
+
+    /**
+     * 源代码
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $sourceCode;
+
+    /**
+     * 描述信息
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $description;
+
+    /**
+     * 云函数链接
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $url;
+
+    /**
+     * @param $id string ID
+     */
+
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param $name string 函数名称
+     * @return UpdateFunctionInput
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $sourceCode string 源代码
+     * @return UpdateFunctionInput
+     */
+    public function withSourceCode($sourceCode)
+    {
+        $this->sourceCode = $sourceCode;
+        return $this;
+    }
+
+    /**
+     * @param $description string 描述信息
+     * @return UpdateFunctionInput
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $url string 云函数链接
+     * @return UpdateFunctionInput
+     */
+    public function withUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
 }
 
-class UserRegisterInput
+
+/**
+ * LoginByEmailInput
+ */
+class LoginByEmailInput
 {
     /**
-     * Optional
+     * Required
      *
      * @var string
      *
@@ -11645,23 +3708,143 @@ class UserRegisterInput
     public $email;
 
     /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * 图形验证码
      * Optional
      *
      * @var string
      *
      */
-    public $unionid;
+    public $captchaCode;
 
     /**
+     * 如果用户不存在，是否自动创建一个账号
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $autoRegister;
+
+    /**
+     * @param $email string email
+     * @param $password string password
+     */
+
+    public function __construct($email, $password)
+    {
+        $this->email = $email;
+        $this->password = $password;
+    }
+
+    /**
+     * @param $captchaCode string 图形验证码
+     * @return LoginByEmailInput
+     */
+    public function withCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+        return $this;
+    }
+
+    /**
+     * @param $autoRegister bool 如果用户不存在，是否自动创建一个账号
+     * @return LoginByEmailInput
+     */
+    public function withAutoRegister($autoRegister)
+    {
+        $this->autoRegister = $autoRegister;
+        return $this;
+    }
+}
+
+
+/**
+ * LoginByUsernameInput
+ */
+class LoginByUsernameInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $username;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * 图形验证码
      * Optional
      *
      * @var string
      *
      */
-    public $openid;
+    public $captchaCode;
 
     /**
+     * 如果用户不存在，是否自动创建一个账号
      * Optional
+     *
+     * @var bool
+     *
+     */
+    public $autoRegister;
+
+    /**
+     * @param $username string username
+     * @param $password string password
+     */
+
+    public function __construct($username, $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+    }
+
+    /**
+     * @param $captchaCode string 图形验证码
+     * @return LoginByUsernameInput
+     */
+    public function withCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+        return $this;
+    }
+
+    /**
+     * @param $autoRegister bool 如果用户不存在，是否自动创建一个账号
+     * @return LoginByUsernameInput
+     */
+    public function withAutoRegister($autoRegister)
+    {
+        $this->autoRegister = $autoRegister;
+        return $this;
+    }
+}
+
+
+/**
+ * LoginByPhoneCodeInput
+ */
+class LoginByPhoneCodeInput
+{
+    /**
+     * Required
      *
      * @var string
      *
@@ -11669,15 +3852,184 @@ class UserRegisterInput
     public $phone;
 
     /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * 如果用户不存在，是否自动创建一个账号
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $autoRegister;
+
+    /**
+     * @param $phone string phone
+     * @param $code string code
+     */
+
+    public function __construct($phone, $code)
+    {
+        $this->phone = $phone;
+        $this->code = $code;
+    }
+
+    /**
+     * @param $autoRegister bool 如果用户不存在，是否自动创建一个账号
+     * @return LoginByPhoneCodeInput
+     */
+    public function withAutoRegister($autoRegister)
+    {
+        $this->autoRegister = $autoRegister;
+        return $this;
+    }
+}
+
+
+/**
+ * LoginByPhonePasswordInput
+ */
+class LoginByPhonePasswordInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $phone;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * 图形验证码
      * Optional
      *
      * @var string
      *
      */
-    public $phoneCode;
+    public $captchaCode;
+
+    /**
+     * 如果用户不存在，是否自动创建一个账号
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $autoRegister;
+
+    /**
+     * @param $phone string phone
+     * @param $password string password
+     */
+
+    public function __construct($phone, $password)
+    {
+        $this->phone = $phone;
+        $this->password = $password;
+    }
+
+    /**
+     * @param $captchaCode string 图形验证码
+     * @return LoginByPhonePasswordInput
+     */
+    public function withCaptchaCode($captchaCode)
+    {
+        $this->captchaCode = $captchaCode;
+        return $this;
+    }
+
+    /**
+     * @param $autoRegister bool 如果用户不存在，是否自动创建一个账号
+     * @return LoginByPhonePasswordInput
+     */
+    public function withAutoRegister($autoRegister)
+    {
+        $this->autoRegister = $autoRegister;
+        return $this;
+    }
+}
+
+
+/**
+ * PolicyStatementInput
+ */
+class PolicyStatementInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $resource;
+
+    /**
+     * Required
+     *
+     * @var string[]
+     *
+     */
+    public $actions;
 
     /**
      * Optional
+     *
+     * @var PolicyEffect
+     *
+     */
+    public $effect;
+
+    /**
+     * @param $resource string resource
+     * @param $actions string[] actions
+     */
+
+    public function __construct($resource, $actions)
+    {
+        $this->resource = $resource;
+        $this->actions = $actions;
+    }
+
+    /**
+     * @param $effect PolicyEffect effect
+     * @return PolicyStatementInput
+     */
+    public function withEffect($effect)
+    {
+        $this->effect = $effect;
+        return $this;
+    }
+}
+
+
+/**
+ * RegisterByUsernameInput
+ */
+class RegisterByUsernameInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $username;
+
+    /**
+     * Required
      *
      * @var string
      *
@@ -11687,10 +4039,10 @@ class UserRegisterInput
     /**
      * Optional
      *
-     * @var string
+     * @var RegisterProfile
      *
      */
-    public $salt;
+    public $profile;
 
     /**
      * Optional
@@ -11703,26 +4055,66 @@ class UserRegisterInput
     /**
      * Optional
      *
-     * @var string
+     * @var bool
      *
      */
-    public $lastIP;
+    public $generateToken;
 
     /**
-     * Required
-     *
-     * @var string
-     *
+     * @param $username string username
+     * @param $password string password
      */
-    public $registerInClient;
 
+    public function __construct($username, $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+    }
+
+    /**
+     * @param $profile RegisterProfile profile
+     * @return RegisterByUsernameInput
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $forceLogin bool forceLogin
+     * @return RegisterByUsernameInput
+     */
+    public function withForceLogin($forceLogin)
+    {
+        $this->forceLogin = $forceLogin;
+        return $this;
+    }
+
+    /**
+     * @param $generateToken bool generateToken
+     * @return RegisterByUsernameInput
+     */
+    public function withGenerateToken($generateToken)
+    {
+        $this->generateToken = $generateToken;
+        return $this;
+    }
+}
+
+
+/**
+ * RegisterProfile
+ */
+class RegisterProfile
+{
     /**
      * Optional
      *
      * @var string
      *
      */
-    public $registerMethod;
+    public $ip;
 
     /**
      * Optional
@@ -11731,14 +4123,6 @@ class UserRegisterInput
      *
      */
     public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
 
     /**
      * Optional
@@ -11927,29 +4311,549 @@ class UserRegisterInput
     /**
      * Optional
      *
-     * @var string
+     * @var UserDdfInput[]
      *
      */
-    public $updatedAt;
+    public $udf;
+
+
+    public function __construct()
+    {
+
+    }
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $ip string ip
+     * @return RegisterProfile
      */
-    public $signedUp;
+    public function withIp($ip)
+    {
+        $this->ip = $ip;
+        return $this;
+    }
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $oauth string oauth
+     * @return RegisterProfile
      */
-    public $lastLogin;
+    public function withOauth($oauth)
+    {
+        $this->oauth = $oauth;
+        return $this;
+    }
+
+    /**
+     * @param $nickname string nickname
+     * @return RegisterProfile
+     */
+    public function withNickname($nickname)
+    {
+        $this->nickname = $nickname;
+        return $this;
+    }
+
+    /**
+     * @param $company string company
+     * @return RegisterProfile
+     */
+    public function withCompany($company)
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @param $photo string photo
+     * @return RegisterProfile
+     */
+    public function withPhoto($photo)
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @param $device string device
+     * @return RegisterProfile
+     */
+    public function withDevice($device)
+    {
+        $this->device = $device;
+        return $this;
+    }
+
+    /**
+     * @param $browser string browser
+     * @return RegisterProfile
+     */
+    public function withBrowser($browser)
+    {
+        $this->browser = $browser;
+        return $this;
+    }
+
+    /**
+     * @param $name string name
+     * @return RegisterProfile
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $givenName string givenName
+     * @return RegisterProfile
+     */
+    public function withGivenName($givenName)
+    {
+        $this->givenName = $givenName;
+        return $this;
+    }
+
+    /**
+     * @param $familyName string familyName
+     * @return RegisterProfile
+     */
+    public function withFamilyName($familyName)
+    {
+        $this->familyName = $familyName;
+        return $this;
+    }
+
+    /**
+     * @param $middleName string middleName
+     * @return RegisterProfile
+     */
+    public function withMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+        return $this;
+    }
+
+    /**
+     * @param $profile string profile
+     * @return RegisterProfile
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $preferredUsername string preferredUsername
+     * @return RegisterProfile
+     */
+    public function withPreferredUsername($preferredUsername)
+    {
+        $this->preferredUsername = $preferredUsername;
+        return $this;
+    }
+
+    /**
+     * @param $website string website
+     * @return RegisterProfile
+     */
+    public function withWebsite($website)
+    {
+        $this->website = $website;
+        return $this;
+    }
+
+    /**
+     * @param $gender string gender
+     * @return RegisterProfile
+     */
+    public function withGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @param $birthdate string birthdate
+     * @return RegisterProfile
+     */
+    public function withBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+        return $this;
+    }
+
+    /**
+     * @param $zoneinfo string zoneinfo
+     * @return RegisterProfile
+     */
+    public function withZoneinfo($zoneinfo)
+    {
+        $this->zoneinfo = $zoneinfo;
+        return $this;
+    }
+
+    /**
+     * @param $locale string locale
+     * @return RegisterProfile
+     */
+    public function withLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * @param $address string address
+     * @return RegisterProfile
+     */
+    public function withAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param $formatted string formatted
+     * @return RegisterProfile
+     */
+    public function withFormatted($formatted)
+    {
+        $this->formatted = $formatted;
+        return $this;
+    }
+
+    /**
+     * @param $streetAddress string streetAddress
+     * @return RegisterProfile
+     */
+    public function withStreetAddress($streetAddress)
+    {
+        $this->streetAddress = $streetAddress;
+        return $this;
+    }
+
+    /**
+     * @param $locality string locality
+     * @return RegisterProfile
+     */
+    public function withLocality($locality)
+    {
+        $this->locality = $locality;
+        return $this;
+    }
+
+    /**
+     * @param $region string region
+     * @return RegisterProfile
+     */
+    public function withRegion($region)
+    {
+        $this->region = $region;
+        return $this;
+    }
+
+    /**
+     * @param $postalCode string postalCode
+     * @return RegisterProfile
+     */
+    public function withPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    /**
+     * @param $country string country
+     * @return RegisterProfile
+     */
+    public function withCountry($country)
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * @param $udf UserDdfInput[] udf
+     * @return RegisterProfile
+     */
+    public function withUdf($udf)
+    {
+        $this->udf = $udf;
+        return $this;
+    }
 }
 
-class UserUpdateInput
+
+/**
+ * UserDdfInput
+ */
+class UserDdfInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $value;
+
+    /**
+     * @param $key string key
+     * @param $value string value
+     */
+
+    public function __construct($key, $value)
+    {
+        $this->key = $key;
+        $this->value = $value;
+    }
+
+}
+
+
+/**
+ * RegisterByEmailInput
+ */
+class RegisterByEmailInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $email;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * Optional
+     *
+     * @var RegisterProfile
+     *
+     */
+    public $profile;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $forceLogin;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $generateToken;
+
+    /**
+     * @param $email string email
+     * @param $password string password
+     */
+
+    public function __construct($email, $password)
+    {
+        $this->email = $email;
+        $this->password = $password;
+    }
+
+    /**
+     * @param $profile RegisterProfile profile
+     * @return RegisterByEmailInput
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $forceLogin bool forceLogin
+     * @return RegisterByEmailInput
+     */
+    public function withForceLogin($forceLogin)
+    {
+        $this->forceLogin = $forceLogin;
+        return $this;
+    }
+
+    /**
+     * @param $generateToken bool generateToken
+     * @return RegisterByEmailInput
+     */
+    public function withGenerateToken($generateToken)
+    {
+        $this->generateToken = $generateToken;
+        return $this;
+    }
+}
+
+
+/**
+ * RegisterByPhoneCodeInput
+ */
+class RegisterByPhoneCodeInput
+{
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $phone;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * Optional
+     *
+     * @var RegisterProfile
+     *
+     */
+    public $profile;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $forceLogin;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $generateToken;
+
+    /**
+     * @param $phone string phone
+     * @param $code string code
+     */
+
+    public function __construct($phone, $code)
+    {
+        $this->phone = $phone;
+        $this->code = $code;
+    }
+
+    /**
+     * @param $password string password
+     * @return RegisterByPhoneCodeInput
+     */
+    public function withPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @param $profile RegisterProfile profile
+     * @return RegisterByPhoneCodeInput
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $forceLogin bool forceLogin
+     * @return RegisterByPhoneCodeInput
+     */
+    public function withForceLogin($forceLogin)
+    {
+        $this->forceLogin = $forceLogin;
+        return $this;
+    }
+
+    /**
+     * @param $generateToken bool generateToken
+     * @return RegisterByPhoneCodeInput
+     */
+    public function withGenerateToken($generateToken)
+    {
+        $this->generateToken = $generateToken;
+        return $this;
+    }
+}
+
+
+/**
+ * 批量删除返回结果
+ */
+class BatchOperationResult
+{
+    /**
+     * 删除成功的个数
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $succeedCount;
+
+    /**
+     * 删除失败的个数
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $failedCount;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $message;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     *
+     */
+    public $errors;
+}
+
+class RefreshToken
 {
     /**
      * Optional
@@ -11957,15 +4861,74 @@ class UserUpdateInput
      * @var string
      *
      */
-    public $_id;
+    public $token;
 
     /**
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $iat;
+
+    /**
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $exp;
+}
+
+/**
+ * CreateUserInput
+ */
+class CreateUserInput
+{
+    /**
+     * 用户名，用户池内唯一
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $username;
+
+    /**
+     * 邮箱，不区分大小写，如 Bob@example.com 和 bob@example.com 会识别为同一个邮箱。用户池内唯一。
      * Optional
      *
      * @var string
      *
      */
     public $email;
+
+    /**
+     * 邮箱是否已验证
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $emailVerified;
+
+    /**
+     * 手机号，用户池内唯一
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $phone;
+
+    /**
+     * 手机号是否已验证
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $phoneVerified;
 
     /**
      * Optional
@@ -11984,38 +4947,7 @@ class UserUpdateInput
     public $openid;
 
     /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $emailVerified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $phoneVerified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
+     * 昵称，该字段不唯一。
      * Optional
      *
      * @var string
@@ -12024,14 +4956,7 @@ class UserUpdateInput
     public $nickname;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $company;
-
-    /**
+     * 头像链接，默认为 https://usercontents.authing.cn/authing-avatar.png
      * Optional
      *
      * @var string
@@ -12045,31 +4970,16 @@ class UserUpdateInput
      * @var string
      *
      */
-    public $browser;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $device;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
     public $password;
 
     /**
+     * 注册方式
      * Optional
      *
-     * @var string
+     * @var string[]
      *
      */
-    public $registerInClient;
+    public $registerSource;
 
     /**
      * Optional
@@ -12077,9 +4987,10 @@ class UserUpdateInput
      * @var string
      *
      */
-    public $registerMethod;
+    public $browser;
 
     /**
+     * 用户社会化登录第三方身份提供商返回的原始用户信息，非社会化登录方式注册的用户此字段为空。
      * Optional
      *
      * @var string
@@ -12088,22 +4999,7 @@ class UserUpdateInput
     public $oauth;
 
     /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $tokenExpiredAt;
-
-    /**
+     * 用户累计登录次数，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
      * Optional
      *
      * @var int
@@ -12125,9 +5021,18 @@ class UserUpdateInput
      * @var string
      *
      */
+    public $company;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
     public $lastIP;
 
     /**
+     * 用户注册时间，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
      * Optional
      *
      * @var string
@@ -12157,6 +5062,14 @@ class UserUpdateInput
      * @var string
      *
      */
+    public $device;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
     public $name;
 
     /**
@@ -12295,27 +5208,574 @@ class UserUpdateInput
      */
     public $country;
 
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
+
+    public function __construct()
+    {
+
+    }
 
     /**
-     * Optional
-     *
-     * @var string
-     *
+     * @param $username string 用户名，用户池内唯一
+     * @return CreateUserInput
      */
-    public $oldPassword;
+    public function withUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @param $email string 邮箱，不区分大小写，如 Bob@example.com 和 bob@example.com 会识别为同一个邮箱。用户池内唯一。
+     * @return CreateUserInput
+     */
+    public function withEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param $emailVerified bool 邮箱是否已验证
+     * @return CreateUserInput
+     */
+    public function withEmailVerified($emailVerified)
+    {
+        $this->emailVerified = $emailVerified;
+        return $this;
+    }
+
+    /**
+     * @param $phone string 手机号，用户池内唯一
+     * @return CreateUserInput
+     */
+    public function withPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @param $phoneVerified bool 手机号是否已验证
+     * @return CreateUserInput
+     */
+    public function withPhoneVerified($phoneVerified)
+    {
+        $this->phoneVerified = $phoneVerified;
+        return $this;
+    }
+
+    /**
+     * @param $unionid string unionid
+     * @return CreateUserInput
+     */
+    public function withUnionid($unionid)
+    {
+        $this->unionid = $unionid;
+        return $this;
+    }
+
+    /**
+     * @param $openid string openid
+     * @return CreateUserInput
+     */
+    public function withOpenid($openid)
+    {
+        $this->openid = $openid;
+        return $this;
+    }
+
+    /**
+     * @param $nickname string 昵称，该字段不唯一。
+     * @return CreateUserInput
+     */
+    public function withNickname($nickname)
+    {
+        $this->nickname = $nickname;
+        return $this;
+    }
+
+    /**
+     * @param $photo string 头像链接，默认为 https://usercontents.authing.cn/authing-avatar.png
+     * @return CreateUserInput
+     */
+    public function withPhoto($photo)
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @param $password string password
+     * @return CreateUserInput
+     */
+    public function withPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @param $registerSource string[] 注册方式
+     * @return CreateUserInput
+     */
+    public function withRegisterSource($registerSource)
+    {
+        $this->registerSource = $registerSource;
+        return $this;
+    }
+
+    /**
+     * @param $browser string browser
+     * @return CreateUserInput
+     */
+    public function withBrowser($browser)
+    {
+        $this->browser = $browser;
+        return $this;
+    }
+
+    /**
+     * @param $oauth string 用户社会化登录第三方身份提供商返回的原始用户信息，非社会化登录方式注册的用户此字段为空。
+     * @return CreateUserInput
+     */
+    public function withOauth($oauth)
+    {
+        $this->oauth = $oauth;
+        return $this;
+    }
+
+    /**
+     * @param $loginsCount int 用户累计登录次数，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * @return CreateUserInput
+     */
+    public function withLoginsCount($loginsCount)
+    {
+        $this->loginsCount = $loginsCount;
+        return $this;
+    }
+
+    /**
+     * @param $lastLogin string lastLogin
+     * @return CreateUserInput
+     */
+    public function withLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+    /**
+     * @param $company string company
+     * @return CreateUserInput
+     */
+    public function withCompany($company)
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @param $lastIP string lastIP
+     * @return CreateUserInput
+     */
+    public function withLastIp($lastIP)
+    {
+        $this->lastIP = $lastIP;
+        return $this;
+    }
+
+    /**
+     * @param $signedUp string 用户注册时间，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * @return CreateUserInput
+     */
+    public function withSignedUp($signedUp)
+    {
+        $this->signedUp = $signedUp;
+        return $this;
+    }
+
+    /**
+     * @param $blocked bool blocked
+     * @return CreateUserInput
+     */
+    public function withBlocked($blocked)
+    {
+        $this->blocked = $blocked;
+        return $this;
+    }
+
+    /**
+     * @param $isDeleted bool isDeleted
+     * @return CreateUserInput
+     */
+    public function withIsDeleted($isDeleted)
+    {
+        $this->isDeleted = $isDeleted;
+        return $this;
+    }
+
+    /**
+     * @param $device string device
+     * @return CreateUserInput
+     */
+    public function withDevice($device)
+    {
+        $this->device = $device;
+        return $this;
+    }
+
+    /**
+     * @param $name string name
+     * @return CreateUserInput
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $givenName string givenName
+     * @return CreateUserInput
+     */
+    public function withGivenName($givenName)
+    {
+        $this->givenName = $givenName;
+        return $this;
+    }
+
+    /**
+     * @param $familyName string familyName
+     * @return CreateUserInput
+     */
+    public function withFamilyName($familyName)
+    {
+        $this->familyName = $familyName;
+        return $this;
+    }
+
+    /**
+     * @param $middleName string middleName
+     * @return CreateUserInput
+     */
+    public function withMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+        return $this;
+    }
+
+    /**
+     * @param $profile string profile
+     * @return CreateUserInput
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $preferredUsername string preferredUsername
+     * @return CreateUserInput
+     */
+    public function withPreferredUsername($preferredUsername)
+    {
+        $this->preferredUsername = $preferredUsername;
+        return $this;
+    }
+
+    /**
+     * @param $website string website
+     * @return CreateUserInput
+     */
+    public function withWebsite($website)
+    {
+        $this->website = $website;
+        return $this;
+    }
+
+    /**
+     * @param $gender string gender
+     * @return CreateUserInput
+     */
+    public function withGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @param $birthdate string birthdate
+     * @return CreateUserInput
+     */
+    public function withBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+        return $this;
+    }
+
+    /**
+     * @param $zoneinfo string zoneinfo
+     * @return CreateUserInput
+     */
+    public function withZoneinfo($zoneinfo)
+    {
+        $this->zoneinfo = $zoneinfo;
+        return $this;
+    }
+
+    /**
+     * @param $locale string locale
+     * @return CreateUserInput
+     */
+    public function withLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * @param $address string address
+     * @return CreateUserInput
+     */
+    public function withAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param $formatted string formatted
+     * @return CreateUserInput
+     */
+    public function withFormatted($formatted)
+    {
+        $this->formatted = $formatted;
+        return $this;
+    }
+
+    /**
+     * @param $streetAddress string streetAddress
+     * @return CreateUserInput
+     */
+    public function withStreetAddress($streetAddress)
+    {
+        $this->streetAddress = $streetAddress;
+        return $this;
+    }
+
+    /**
+     * @param $locality string locality
+     * @return CreateUserInput
+     */
+    public function withLocality($locality)
+    {
+        $this->locality = $locality;
+        return $this;
+    }
+
+    /**
+     * @param $region string region
+     * @return CreateUserInput
+     */
+    public function withRegion($region)
+    {
+        $this->region = $region;
+        return $this;
+    }
+
+    /**
+     * @param $postalCode string postalCode
+     * @return CreateUserInput
+     */
+    public function withPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    /**
+     * @param $country string country
+     * @return CreateUserInput
+     */
+    public function withCountry($country)
+    {
+        $this->country = $country;
+        return $this;
+    }
 }
 
-class NewUserClientInput
+
+/**
+ * UpdateUserInput
+ */
+class UpdateUserInput
 {
     /**
-     * Required
+     * 邮箱。直接修改用户邮箱需要管理员权限，普通用户修改邮箱请使用 **updateEmail** 接口。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $email;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $unionid;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $openid;
+
+    /**
+     * 邮箱是否已验证。直接修改 emailVerified 需要管理员权限。
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $emailVerified;
+
+    /**
+     * 手机号。直接修改用户手机号需要管理员权限，普通用户修改邮箱请使用 **updatePhone** 接口。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $phone;
+
+    /**
+     * 手机号是否已验证。直接修改 **phoneVerified** 需要管理员权限。
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $phoneVerified;
+
+    /**
+     * 用户名，用户池内唯一
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $username;
+
+    /**
+     * 昵称，该字段不唯一。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $nickname;
+
+    /**
+     * 密码。直接修改用户密码需要管理员权限，普通用户修改邮箱请使用 **updatePassword** 接口。
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $password;
+
+    /**
+     * 头像链接，默认为 https://usercontents.authing.cn/authing-avatar.png
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $photo;
+
+    /**
+     * 注册方式
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $company;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $browser;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $device;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $oauth;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $tokenExpiredAt;
+
+    /**
+     * 用户累计登录次数，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * Optional
+     *
+     * @var int
+     *
+     */
+    public $loginsCount;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $lastLogin;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $lastIP;
+
+    /**
+     * 用户注册时间，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $blocked;
+
+    /**
+     * Optional
      *
      * @var string
      *
@@ -12323,12 +5783,567 @@ class NewUserClientInput
     public $name;
 
     /**
-     * Required
+     * Optional
      *
      * @var string
      *
      */
-    public $userId;
+    public $givenName;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $familyName;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $middleName;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $profile;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $preferredUsername;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $website;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $gender;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $birthdate;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $zoneinfo;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $locale;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $address;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $formatted;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $streetAddress;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $locality;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $region;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $postalCode;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $city;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $province;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $country;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $email string 邮箱。直接修改用户邮箱需要管理员权限，普通用户修改邮箱请使用 **updateEmail** 接口。
+     * @return UpdateUserInput
+     */
+    public function withEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param $unionid string unionid
+     * @return UpdateUserInput
+     */
+    public function withUnionid($unionid)
+    {
+        $this->unionid = $unionid;
+        return $this;
+    }
+
+    /**
+     * @param $openid string openid
+     * @return UpdateUserInput
+     */
+    public function withOpenid($openid)
+    {
+        $this->openid = $openid;
+        return $this;
+    }
+
+    /**
+     * @param $emailVerified bool 邮箱是否已验证。直接修改 emailVerified 需要管理员权限。
+     * @return UpdateUserInput
+     */
+    public function withEmailVerified($emailVerified)
+    {
+        $this->emailVerified = $emailVerified;
+        return $this;
+    }
+
+    /**
+     * @param $phone string 手机号。直接修改用户手机号需要管理员权限，普通用户修改邮箱请使用 **updatePhone** 接口。
+     * @return UpdateUserInput
+     */
+    public function withPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @param $phoneVerified bool 手机号是否已验证。直接修改 **phoneVerified** 需要管理员权限。
+     * @return UpdateUserInput
+     */
+    public function withPhoneVerified($phoneVerified)
+    {
+        $this->phoneVerified = $phoneVerified;
+        return $this;
+    }
+
+    /**
+     * @param $username string 用户名，用户池内唯一
+     * @return UpdateUserInput
+     */
+    public function withUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @param $nickname string 昵称，该字段不唯一。
+     * @return UpdateUserInput
+     */
+    public function withNickname($nickname)
+    {
+        $this->nickname = $nickname;
+        return $this;
+    }
+
+    /**
+     * @param $password string 密码。直接修改用户密码需要管理员权限，普通用户修改邮箱请使用 **updatePassword** 接口。
+     * @return UpdateUserInput
+     */
+    public function withPassword($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @param $photo string 头像链接，默认为 https://usercontents.authing.cn/authing-avatar.png
+     * @return UpdateUserInput
+     */
+    public function withPhoto($photo)
+    {
+        $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @param $company string 注册方式
+     * @return UpdateUserInput
+     */
+    public function withCompany($company)
+    {
+        $this->company = $company;
+        return $this;
+    }
+
+    /**
+     * @param $browser string browser
+     * @return UpdateUserInput
+     */
+    public function withBrowser($browser)
+    {
+        $this->browser = $browser;
+        return $this;
+    }
+
+    /**
+     * @param $device string device
+     * @return UpdateUserInput
+     */
+    public function withDevice($device)
+    {
+        $this->device = $device;
+        return $this;
+    }
+
+    /**
+     * @param $oauth string oauth
+     * @return UpdateUserInput
+     */
+    public function withOauth($oauth)
+    {
+        $this->oauth = $oauth;
+        return $this;
+    }
+
+    /**
+     * @param $tokenExpiredAt string tokenExpiredAt
+     * @return UpdateUserInput
+     */
+    public function withTokenExpiredAt($tokenExpiredAt)
+    {
+        $this->tokenExpiredAt = $tokenExpiredAt;
+        return $this;
+    }
+
+    /**
+     * @param $loginsCount int 用户累计登录次数，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * @return UpdateUserInput
+     */
+    public function withLoginsCount($loginsCount)
+    {
+        $this->loginsCount = $loginsCount;
+        return $this;
+    }
+
+    /**
+     * @param $lastLogin string lastLogin
+     * @return UpdateUserInput
+     */
+    public function withLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+    /**
+     * @param $lastIP string lastIP
+     * @return UpdateUserInput
+     */
+    public function withLastIp($lastIP)
+    {
+        $this->lastIP = $lastIP;
+        return $this;
+    }
+
+    /**
+     * @param $blocked bool 用户注册时间，当你从你原有用户系统向 Authing 迁移的时候可以设置此字段。
+     * @return UpdateUserInput
+     */
+    public function withBlocked($blocked)
+    {
+        $this->blocked = $blocked;
+        return $this;
+    }
+
+    /**
+     * @param $name string name
+     * @return UpdateUserInput
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $givenName string givenName
+     * @return UpdateUserInput
+     */
+    public function withGivenName($givenName)
+    {
+        $this->givenName = $givenName;
+        return $this;
+    }
+
+    /**
+     * @param $familyName string familyName
+     * @return UpdateUserInput
+     */
+    public function withFamilyName($familyName)
+    {
+        $this->familyName = $familyName;
+        return $this;
+    }
+
+    /**
+     * @param $middleName string middleName
+     * @return UpdateUserInput
+     */
+    public function withMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+        return $this;
+    }
+
+    /**
+     * @param $profile string profile
+     * @return UpdateUserInput
+     */
+    public function withProfile($profile)
+    {
+        $this->profile = $profile;
+        return $this;
+    }
+
+    /**
+     * @param $preferredUsername string preferredUsername
+     * @return UpdateUserInput
+     */
+    public function withPreferredUsername($preferredUsername)
+    {
+        $this->preferredUsername = $preferredUsername;
+        return $this;
+    }
+
+    /**
+     * @param $website string website
+     * @return UpdateUserInput
+     */
+    public function withWebsite($website)
+    {
+        $this->website = $website;
+        return $this;
+    }
+
+    /**
+     * @param $gender string gender
+     * @return UpdateUserInput
+     */
+    public function withGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @param $birthdate string birthdate
+     * @return UpdateUserInput
+     */
+    public function withBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+        return $this;
+    }
+
+    /**
+     * @param $zoneinfo string zoneinfo
+     * @return UpdateUserInput
+     */
+    public function withZoneinfo($zoneinfo)
+    {
+        $this->zoneinfo = $zoneinfo;
+        return $this;
+    }
+
+    /**
+     * @param $locale string locale
+     * @return UpdateUserInput
+     */
+    public function withLocale($locale)
+    {
+        $this->locale = $locale;
+        return $this;
+    }
+
+    /**
+     * @param $address string address
+     * @return UpdateUserInput
+     */
+    public function withAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @param $formatted string formatted
+     * @return UpdateUserInput
+     */
+    public function withFormatted($formatted)
+    {
+        $this->formatted = $formatted;
+        return $this;
+    }
+
+    /**
+     * @param $streetAddress string streetAddress
+     * @return UpdateUserInput
+     */
+    public function withStreetAddress($streetAddress)
+    {
+        $this->streetAddress = $streetAddress;
+        return $this;
+    }
+
+    /**
+     * @param $locality string locality
+     * @return UpdateUserInput
+     */
+    public function withLocality($locality)
+    {
+        $this->locality = $locality;
+        return $this;
+    }
+
+    /**
+     * @param $region string region
+     * @return UpdateUserInput
+     */
+    public function withRegion($region)
+    {
+        $this->region = $region;
+        return $this;
+    }
+
+    /**
+     * @param $postalCode string postalCode
+     * @return UpdateUserInput
+     */
+    public function withPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+        return $this;
+    }
+
+    /**
+     * @param $city string city
+     * @return UpdateUserInput
+     */
+    public function withCity($city)
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * @param $province string province
+     * @return UpdateUserInput
+     */
+    public function withProvince($province)
+    {
+        $this->province = $province;
+        return $this;
+    }
+
+    /**
+     * @param $country string country
+     * @return UpdateUserInput
+     */
+    public function withCountry($country)
+    {
+        $this->country = $country;
+        return $this;
+    }
+}
+
+
+/**
+ * UpdateUserpoolInput
+ */
+class UpdateUserpoolInput
+{
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $name;
 
     /**
      * Optional
@@ -12344,42 +6359,7 @@ class NewUserClientInput
      * @var string
      *
      */
-    public $clientTypeId;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $userPoolTypeList;
-
-    /**
-     * Optional
-     *
-     * @var IamType
-     *
-     */
-    public $iamType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
     public $domain;
-}
-
-class UpdateUserClientInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
 
     /**
      * Optional
@@ -12387,23 +6367,7 @@ class UpdateUserClientInput
      * @var string
      *
      */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $clientType;
+    public $description;
 
     /**
      * Optional
@@ -12411,7 +6375,7 @@ class UpdateUserClientInput
      * @var string[]
      *
      */
-    public $userPoolTypeList;
+    public $userpoolTypes;
 
     /**
      * Optional
@@ -12440,38 +6404,6 @@ class UpdateUserClientInput
     /**
      * Optional
      *
-     * @var bool
-     *
-     */
-    public $showWXMPQRCode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $useMiniLogin;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $useSelfWxapp;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enableEmail;
-
-    /**
-     * Optional
-     *
      * @var string
      *
      */
@@ -12480,26 +6412,10 @@ class UpdateUserClientInput
     /**
      * Optional
      *
-     * @var string
-     *
-     */
-    public $descriptions;
-
-    /**
-     * Optional
-     *
      * @var int
      *
      */
-    public $jwtExpired;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $secret;
+    public $tokenExpiresAfter;
 
     /**
      * Optional
@@ -12516,14 +6432,6 @@ class UpdateUserClientInput
      *
      */
     public $loginFailCheck;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
 
     /**
      * Optional
@@ -12556,8 +6464,215 @@ class UpdateUserClientInput
      *
      */
     public $app2WxappLoginStrategy;
+
+    /**
+     * Optional
+     *
+     * @var RegisterWhiteListConfigInput
+     *
+     */
+    public $whitelist;
+
+    /**
+     * 自定义短信服务商配置
+     * Optional
+     *
+     * @var CustomSmsProviderInput
+     *
+     */
+    public $customSMSProvider;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $name string name
+     * @return UpdateUserpoolInput
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $logo string logo
+     * @return UpdateUserpoolInput
+     */
+    public function withLogo($logo)
+    {
+        $this->logo = $logo;
+        return $this;
+    }
+
+    /**
+     * @param $domain string domain
+     * @return UpdateUserpoolInput
+     */
+    public function withDomain($domain)
+    {
+        $this->domain = $domain;
+        return $this;
+    }
+
+    /**
+     * @param $description string description
+     * @return UpdateUserpoolInput
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $userpoolTypes string[] userpoolTypes
+     * @return UpdateUserpoolInput
+     */
+    public function withUserpoolTypes($userpoolTypes)
+    {
+        $this->userpoolTypes = $userpoolTypes;
+        return $this;
+    }
+
+    /**
+     * @param $emailVerifiedDefault bool emailVerifiedDefault
+     * @return UpdateUserpoolInput
+     */
+    public function withEmailVerifiedDefault($emailVerifiedDefault)
+    {
+        $this->emailVerifiedDefault = $emailVerifiedDefault;
+        return $this;
+    }
+
+    /**
+     * @param $sendWelcomeEmail bool sendWelcomeEmail
+     * @return UpdateUserpoolInput
+     */
+    public function withSendWelcomeEmail($sendWelcomeEmail)
+    {
+        $this->sendWelcomeEmail = $sendWelcomeEmail;
+        return $this;
+    }
+
+    /**
+     * @param $registerDisabled bool registerDisabled
+     * @return UpdateUserpoolInput
+     */
+    public function withRegisterDisabled($registerDisabled)
+    {
+        $this->registerDisabled = $registerDisabled;
+        return $this;
+    }
+
+    /**
+     * @param $allowedOrigins string allowedOrigins
+     * @return UpdateUserpoolInput
+     */
+    public function withAllowedOrigins($allowedOrigins)
+    {
+        $this->allowedOrigins = $allowedOrigins;
+        return $this;
+    }
+
+    /**
+     * @param $tokenExpiresAfter int tokenExpiresAfter
+     * @return UpdateUserpoolInput
+     */
+    public function withTokenExpiresAfter($tokenExpiresAfter)
+    {
+        $this->tokenExpiresAfter = $tokenExpiresAfter;
+        return $this;
+    }
+
+    /**
+     * @param $frequentRegisterCheck FrequentRegisterCheckConfigInput frequentRegisterCheck
+     * @return UpdateUserpoolInput
+     */
+    public function withFrequentRegisterCheck($frequentRegisterCheck)
+    {
+        $this->frequentRegisterCheck = $frequentRegisterCheck;
+        return $this;
+    }
+
+    /**
+     * @param $loginFailCheck LoginFailCheckConfigInput loginFailCheck
+     * @return UpdateUserpoolInput
+     */
+    public function withLoginFailCheck($loginFailCheck)
+    {
+        $this->loginFailCheck = $loginFailCheck;
+        return $this;
+    }
+
+    /**
+     * @param $changePhoneStrategy ChangePhoneStrategyInput changePhoneStrategy
+     * @return UpdateUserpoolInput
+     */
+    public function withChangePhoneStrategy($changePhoneStrategy)
+    {
+        $this->changePhoneStrategy = $changePhoneStrategy;
+        return $this;
+    }
+
+    /**
+     * @param $changeEmailStrategy ChangeEmailStrategyInput changeEmailStrategy
+     * @return UpdateUserpoolInput
+     */
+    public function withChangeEmailStrategy($changeEmailStrategy)
+    {
+        $this->changeEmailStrategy = $changeEmailStrategy;
+        return $this;
+    }
+
+    /**
+     * @param $qrcodeLoginStrategy QrcodeLoginStrategyInput qrcodeLoginStrategy
+     * @return UpdateUserpoolInput
+     */
+    public function withQrcodeLoginStrategy($qrcodeLoginStrategy)
+    {
+        $this->qrcodeLoginStrategy = $qrcodeLoginStrategy;
+        return $this;
+    }
+
+    /**
+     * @param $app2WxappLoginStrategy App2WxappLoginStrategyInput app2WxappLoginStrategy
+     * @return UpdateUserpoolInput
+     */
+    public function withApp2WxappLoginStrategy($app2WxappLoginStrategy)
+    {
+        $this->app2WxappLoginStrategy = $app2WxappLoginStrategy;
+        return $this;
+    }
+
+    /**
+     * @param $whitelist RegisterWhiteListConfigInput whitelist
+     * @return UpdateUserpoolInput
+     */
+    public function withWhitelist($whitelist)
+    {
+        $this->whitelist = $whitelist;
+        return $this;
+    }
+
+    /**
+     * @param $customSMSProvider CustomSmsProviderInput 自定义短信服务商配置
+     * @return UpdateUserpoolInput
+     */
+    public function withCustomSmsProvider($customSMSProvider)
+    {
+        $this->customSMSProvider = $customSMSProvider;
+        return $this;
+    }
 }
 
+
+/**
+ * FrequentRegisterCheckConfigInput
+ */
 class FrequentRegisterCheckConfigInput
 {
     /**
@@ -12582,9 +6697,49 @@ class FrequentRegisterCheckConfigInput
      * @var bool
      *
      */
-    public $enable;
+    public $enabled;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $timeInterval int timeInterval
+     * @return FrequentRegisterCheckConfigInput
+     */
+    public function withTimeInterval($timeInterval)
+    {
+        $this->timeInterval = $timeInterval;
+        return $this;
+    }
+
+    /**
+     * @param $limit int limit
+     * @return FrequentRegisterCheckConfigInput
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $enabled bool enabled
+     * @return FrequentRegisterCheckConfigInput
+     */
+    public function withEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
 }
 
+
+/**
+ * LoginFailCheckConfigInput
+ */
 class LoginFailCheckConfigInput
 {
     /**
@@ -12609,9 +6764,49 @@ class LoginFailCheckConfigInput
      * @var bool
      *
      */
-    public $enable;
+    public $enabled;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $timeInterval int timeInterval
+     * @return LoginFailCheckConfigInput
+     */
+    public function withTimeInterval($timeInterval)
+    {
+        $this->timeInterval = $timeInterval;
+        return $this;
+    }
+
+    /**
+     * @param $limit int limit
+     * @return LoginFailCheckConfigInput
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $enabled bool enabled
+     * @return LoginFailCheckConfigInput
+     */
+    public function withEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
 }
 
+
+/**
+ * ChangePhoneStrategyInput
+ */
 class ChangePhoneStrategyInput
 {
     /**
@@ -12621,8 +6816,28 @@ class ChangePhoneStrategyInput
      *
      */
     public $verifyOldPhone;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $verifyOldPhone bool verifyOldPhone
+     * @return ChangePhoneStrategyInput
+     */
+    public function withVerifyOldPhone($verifyOldPhone)
+    {
+        $this->verifyOldPhone = $verifyOldPhone;
+        return $this;
+    }
 }
 
+
+/**
+ * ChangeEmailStrategyInput
+ */
 class ChangeEmailStrategyInput
 {
     /**
@@ -12632,8 +6847,28 @@ class ChangeEmailStrategyInput
      *
      */
     public $verifyOldEmail;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $verifyOldEmail bool verifyOldEmail
+     * @return ChangeEmailStrategyInput
+     */
+    public function withVerifyOldEmail($verifyOldEmail)
+    {
+        $this->verifyOldEmail = $verifyOldEmail;
+        return $this;
+    }
 }
 
+
+/**
+ * QrcodeLoginStrategyInput
+ */
 class QrcodeLoginStrategyInput
 {
     /**
@@ -12667,8 +6902,58 @@ class QrcodeLoginStrategyInput
      *
      */
     public $ticketExpiresAfter;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $qrcodeExpiresAfter int qrcodeExpiresAfter
+     * @return QrcodeLoginStrategyInput
+     */
+    public function withQrcodeExpiresAfter($qrcodeExpiresAfter)
+    {
+        $this->qrcodeExpiresAfter = $qrcodeExpiresAfter;
+        return $this;
+    }
+
+    /**
+     * @param $returnFullUserInfo bool returnFullUserInfo
+     * @return QrcodeLoginStrategyInput
+     */
+    public function withReturnFullUserInfo($returnFullUserInfo)
+    {
+        $this->returnFullUserInfo = $returnFullUserInfo;
+        return $this;
+    }
+
+    /**
+     * @param $allowExchangeUserInfoFromBrowser bool allowExchangeUserInfoFromBrowser
+     * @return QrcodeLoginStrategyInput
+     */
+    public function withAllowExchangeUserInfoFromBrowser($allowExchangeUserInfoFromBrowser)
+    {
+        $this->allowExchangeUserInfoFromBrowser = $allowExchangeUserInfoFromBrowser;
+        return $this;
+    }
+
+    /**
+     * @param $ticketExpiresAfter int ticketExpiresAfter
+     * @return QrcodeLoginStrategyInput
+     */
+    public function withTicketExpiresAfter($ticketExpiresAfter)
+    {
+        $this->ticketExpiresAfter = $ticketExpiresAfter;
+        return $this;
+    }
 }
 
+
+/**
+ * App2WxappLoginStrategyInput
+ */
 class App2WxappLoginStrategyInput
 {
     /**
@@ -12686,227 +6971,39 @@ class App2WxappLoginStrategyInput
      *
      */
     public $ticketExchangeUserInfoNeedSecret;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $ticketExpriresAfter int ticketExpriresAfter
+     * @return App2WxappLoginStrategyInput
+     */
+    public function withTicketExpriresAfter($ticketExpriresAfter)
+    {
+        $this->ticketExpriresAfter = $ticketExpriresAfter;
+        return $this;
+    }
+
+    /**
+     * @param $ticketExchangeUserInfoNeedSecret bool ticketExchangeUserInfoNeedSecret
+     * @return App2WxappLoginStrategyInput
+     */
+    public function withTicketExchangeUserInfoNeedSecret($ticketExchangeUserInfoNeedSecret)
+    {
+        $this->ticketExchangeUserInfoNeedSecret = $ticketExchangeUserInfoNeedSecret;
+        return $this;
+    }
 }
 
-class InvitationCode
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
 
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $code;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-}
-
-class SuperAdminUpdateInput
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $password;
-}
-
-class RefreshToken
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $iat;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $exp;
-}
-
-class PermissionDescriptorsInputType
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $permissionId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $operationAllow;
-}
-
-class EncryptPassword
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $encryptUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $decryptUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logs;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $password;
-}
-
-class RefreshAccessTokenData
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $accessToken;
-}
-
-class RefreshThirdPartyIdentityResult
+/**
+ * RegisterWhiteListConfigInput
+ */
+class RegisterWhiteListConfigInput
 {
     /**
      * Optional
@@ -12914,15 +7011,74 @@ class RefreshThirdPartyIdentityResult
      * @var bool
      *
      */
-    public $refreshSuccess;
+    public $phoneEnabled;
 
     /**
      * Optional
      *
-     * @var string
+     * @var bool
      *
      */
-    public $message;
+    public $emailEnabled;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $usernameEnabled;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $phoneEnabled bool phoneEnabled
+     * @return RegisterWhiteListConfigInput
+     */
+    public function withPhoneEnabled($phoneEnabled)
+    {
+        $this->phoneEnabled = $phoneEnabled;
+        return $this;
+    }
+
+    /**
+     * @param $emailEnabled bool emailEnabled
+     * @return RegisterWhiteListConfigInput
+     */
+    public function withEmailEnabled($emailEnabled)
+    {
+        $this->emailEnabled = $emailEnabled;
+        return $this;
+    }
+
+    /**
+     * @param $usernameEnabled bool usernameEnabled
+     * @return RegisterWhiteListConfigInput
+     */
+    public function withUsernameEnabled($usernameEnabled)
+    {
+        $this->usernameEnabled = $usernameEnabled;
+        return $this;
+    }
+}
+
+
+/**
+ * CustomSmsProviderInput
+ */
+class CustomSmsProviderInput
+{
+    /**
+     * Optional
+     *
+     * @var bool
+     *
+     */
+    public $enabled;
 
     /**
      * Optional
@@ -12935,11 +7091,116 @@ class RefreshThirdPartyIdentityResult
     /**
      * Optional
      *
+     * @var SmsConfig253Input
+     *
+     */
+    public $config253;
+
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $enabled bool enabled
+     * @return CustomSmsProviderInput
+     */
+    public function withEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+        return $this;
+    }
+
+    /**
+     * @param $provider string provider
+     * @return CustomSmsProviderInput
+     */
+    public function withProvider($provider)
+    {
+        $this->provider = $provider;
+        return $this;
+    }
+
+    /**
+     * @param $config253 SmsConfig253Input config253
+     * @return CustomSmsProviderInput
+     */
+    public function withConfig253($config253)
+    {
+        $this->config253 = $config253;
+        return $this;
+    }
+}
+
+
+/**
+ * SmsConfig253Input
+ */
+class SmsConfig253Input
+{
+    /**
+     * Required
+     *
      * @var string
      *
      */
-    public $refreshToken;
+    public $appId;
 
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $template;
+
+    /**
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $ttl;
+
+    /**
+     * Required
+     *
+     * @var string
+     *
+     */
+    public $sendSmsApi;
+
+    /**
+     * @param $appId string appId
+     * @param $key string key
+     * @param $template string template
+     * @param $ttl int ttl
+     * @param $sendSmsApi string sendSmsApi
+     */
+
+    public function __construct($appId, $key, $template, $ttl, $sendSmsApi)
+    {
+        $this->appId = $appId;
+        $this->key = $key;
+        $this->template = $template;
+        $this->ttl = $ttl;
+        $this->sendSmsApi = $sendSmsApi;
+    }
+
+}
+
+
+class RefreshAccessTokenRes
+{
     /**
      * Optional
      *
@@ -12951,173 +7212,10 @@ class RefreshThirdPartyIdentityResult
     /**
      * Optional
      *
-     * @var string
+     * @var int
      *
      */
-    public $updatedAt;
-}
-
-class OidcPasswordModeUserInfo
-{
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $sub;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $birthdate;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $family_name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $gender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $given_name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $locale;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $middle_name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $nickname;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $picture;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $preferred_username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $profile;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updated_at;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $website;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $zoneinfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $company;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $browser;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $device;
+    public $exp;
 
     /**
      * Optional
@@ -13125,995 +7223,11 @@ class OidcPasswordModeUserInfo
      * @var int
      *
      */
-    public $logins_count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $register_method;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $blocked;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $last_ip;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $register_in_userpool;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $last_login;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $signed_up;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $email_verified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $phone_number;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $phone_number_verified;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $access_token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $refresh_token;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $expires_in;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $token_type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $scope;
+    public $iat;
 }
 
-class RefreshedSignInToken
+class KeyValuePair
 {
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $access_token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $id_token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $refresh_token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $scope;
-
-    /**
-     * Optional
-     *
-     * @var int
-     *
-     */
-    public $expires_in;
-}
-
-class CreateRbacPermissionInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class UpdateRbacPermissionInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class CreateRbacRoleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class UpdateRbacRoleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class CreateRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class UpdateRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-}
-
-class AssignUserToRbacRoleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class AssignUserToRbacRoleBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $userIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class RevokeRbacRoleFromUserInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class RevokeRbacRoleFromUserBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $userIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class AddPermissionToRbacRoleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $permissionId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class AddPermissionToRbacRoleBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $permissionIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class RemovePermissionFromRbacRoleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $permissionId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class RemovePermissionFromRbacRoleBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $permissionIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-}
-
-class AddRoleToRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class AddRoleToRbacGroupBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $roleIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class RemoveRoleFromRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $roleId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class RemoveRoleFromRbacGroupBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $roleIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class AddUserToRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class AddUserToRbacGroupBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $userIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class RemoveUserFromRbacGroupInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class RemoveUserFromRbacGroupBatchInput
-{
-    /**
-     * Required
-     *
-     * @var string[]
-     *
-     */
-    public $userIdList;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class CreateOrgInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $rootGroupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-}
-
-class UpdateOrgInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $logo;
-}
-
-class AddOrgNodeInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $parentGroupId;
-}
-
-class RemoveOrgNodeInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $groupId;
-}
-
-class CreateDingTalkCorpInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $corpId;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $twoWaySynchronizationOn;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $appkey;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $secret;
-}
-
-class CorpSyncResult
-{
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $code;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $message;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $orgId;
-}
-
-class CreateWechatWorkCorpInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $corpId;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $twoWaySynchronizationOn;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperSecret;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperToken;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $addressBookSyncHelperEncodingAESKey;
-}
-
-class CreateRuleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Required
-     *
-     * @var RuleTypes
-     *
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $code;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $async;
-}
-
-class UpdateRuleInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var RuleTypes
-     *
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $code;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     *
-     */
-    public $async;
-}
-
-class SetRuleEnvInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
-
     /**
      * Required
      *
@@ -14131,563 +7245,247 @@ class SetRuleEnvInput
     public $value;
 }
 
-class RemoveRuleEnvInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $userPoolId;
 
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $key;
-}
-
-class UpdateRuleOrderInput
-{
-    /**
-     * Required
-     *
-     * @var UpdateRuleOrderItem[]
-     *
-     */
-    public $list;
-}
-
-class UpdateRuleOrderItem
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $id;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $order;
-}
-
-class SetUserMetadataInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $key;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $value;
-}
-
-class RemoveUserMetadataInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $key;
-}
-
-class AuthenticationContextInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $protocol;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $connection;
-
-    /**
-     * Optional
-     *
-     * @var LdapConfigurationInput
-     *
-     */
-    public $ldapConfiguration;
-}
-
-class LdapConfigurationInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $enabled;
-
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $isDeleted;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $ldapLink;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $baseDN;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $searchStandard;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $description;
-
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $createdAt;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $updatedAt;
-}
-
-class DeleteOrgInput
-{
-    /**
-     * Required
-     *
-     * @var string
-     *
-     */
-    public $_id;
-}
-
-class DeleteRBACGroupBatchResult
-{
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $success;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $requestCount;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $deletedCount;
-}
-
-class DeleteRBACRoleBatchResult
-{
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $success;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $requestCount;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $deletedCount;
-}
-
-class DeleteRBACPermissionBatchResult
-{
-    /**
-     * Required
-     *
-     * @var bool
-     *
-     */
-    public $success;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $requestCount;
-
-    /**
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $deletedCount;
-}
-
-
-class AddEmailProviderResponse
+class AddMemberResponse
 {
 
     /**
-     * @var EmailProviderList
+     * @var Node
      */
-    public $AddEmailProvider;
+    public $addMember;
 }
 
-class AddEmailProviderParam
+class AddMemberParam
 {
 
     /**
      * Optional
      *
-     * @var EmailProviderListInput
+     * @var int
      */
-    public $options;
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $includeChildrenNodes;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $nodeId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $nodeCode;
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $isLeader;
+
+    /**
+     * @param $userIds string[]
+     */
+    public function __construct($userIds)
+    {
+        $this->userIds = $userIds;
+    }
+
+    /**
+     * @param $page int
+     * @return AddMemberParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return AddMemberParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return AddMemberParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return AddMemberParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
+
+    /**
+     * @param $nodeId string
+     * @return AddMemberParam
+     */
+    public function withNodeId($nodeId)
+    {
+        $this->nodeId = $nodeId;
+        return $this;
+    }
+
+    /**
+     * @param $orgId string
+     * @return AddMemberParam
+     */
+    public function withOrgId($orgId)
+    {
+        $this->orgId = $orgId;
+        return $this;
+    }
+
+    /**
+     * @param $nodeCode string
+     * @return AddMemberParam
+     */
+    public function withNodeCode($nodeCode)
+    {
+        $this->nodeCode = $nodeCode;
+        return $this;
+    }
+
+    /**
+     * @param $isLeader bool
+     * @return AddMemberParam
+     */
+    public function withIsLeader($isLeader)
+    {
+        $this->isLeader = $isLeader;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::AddEmailProviderDocument,
-            "operationName" => "AddEmailProvider",
+            "query" => self::AddMemberDocument,
+            "operationName" => "addMember",
             "variables" => $this
         ];
     }
 
-    const AddEmailProviderDocument = <<<EOF
-mutation AddEmailProvider(\$options: EmailProviderListInput) {
-  AddEmailProvider(options: \$options) {
-    _id
+    const AddMemberDocument = <<<EOF
+mutation addMember(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$nodeId: String, \$orgId: String, \$nodeCode: String, \$userIds: [String!]!, \$isLeader: Boolean) {
+  addMember(nodeId: \$nodeId, orgId: \$orgId, nodeCode: \$nodeCode, userIds: \$userIds, isLeader: \$isLeader) {
+    id
     name
-    image
+    nameI18n
     description
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    client
-    user
-    status
-    provider {
-      _id
-      name
-      image
-      description
-      client
-      user
-      status
-    }
-  }
-}
-EOF;
-}
-
-
-class AddLdapServerResponse
-{
-
-    /**
-     * @var LDAPSingleServer
-     */
-    public $AddLDAPServer;
-}
-
-class AddLdapServerParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapLink;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $baseDN;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $searchStandard;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $emailPostfix;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddLdapServerDocument,
-            "operationName" => "AddLDAPServer",
-            "variables" => $this
-        ];
-    }
-
-    const AddLdapServerDocument = <<<EOF
-mutation AddLDAPServer(\$name: String!, \$clientId: String!, \$userId: String!, \$ldapLink: String!, \$baseDN: String!, \$searchStandard: String!, \$username: String!, \$password: String!, \$emailPostfix: String, \$description: String, \$enabled: Boolean) {
-  AddLDAPServer(name: \$name, clientId: \$clientId, userId: \$userId, ldapLink: \$ldapLink, baseDN: \$baseDN, searchStandard: \$searchStandard, username: \$username, password: \$password, emailPostfix: \$emailPostfix, description: \$description, enabled: \$enabled) {
-    _id
-    name
-    clientId
-    userId
-    ldapLink
-    baseDN
-    searchStandard
-    emailPostfix
-    username
-    password
-    description
-    enabled
-    isDeleted
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
     createdAt
     updatedAt
-  }
-}
-EOF;
-}
-
-
-class AddOAuthListResponse
-{
-
-    /**
-     * @var OAuthList
-     */
-    public $AddOAuthList;
-}
-
-class AddOAuthListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var OAuthListUpdateInput
-     */
-    public $options;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormUpdateInput
-     */
-    public $fields;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddOAuthListDocument,
-            "operationName" => "AddOAuthList",
-            "variables" => $this
-        ];
-    }
-
-    const AddOAuthListDocument = <<<EOF
-mutation AddOAuthList(\$options: OAuthListUpdateInput, \$fields: [OAuthListFieldsFormUpdateInput]) {
-  AddOAuthList(options: \$options, fields: \$fields) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
+      totalCount
+      list {
+        id
+        arn
+        userPoolId
+        username
+        email
+        emailVerified
+        phone
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
+      }
     }
   }
 }
@@ -14695,1172 +7493,737 @@ EOF;
 }
 
 
-class AddSystemPricingResponse
+class AddNodeResponse
 {
 
     /**
-     * @var PricingList
+     * @var Org
      */
-    public $AddSystemPricing;
+    public $addNode;
 }
 
-class AddSystemPricingParam
-{
-
-    /**
-     * Optional
-     *
-     * @var PricingFieldsInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddSystemPricingDocument,
-            "operationName" => "AddSystemPricing",
-            "variables" => $this
-        ];
-    }
-
-    const AddSystemPricingDocument = <<<EOF
-mutation AddSystemPricing(\$options: PricingFieldsInput) {
-  AddSystemPricing(options: \$options) {
-    _id
-    type
-    startNumber
-    freeNumber
-    startPrice
-    maxNumber
-    d
-    features
-  }
-}
-EOF;
-}
-
-
-class ClearAvatarSrcResponse
-{
-
-    /**
-     * @var OAuthList
-     */
-    public $ClearAvatarSrc;
-}
-
-class ClearAvatarSrcParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ClearAvatarSrcDocument,
-            "operationName" => "ClearAvatarSrc",
-            "variables" => $this
-        ];
-    }
-
-    const ClearAvatarSrcDocument = <<<EOF
-mutation ClearAvatarSrc(\$client: String, \$oauth: String, \$user: String) {
-  ClearAvatarSrc(client: \$client, oauth: \$oauth, user: \$user) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class ContinuePayResponse
-{
-
-    /**
-     * @var OrderSuccess
-     */
-    public $ContinuePay;
-}
-
-class ContinuePayParam
+class AddNodeParam
 {
 
     /**
      * Required
      *
      * @var string
+     */
+    public $orgId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $parentNodeId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $nameI18n;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $descriptionI18n;
+
+    /**
+     * Optional
+     *
+     * @var int
      */
     public $order;
 
-    function createRequest()
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @param $orgId string
+     * @param $name string
+     */
+    public function __construct($orgId, $name)
     {
-        return [
-            "query" => self::ContinuePayDocument,
-            "operationName" => "ContinuePay",
-            "variables" => $this
-        ];
+        $this->orgId = $orgId;
+        $this->name = $name;
     }
 
-    const ContinuePayDocument = <<<EOF
-mutation ContinuePay(\$order: String!) {
-  ContinuePay(order: \$order) {
-    code
-    url
-    charge
-  }
-}
-EOF;
-}
-
-
-class CreateDefaultSamlIdentityProviderSettingsResponse
-{
-
     /**
-     * @var SAMLDefaultIdentityProviderSettings
+     * @param $parentNodeId string
+     * @return AddNodeParam
      */
-    public $CreateDefaultSAMLIdentityProviderSettings;
-}
-
-class CreateDefaultSamlIdentityProviderSettingsParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var AssertionMapInputType
-     */
-    public $mappings;
-
-    function createRequest()
+    public function withParentNodeId($parentNodeId)
     {
-        return [
-            "query" => self::CreateDefaultSamlIdentityProviderSettingsDocument,
-            "operationName" => "CreateDefaultSAMLIdentityProviderSettings",
-            "variables" => $this
-        ];
+        $this->parentNodeId = $parentNodeId;
+        return $this;
     }
 
-    const CreateDefaultSamlIdentityProviderSettingsDocument = <<<EOF
-mutation CreateDefaultSAMLIdentityProviderSettings(\$name: String!, \$image: String, \$description: String, \$mappings: AssertionMapInputType) {
-  CreateDefaultSAMLIdentityProviderSettings(name: \$name, image: \$image, description: \$description, mappings: \$mappings) {
-    _id
-    name
-    image
-    description
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
+    /**
+     * @param $nameI18n string
+     * @return AddNodeParam
+     */
+    public function withNameI18n($nameI18n)
+    {
+        $this->nameI18n = $nameI18n;
+        return $this;
     }
-    isDeleted
-  }
-}
-EOF;
-}
-
-
-class CreateOAuthProviderResponse
-{
 
     /**
-     * @var OAuthProviderClient
+     * @param $description string
+     * @return AddNodeParam
      */
-    public $CreateOAuthProvider;
-}
-
-class CreateOAuthProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $descriptionI18n string
+     * @return AddNodeParam
      */
-    public $domain;
+    public function withDescriptionI18n($descriptionI18n)
+    {
+        $this->descriptionI18n = $descriptionI18n;
+        return $this;
+    }
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $order int
+     * @return AddNodeParam
      */
-    public $redirectUris;
+    public function withOrder($order)
+    {
+        $this->order = $order;
+        return $this;
+    }
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $code string
+     * @return AddNodeParam
      */
-    public $grants;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $casExpire;
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::CreateOAuthProviderDocument,
-            "operationName" => "CreateOAuthProvider",
+            "query" => self::AddNodeDocument,
+            "operationName" => "addNode",
             "variables" => $this
         ];
     }
 
-    const CreateOAuthProviderDocument = <<<EOF
-mutation CreateOAuthProvider(\$name: String!, \$domain: String!, \$redirectUris: [String]!, \$grants: [String!]!, \$clientId: String, \$image: String, \$description: String, \$homepageURL: String, \$casExpire: Int) {
-  CreateOAuthProvider(name: \$name, domain: \$domain, redirectUris: \$redirectUris, grants: \$grants, clientId: \$clientId, image: \$image, description: \$description, homepageURL: \$homepageURL, casExpire: \$casExpire) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class CreateOidcAppResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $CreateOIDCApp;
-}
-
-class CreateOidcAppParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $redirect_uris;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $grant_types;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $response_types;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $token_endpoint_auth_method;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $isDefault;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_signing_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_encryption_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_encryption_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $_jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $custom_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $authorization_code_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $access_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $cas_expire;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderCustomStylesInput
-     */
-    public $customStyles;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateOidcAppDocument,
-            "operationName" => "CreateOIDCApp",
-            "variables" => $this
-        ];
-    }
-
-    const CreateOidcAppDocument = <<<EOF
-mutation CreateOIDCApp(\$name: String!, \$domain: String!, \$redirect_uris: [String]!, \$grant_types: [String!]!, \$response_types: [String!]!, \$clientId: String, \$client_id: String, \$token_endpoint_auth_method: String, \$image: String, \$isDefault: Boolean, \$id_token_signed_response_alg: String, \$id_token_encrypted_response_alg: String, \$id_token_encrypted_response_enc: String, \$userinfo_signed_response_alg: String, \$userinfo_encrypted_response_alg: String, \$userinfo_encrypted_response_enc: String, \$request_object_signing_alg: String, \$request_object_encryption_alg: String, \$request_object_encryption_enc: String, \$jwks_uri: String, \$_jwks_uri: String, \$jwks: String, \$_jwks: String, \$custom_jwks: String, \$description: String, \$homepageURL: String, \$authorization_code_expire: String, \$id_token_expire: String, \$access_token_expire: String, \$cas_expire: String, \$customStyles: OIDCProviderCustomStylesInput) {
-  CreateOIDCApp(name: \$name, domain: \$domain, redirect_uris: \$redirect_uris, grant_types: \$grant_types, response_types: \$response_types, clientId: \$clientId, client_id: \$client_id, token_endpoint_auth_method: \$token_endpoint_auth_method, image: \$image, isDefault: \$isDefault, id_token_signed_response_alg: \$id_token_signed_response_alg, id_token_encrypted_response_alg: \$id_token_encrypted_response_alg, id_token_encrypted_response_enc: \$id_token_encrypted_response_enc, userinfo_signed_response_alg: \$userinfo_signed_response_alg, userinfo_encrypted_response_alg: \$userinfo_encrypted_response_alg, userinfo_encrypted_response_enc: \$userinfo_encrypted_response_enc, request_object_signing_alg: \$request_object_signing_alg, request_object_encryption_alg: \$request_object_encryption_alg, request_object_encryption_enc: \$request_object_encryption_enc, jwks_uri: \$jwks_uri, _jwks_uri: \$_jwks_uri, jwks: \$jwks, _jwks: \$_jwks, custom_jwks: \$custom_jwks, description: \$description, homepageURL: \$homepageURL, authorization_code_expire: \$authorization_code_expire, id_token_expire: \$id_token_expire, access_token_expire: \$access_token_expire, cas_expire: \$cas_expire, customStyles: \$customStyles) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class CreateSamlIdentityProviderResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $CreateSAMLIdentityProvider;
-}
-
-class CreateSamlIdentityProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $IdPMetadata;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateSamlIdentityProviderDocument,
-            "operationName" => "CreateSAMLIdentityProvider",
-            "variables" => $this
-        ];
-    }
-
-    const CreateSamlIdentityProviderDocument = <<<EOF
-mutation CreateSAMLIdentityProvider(\$name: String!, \$domain: String!, \$clientId: String!, \$image: String, \$description: String, \$SPMetadata: String, \$IdPMetadata: String) {
-  CreateSAMLIdentityProvider(name: \$name, domain: \$domain, clientId: \$clientId, image: \$image, description: \$description, SPMetadata: \$SPMetadata, IdPMetadata: \$IdPMetadata) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class CreateSamlServiceProviderResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $CreateSAMLServiceProvider;
-}
-
-class CreateSamlServiceProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $redirectUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $IdPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var AssertionMapInputType
-     */
-    public $mappings;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $defaultIdPMapId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateSamlServiceProviderDocument,
-            "operationName" => "CreateSAMLServiceProvider",
-            "variables" => $this
-        ];
-    }
-
-    const CreateSamlServiceProviderDocument = <<<EOF
-mutation CreateSAMLServiceProvider(\$name: String!, \$domain: String!, \$clientId: String!, \$redirectUrl: String!, \$description: String, \$SPMetadata: String, \$IdPMetadata: String, \$image: String, \$mappings: AssertionMapInputType, \$defaultIdPMapId: String) {
-  CreateSAMLServiceProvider(name: \$name, domain: \$domain, clientId: \$clientId, redirectUrl: \$redirectUrl, description: \$description, SPMetadata: \$SPMetadata, IdPMetadata: \$IdPMetadata, image: \$image, mappings: \$mappings, defaultIdPMapId: \$defaultIdPMapId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
+    const AddNodeDocument = <<<EOF
+mutation addNode(\$orgId: String!, \$parentNodeId: String, \$name: String!, \$nameI18n: String, \$description: String, \$descriptionI18n: String, \$order: Int, \$code: String) {
+  addNode(orgId: \$orgId, parentNodeId: \$parentNodeId, name: \$name, nameI18n: \$nameI18n, description: \$description, descriptionI18n: \$descriptionI18n, order: \$order, code: \$code) {
+    id
+    rootNode {
+      id
       name
-      image
+      nameI18n
       description
-      isDeleted
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
+      createdAt
+      updatedAt
+      children
     }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class EnableSamlIdentityProviderResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $EnableSAMLIdentityProvider;
-}
-
-class EnableSamlIdentityProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EnableSamlIdentityProviderDocument,
-            "operationName" => "EnableSAMLIdentityProvider",
-            "variables" => $this
-        ];
-    }
-
-    const EnableSamlIdentityProviderDocument = <<<EOF
-mutation EnableSAMLIdentityProvider(\$appId: String!, \$clientId: String!, \$enabled: Boolean) {
-  EnableSAMLIdentityProvider(appId: \$appId, clientId: \$clientId, enabled: \$enabled) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class EnableSamlServiceProviderResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $EnableSAMLServiceProvider;
-}
-
-class EnableSamlServiceProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EnableSamlServiceProviderDocument,
-            "operationName" => "EnableSAMLServiceProvider",
-            "variables" => $this
-        ];
-    }
-
-    const EnableSamlServiceProviderDocument = <<<EOF
-mutation EnableSAMLServiceProvider(\$appId: String!, \$clientId: String!, \$enabled: Boolean) {
-  EnableSAMLServiceProvider(appId: \$appId, clientId: \$clientId, enabled: \$enabled) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
+    nodes {
+      id
       name
-      image
+      nameI18n
       description
-      isDeleted
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
+      createdAt
+      updatedAt
+      children
     }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
   }
 }
 EOF;
 }
 
 
-class IncClientFlowNumberResponse
+class AddPolicyAssignmentsResponse
 {
 
     /**
-     * @var OrderSuccess
+     * @var CommonMessage
      */
-    public $IncClientFlowNumber;
+    public $addPolicyAssignments;
 }
 
-class IncClientFlowNumberParam
+class AddPolicyAssignmentsParam
 {
 
     /**
-     * Optional
+     * Required
      *
-     * @var string
+     * @var string[]
      */
-    public $user;
+    public $policies;
+
+    /**
+     * Required
+     *
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
 
     /**
      * Optional
      *
-     * @var string
+     * @var string[]
      */
-    public $userInvitied;
+    public $targetIdentifiers;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $policies string[]
+     * @param $targetType PolicyAssignmentTargetType
      */
-    public $client;
+    public function __construct($policies, $targetType)
+    {
+        $this->policies = $policies;
+        $this->targetType = $targetType;
+    }
 
     /**
-     * Optional
-     *
-     * @var int
+     * @param $targetIdentifiers string[]
+     * @return AddPolicyAssignmentsParam
      */
-    public $number;
+    public function withTargetIdentifiers($targetIdentifiers)
+    {
+        $this->targetIdentifiers = $targetIdentifiers;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::IncClientFlowNumberDocument,
-            "operationName" => "IncClientFlowNumber",
+            "query" => self::AddPolicyAssignmentsDocument,
+            "operationName" => "addPolicyAssignments",
             "variables" => $this
         ];
     }
 
-    const IncClientFlowNumberDocument = <<<EOF
-mutation IncClientFlowNumber(\$user: String, \$userInvitied: String, \$client: String, \$number: Int) {
-  IncClientFlowNumber(user: \$user, userInvitied: \$userInvitied, client: \$client, number: \$number) {
+    const AddPolicyAssignmentsDocument = <<<EOF
+mutation addPolicyAssignments(\$policies: [String!]!, \$targetType: PolicyAssignmentTargetType!, \$targetIdentifiers: [String!]) {
+  addPolicyAssignments(policies: \$policies, targetType: \$targetType, targetIdentifiers: \$targetIdentifiers) {
+    message
     code
-    url
-    charge
   }
 }
 EOF;
 }
 
 
-class LoginByLdapResponse
+class AddUdfResponse
+{
+
+    /**
+     * @var UserDefinedField
+     */
+    public $addUdf;
+}
+
+class AddUdfParam
+{
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var UdfDataType
+     */
+    public $dataType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $label;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $options;
+
+    /**
+     * @param $targetType UdfTargetType
+     * @param $key string
+     * @param $dataType UdfDataType
+     * @param $label string
+     */
+    public function __construct($targetType, $key, $dataType, $label)
+    {
+        $this->targetType = $targetType;
+        $this->key = $key;
+        $this->dataType = $dataType;
+        $this->label = $label;
+    }
+
+    /**
+     * @param $options string
+     * @return AddUdfParam
+     */
+    public function withOptions($options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AddUdfDocument,
+            "operationName" => "addUdf",
+            "variables" => $this
+        ];
+    }
+
+    const AddUdfDocument = <<<EOF
+mutation addUdf(\$targetType: UDFTargetType!, \$key: String!, \$dataType: UDFDataType!, \$label: String!, \$options: String) {
+  addUdf(targetType: \$targetType, key: \$key, dataType: \$dataType, label: \$label, options: \$options) {
+    targetType
+    dataType
+    key
+    label
+    options
+  }
+}
+EOF;
+}
+
+
+class AddUserToGroupResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $addUserToGroup;
+}
+
+class AddUserToGroupParam
+{
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @param $userIds string[]
+     */
+    public function __construct($userIds)
+    {
+        $this->userIds = $userIds;
+    }
+
+    /**
+     * @param $code string
+     * @return AddUserToGroupParam
+     */
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AddUserToGroupDocument,
+            "operationName" => "addUserToGroup",
+            "variables" => $this
+        ];
+    }
+
+    const AddUserToGroupDocument = <<<EOF
+mutation addUserToGroup(\$userIds: [String!]!, \$code: String) {
+  addUserToGroup(userIds: \$userIds, code: \$code) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class AddWhitelistResponse
+{
+
+    /**
+     * @var WhiteList[]
+     */
+    public $addWhitelist;
+}
+
+class AddWhitelistParam
+{
+
+    /**
+     * Required
+     *
+     * @var WhitelistType
+     */
+    public $type;
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $list;
+
+    /**
+     * @param $type WhitelistType
+     * @param $list string[]
+     */
+    public function __construct($type, $list)
+    {
+        $this->type = $type;
+        $this->list = $list;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AddWhitelistDocument,
+            "operationName" => "addWhitelist",
+            "variables" => $this
+        ];
+    }
+
+    const AddWhitelistDocument = <<<EOF
+mutation addWhitelist(\$type: WhitelistType!, \$list: [String!]!) {
+  addWhitelist(type: \$type, list: \$list) {
+    createdAt
+    updatedAt
+    value
+  }
+}
+EOF;
+}
+
+
+class AllowResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $allow;
+}
+
+class AllowParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $action;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $userId;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $roleCode;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $roleCodes;
+
+    /**
+     * @param $resource string
+     * @param $action string
+     */
+    public function __construct($resource, $action)
+    {
+        $this->resource = $resource;
+        $this->action = $action;
+    }
+
+    /**
+     * @param $userId string
+     * @return AllowParam
+     */
+    public function withUserId($userId)
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    /**
+     * @param $userIds string[]
+     * @return AllowParam
+     */
+    public function withUserIds($userIds)
+    {
+        $this->userIds = $userIds;
+        return $this;
+    }
+
+    /**
+     * @param $roleCode string
+     * @return AllowParam
+     */
+    public function withRoleCode($roleCode)
+    {
+        $this->roleCode = $roleCode;
+        return $this;
+    }
+
+    /**
+     * @param $roleCodes string[]
+     * @return AllowParam
+     */
+    public function withRoleCodes($roleCodes)
+    {
+        $this->roleCodes = $roleCodes;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AllowDocument,
+            "operationName" => "allow",
+            "variables" => $this
+        ];
+    }
+
+    const AllowDocument = <<<EOF
+mutation allow(\$resource: String!, \$action: String!, \$userId: String, \$userIds: [String!], \$roleCode: String, \$roleCodes: [String!]) {
+  allow(resource: \$resource, action: \$action, userId: \$userId, userIds: \$userIds, roleCode: \$roleCode, roleCodes: \$roleCodes) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class AssignRoleResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $assignRole;
+}
+
+class AssignRoleParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $roleCode;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $roleCodes;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $groupCodes;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $nodeCodes;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $roleCode string
+     * @return AssignRoleParam
+     */
+    public function withRoleCode($roleCode)
+    {
+        $this->roleCode = $roleCode;
+        return $this;
+    }
+
+    /**
+     * @param $roleCodes string[]
+     * @return AssignRoleParam
+     */
+    public function withRoleCodes($roleCodes)
+    {
+        $this->roleCodes = $roleCodes;
+        return $this;
+    }
+
+    /**
+     * @param $userIds string[]
+     * @return AssignRoleParam
+     */
+    public function withUserIds($userIds)
+    {
+        $this->userIds = $userIds;
+        return $this;
+    }
+
+    /**
+     * @param $groupCodes string[]
+     * @return AssignRoleParam
+     */
+    public function withGroupCodes($groupCodes)
+    {
+        $this->groupCodes = $groupCodes;
+        return $this;
+    }
+
+    /**
+     * @param $nodeCodes string[]
+     * @return AssignRoleParam
+     */
+    public function withNodeCodes($nodeCodes)
+    {
+        $this->nodeCodes = $nodeCodes;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::AssignRoleDocument,
+            "operationName" => "assignRole",
+            "variables" => $this
+        ];
+    }
+
+    const AssignRoleDocument = <<<EOF
+mutation assignRole(\$roleCode: String, \$roleCodes: [String], \$userIds: [String!], \$groupCodes: [String!], \$nodeCodes: [String!]) {
+  assignRole(roleCode: \$roleCode, roleCodes: \$roleCodes, userIds: \$userIds, groupCodes: \$groupCodes, nodeCodes: \$nodeCodes) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class BindPhoneResponse
 {
 
     /**
      * @var User
      */
-    public $LoginByLDAP;
+    public $bindPhone;
 }
 
-class LoginByLdapParam
+class BindPhoneParam
 {
 
     /**
@@ -15868,56 +8231,51 @@ class LoginByLdapParam
      *
      * @var string
      */
-    public $username;
+    public $phone;
 
     /**
      * Required
      *
      * @var string
      */
-    public $password;
+    public $phoneCode;
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $phone string
+     * @param $phoneCode string
      */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $browser;
+    public function __construct($phone, $phoneCode)
+    {
+        $this->phone = $phone;
+        $this->phoneCode = $phoneCode;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::LoginByLdapDocument,
-            "operationName" => "LoginByLDAP",
+            "query" => self::BindPhoneDocument,
+            "operationName" => "bindPhone",
             "variables" => $this
         ];
     }
 
-    const LoginByLdapDocument = <<<EOF
-mutation LoginByLDAP(\$username: String!, \$password: String!, \$clientId: String!, \$browser: String) {
-  LoginByLDAP(username: \$username, password: \$password, clientId: \$clientId, browser: \$browser) {
-    _id
+    const BindPhoneDocument = <<<EOF
+mutation bindPhone(\$phone: String!, \$phoneCode: String!) {
+  bindPhone(phone: \$phone, phoneCode: \$phoneCode) {
+    id
+    arn
+    userPoolId
     username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -15928,6 +8286,8 @@ mutation LoginByLDAP(\$username: String!, \$password: String!, \$clientId: Strin
     blocked
     isDeleted
     device
+    browser
+    company
     name
     givenName
     familyName
@@ -15945,3504 +8305,11 @@ mutation LoginByLDAP(\$username: String!, \$password: String!, \$clientId: Strin
     locality
     region
     postalCode
+    city
+    province
     country
-    updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    oldPassword
-    metadata
-  }
-}
-EOF;
-}
-
-
-class RemoveEmailProviderResponse
-{
-
-    /**
-     * @var EmailProviderList[]
-     */
-    public $RemoveEmailProvider;
-}
-
-class RemoveEmailProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_ids;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveEmailProviderDocument,
-            "operationName" => "RemoveEmailProvider",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveEmailProviderDocument = <<<EOF
-mutation RemoveEmailProvider(\$_ids: [String]!) {
-  RemoveEmailProvider(_ids: \$_ids) {
-    _id
-    name
-    image
-    description
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    client
-    user
-    status
-    provider {
-      _id
-      name
-      image
-      description
-      client
-      user
-      status
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveLdapServerResponse
-{
-
-    /**
-     * @var LDAPSingleServer
-     */
-    public $RemoveLDAPServer;
-}
-
-class RemoveLdapServerParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveLdapServerDocument,
-            "operationName" => "RemoveLDAPServer",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveLdapServerDocument = <<<EOF
-mutation RemoveLDAPServer(\$ldapId: String!, \$clientId: String!) {
-  RemoveLDAPServer(ldapId: \$ldapId, clientId: \$clientId) {
-    _id
-    name
-    clientId
-    userId
-    ldapLink
-    baseDN
-    searchStandard
-    emailPostfix
-    username
-    password
-    description
-    enabled
-    isDeleted
     createdAt
     updatedAt
-  }
-}
-EOF;
-}
-
-
-class RemoveOAuthListResponse
-{
-
-    /**
-     * @var string[]
-     */
-    public $RemoveOAuthList;
-}
-
-class RemoveOAuthListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $ids;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveOAuthListDocument,
-            "operationName" => "RemoveOAuthList",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveOAuthListDocument = <<<EOF
-mutation RemoveOAuthList(\$ids: [String]) {
-  RemoveOAuthList(ids: \$ids)
-}
-EOF;
-}
-
-
-class RemoveOAuthProviderResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $RemoveOAuthProvider;
-}
-
-class RemoveOAuthProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveOAuthProviderDocument,
-            "operationName" => "RemoveOAuthProvider",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveOAuthProviderDocument = <<<EOF
-mutation RemoveOAuthProvider(\$appId: String!, \$clientId: String!) {
-  RemoveOAuthProvider(appId: \$appId, clientId: \$clientId) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class RemoveOidcAppResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $RemoveOIDCApp;
-}
-
-class RemoveOidcAppParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveOidcAppDocument,
-            "operationName" => "RemoveOIDCApp",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveOidcAppDocument = <<<EOF
-mutation RemoveOIDCApp(\$appId: String!, \$clientId: String!) {
-  RemoveOIDCApp(appId: \$appId, clientId: \$clientId) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveSamlIdentityProviderResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $RemoveSAMLIdentityProvider;
-}
-
-class RemoveSamlIdentityProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveSamlIdentityProviderDocument,
-            "operationName" => "RemoveSAMLIdentityProvider",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveSamlIdentityProviderDocument = <<<EOF
-mutation RemoveSAMLIdentityProvider(\$appId: String!, \$clientId: String!) {
-  RemoveSAMLIdentityProvider(appId: \$appId, clientId: \$clientId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class RemoveSamlServiceProviderResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $RemoveSAMLServiceProvider;
-}
-
-class RemoveSamlServiceProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveSamlServiceProviderDocument,
-            "operationName" => "RemoveSAMLServiceProvider",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveSamlServiceProviderDocument = <<<EOF
-mutation RemoveSAMLServiceProvider(\$appId: String!, \$clientId: String!) {
-  RemoveSAMLServiceProvider(appId: \$appId, clientId: \$clientId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class RevokeUserAuthorizedAppResponse
-{
-
-    /**
-     * @var UserAuthorizedApp
-     */
-    public $RevokeUserAuthorizedApp;
-}
-
-class RevokeUserAuthorizedAppParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RevokeUserAuthorizedAppDocument,
-            "operationName" => "RevokeUserAuthorizedApp",
-            "variables" => $this
-        ];
-    }
-
-    const RevokeUserAuthorizedAppDocument = <<<EOF
-mutation RevokeUserAuthorizedApp(\$appId: String, \$userPoolId: String, \$userId: String) {
-  RevokeUserAuthorizedApp(appId: \$appId, userPoolId: \$userPoolId, userId: \$userId) {
-    _id
-    appId
-    userId
-    scope
-    type
-    isRevoked
-    when
-  }
-}
-EOF;
-}
-
-
-class SaveEmailProviderWithClientResponse
-{
-
-    /**
-     * @var EmailProviderWithClientList
-     */
-    public $SaveEmailProviderWithClient;
-}
-
-class SaveEmailProviderWithClientParam
-{
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderWithClientAddInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SaveEmailProviderWithClientDocument,
-            "operationName" => "SaveEmailProviderWithClient",
-            "variables" => $this
-        ];
-    }
-
-    const SaveEmailProviderWithClientDocument = <<<EOF
-mutation SaveEmailProviderWithClient(\$options: EmailProviderWithClientAddInput) {
-  SaveEmailProviderWithClient(options: \$options) {
-    _id
-    user
-    client
-    status
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    provider {
-      _id
-      name
-      image
-      description
-    }
-  }
-}
-EOF;
-}
-
-
-class SendEmailResponse
-{
-
-    /**
-     * @var EmailSentList
-     */
-    public $SendEmail;
-}
-
-class SendEmailParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $receivers;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $subject;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $testAvailable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $providerName;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $content;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $sender;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $meta_data;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendEmailDocument,
-            "operationName" => "SendEmail",
-            "variables" => $this
-        ];
-    }
-
-    const SendEmailDocument = <<<EOF
-mutation SendEmail(\$receivers: [String]!, \$subject: String!, \$client: String!, \$user: String, \$testAvailable: Boolean, \$providerName: String, \$content: String, \$sender: String, \$meta_data: String, \$secret: String) {
-  SendEmail(receivers: \$receivers, subject: \$subject, client: \$client, user: \$user, testAvailable: \$testAvailable, providerName: \$providerName, content: \$content, sender: \$sender, meta_data: \$meta_data, secret: \$secret) {
-    _id
-    user
-    subject
-    content
-    sender
-    receivers
-    post
-    createdAt
-    rejected
-    isDeleted
-    client
-  }
-}
-EOF;
-}
-
-
-class SendEmailByTypeResponse
-{
-
-    /**
-     * @var EmailSentList
-     */
-    public $SendEmailByType;
-}
-
-class SendEmailByTypeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $receivers;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $meta_data;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendEmailByTypeDocument,
-            "operationName" => "SendEmailByType",
-            "variables" => $this
-        ];
-    }
-
-    const SendEmailByTypeDocument = <<<EOF
-mutation SendEmailByType(\$user: String!, \$type: String!, \$client: String!, \$receivers: [String]!, \$meta_data: String) {
-  SendEmailByType(user: \$user, type: \$type, client: \$client, receivers: \$receivers, meta_data: \$meta_data) {
-    _id
-    user
-    subject
-    content
-    sender
-    receivers
-    post
-    createdAt
-    rejected
-    isDeleted
-    client
-  }
-}
-EOF;
-}
-
-
-class SendWebhookTestResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $SendWebhookTest;
-}
-
-class SendWebhookTestParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendWebhookTestDocument,
-            "operationName" => "SendWebhookTest",
-            "variables" => $this
-        ];
-    }
-
-    const SendWebhookTestDocument = <<<EOF
-mutation SendWebhookTest(\$id: String!) {
-  SendWebhookTest(id: \$id)
-}
-EOF;
-}
-
-
-class SetApplicationOAuthEnableOrDisableResponse
-{
-
-    /**
-     * @var OAuthList
-     */
-    public $SetApplicationOAuthEnableOrDisable;
-}
-
-class SetApplicationOAuthEnableOrDisableParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SetApplicationOAuthEnableOrDisableDocument,
-            "operationName" => "SetApplicationOAuthEnableOrDisable",
-            "variables" => $this
-        ];
-    }
-
-    const SetApplicationOAuthEnableOrDisableDocument = <<<EOF
-mutation SetApplicationOAuthEnableOrDisable(\$client: String, \$oauth: String, \$user: String, \$enabled: Boolean) {
-  SetApplicationOAuthEnableOrDisable(client: \$client, oauth: \$oauth, user: \$user, enabled: \$enabled) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateApplicationOAuthResponse
-{
-
-    /**
-     * @var OAuthList
-     */
-    public $UpdateApplicationOAuth;
-}
-
-class UpdateApplicationOAuthParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $oauth;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $alias;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormUpdateInput
-     */
-    public $fields;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateApplicationOAuthDocument,
-            "operationName" => "UpdateApplicationOAuth",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateApplicationOAuthDocument = <<<EOF
-mutation UpdateApplicationOAuth(\$client: String, \$oauth: String, \$user: String, \$alias: String, \$fields: [OAuthListFieldsFormUpdateInput]) {
-  UpdateApplicationOAuth(client: \$client, oauth: \$oauth, user: \$user, alias: \$alias, fields: \$fields) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateEmailProviderResponse
-{
-
-    /**
-     * @var EmailProviderList
-     */
-    public $UpdateEmailProvider;
-}
-
-class UpdateEmailProviderParam
-{
-
-    /**
-     * Optional
-     *
-     * @var EmailProviderListInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateEmailProviderDocument,
-            "operationName" => "UpdateEmailProvider",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateEmailProviderDocument = <<<EOF
-mutation UpdateEmailProvider(\$options: EmailProviderListInput) {
-  UpdateEmailProvider(options: \$options) {
-    _id
-    name
-    image
-    description
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    client
-    user
-    status
-    provider {
-      _id
-      name
-      image
-      description
-      client
-      user
-      status
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateEmailTemplateResponse
-{
-
-    /**
-     * @var EmailTemplate
-     */
-    public $UpdateEmailTemplate;
-}
-
-class UpdateEmailTemplateParam
-{
-
-    /**
-     * Required
-     *
-     * @var EmailTemplateInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateEmailTemplateDocument,
-            "operationName" => "UpdateEmailTemplate",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateEmailTemplateDocument = <<<EOF
-mutation UpdateEmailTemplate(\$options: EmailTemplateInput!) {
-  UpdateEmailTemplate(options: \$options) {
-    _id
-    type
-    sender
-    object
-    hasURL
-    URLExpireTime
-    status
-    redirectTo
-    content
-  }
-}
-EOF;
-}
-
-
-class UpdateEmailTemplateWithClientResponse
-{
-
-    /**
-     * @var EmailProviderWithClientList
-     */
-    public $UpdateEmailTemplateWithClient;
-}
-
-class UpdateEmailTemplateWithClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var EmailTemplateWithClientInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateEmailTemplateWithClientDocument,
-            "operationName" => "UpdateEmailTemplateWithClient",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateEmailTemplateWithClientDocument = <<<EOF
-mutation UpdateEmailTemplateWithClient(\$options: EmailTemplateWithClientInput!) {
-  UpdateEmailTemplateWithClient(options: \$options) {
-    _id
-    user
-    client
-    status
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    provider {
-      _id
-      name
-      image
-      description
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateLdapServerResponse
-{
-
-    /**
-     * @var LDAPSingleServer
-     */
-    public $UpdateLDAPServer;
-}
-
-class UpdateLdapServerParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapLink;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $baseDN;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $searchStandard;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $emailPostfix;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateLdapServerDocument,
-            "operationName" => "UpdateLDAPServer",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateLdapServerDocument = <<<EOF
-mutation UpdateLDAPServer(\$ldapId: String!, \$name: String!, \$clientId: String!, \$userId: String!, \$ldapLink: String!, \$baseDN: String!, \$username: String!, \$searchStandard: String!, \$password: String!, \$emailPostfix: String, \$description: String, \$enabled: Boolean) {
-  UpdateLDAPServer(ldapId: \$ldapId, name: \$name, clientId: \$clientId, userId: \$userId, ldapLink: \$ldapLink, baseDN: \$baseDN, username: \$username, searchStandard: \$searchStandard, password: \$password, emailPostfix: \$emailPostfix, description: \$description, enabled: \$enabled) {
-    _id
-    name
-    clientId
-    userId
-    ldapLink
-    baseDN
-    searchStandard
-    emailPostfix
-    username
-    password
-    description
-    enabled
-    isDeleted
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class UpdateOAuthListResponse
-{
-
-    /**
-     * @var OAuthList
-     */
-    public $UpdateOAuthList;
-}
-
-class UpdateOAuthListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var OAuthListUpdateInput
-     */
-    public $options;
-
-    /**
-     * Optional
-     *
-     * @var OAuthListFieldsFormUpdateInput
-     */
-    public $fields;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateOAuthListDocument,
-            "operationName" => "UpdateOAuthList",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateOAuthListDocument = <<<EOF
-mutation UpdateOAuthList(\$options: OAuthListUpdateInput, \$fields: [OAuthListFieldsFormUpdateInput]) {
-  UpdateOAuthList(options: \$options, fields: \$fields) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateOAuthProviderResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $UpdateOAuthProvider;
-}
-
-class UpdateOAuthProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $redirectUris;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $grants;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $css;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $casExpire;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateOAuthProviderDocument,
-            "operationName" => "UpdateOAuthProvider",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateOAuthProviderDocument = <<<EOF
-mutation UpdateOAuthProvider(\$appId: String!, \$domain: String, \$name: String, \$image: String, \$redirectUris: [String], \$grants: [String], \$description: String, \$homepageURL: String, \$css: String, \$casExpire: Int) {
-  UpdateOAuthProvider(appId: \$appId, domain: \$domain, name: \$name, image: \$image, redirectUris: \$redirectUris, grants: \$grants, description: \$description, homepageURL: \$homepageURL, css: \$css, casExpire: \$casExpire) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class UpdateOidcAppResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $UpdateOIDCApp;
-}
-
-class UpdateOidcAppParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $redirect_uris;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $token_endpoint_auth_method;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $grant_types;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $response_types;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_signed_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_encrypted_response_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userinfo_encrypted_response_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_signing_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_encryption_alg;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $request_object_encryption_enc;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $_jwks_uri;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $custom_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $_jwks;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $homepageURL;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $css;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $authorization_code_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $id_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $access_token_expire;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $cas_expire;
-
-    /**
-     * Optional
-     *
-     * @var OidcProviderCustomStylesInput
-     */
-    public $customStyles;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateOidcAppDocument,
-            "operationName" => "UpdateOIDCApp",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateOidcAppDocument = <<<EOF
-mutation UpdateOIDCApp(\$appId: String!, \$domain: String, \$name: String, \$image: String, \$redirect_uris: [String], \$token_endpoint_auth_method: String, \$grant_types: [String], \$response_types: [String], \$id_token_signed_response_alg: String, \$id_token_encrypted_response_alg: String, \$id_token_encrypted_response_enc: String, \$userinfo_signed_response_alg: String, \$userinfo_encrypted_response_alg: String, \$userinfo_encrypted_response_enc: String, \$request_object_signing_alg: String, \$request_object_encryption_alg: String, \$request_object_encryption_enc: String, \$jwks_uri: String, \$_jwks_uri: String, \$custom_jwks: String, \$jwks: String, \$_jwks: String, \$description: String, \$homepageURL: String, \$css: String, \$authorization_code_expire: String, \$id_token_expire: String, \$access_token_expire: String, \$cas_expire: String, \$customStyles: OIDCProviderCustomStylesInput) {
-  UpdateOIDCApp(appId: \$appId, domain: \$domain, name: \$name, image: \$image, redirect_uris: \$redirect_uris, token_endpoint_auth_method: \$token_endpoint_auth_method, grant_types: \$grant_types, response_types: \$response_types, id_token_signed_response_alg: \$id_token_signed_response_alg, id_token_encrypted_response_alg: \$id_token_encrypted_response_alg, id_token_encrypted_response_enc: \$id_token_encrypted_response_enc, userinfo_signed_response_alg: \$userinfo_signed_response_alg, userinfo_encrypted_response_alg: \$userinfo_encrypted_response_alg, userinfo_encrypted_response_enc: \$userinfo_encrypted_response_enc, request_object_signing_alg: \$request_object_signing_alg, request_object_encryption_alg: \$request_object_encryption_alg, request_object_encryption_enc: \$request_object_encryption_enc, jwks_uri: \$jwks_uri, _jwks_uri: \$_jwks_uri, custom_jwks: \$custom_jwks, jwks: \$jwks, _jwks: \$_jwks, description: \$description, homepageURL: \$homepageURL, css: \$css, authorization_code_expire: \$authorization_code_expire, id_token_expire: \$id_token_expire, access_token_expire: \$access_token_expire, cas_expire: \$cas_expire, customStyles: \$customStyles) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateSamlIdentityProviderResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $UpdateSAMLIdentityProvider;
-}
-
-class UpdateSamlIdentityProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $attributeNameFormat;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $customAttributes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $emailDomainTransformation;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $authnContextClassRef;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $IdPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $assertionConsumerUrl;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $bindings;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $nameIds;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $attributes;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enableSignRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resSignAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resSignPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resSignPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enableSignReq;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enableEncryptRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resEncryptPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $css;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateSamlIdentityProviderDocument,
-            "operationName" => "UpdateSAMLIdentityProvider",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateSamlIdentityProviderDocument = <<<EOF
-mutation UpdateSAMLIdentityProvider(\$appId: String!, \$clientId: String!, \$domain: String, \$image: String, \$name: String, \$description: String, \$SPMetadata: String, \$attributeNameFormat: String, \$customAttributes: String, \$emailDomainTransformation: String, \$authnContextClassRef: String, \$IdPMetadata: String, \$assertionConsumerUrl: String, \$bindings: [String], \$nameIds: [String], \$attributes: [String], \$enableSignRes: Boolean, \$resSignAlgorithm: String, \$resAbstractAlgorithm: String, \$resSignPublicKey: String, \$resSignPrivateKey: String, \$resSignPrivateKeyPass: String, \$enableSignReq: Boolean, \$reqSignPublicKey: String, \$enableEncryptRes: Boolean, \$resEncryptPublicKey: String, \$css: String) {
-  UpdateSAMLIdentityProvider(appId: \$appId, clientId: \$clientId, domain: \$domain, image: \$image, name: \$name, description: \$description, SPMetadata: \$SPMetadata, attributeNameFormat: \$attributeNameFormat, customAttributes: \$customAttributes, emailDomainTransformation: \$emailDomainTransformation, authnContextClassRef: \$authnContextClassRef, IdPMetadata: \$IdPMetadata, assertionConsumerUrl: \$assertionConsumerUrl, bindings: \$bindings, nameIds: \$nameIds, attributes: \$attributes, enableSignRes: \$enableSignRes, resSignAlgorithm: \$resSignAlgorithm, resAbstractAlgorithm: \$resAbstractAlgorithm, resSignPublicKey: \$resSignPublicKey, resSignPrivateKey: \$resSignPrivateKey, resSignPrivateKeyPass: \$resSignPrivateKeyPass, enableSignReq: \$enableSignReq, reqSignPublicKey: \$reqSignPublicKey, enableEncryptRes: \$enableEncryptRes, resEncryptPublicKey: \$resEncryptPublicKey, css: \$css) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class UpdateSamlServiceProviderResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $UpdateSAMLServiceProvider;
-}
-
-class UpdateSamlServiceProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domain;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $redirectUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $loginUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $logoutUrl;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $nameId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $IdPEntityID;
-
-    /**
-     * Optional
-     *
-     * @var AssertionConsumeServiceInputType
-     */
-    public $assertionConsumeService;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $image;
-
-    /**
-     * Optional
-     *
-     * @var AssertionMapInputType
-     */
-    public $mappings;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $defaultIdPMapId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $SPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $IdPMetadata;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enableSignRes;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resSignPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $hasResEncrypted;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resEncryptAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resDecryptPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resDecryptPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $resEncryptPublicKey;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enableSignReq;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqSignAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqAbstractAlgorithm;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqSignPrivateKey;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqSignPrivateKeyPass;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $reqSignPublicKey;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateSamlServiceProviderDocument,
-            "operationName" => "UpdateSAMLServiceProvider",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateSamlServiceProviderDocument = <<<EOF
-mutation UpdateSAMLServiceProvider(\$appId: String!, \$name: String!, \$domain: String!, \$clientId: String!, \$redirectUrl: String!, \$loginUrl: String!, \$logoutUrl: String!, \$nameId: String!, \$IdPEntityID: String, \$assertionConsumeService: [AssertionConsumeServiceInputType], \$image: String, \$mappings: AssertionMapInputType, \$defaultIdPMapId: String, \$description: String, \$SPMetadata: String, \$IdPMetadata: String, \$enableSignRes: Boolean, \$resSignPublicKey: String, \$hasResEncrypted: Boolean, \$resEncryptAlgorithm: String, \$resAbstractAlgorithm: String, \$resDecryptPrivateKey: String, \$resDecryptPrivateKeyPass: String, \$resEncryptPublicKey: String, \$enableSignReq: Boolean, \$reqSignAlgorithm: String, \$reqAbstractAlgorithm: String, \$reqSignPrivateKey: String, \$reqSignPrivateKeyPass: String, \$reqSignPublicKey: String) {
-  UpdateSAMLServiceProvider(appId: \$appId, name: \$name, domain: \$domain, clientId: \$clientId, redirectUrl: \$redirectUrl, loginUrl: \$loginUrl, logoutUrl: \$logoutUrl, nameId: \$nameId, IdPEntityID: \$IdPEntityID, assertionConsumeService: \$assertionConsumeService, image: \$image, mappings: \$mappings, defaultIdPMapId: \$defaultIdPMapId, description: \$description, SPMetadata: \$SPMetadata, IdPMetadata: \$IdPMetadata, enableSignRes: \$enableSignRes, resSignPublicKey: \$resSignPublicKey, hasResEncrypted: \$hasResEncrypted, resEncryptAlgorithm: \$resEncryptAlgorithm, resAbstractAlgorithm: \$resAbstractAlgorithm, resDecryptPrivateKey: \$resDecryptPrivateKey, resDecryptPrivateKeyPass: \$resDecryptPrivateKeyPass, resEncryptPublicKey: \$resEncryptPublicKey, enableSignReq: \$enableSignReq, reqSignAlgorithm: \$reqSignAlgorithm, reqAbstractAlgorithm: \$reqAbstractAlgorithm, reqSignPrivateKey: \$reqSignPrivateKey, reqSignPrivateKeyPass: \$reqSignPrivateKeyPass, reqSignPublicKey: \$reqSignPublicKey) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class UpdateSystemPricingResponse
-{
-
-    /**
-     * @var PricingList
-     */
-    public $UpdateSystemPricing;
-}
-
-class UpdateSystemPricingParam
-{
-
-    /**
-     * Optional
-     *
-     * @var PricingFieldsInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateSystemPricingDocument,
-            "operationName" => "UpdateSystemPricing",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateSystemPricingDocument = <<<EOF
-mutation UpdateSystemPricing(\$options: PricingFieldsInput) {
-  UpdateSystemPricing(options: \$options) {
-    _id
-    type
-    startNumber
-    freeNumber
-    startPrice
-    maxNumber
-    d
-    features
-  }
-}
-EOF;
-}
-
-
-class UseDefaultEmailProviderResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $UseDefaultEmailProvider;
-}
-
-class UseDefaultEmailProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UseDefaultEmailProviderDocument,
-            "operationName" => "UseDefaultEmailProvider",
-            "variables" => $this
-        ];
-    }
-
-    const UseDefaultEmailProviderDocument = <<<EOF
-mutation UseDefaultEmailProvider(\$user: String!, \$client: String!) {
-  UseDefaultEmailProvider(user: \$user, client: \$client)
-}
-EOF;
-}
-
-
-class AddClientWebhookResponse
-{
-
-    /**
-     * @var ClientWebhook
-     */
-    public $addClientWebhook;
-}
-
-class AddClientWebhookParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $events;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $url;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $contentType;
-
-    /**
-     * Required
-     *
-     * @var bool
-     */
-    public $enable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $isLastTimeSuccess;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddClientWebhookDocument,
-            "operationName" => "addClientWebhook",
-            "variables" => $this
-        ];
-    }
-
-    const AddClientWebhookDocument = <<<EOF
-mutation addClientWebhook(\$client: String!, \$events: [String!]!, \$url: String!, \$contentType: String!, \$enable: Boolean!, \$secret: String, \$isLastTimeSuccess: Boolean) {
-  addClientWebhook(client: \$client, events: \$events, url: \$url, contentType: \$contentType, enable: \$enable, secret: \$secret, isLastTimeSuccess: \$isLastTimeSuccess) {
-    _id
-    client
-    events {
-      name
-      label
-      description
-    }
-    url
-    isLastTimeSuccess
-    contentType
-    secret
-    enable
-  }
-}
-EOF;
-}
-
-
-class AddCollaboratorResponse
-{
-
-    /**
-     * @var Collaboration
-     */
-    public $addCollaborator;
-}
-
-class AddCollaboratorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $collaboratorUserId;
-
-    /**
-     * Required
-     *
-     * @var PermissionDescriptorsInputType
-     */
-    public $permissionDescriptors;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddCollaboratorDocument,
-            "operationName" => "addCollaborator",
-            "variables" => $this
-        ];
-    }
-
-    const AddCollaboratorDocument = <<<EOF
-mutation addCollaborator(\$userPoolId: String!, \$collaboratorUserId: String!, \$permissionDescriptors: [PermissionDescriptorsInputType]!) {
-  addCollaborator(userPoolId: \$userPoolId, collaboratorUserId: \$collaboratorUserId, permissionDescriptors: \$permissionDescriptors) {
-    _id
-  }
-}
-EOF;
-}
-
-
-class AddGroupMetadataResponse
-{
-
-    /**
-     * @var GroupMetadata[]
-     */
-    public $addGroupMetadata;
-}
-
-class AddGroupMetadataParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $groupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $key;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $value;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddGroupMetadataDocument,
-            "operationName" => "addGroupMetadata",
-            "variables" => $this
-        ];
-    }
-
-    const AddGroupMetadataDocument = <<<EOF
-mutation addGroupMetadata(\$groupId: String!, \$key: String!, \$value: String!) {
-  addGroupMetadata(groupId: \$groupId, key: \$key, value: \$value) {
-    key
-    value
-  }
-}
-EOF;
-}
-
-
-class AddOrgNodeResponse
-{
-
-    /**
-     * @var Org
-     */
-    public $addOrgNode;
-}
-
-class AddOrgNodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var AddOrgNodeInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddOrgNodeDocument,
-            "operationName" => "addOrgNode",
-            "variables" => $this
-        ];
-    }
-
-    const AddOrgNodeDocument = <<<EOF
-mutation addOrgNode(\$input: AddOrgNodeInput!) {
-  addOrgNode(input: \$input) {
-    _id
-    nodes {
-      _id
-      name
-      description
-      createdAt
-      updatedAt
-      children
-      root
-    }
-  }
-}
-EOF;
-}
-
-
-class AddPermissionResponse
-{
-
-    /**
-     * @var Permission
-     */
-    public $addPermission;
-}
-
-class AddPermissionParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddPermissionDocument,
-            "operationName" => "addPermission",
-            "variables" => $this
-        ];
-    }
-
-    const AddPermissionDocument = <<<EOF
-mutation addPermission(\$name: String!, \$description: String) {
-  addPermission(name: \$name, description: \$description) {
-    _id
-    name
-    affect
-    description
-  }
-}
-EOF;
-}
-
-
-class AddPermissionToRbacRoleResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $addPermissionToRBACRole;
-}
-
-class AddPermissionToRbacRoleParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AddPermissionToRbacRoleInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddPermissionToRbacRoleDocument,
-            "operationName" => "addPermissionToRBACRole",
-            "variables" => $this
-        ];
-    }
-
-    const AddPermissionToRbacRoleDocument = <<<EOF
-mutation addPermissionToRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddPermissionToRBACRoleInput!) {
-  addPermissionToRBACRole(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AddPermissionToRbacRoleBatchResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $addPermissionToRBACRoleBatch;
-}
-
-class AddPermissionToRbacRoleBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var AddPermissionToRbacRoleBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddPermissionToRbacRoleBatchDocument,
-            "operationName" => "addPermissionToRBACRoleBatch",
-            "variables" => $this
-        ];
-    }
-
-    const AddPermissionToRbacRoleBatchDocument = <<<EOF
-mutation addPermissionToRBACRoleBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddPermissionToRBACRoleBatchInput) {
-  addPermissionToRBACRoleBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AddRoleToRbacGroupResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $addRoleToRBACGroup;
-}
-
-class AddRoleToRbacGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AddRoleToRbacGroupInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddRoleToRbacGroupDocument,
-            "operationName" => "addRoleToRBACGroup",
-            "variables" => $this
-        ];
-    }
-
-    const AddRoleToRbacGroupDocument = <<<EOF
-mutation addRoleToRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddRoleToRBACGroupInput!) {
-  addRoleToRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AddRoleToRbacGroupBatchResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $addRoleToRBACGroupBatch;
-}
-
-class AddRoleToRbacGroupBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AddRoleToRbacGroupBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddRoleToRbacGroupBatchDocument,
-            "operationName" => "addRoleToRBACGroupBatch",
-            "variables" => $this
-        ];
-    }
-
-    const AddRoleToRbacGroupBatchDocument = <<<EOF
-mutation addRoleToRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddRoleToRBACGroupBatchInput!) {
-  addRoleToRBACGroupBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AddSuperAdminUserResponse
-{
-
-    /**
-     * @var UsersInGroupListItem
-     */
-    public $addSuperAdminUser;
-}
-
-class AddSuperAdminUserParam
-{
-
-    /**
-     * Required
-     *
-     * @var SuperAdminUpdateInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddSuperAdminUserDocument,
-            "operationName" => "addSuperAdminUser",
-            "variables" => $this
-        ];
-    }
-
-    const AddSuperAdminUserDocument = <<<EOF
-mutation addSuperAdminUser(\$options: SuperAdminUpdateInput!) {
-  addSuperAdminUser(options: \$options) {
-    email
-    username
-    _id
-    upgrade
-  }
-}
-EOF;
-}
-
-
-class AddToInvitationResponse
-{
-
-    /**
-     * @var Invitation
-     */
-    public $addToInvitation;
-}
-
-class AddToInvitationParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddToInvitationDocument,
-            "operationName" => "addToInvitation",
-            "variables" => $this
-        ];
-    }
-
-    const AddToInvitationDocument = <<<EOF
-mutation addToInvitation(\$client: String!, \$phone: String) {
-  addToInvitation(client: \$client, phone: \$phone) {
-    client
-    phone
-    isDeleted
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class AddUserToRbacGroupResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $addUserToRBACGroup;
-}
-
-class AddUserToRbacGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AddUserToRbacGroupInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddUserToRbacGroupDocument,
-            "operationName" => "addUserToRBACGroup",
-            "variables" => $this
-        ];
-    }
-
-    const AddUserToRbacGroupDocument = <<<EOF
-mutation addUserToRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddUserToRBACGroupInput!) {
-  addUserToRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AddUserToRbacGroupBatchResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $addUserToRBACGroupBatch;
-}
-
-class AddUserToRbacGroupBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AddUserToRbacGroupBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddUserToRbacGroupBatchDocument,
-            "operationName" => "addUserToRBACGroupBatch",
-            "variables" => $this
-        ];
-    }
-
-    const AddUserToRbacGroupBatchDocument = <<<EOF
-mutation addUserToRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AddUserToRBACGroupBatchInput!) {
-  addUserToRBACGroupBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AssignRbacRoleToUserResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $assignRBACRoleToUser;
-}
-
-class AssignRbacRoleToUserParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AssignUserToRbacRoleInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AssignRbacRoleToUserDocument,
-            "operationName" => "assignRBACRoleToUser",
-            "variables" => $this
-        ];
-    }
-
-    const AssignRbacRoleToUserDocument = <<<EOF
-mutation assignRBACRoleToUser(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AssignUserToRBACRoleInput!) {
-  assignRBACRoleToUser(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AssignRbacRoleToUserBatchResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $assignRBACRoleToUserBatch;
-}
-
-class AssignRbacRoleToUserBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var AssignUserToRbacRoleBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AssignRbacRoleToUserBatchDocument,
-            "operationName" => "assignRBACRoleToUserBatch",
-            "variables" => $this
-        ];
-    }
-
-    const AssignRbacRoleToUserBatchDocument = <<<EOF
-mutation assignRBACRoleToUserBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: AssignUserToRBACRoleBatchInput!) {
-  assignRBACRoleToUserBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class AssignUserToRoleResponse
-{
-
-    /**
-     * @var PagedUserGroup
-     */
-    public $assignUserToRole;
-}
-
-class AssignUserToRoleParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $group;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AssignUserToRoleDocument,
-            "operationName" => "assignUserToRole",
-            "variables" => $this
-        ];
-    }
-
-    const AssignUserToRoleDocument = <<<EOF
-mutation assignUserToRole(\$client: String!, \$user: String!, \$group: String!) {
-  assignUserToRole(client: \$client, user: \$user, group: \$group) {
-    list {
-      _id
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class BindOtherOAuthResponse
-{
-
-    /**
-     * @var UserOAuthBind
-     */
-    public $bindOtherOAuth;
-}
-
-class BindOtherOAuthParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $unionid;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userInfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::BindOtherOAuthDocument,
-            "operationName" => "bindOtherOAuth",
-            "variables" => $this
-        ];
-    }
-
-    const BindOtherOAuthDocument = <<<EOF
-mutation bindOtherOAuth(\$type: String!, \$unionid: String!, \$userInfo: String!, \$client: String, \$user: String) {
-  bindOtherOAuth(type: \$type, unionid: \$unionid, userInfo: \$userInfo, client: \$client, user: \$user) {
-    _id
-    user
-    client
-    type
-    unionid
-    userInfo
-    createdAt
   }
 }
 EOF;
@@ -19453,20 +8320,27 @@ class ChangeMfaResponse
 {
 
     /**
-     * @var MFA
+     * @var Mfa
      */
-    public $changeMFA;
+    public $changeMfa;
 }
 
 class ChangeMfaParam
 {
 
     /**
-     * Required
+     * Optional
      *
      * @var bool
      */
     public $enable;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $id;
 
     /**
      * Optional
@@ -19485,250 +8359,203 @@ class ChangeMfaParam
     /**
      * Optional
      *
-     * @var string
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
      * @var bool
      */
-    public $refreshKey;
+    public $refresh;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $enable bool
+     * @return ChangeMfaParam
+     */
+    public function withEnable($enable)
+    {
+        $this->enable = $enable;
+        return $this;
+    }
+
+    /**
+     * @param $id string
+     * @return ChangeMfaParam
+     */
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @param $userId string
+     * @return ChangeMfaParam
+     */
+    public function withUserId($userId)
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    /**
+     * @param $userPoolId string
+     * @return ChangeMfaParam
+     */
+    public function withUserPoolId($userPoolId)
+    {
+        $this->userPoolId = $userPoolId;
+        return $this;
+    }
+
+    /**
+     * @param $refresh bool
+     * @return ChangeMfaParam
+     */
+    public function withRefresh($refresh)
+    {
+        $this->refresh = $refresh;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
             "query" => self::ChangeMfaDocument,
-            "operationName" => "changeMFA",
+            "operationName" => "changeMfa",
             "variables" => $this
         ];
     }
 
     const ChangeMfaDocument = <<<EOF
-mutation changeMFA(\$enable: Boolean!, \$userId: String, \$userPoolId: String, \$_id: String, \$refreshKey: Boolean) {
-  changeMFA(enable: \$enable, userId: \$userId, userPoolId: \$userPoolId, _id: \$_id, refreshKey: \$refreshKey) {
-    _id
+mutation changeMfa(\$enable: Boolean, \$id: String, \$userId: String, \$userPoolId: String, \$refresh: Boolean) {
+  changeMfa(enable: \$enable, id: \$id, userId: \$userId, userPoolId: \$userPoolId, refresh: \$refresh) {
+    id
     userId
     userPoolId
     enable
-    shareKey
-  }
-}
-EOF;
-}
-
-
-class ChangePasswordResponse
-{
-
-    /**
-     * @var ExtendUser
-     */
-    public $changePassword;
-}
-
-class ChangePasswordParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $verifyCode;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ChangePasswordDocument,
-            "operationName" => "changePassword",
-            "variables" => $this
-        ];
-    }
-
-    const ChangePasswordDocument = <<<EOF
-mutation changePassword(\$password: String!, \$email: String!, \$client: String!, \$verifyCode: String!) {
-  changePassword(password: \$password, email: \$email, client: \$client, verifyCode: \$verifyCode) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-    name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
-  }
-}
-EOF;
-}
-
-
-class CreateAdConnectorResponse
-{
-
-    /**
-     * @var ADConnector
-     */
-    public $createAdConnector;
-}
-
-class CreateAdConnectorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $logo;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateAdConnectorDocument,
-            "operationName" => "createAdConnector",
-            "variables" => $this
-        ];
-    }
-
-    const CreateAdConnectorDocument = <<<EOF
-mutation createAdConnector(\$name: String!, \$logo: String, \$userPoolId: String!) {
-  createAdConnector(name: \$name, logo: \$logo, userPoolId: \$userPoolId) {
-    _id
-    name
     secret
-    salt
-    logo
+  }
+}
+EOF;
+}
+
+
+class ConfigEmailTemplateResponse
+{
+
+    /**
+     * @var EmailTemplate
+     */
+    public $configEmailTemplate;
+}
+
+class ConfigEmailTemplateParam
+{
+
+    /**
+     * Required
+     *
+     * @var ConfigEmailTemplateInput
+     */
+    public $input;
+
+    /**
+     * @param $input ConfigEmailTemplateInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::ConfigEmailTemplateDocument,
+            "operationName" => "configEmailTemplate",
+            "variables" => $this
+        ];
+    }
+
+    const ConfigEmailTemplateDocument = <<<EOF
+mutation configEmailTemplate(\$input: ConfigEmailTemplateInput!) {
+  configEmailTemplate(input: \$input) {
+    type
+    name
+    subject
+    sender
+    content
+    redirectTo
+    hasURL
+    expiresIn
     enabled
-    userPoolId
-    status
-    createdAt
+    isSystem
   }
 }
 EOF;
 }
 
 
-class CreateCustomMfaResponse
+class CreateFunctionResponse
 {
 
     /**
-     * @var CustomMFA
+     * @var Function
      */
-    public $createCustomMFA;
+    public $createFunction;
 }
 
-class CreateCustomMfaParam
+class CreateFunctionParam
+{
+
+    /**
+     * Required
+     *
+     * @var CreateFunctionInput
+     */
+    public $input;
+
+    /**
+     * @param $input CreateFunctionInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::CreateFunctionDocument,
+            "operationName" => "createFunction",
+            "variables" => $this
+        ];
+    }
+
+    const CreateFunctionDocument = <<<EOF
+mutation createFunction(\$input: CreateFunctionInput!) {
+  createFunction(input: \$input) {
+    id
+    name
+    sourceCode
+    description
+    url
+  }
+}
+EOF;
+}
+
+
+class CreateGroupResponse
+{
+
+    /**
+     * @var Group
+     */
+    public $createGroup;
+}
+
+class CreateGroupParam
 {
 
     /**
@@ -19736,14 +8563,7 @@ class CreateCustomMfaParam
      *
      * @var string
      */
-    public $userIdInMiniLogin;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
+    public $code;
 
     /**
      * Required
@@ -19753,124 +8573,49 @@ class CreateCustomMfaParam
     public $name;
 
     /**
-     * Required
-     *
-     * @var string
-     */
-    public $secret;
-
-    /**
      * Optional
      *
      * @var string
      */
-    public $remark;
+    public $description;
+
+    /**
+     * @param $code string
+     * @param $name string
+     */
+    public function __construct($code, $name)
+    {
+        $this->code = $code;
+        $this->name = $name;
+    }
+
+    /**
+     * @param $description string
+     * @return CreateGroupParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::CreateCustomMfaDocument,
-            "operationName" => "createCustomMFA",
+            "query" => self::CreateGroupDocument,
+            "operationName" => "createGroup",
             "variables" => $this
         ];
     }
 
-    const CreateCustomMfaDocument = <<<EOF
-mutation createCustomMFA(\$userIdInMiniLogin: String!, \$userPoolId: String!, \$name: String!, \$secret: String!, \$remark: String) {
-  createCustomMFA(userIdInMiniLogin: \$userIdInMiniLogin, userPoolId: \$userPoolId, name: \$name, secret: \$secret, remark: \$remark) {
-    _id
-    userIdInMiniLogin
-    userPoolId {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    remark
-    name
-    secret
-  }
-}
-EOF;
-}
-
-
-class CreateInterConnectionResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $createInterConnection;
-}
-
-class CreateInterConnectionParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $sourceUserPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $sourceUserId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $targetUserPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $targetUserId;
-
-    /**
-     * Required
-     *
-     * @var int
-     */
-    public $maxAge;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateInterConnectionDocument,
-            "operationName" => "createInterConnection",
-            "variables" => $this
-        ];
-    }
-
-    const CreateInterConnectionDocument = <<<EOF
-mutation createInterConnection(\$sourceUserPoolId: String!, \$sourceUserId: String!, \$targetUserPoolId: String!, \$targetUserId: String!, \$maxAge: Int!) {
-  createInterConnection(sourceUserPoolId: \$sourceUserPoolId, sourceUserId: \$sourceUserId, targetUserId: \$targetUserId, targetUserPoolId: \$targetUserPoolId, maxAge: \$maxAge) {
-    message
+    const CreateGroupDocument = <<<EOF
+mutation createGroup(\$code: String!, \$name: String!, \$description: String) {
+  createGroup(code: \$code, name: \$name, description: \$description) {
     code
-    status
+    name
+    description
+    createdAt
+    updatedAt
   }
 }
 EOF;
@@ -19892,9 +8637,51 @@ class CreateOrgParam
     /**
      * Required
      *
-     * @var CreateOrgInput
+     * @var string
      */
-    public $input;
+    public $name;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * @param $name string
+     */
+    public function __construct($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @param $code string
+     * @return CreateOrgParam
+     */
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @param $description string
+     * @return CreateOrgParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -19906,17 +8693,38 @@ class CreateOrgParam
     }
 
     const CreateOrgDocument = <<<EOF
-mutation createOrg(\$input: CreateOrgInput!) {
-  createOrg(input: \$input) {
-    _id
-    nodes {
-      _id
+mutation createOrg(\$name: String!, \$code: String, \$description: String) {
+  createOrg(name: \$name, code: \$code, description: \$description) {
+    id
+    rootNode {
+      id
       name
+      nameI18n
       description
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
       createdAt
       updatedAt
       children
+    }
+    nodes {
+      id
+      name
+      nameI18n
+      description
+      descriptionI18n
+      order
+      code
       root
+      depth
+      path
+      createdAt
+      updatedAt
+      children
     }
   }
 }
@@ -19924,156 +8732,82 @@ EOF;
 }
 
 
-class CreateRbacGroupResponse
+class CreatePolicyResponse
 {
 
     /**
-     * @var RBACGroup
+     * @var Policy
      */
-    public $createRBACGroup;
+    public $createPolicy;
 }
 
-class CreateRbacGroupParam
-{
-
-    /**
-     * Required
-     *
-     * @var CreateRbacGroupInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateRbacGroupDocument,
-            "operationName" => "createRBACGroup",
-            "variables" => $this
-        ];
-    }
-
-    const CreateRbacGroupDocument = <<<EOF
-mutation createRBACGroup(\$input: CreateRBACGroupInput!) {
-  createRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class CreateRbacPermissionResponse
-{
-
-    /**
-     * @var RBACPermission
-     */
-    public $createRBACPermission;
-}
-
-class CreateRbacPermissionParam
+class CreatePolicyParam
 {
 
     /**
      * Required
      *
-     * @var CreateRbacPermissionInput
+     * @var string
      */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CreateRbacPermissionDocument,
-            "operationName" => "createRBACPermission",
-            "variables" => $this
-        ];
-    }
-
-    const CreateRbacPermissionDocument = <<<EOF
-mutation createRBACPermission(\$input: CreateRBACPermissionInput!) {
-  createRBACPermission(input: \$input) {
-    _id
-    name
-    userPoolId
-    createdAt
-    updatedAt
-    description
-  }
-}
-EOF;
-}
-
-
-class CreateRbacRoleResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $createRBACRole;
-}
-
-class CreateRbacRoleParam
-{
+    public $code;
 
     /**
      * Optional
      *
-     * @var SortByEnum
+     * @var string
      */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
+    public $description;
 
     /**
      * Required
      *
-     * @var CreateRbacRoleInput
+     * @var PolicyStatementInput[]
      */
-    public $input;
+    public $statements;
+
+    /**
+     * @param $code string
+     * @param $statements PolicyStatementInput[]
+     */
+    public function __construct($code, $statements)
+    {
+        $this->code = $code;
+        $this->statements = $statements;
+    }
+
+    /**
+     * @param $description string
+     * @return CreatePolicyParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::CreateRbacRoleDocument,
-            "operationName" => "createRBACRole",
+            "query" => self::CreatePolicyDocument,
+            "operationName" => "createPolicy",
             "variables" => $this
         ];
     }
 
-    const CreateRbacRoleDocument = <<<EOF
-mutation createRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: CreateRBACRoleInput!) {
-  createRBACRole(input: \$input) {
-    _id
-    userPoolId
-    name
+    const CreatePolicyDocument = <<<EOF
+mutation createPolicy(\$code: String!, \$description: String, \$statements: [PolicyStatementInput!]!) {
+  createPolicy(code: \$code, description: \$description, statements: \$statements) {
+    code
+    assignmentsCount
+    isDefault
     description
+    statements {
+      resource
+      actions
+      effect
+    }
     createdAt
     updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
   }
 }
 EOF;
@@ -20084,7 +8818,7 @@ class CreateRoleResponse
 {
 
     /**
-     * @var Group
+     * @var Role
      */
     public $createRole;
 }
@@ -20097,21 +8831,49 @@ class CreateRoleParam
      *
      * @var string
      */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
+    public $code;
 
     /**
      * Optional
      *
      * @var string
      */
-    public $descriptions;
+    public $description;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $parent;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $description string
+     * @return CreateRoleParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $parent string
+     * @return CreateRoleParam
+     */
+    public function withParent($parent)
+    {
+        $this->parent = $parent;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -20123,63 +8885,128 @@ class CreateRoleParam
     }
 
     const CreateRoleDocument = <<<EOF
-mutation createRole(\$client: String!, \$name: String!, \$descriptions: String) {
-  createRole(client: \$client, name: \$name, descriptions: \$descriptions) {
-    _id
-    name
-    descriptions
-    client
-    permissions
+mutation createRole(\$code: String!, \$description: String, \$parent: String) {
+  createRole(code: \$code, description: \$description, parent: \$parent) {
+    code
+    arn
+    description
+    isSystem
     createdAt
+    updatedAt
+    parent {
+      code
+      arn
+      description
+      isSystem
+      createdAt
+      updatedAt
+    }
   }
 }
 EOF;
 }
 
 
-class CreateRuleResponse
+class CreateSocialConnectionResponse
 {
 
     /**
-     * @var Rule
+     * @var SocialConnection
      */
-    public $createRule;
+    public $createSocialConnection;
 }
 
-class CreateRuleParam
+class CreateSocialConnectionParam
 {
 
     /**
      * Required
      *
-     * @var CreateRuleInput
+     * @var CreateSocialConnectionInput
      */
     public $input;
+
+    /**
+     * @param $input CreateSocialConnectionInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::CreateRuleDocument,
-            "operationName" => "createRule",
+            "query" => self::CreateSocialConnectionDocument,
+            "operationName" => "createSocialConnection",
             "variables" => $this
         ];
     }
 
-    const CreateRuleDocument = <<<EOF
-mutation createRule(\$input: CreateRuleInput!) {
-  createRule(input: \$input) {
-    _id
-    userPoolId
+    const CreateSocialConnectionDocument = <<<EOF
+mutation createSocialConnection(\$input: CreateSocialConnectionInput!) {
+  createSocialConnection(input: \$input) {
+    provider
     name
+    logo
     description
-    type
+    fields {
+      key
+      label
+      type
+      placeholder
+    }
+  }
+}
+EOF;
+}
+
+
+class CreateSocialConnectionInstanceResponse
+{
+
+    /**
+     * @var SocialConnectionInstance
+     */
+    public $createSocialConnectionInstance;
+}
+
+class CreateSocialConnectionInstanceParam
+{
+
+    /**
+     * Required
+     *
+     * @var CreateSocialConnectionInstanceInput
+     */
+    public $input;
+
+    /**
+     * @param $input CreateSocialConnectionInstanceInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::CreateSocialConnectionInstanceDocument,
+            "operationName" => "createSocialConnectionInstance",
+            "variables" => $this
+        ];
+    }
+
+    const CreateSocialConnectionInstanceDocument = <<<EOF
+mutation createSocialConnectionInstance(\$input: CreateSocialConnectionInstanceInput!) {
+  createSocialConnectionInstance(input: \$input) {
+    provider
     enabled
-    faasUrl
-    code
-    order
-    async
-    createdAt
-    updatedAt
+    fields {
+      key
+      value
+    }
   }
 }
 EOF;
@@ -20190,7 +9017,7 @@ class CreateUserResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $createUser;
 }
@@ -20201,16 +9028,9 @@ class CreateUserParam
     /**
      * Required
      *
-     * @var UserRegisterInput
+     * @var CreateUserInput
      */
     public $userInfo;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $invitationCode;
 
     /**
      * Optional
@@ -20218,6 +9038,24 @@ class CreateUserParam
      * @var bool
      */
     public $keepPassword;
+
+    /**
+     * @param $userInfo CreateUserInput
+     */
+    public function __construct($userInfo)
+    {
+        $this->userInfo = $userInfo;
+    }
+
+    /**
+     * @param $keepPassword bool
+     * @return CreateUserParam
+     */
+    public function withKeepPassword($keepPassword)
+    {
+        $this->keepPassword = $keepPassword;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -20229,24 +9067,22 @@ class CreateUserParam
     }
 
     const CreateUserDocument = <<<EOF
-mutation createUser(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$keepPassword: Boolean) {
-  createUser(userInfo: \$userInfo, invitationCode: \$invitationCode, keepPassword: \$keepPassword) {
-    _id
+mutation createUser(\$userInfo: CreateUserInput!, \$keepPassword: Boolean) {
+  createUser(userInfo: \$userInfo, keepPassword: \$keepPassword) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -20256,6 +9092,9 @@ mutation createUser(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -20273,62 +9112,27 @@ mutation createUser(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
   }
 }
 EOF;
 }
 
 
-class CreateUserWithoutAuthenticationResponse
+class CreateUserpoolResponse
 {
 
     /**
-     * @var User
+     * @var UserPool
      */
-    public $createUserWithoutAuthentication;
+    public $createUserpool;
 }
 
-class CreateUserWithoutAuthenticationParam
+class CreateUserpoolParam
 {
 
     /**
@@ -20336,95 +9140,162 @@ class CreateUserWithoutAuthenticationParam
      *
      * @var string
      */
-    public $userPoolId;
+    public $name;
 
     /**
      * Required
      *
-     * @var UserRegisterInput
+     * @var string
      */
-    public $userInfo;
+    public $domain;
 
     /**
      * Optional
      *
-     * @var bool
+     * @var string
      */
-    public $forceLogin;
+    public $description;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $logo;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $userpoolTypes;
+
+    /**
+     * @param $name string
+     * @param $domain string
+     */
+    public function __construct($name, $domain)
+    {
+        $this->name = $name;
+        $this->domain = $domain;
+    }
+
+    /**
+     * @param $description string
+     * @return CreateUserpoolParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $logo string
+     * @return CreateUserpoolParam
+     */
+    public function withLogo($logo)
+    {
+        $this->logo = $logo;
+        return $this;
+    }
+
+    /**
+     * @param $userpoolTypes string[]
+     * @return CreateUserpoolParam
+     */
+    public function withUserpoolTypes($userpoolTypes)
+    {
+        $this->userpoolTypes = $userpoolTypes;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::CreateUserWithoutAuthenticationDocument,
-            "operationName" => "createUserWithoutAuthentication",
+            "query" => self::CreateUserpoolDocument,
+            "operationName" => "createUserpool",
             "variables" => $this
         ];
     }
 
-    const CreateUserWithoutAuthenticationDocument = <<<EOF
-mutation createUserWithoutAuthentication(\$userPoolId: String!, \$userInfo: UserRegisterInput!, \$forceLogin: Boolean) {
-  createUserWithoutAuthentication(userPoolId: \$userPoolId, userInfo: \$userInfo, forceLogin: \$forceLogin) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
+    const CreateUserpoolDocument = <<<EOF
+mutation createUserpool(\$name: String!, \$domain: String!, \$description: String, \$logo: String, \$userpoolTypes: [String!]) {
+  createUserpool(name: \$name, domain: \$domain, description: \$description, logo: \$logo, userpoolTypes: \$userpoolTypes) {
+    id
     name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
+    domain
+    description
+    secret
+    jwtSecret
+    userpoolTypes {
+      code
+      name
+      description
+      image
+      sdks
+    }
+    logo
+    createdAt
     updatedAt
-    metadata
+    emailVerifiedDefault
+    sendWelcomeEmail
+    registerDisabled
+    showWxQRCodeWhenRegisterDisabled
+    allowedOrigins
+    tokenExpiresAfter
+    isDeleted
+    frequentRegisterCheck {
+      timeInterval
+      limit
+      enabled
+    }
+    loginFailCheck {
+      timeInterval
+      limit
+      enabled
+    }
+    changePhoneStrategy {
+      verifyOldPhone
+    }
+    changeEmailStrategy {
+      verifyOldEmail
+    }
+    qrcodeLoginStrategy {
+      qrcodeExpiresAfter
+      returnFullUserInfo
+      allowExchangeUserInfoFromBrowser
+      ticketExpiresAfter
+    }
+    app2WxappLoginStrategy {
+      ticketExpriresAfter
+      ticketExchangeUserInfoNeedSecret
+    }
+    whitelist {
+      phoneEnabled
+      emailEnabled
+      usernameEnabled
+    }
+    customSMSProvider {
+      enabled
+      provider
+    }
   }
 }
 EOF;
 }
 
 
-class DeleteClientWebhookResponse
+class DeleteFunctionResponse
 {
 
     /**
-     * @var ClientWebhook
+     * @var CommonMessage
      */
-    public $deleteClientWebhook;
+    public $deleteFunction;
 }
 
-class DeleteClientWebhookParam
+class DeleteFunctionParam
 {
 
     /**
@@ -20434,30 +9305,131 @@ class DeleteClientWebhookParam
      */
     public $id;
 
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
     function createRequest()
     {
         return [
-            "query" => self::DeleteClientWebhookDocument,
-            "operationName" => "deleteClientWebhook",
+            "query" => self::DeleteFunctionDocument,
+            "operationName" => "deleteFunction",
             "variables" => $this
         ];
     }
 
-    const DeleteClientWebhookDocument = <<<EOF
-mutation deleteClientWebhook(\$id: String!) {
-  deleteClientWebhook(id: \$id) {
-    _id
-    client
-    events {
-      name
-      label
-      description
+    const DeleteFunctionDocument = <<<EOF
+mutation deleteFunction(\$id: String!) {
+  deleteFunction(id: \$id) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class DeleteGroupsResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $deleteGroups;
+}
+
+class DeleteGroupsParam
+{
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $codeList;
+
+    /**
+     * @param $codeList string[]
+     */
+    public function __construct($codeList)
+    {
+        $this->codeList = $codeList;
     }
-    url
-    isLastTimeSuccess
-    contentType
-    secret
-    enable
+
+    function createRequest()
+    {
+        return [
+            "query" => self::DeleteGroupsDocument,
+            "operationName" => "deleteGroups",
+            "variables" => $this
+        ];
+    }
+
+    const DeleteGroupsDocument = <<<EOF
+mutation deleteGroups(\$codeList: [String!]!) {
+  deleteGroups(codeList: \$codeList) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class DeleteNodeResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $deleteNode;
+}
+
+class DeleteNodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $nodeId;
+
+    /**
+     * @param $orgId string
+     * @param $nodeId string
+     */
+    public function __construct($orgId, $nodeId)
+    {
+        $this->orgId = $orgId;
+        $this->nodeId = $nodeId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::DeleteNodeDocument,
+            "operationName" => "deleteNode",
+            "variables" => $this
+        ];
+    }
+
+    const DeleteNodeDocument = <<<EOF
+mutation deleteNode(\$orgId: String!, \$nodeId: String!) {
+  deleteNode(orgId: \$orgId, nodeId: \$nodeId) {
+    message
+    code
   }
 }
 EOF;
@@ -20481,7 +9453,15 @@ class DeleteOrgParam
      *
      * @var string
      */
-    public $_id;
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 
     function createRequest()
     {
@@ -20493,67 +9473,73 @@ class DeleteOrgParam
     }
 
     const DeleteOrgDocument = <<<EOF
-mutation deleteOrg(\$_id: String!) {
-  deleteOrg(_id: \$_id) {
+mutation deleteOrg(\$id: String!) {
+  deleteOrg(id: \$id) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacGroupResponse
+class DeletePoliciesResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACGroup;
+    public $deletePolicies;
 }
 
-class DeleteRbacGroupParam
+class DeletePoliciesParam
 {
 
     /**
      * Required
      *
-     * @var string
+     * @var string[]
      */
-    public $_id;
+    public $codes;
+
+    /**
+     * @param $codes string[]
+     */
+    public function __construct($codes)
+    {
+        $this->codes = $codes;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacGroupDocument,
-            "operationName" => "deleteRBACGroup",
+            "query" => self::DeletePoliciesDocument,
+            "operationName" => "deletePolicies",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacGroupDocument = <<<EOF
-mutation deleteRBACGroup(\$_id: String!) {
-  deleteRBACGroup(_id: \$_id) {
+    const DeletePoliciesDocument = <<<EOF
+mutation deletePolicies(\$codes: [String!]!) {
+  deletePolicies(codes: \$codes) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacGroupBatchResponse
+class DeletePolicyResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACGroupBatch;
+    public $deletePolicy;
 }
 
-class DeleteRbacGroupBatchParam
+class DeletePolicyParam
 {
 
     /**
@@ -20561,39 +9547,46 @@ class DeleteRbacGroupBatchParam
      *
      * @var string
      */
-    public $idList;
+    public $code;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacGroupBatchDocument,
-            "operationName" => "deleteRBACGroupBatch",
+            "query" => self::DeletePolicyDocument,
+            "operationName" => "deletePolicy",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacGroupBatchDocument = <<<EOF
-mutation deleteRBACGroupBatch(\$idList: [String!]!) {
-  deleteRBACGroupBatch(idList: \$idList) {
+    const DeletePolicyDocument = <<<EOF
+mutation deletePolicy(\$code: String!) {
+  deletePolicy(code: \$code) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacPermissionResponse
+class DeleteRoleResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACPermission;
+    public $deleteRole;
 }
 
-class DeleteRbacPermissionParam
+class DeleteRoleParam
 {
 
     /**
@@ -20601,39 +9594,95 @@ class DeleteRbacPermissionParam
      *
      * @var string
      */
-    public $_id;
+    public $code;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacPermissionDocument,
-            "operationName" => "deleteRBACPermission",
+            "query" => self::DeleteRoleDocument,
+            "operationName" => "deleteRole",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacPermissionDocument = <<<EOF
-mutation deleteRBACPermission(\$_id: String!) {
-  deleteRBACPermission(_id: \$_id) {
+    const DeleteRoleDocument = <<<EOF
+mutation deleteRole(\$code: String!) {
+  deleteRole(code: \$code) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacPermissionBatchResponse
+class DeleteRolesResponse
+{
+
+    /**
+     * @var BatchOperationResult
+     */
+    public $deleteRoles;
+}
+
+class DeleteRolesParam
+{
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $codes;
+
+    /**
+     * @param $codes string[]
+     */
+    public function __construct($codes)
+    {
+        $this->codes = $codes;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::DeleteRolesDocument,
+            "operationName" => "deleteRoles",
+            "variables" => $this
+        ];
+    }
+
+    const DeleteRolesDocument = <<<EOF
+mutation deleteRoles(\$codes: [String!]!) {
+  deleteRoles(codes: \$codes) {
+    succeedCount
+    failedCount
+    message
+    errors
+  }
+}
+EOF;
+}
+
+
+class DeleteUserResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACPermissionBatch;
+    public $deleteUser;
 }
 
-class DeleteRbacPermissionBatchParam
+class DeleteUserParam
 {
 
     /**
@@ -20641,696 +9690,181 @@ class DeleteRbacPermissionBatchParam
      *
      * @var string
      */
-    public $idList;
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacPermissionBatchDocument,
-            "operationName" => "deleteRBACPermissionBatch",
+            "query" => self::DeleteUserDocument,
+            "operationName" => "deleteUser",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacPermissionBatchDocument = <<<EOF
-mutation deleteRBACPermissionBatch(\$idList: [String!]!) {
-  deleteRBACPermissionBatch(idList: \$idList) {
+    const DeleteUserDocument = <<<EOF
+mutation deleteUser(\$id: String!) {
+  deleteUser(id: \$id) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacRoleResponse
+class DeleteUserpoolResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACRole;
+    public $deleteUserpool;
 }
 
-class DeleteRbacRoleParam
+class DeleteUserpoolParam
 {
 
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacRoleDocument,
-            "operationName" => "deleteRBACRole",
+            "query" => self::DeleteUserpoolDocument,
+            "operationName" => "deleteUserpool",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacRoleDocument = <<<EOF
-mutation deleteRBACRole(\$_id: String!) {
-  deleteRBACRole(_id: \$_id) {
+    const DeleteUserpoolDocument = <<<EOF
+mutation deleteUserpool {
+  deleteUserpool {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRbacRoleBatchResponse
+class DeleteUsersResponse
 {
 
     /**
      * @var CommonMessage
      */
-    public $deleteRBACRoleBatch;
+    public $deleteUsers;
 }
 
-class DeleteRbacRoleBatchParam
+class DeleteUsersParam
 {
 
     /**
      * Required
      *
-     * @var string
+     * @var string[]
      */
-    public $idList;
+    public $ids;
+
+    /**
+     * @param $ids string[]
+     */
+    public function __construct($ids)
+    {
+        $this->ids = $ids;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRbacRoleBatchDocument,
-            "operationName" => "deleteRBACRoleBatch",
+            "query" => self::DeleteUsersDocument,
+            "operationName" => "deleteUsers",
             "variables" => $this
         ];
     }
 
-    const DeleteRbacRoleBatchDocument = <<<EOF
-mutation deleteRBACRoleBatch(\$idList: [String!]!) {
-  deleteRBACRoleBatch(idList: \$idList) {
+    const DeleteUsersDocument = <<<EOF
+mutation deleteUsers(\$ids: [String!]!) {
+  deleteUsers(ids: \$ids) {
     message
     code
-    status
   }
 }
 EOF;
 }
 
 
-class DeleteRuleResponse
+class DisableEmailTemplateResponse
 {
 
     /**
-     * @var CommonMessage
+     * @var EmailTemplate
      */
-    public $deleteRule;
+    public $disableEmailTemplate;
 }
 
-class DeleteRuleParam
+class DisableEmailTemplateParam
 {
 
     /**
      * Required
      *
-     * @var string
+     * @var EmailTemplateType
      */
-    public $_id;
+    public $type;
+
+    /**
+     * @param $type EmailTemplateType
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::DeleteRuleDocument,
-            "operationName" => "deleteRule",
+            "query" => self::DisableEmailTemplateDocument,
+            "operationName" => "disableEmailTemplate",
             "variables" => $this
         ];
     }
 
-    const DeleteRuleDocument = <<<EOF
-mutation deleteRule(\$_id: String!) {
-  deleteRule(_id: \$_id) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class DisableAdConnectorResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $disableAdConnector;
-}
-
-class DisableAdConnectorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::DisableAdConnectorDocument,
-            "operationName" => "disableAdConnector",
-            "variables" => $this
-        ];
-    }
-
-    const DisableAdConnectorDocument = <<<EOF
-mutation disableAdConnector(\$_id: String!) {
-  disableAdConnector(_id: \$_id)
-}
-EOF;
-}
-
-
-class DisableAdConnectorForProviderResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $disableAdConnectorForProvider;
-}
-
-class DisableAdConnectorForProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $providerId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $adConnectorId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::DisableAdConnectorForProviderDocument,
-            "operationName" => "disableAdConnectorForProvider",
-            "variables" => $this
-        ];
-    }
-
-    const DisableAdConnectorForProviderDocument = <<<EOF
-mutation disableAdConnectorForProvider(\$providerId: String!, \$adConnectorId: String!) {
-  disableAdConnectorForProvider(providerId: \$providerId, adConnectorId: \$adConnectorId)
-}
-EOF;
-}
-
-
-class EnableAdConnectorResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $enableAdConnector;
-}
-
-class EnableAdConnectorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EnableAdConnectorDocument,
-            "operationName" => "enableAdConnector",
-            "variables" => $this
-        ];
-    }
-
-    const EnableAdConnectorDocument = <<<EOF
-mutation enableAdConnector(\$_id: String!) {
-  enableAdConnector(_id: \$_id)
-}
-EOF;
-}
-
-
-class EnableAdConnectorForProviderResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $enableAdConnectorForProvider;
-}
-
-class EnableAdConnectorForProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var ProviderType
-     */
-    public $providerType;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $providerId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $adConnectorId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EnableAdConnectorForProviderDocument,
-            "operationName" => "enableAdConnectorForProvider",
-            "variables" => $this
-        ];
-    }
-
-    const EnableAdConnectorForProviderDocument = <<<EOF
-mutation enableAdConnectorForProvider(\$providerType: providerType!, \$providerId: String!, \$adConnectorId: String!) {
-  enableAdConnectorForProvider(providerType: \$providerType, providerId: \$providerId, adConnectorId: \$adConnectorId)
-}
-EOF;
-}
-
-
-class EnablePasswordFaasResponse
-{
-
-    /**
-     * @var PaaswordFaas
-     */
-    public $enablePasswordFaas;
-}
-
-class EnablePasswordFaasParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var bool
-     */
-    public $enable;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EnablePasswordFaasDocument,
-            "operationName" => "enablePasswordFaas",
-            "variables" => $this
-        ];
-    }
-
-    const EnablePasswordFaasDocument = <<<EOF
-mutation enablePasswordFaas(\$client: String!, \$enable: Boolean!) {
-  enablePasswordFaas(client: \$client, enable: \$enable) {
-    encryptUrl
-    decryptUrl
-    user
-    client
-    logs
-    enable
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class EncryptPasswordResponse
-{
-
-    /**
-     * @var EncryptPassword
-     */
-    public $encryptPassword;
-}
-
-class EncryptPasswordParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $isTest;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::EncryptPasswordDocument,
-            "operationName" => "encryptPassword",
-            "variables" => $this
-        ];
-    }
-
-    const EncryptPasswordDocument = <<<EOF
-mutation encryptPassword(\$password: String!, \$client: String!, \$isTest: Boolean) {
-  encryptPassword(password: \$password, client: \$client, isTest: \$isTest) {
-    _id
-    encryptUrl
-    decryptUrl
-    client
-    user
-    logs
-    enable
-    createdAt
-    updatedAt
-    password
-  }
-}
-EOF;
-}
-
-
-class GenerateInvitationCodeResponse
-{
-
-    /**
-     * @var InvitationCode
-     */
-    public $generateInvitationCode;
-}
-
-class GenerateInvitationCodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GenerateInvitationCodeDocument,
-            "operationName" => "generateInvitationCode",
-            "variables" => $this
-        ];
-    }
-
-    const GenerateInvitationCodeDocument = <<<EOF
-mutation generateInvitationCode(\$user: String!, \$client: String!) {
-  generateInvitationCode(user: \$user, client: \$client) {
-    _id
-    user
-    client
-    code
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class LoginResponse
-{
-
-    /**
-     * @var ExtendUser
-     */
-    public $login;
-}
-
-class LoginParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $registerInClient;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $phoneCode;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $unionid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $openid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $lastIP;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $verifyCode;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $MFACode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $fromRegister;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $device;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $browser;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::LoginDocument,
-            "operationName" => "login",
-            "variables" => $this
-        ];
-    }
-
-    const LoginDocument = <<<EOF
-mutation login(\$registerInClient: String!, \$phone: String, \$phoneCode: Int, \$unionid: String, \$openid: String, \$username: String, \$email: String, \$password: String, \$lastIP: String, \$verifyCode: String, \$MFACode: String, \$fromRegister: Boolean, \$device: String, \$browser: String) {
-  login(registerInClient: \$registerInClient, phone: \$phone, phoneCode: \$phoneCode, unionid: \$unionid, openid: \$openid, username: \$username, email: \$email, password: \$password, lastIP: \$lastIP, verifyCode: \$verifyCode, MFACode: \$MFACode, fromRegister: \$fromRegister, device: \$device, browser: \$browser) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
+    const DisableEmailTemplateDocument = <<<EOF
+mutation disableEmailTemplate(\$type: EmailTemplateType!) {
+  disableEmailTemplate(type: \$type) {
+    type
     name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
+    subject
+    sender
+    content
+    redirectTo
+    hasURL
+    expiresIn
+    enabled
+    isSystem
   }
 }
 EOF;
 }
 
 
-class LoginByAdResponse
+class DisableSocialConnectionInstanceResponse
 {
 
     /**
-     * @var User
+     * @var SocialConnectionInstance
      */
-    public $loginByAd;
+    public $disableSocialConnectionInstance;
 }
 
-class LoginByAdParam
+class DisableSocialConnectionInstanceParam
 {
 
     /**
@@ -21338,87 +9872,140 @@ class LoginByAdParam
      *
      * @var string
      */
-    public $adConnectorId;
+    public $provider;
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $provider string
      */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
+    public function __construct($provider)
+    {
+        $this->provider = $provider;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::LoginByAdDocument,
-            "operationName" => "loginByAd",
+            "query" => self::DisableSocialConnectionInstanceDocument,
+            "operationName" => "disableSocialConnectionInstance",
             "variables" => $this
         ];
     }
 
-    const LoginByAdDocument = <<<EOF
-mutation loginByAd(\$adConnectorId: String!, \$username: String!, \$password: String!) {
-  loginByAd(adConnectorId: \$adConnectorId, username: \$username, password: \$password) {
-    _id
-    username
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    nickname
-    company
-    photo
-    browser
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-    device
-    name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
+    const DisableSocialConnectionInstanceDocument = <<<EOF
+mutation disableSocialConnectionInstance(\$provider: String!) {
+  disableSocialConnectionInstance(provider: \$provider) {
+    provider
+    enabled
+    fields {
+      key
+      value
     }
-    oldPassword
-    metadata
+  }
+}
+EOF;
+}
+
+
+class EnableEmailTemplateResponse
+{
+
+    /**
+     * @var EmailTemplate
+     */
+    public $enableEmailTemplate;
+}
+
+class EnableEmailTemplateParam
+{
+
+    /**
+     * Required
+     *
+     * @var EmailTemplateType
+     */
+    public $type;
+
+    /**
+     * @param $type EmailTemplateType
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::EnableEmailTemplateDocument,
+            "operationName" => "enableEmailTemplate",
+            "variables" => $this
+        ];
+    }
+
+    const EnableEmailTemplateDocument = <<<EOF
+mutation enableEmailTemplate(\$type: EmailTemplateType!) {
+  enableEmailTemplate(type: \$type) {
+    type
+    name
+    subject
+    sender
+    content
+    redirectTo
+    hasURL
+    expiresIn
+    enabled
+    isSystem
+  }
+}
+EOF;
+}
+
+
+class EnableSocialConnectionInstanceResponse
+{
+
+    /**
+     * @var SocialConnectionInstance
+     */
+    public $enableSocialConnectionInstance;
+}
+
+class EnableSocialConnectionInstanceParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $provider;
+
+    /**
+     * @param $provider string
+     */
+    public function __construct($provider)
+    {
+        $this->provider = $provider;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::EnableSocialConnectionInstanceDocument,
+            "operationName" => "enableSocialConnectionInstance",
+            "variables" => $this
+        ];
+    }
+
+    const EnableSocialConnectionInstanceDocument = <<<EOF
+mutation enableSocialConnectionInstance(\$provider: String!) {
+  enableSocialConnectionInstance(provider: \$provider) {
+    provider
+    enabled
+    fields {
+      key
+      value
+    }
   }
 }
 EOF;
@@ -21429,7 +10016,7 @@ class LoginByEmailResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $loginByEmail;
 }
@@ -21440,23 +10027,17 @@ class LoginByEmailParam
     /**
      * Required
      *
-     * @var string
+     * @var LoginByEmailInput
      */
-    public $clientId;
+    public $input;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $input LoginByEmailInput
      */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
@@ -21468,24 +10049,22 @@ class LoginByEmailParam
     }
 
     const LoginByEmailDocument = <<<EOF
-mutation loginByEmail(\$clientId: String!, \$email: String, \$password: String) {
-  login(registerInClient: \$clientId, email: \$email, password: \$password) {
-    _id
+mutation loginByEmail(\$input: LoginByEmailInput!) {
+  loginByEmail(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -21495,6 +10074,9 @@ mutation loginByEmail(\$clientId: String!, \$email: String, \$password: String) 
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -21512,46 +10094,11 @@ mutation loginByEmail(\$clientId: String!, \$email: String, \$password: String) 
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
   }
 }
 EOF;
@@ -21562,7 +10109,7 @@ class LoginByPhoneCodeResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $loginByPhoneCode;
 }
@@ -21573,23 +10120,17 @@ class LoginByPhoneCodeParam
     /**
      * Required
      *
-     * @var string
+     * @var LoginByPhoneCodeInput
      */
-    public $clientId;
+    public $input;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $input LoginByPhoneCodeInput
      */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $phoneCode;
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
@@ -21601,24 +10142,22 @@ class LoginByPhoneCodeParam
     }
 
     const LoginByPhoneCodeDocument = <<<EOF
-mutation loginByPhoneCode(\$clientId: String!, \$phone: String, \$phoneCode: Int) {
-  login(registerInClient: \$clientId, phone: \$phone, phoneCode: \$phoneCode) {
-    _id
+mutation loginByPhoneCode(\$input: LoginByPhoneCodeInput!) {
+  loginByPhoneCode(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -21628,6 +10167,9 @@ mutation loginByPhoneCode(\$clientId: String!, \$phone: String, \$phoneCode: Int
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -21645,46 +10187,11 @@ mutation loginByPhoneCode(\$clientId: String!, \$phone: String, \$phoneCode: Int
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
   }
 }
 EOF;
@@ -21695,7 +10202,7 @@ class LoginByPhonePasswordResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $loginByPhonePassword;
 }
@@ -21706,23 +10213,17 @@ class LoginByPhonePasswordParam
     /**
      * Required
      *
-     * @var string
+     * @var LoginByPhonePasswordInput
      */
-    public $clientId;
+    public $input;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $input LoginByPhonePasswordInput
      */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
@@ -21734,24 +10235,22 @@ class LoginByPhonePasswordParam
     }
 
     const LoginByPhonePasswordDocument = <<<EOF
-mutation loginByPhonePassword(\$clientId: String!, \$phone: String, \$password: String) {
-  login(registerInClient: \$clientId, phone: \$phone, password: \$password) {
-    _id
+mutation loginByPhonePassword(\$input: LoginByPhonePasswordInput!) {
+  loginByPhonePassword(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -21761,6 +10260,9 @@ mutation loginByPhonePassword(\$clientId: String!, \$phone: String, \$password: 
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -21778,46 +10280,11 @@ mutation loginByPhonePassword(\$clientId: String!, \$phone: String, \$password: 
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
   }
 }
 EOF;
@@ -21828,7 +10295,7 @@ class LoginByUsernameResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $loginByUsername;
 }
@@ -21839,23 +10306,17 @@ class LoginByUsernameParam
     /**
      * Required
      *
-     * @var string
+     * @var LoginByUsernameInput
      */
-    public $clientId;
+    public $input;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $input LoginByUsernameInput
      */
-    public $username;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
@@ -21867,961 +10328,205 @@ class LoginByUsernameParam
     }
 
     const LoginByUsernameDocument = <<<EOF
-mutation loginByUsername(\$clientId: String!, \$username: String, \$password: String) {
-  login(registerInClient: \$clientId, username: \$username, password: \$password) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-    name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
-  }
-}
-EOF;
-}
-
-
-class NewClientResponse
-{
-
-    /**
-     * @var UserClient
-     */
-    public $newClient;
-}
-
-class NewClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var NewUserClientInput
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::NewClientDocument,
-            "operationName" => "newClient",
-            "variables" => $this
-        ];
-    }
-
-    const NewClientDocument = <<<EOF
-mutation newClient(\$client: NewUserClientInput!) {
-  newClient(client: \$client) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
-    createdAt
-    isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
-  }
-}
-EOF;
-}
-
-
-class OauthPasswordLoginResponse
-{
-
-    /**
-     * @var ExtendUser
-     */
-    public $oauthPasswordLogin;
-}
-
-class OauthPasswordLoginParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $registerInClient;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $unionid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $lastIP;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $verifyCode;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::OauthPasswordLoginDocument,
-            "operationName" => "oauthPasswordLogin",
-            "variables" => $this
-        ];
-    }
-
-    const OauthPasswordLoginDocument = <<<EOF
-mutation oauthPasswordLogin(\$registerInClient: String!, \$phone: String, \$unionid: String, \$email: String, \$password: String, \$lastIP: String, \$verifyCode: String) {
-  oauthPasswordLogin(registerInClient: \$registerInClient, phone: \$phone, unionid: \$unionid, email: \$email, password: \$password, lastIP: \$lastIP, verifyCode: \$verifyCode) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-    name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userLocation {
-      _id
-      when
-      where
-    }
-    userLoginHistory {
-      totalCount
-    }
-    systemApplicationType {
-      _id
-      name
-      descriptions
-      price
-    }
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    customData
-    metadata
-  }
-}
-EOF;
-}
-
-
-class OrderResponse
-{
-
-    /**
-     * @var OrderSuccess
-     */
-    public $order;
-}
-
-class OrderParam
-{
-
-    /**
-     * Required
-     *
-     * @var OrderAddInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::OrderDocument,
-            "operationName" => "order",
-            "variables" => $this
-        ];
-    }
-
-    const OrderDocument = <<<EOF
-mutation order(\$options: OrderAddInput!) {
-  order(options: \$options) {
-    code
-    url
-    charge
-  }
-}
-EOF;
-}
-
-
-class PasswordLessForceLoginResponse
-{
-
-    /**
-     * @var User
-     */
-    public $passwordLessForceLogin;
-}
-
-class PasswordLessForceLoginParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::PasswordLessForceLoginDocument,
-            "operationName" => "passwordLessForceLogin",
-            "variables" => $this
-        ];
-    }
-
-    const PasswordLessForceLoginDocument = <<<EOF
-mutation passwordLessForceLogin(\$userPoolId: String!, \$userId: String!) {
-  passwordLessForceLogin(userPoolId: \$userPoolId, userId: \$userId) {
-    _id
-    email
-    unionid
-    openid
-    emailVerified
-    phone
-    phoneVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    device
-    password
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-    name
-    givenName
-    familyName
-    middleName
-    profile
-    preferredUsername
-    website
-    gender
-    birthdate
-    zoneinfo
-    locale
-    address
-    formatted
-    streetAddress
-    locality
-    region
-    postalCode
-    country
-    updatedAt
-    metadata
-  }
-}
-EOF;
-}
-
-
-class RecordAuthAuditResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $recordAuthAudit;
-}
-
-class RecordAuthAuditParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appType;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $event;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $message;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RecordAuthAuditDocument,
-            "operationName" => "recordAuthAudit",
-            "variables" => $this
-        ];
-    }
-
-    const RecordAuthAuditDocument = <<<EOF
-mutation recordAuthAudit(\$userPoolId: String!, \$appType: String!, \$appId: String!, \$userId: String!, \$event: String!, \$message: String) {
-  recordAuthAudit(userPoolId: \$userPoolId, appType: \$appType, appId: \$appId, userId: \$userId, event: \$event, message: \$message) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class RecordRequestResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $recordRequest;
-}
-
-class RecordRequestParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $when;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ip;
-
-    /**
-     * Required
-     *
-     * @var int
-     */
-    public $responseTime;
-
-    /**
-     * Required
-     *
-     * @var int
-     */
-    public $size;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $from;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RecordRequestDocument,
-            "operationName" => "recordRequest",
-            "variables" => $this
-        ];
-    }
-
-    const RecordRequestDocument = <<<EOF
-mutation recordRequest(\$when: String!, \$ip: String!, \$responseTime: Int!, \$size: Int!, \$from: String) {
-  recordRequest(when: \$when, ip: \$ip, responseTime: \$responseTime, size: \$size, from: \$from) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class RefreshAdConnectorSecretResponse
-{
-
-    /**
-     * @var ADConnector
-     */
-    public $refreshAdConnectorSecret;
-}
-
-class RefreshAdConnectorSecretParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RefreshAdConnectorSecretDocument,
-            "operationName" => "refreshAdConnectorSecret",
-            "variables" => $this
-        ];
-    }
-
-    const RefreshAdConnectorSecretDocument = <<<EOF
-mutation refreshAdConnectorSecret(\$_id: String) {
-  refreshAdConnectorSecret(_id: \$_id) {
-    _id
-    name
-    secret
-    salt
-    logo
-    enabled
+mutation loginByUsername(\$input: LoginByUsernameInput!) {
+  loginByUsername(input: \$input) {
+    id
+    arn
     userPoolId
-    status
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class RefreshAppSecretResponse
-{
-
-    /**
-     * @var UserClient
-     */
-    public $refreshAppSecret;
-}
-
-class RefreshAppSecretParam
-{
-
-    /**
-     * Required
-     *
-     * @var UpdateUserClientInput
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RefreshAppSecretDocument,
-            "operationName" => "refreshAppSecret",
-            "variables" => $this
-        ];
-    }
-
-    const RefreshAppSecretDocument = <<<EOF
-mutation refreshAppSecret(\$client: UpdateUserClientInput!) {
-  refreshAppSecret(client: \$client) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
     token
-    descriptions
-    jwtExpired
-    createdAt
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
     isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
-  }
-}
-EOF;
-}
-
-
-class RefreshSignInTokenResponse
-{
-
-    /**
-     * @var RefreshedSignInToken
-     */
-    public $refreshSignInToken;
-}
-
-class RefreshSignInTokenParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $oidcAppId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $refreshToken;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RefreshSignInTokenDocument,
-            "operationName" => "refreshSignInToken",
-            "variables" => $this
-        ];
-    }
-
-    const RefreshSignInTokenDocument = <<<EOF
-mutation refreshSignInToken(\$oidcAppId: String, \$userPoolId: String, \$refreshToken: String!) {
-  refreshSignInToken(oidcAppId: \$oidcAppId, userPoolId: \$userPoolId, refreshToken: \$refreshToken) {
-    access_token
-    id_token
-    refresh_token
-    scope
-    expires_in
-  }
-}
-EOF;
-}
-
-
-class RefreshThirdPartyTokenResponse
-{
-
-    /**
-     * @var RefreshThirdPartyIdentityResult
-     */
-    public $refreshThirdPartyToken;
-}
-
-class RefreshThirdPartyTokenParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RefreshThirdPartyTokenDocument,
-            "operationName" => "refreshThirdPartyToken",
-            "variables" => $this
-        ];
-    }
-
-    const RefreshThirdPartyTokenDocument = <<<EOF
-mutation refreshThirdPartyToken(\$userPoolId: String!, \$userId: String!) {
-  refreshThirdPartyToken(userPoolId: \$userPoolId, userId: \$userId) {
-    refreshSuccess
-    message
-    provider
-    refreshToken
-    accessToken
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
     updatedAt
+  }
+}
+EOF;
+}
+
+
+class MoveNodeResponse
+{
+
+    /**
+     * @var Org
+     */
+    public $moveNode;
+}
+
+class MoveNodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $nodeId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetParentId;
+
+    /**
+     * @param $orgId string
+     * @param $nodeId string
+     * @param $targetParentId string
+     */
+    public function __construct($orgId, $nodeId, $targetParentId)
+    {
+        $this->orgId = $orgId;
+        $this->nodeId = $nodeId;
+        $this->targetParentId = $targetParentId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::MoveNodeDocument,
+            "operationName" => "moveNode",
+            "variables" => $this
+        ];
+    }
+
+    const MoveNodeDocument = <<<EOF
+mutation moveNode(\$orgId: String!, \$nodeId: String!, \$targetParentId: String!) {
+  moveNode(orgId: \$orgId, nodeId: \$nodeId, targetParentId: \$targetParentId) {
+    id
+    rootNode {
+      id
+      name
+      nameI18n
+      description
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
+      createdAt
+      updatedAt
+      children
+    }
+    nodes {
+      id
+      name
+      nameI18n
+      description
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
+      createdAt
+      updatedAt
+      children
+    }
+  }
+}
+EOF;
+}
+
+
+class RefreshAccessTokenResponse
+{
+
+    /**
+     * @var RefreshAccessTokenRes
+     */
+    public $refreshAccessToken;
+}
+
+class RefreshAccessTokenParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $accessToken;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $accessToken string
+     * @return RefreshAccessTokenParam
+     */
+    public function withAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::RefreshAccessTokenDocument,
+            "operationName" => "refreshAccessToken",
+            "variables" => $this
+        ];
+    }
+
+    const RefreshAccessTokenDocument = <<<EOF
+mutation refreshAccessToken(\$accessToken: String) {
+  refreshAccessToken(accessToken: \$accessToken) {
+    accessToken
+    exp
+    iat
   }
 }
 EOF;
@@ -22841,18 +10546,26 @@ class RefreshTokenParam
 {
 
     /**
-     * Required
+     * Optional
      *
      * @var string
      */
-    public $client;
+    public $id;
+
+    public function __construct()
+    {
+
+    }
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $id string
+     * @return RefreshTokenParam
      */
-    public $user;
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -22864,8 +10577,8 @@ class RefreshTokenParam
     }
 
     const RefreshTokenDocument = <<<EOF
-mutation refreshToken(\$client: String!, \$user: String!) {
-  refreshToken(client: \$client, user: \$user) {
+mutation refreshToken(\$id: String) {
+  refreshToken(id: \$id) {
     token
     iat
     exp
@@ -22875,67 +10588,89 @@ EOF;
 }
 
 
-class RegisterResponse
+class RefreshUserpoolSecretResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var string
      */
-    public $register;
+    public $refreshUserpoolSecret;
 }
 
-class RegisterParam
+class RefreshUserpoolSecretParam
+{
+
+
+    function createRequest()
+    {
+        return [
+            "query" => self::RefreshUserpoolSecretDocument,
+            "operationName" => "refreshUserpoolSecret",
+            "variables" => $this
+        ];
+    }
+
+    const RefreshUserpoolSecretDocument = <<<EOF
+mutation refreshUserpoolSecret {
+  refreshUserpoolSecret
+}
+EOF;
+}
+
+
+class RegisterByEmailResponse
+{
+
+    /**
+     * @var User
+     */
+    public $registerByEmail;
+}
+
+class RegisterByEmailParam
 {
 
     /**
      * Required
      *
-     * @var UserRegisterInput
+     * @var RegisterByEmailInput
      */
-    public $userInfo;
+    public $input;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $input RegisterByEmailInput
      */
-    public $invitationCode;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $keepPassword;
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RegisterDocument,
-            "operationName" => "register",
+            "query" => self::RegisterByEmailDocument,
+            "operationName" => "registerByEmail",
             "variables" => $this
         ];
     }
 
-    const RegisterDocument = <<<EOF
-mutation register(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$keepPassword: Boolean) {
-  register(userInfo: \$userInfo, invitationCode: \$invitationCode, keepPassword: \$keepPassword) {
-    _id
+    const RegisterByEmailDocument = <<<EOF
+mutation registerByEmail(\$input: RegisterByEmailInput!) {
+  registerByEmail(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -22945,6 +10680,9 @@ mutation register(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$ke
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -22962,432 +10700,425 @@ mutation register(\$userInfo: UserRegisterInput!, \$invitationCode: String, \$ke
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    metadata
   }
 }
 EOF;
 }
 
 
-class RemoveAdConnectorResponse
+class RegisterByPhoneCodeResponse
 {
 
     /**
+     * @var User
+     */
+    public $registerByPhoneCode;
+}
+
+class RegisterByPhoneCodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var RegisterByPhoneCodeInput
+     */
+    public $input;
+
+    /**
+     * @param $input RegisterByPhoneCodeInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::RegisterByPhoneCodeDocument,
+            "operationName" => "registerByPhoneCode",
+            "variables" => $this
+        ];
+    }
+
+    const RegisterByPhoneCodeDocument = <<<EOF
+mutation registerByPhoneCode(\$input: RegisterByPhoneCodeInput!) {
+  registerByPhoneCode(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class RegisterByUsernameResponse
+{
+
+    /**
+     * @var User
+     */
+    public $registerByUsername;
+}
+
+class RegisterByUsernameParam
+{
+
+    /**
+     * Required
+     *
+     * @var RegisterByUsernameInput
+     */
+    public $input;
+
+    /**
+     * @param $input RegisterByUsernameInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::RegisterByUsernameDocument,
+            "operationName" => "registerByUsername",
+            "variables" => $this
+        ];
+    }
+
+    const RegisterByUsernameDocument = <<<EOF
+mutation registerByUsername(\$input: RegisterByUsernameInput!) {
+  registerByUsername(input: \$input) {
+    id
+    arn
+    userPoolId
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class RemoveMemberResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $removeMember;
+}
+
+class RemoveMemberParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
      * @var bool
      */
-    public $removeAdConnector;
-}
+    public $includeChildrenNodes;
 
-class RemoveAdConnectorParam
-{
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $nodeId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $nodeCode;
 
     /**
      * Required
      *
-     * @var string
+     * @var string[]
      */
-    public $_id;
+    public $userIds;
+
+    /**
+     * @param $userIds string[]
+     */
+    public function __construct($userIds)
+    {
+        $this->userIds = $userIds;
+    }
+
+    /**
+     * @param $page int
+     * @return RemoveMemberParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return RemoveMemberParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return RemoveMemberParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return RemoveMemberParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
+
+    /**
+     * @param $nodeId string
+     * @return RemoveMemberParam
+     */
+    public function withNodeId($nodeId)
+    {
+        $this->nodeId = $nodeId;
+        return $this;
+    }
+
+    /**
+     * @param $orgId string
+     * @return RemoveMemberParam
+     */
+    public function withOrgId($orgId)
+    {
+        $this->orgId = $orgId;
+        return $this;
+    }
+
+    /**
+     * @param $nodeCode string
+     * @return RemoveMemberParam
+     */
+    public function withNodeCode($nodeCode)
+    {
+        $this->nodeCode = $nodeCode;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RemoveAdConnectorDocument,
-            "operationName" => "removeAdConnector",
+            "query" => self::RemoveMemberDocument,
+            "operationName" => "removeMember",
             "variables" => $this
         ];
     }
 
-    const RemoveAdConnectorDocument = <<<EOF
-mutation removeAdConnector(\$_id: String!) {
-  removeAdConnector(_id: \$_id)
-}
-EOF;
-}
-
-
-class RemoveCollaboratorResponse
-{
-
-    /**
-     * @var Collaboration
-     */
-    public $removeCollaborator;
-}
-
-class RemoveCollaboratorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $collaborationId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveCollaboratorDocument,
-            "operationName" => "removeCollaborator",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveCollaboratorDocument = <<<EOF
-mutation removeCollaborator(\$collaborationId: String!) {
-  removeCollaborator(collaborationId: \$collaborationId) {
-    _id
-    createdAt
-    owner {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    collaborator {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    userPool {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    permissionDescriptors {
-      permissionId
-      name
-      operationAllow
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveCustomMfaResponse
-{
-
-    /**
-     * @var CustomMFA
-     */
-    public $removeCustomMFA;
-}
-
-class RemoveCustomMfaParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveCustomMfaDocument,
-            "operationName" => "removeCustomMFA",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveCustomMfaDocument = <<<EOF
-mutation removeCustomMFA(\$_id: String!) {
-  removeCustomMFA(_id: \$_id) {
-    _id
-    userIdInMiniLogin
-    userPoolId {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    remark
+    const RemoveMemberDocument = <<<EOF
+mutation removeMember(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$nodeId: String, \$orgId: String, \$nodeCode: String, \$userIds: [String!]!) {
+  removeMember(nodeId: \$nodeId, orgId: \$orgId, nodeCode: \$nodeCode, userIds: \$userIds) {
+    id
     name
-    secret
-  }
-}
-EOF;
-}
-
-
-class RemoveFromInvitationResponse
-{
-
-    /**
-     * @var Invitation
-     */
-    public $removeFromInvitation;
-}
-
-class RemoveFromInvitationParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveFromInvitationDocument,
-            "operationName" => "removeFromInvitation",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveFromInvitationDocument = <<<EOF
-mutation removeFromInvitation(\$client: String!, \$phone: String) {
-  removeFromInvitation(client: \$client, phone: \$phone) {
-    client
-    phone
-    isDeleted
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class RemoveOrgNodeResponse
-{
-
-    /**
-     * @var Org
-     */
-    public $removeOrgNode;
-}
-
-class RemoveOrgNodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var RemoveOrgNodeInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveOrgNodeDocument,
-            "operationName" => "removeOrgNode",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveOrgNodeDocument = <<<EOF
-mutation removeOrgNode(\$input: RemoveOrgNodeInput!) {
-  removeOrgNode(input: \$input) {
-    _id
-    nodes {
-      _id
-      name
-      description
-      createdAt
-      updatedAt
-      children
-      root
-    }
-  }
-}
-EOF;
-}
-
-
-class RemovePermissionFromRbacRoleResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $removePermissionFromRBACRole;
-}
-
-class RemovePermissionFromRbacRoleParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RemovePermissionFromRbacRoleInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemovePermissionFromRbacRoleDocument,
-            "operationName" => "removePermissionFromRBACRole",
-            "variables" => $this
-        ];
-    }
-
-    const RemovePermissionFromRbacRoleDocument = <<<EOF
-mutation removePermissionFromRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemovePermissionFromRBACRoleInput!) {
-  removePermissionFromRBACRole(input: \$input) {
-    _id
-    userPoolId
-    name
+    nameI18n
     description
+    descriptionI18n
+    order
+    code
+    root
+    depth
     createdAt
     updatedAt
-    permissions {
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
       totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
+      list {
+        id
+        arn
+        userPoolId
+        username
+        email
+        emailVerified
+        phone
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
+      }
     }
   }
 }
@@ -23395,449 +11126,195 @@ EOF;
 }
 
 
-class RemovePermissionFromRbacRoleBatchResponse
+class RemovePolicyAssignmentsResponse
 {
 
     /**
-     * @var RBACRole
+     * @var CommonMessage
      */
-    public $removePermissionFromRBACRoleBatch;
+    public $removePolicyAssignments;
 }
 
-class RemovePermissionFromRbacRoleBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RemovePermissionFromRbacRoleBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemovePermissionFromRbacRoleBatchDocument,
-            "operationName" => "removePermissionFromRBACRoleBatch",
-            "variables" => $this
-        ];
-    }
-
-    const RemovePermissionFromRbacRoleBatchDocument = <<<EOF
-mutation removePermissionFromRBACRoleBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemovePermissionFromRBACRoleBatchInput!) {
-  removePermissionFromRBACRoleBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveRoleFromRbacGroupResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $removeRoleFromRBACGroup;
-}
-
-class RemoveRoleFromRbacGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RemoveRoleFromRbacGroupInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveRoleFromRbacGroupDocument,
-            "operationName" => "removeRoleFromRBACGroup",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveRoleFromRbacGroupDocument = <<<EOF
-mutation removeRoleFromRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemoveRoleFromRBACGroupInput!) {
-  removeRoleFromRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveRoleFromRbacGroupBatchResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $removeRoleFromRBACGroupBatch;
-}
-
-class RemoveRoleFromRbacGroupBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RemoveRoleFromRbacGroupBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveRoleFromRbacGroupBatchDocument,
-            "operationName" => "removeRoleFromRBACGroupBatch",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveRoleFromRbacGroupBatchDocument = <<<EOF
-mutation removeRoleFromRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemoveRoleFromRBACGroupBatchInput!) {
-  removeRoleFromRBACGroupBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveRuleEnvResponse
-{
-
-    /**
-     * @var PagedRuleEnvVariable
-     */
-    public $removeRuleEnv;
-}
-
-class RemoveRuleEnvParam
+class RemovePolicyAssignmentsParam
 {
 
     /**
      * Required
      *
-     * @var RemoveRuleEnvInput
+     * @var string[]
      */
-    public $input;
+    public $policies;
+
+    /**
+     * Required
+     *
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $targetIdentifiers;
+
+    /**
+     * @param $policies string[]
+     * @param $targetType PolicyAssignmentTargetType
+     */
+    public function __construct($policies, $targetType)
+    {
+        $this->policies = $policies;
+        $this->targetType = $targetType;
+    }
+
+    /**
+     * @param $targetIdentifiers string[]
+     * @return RemovePolicyAssignmentsParam
+     */
+    public function withTargetIdentifiers($targetIdentifiers)
+    {
+        $this->targetIdentifiers = $targetIdentifiers;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RemoveRuleEnvDocument,
-            "operationName" => "removeRuleEnv",
+            "query" => self::RemovePolicyAssignmentsDocument,
+            "operationName" => "removePolicyAssignments",
             "variables" => $this
         ];
     }
 
-    const RemoveRuleEnvDocument = <<<EOF
-mutation removeRuleEnv(\$input: RemoveRuleEnvInput!) {
-  removeRuleEnv(input: \$input) {
-    totalCount
-    list {
-      key
-      value
-    }
+    const RemovePolicyAssignmentsDocument = <<<EOF
+mutation removePolicyAssignments(\$policies: [String!]!, \$targetType: PolicyAssignmentTargetType!, \$targetIdentifiers: [String!]) {
+  removePolicyAssignments(policies: \$policies, targetType: \$targetType, targetIdentifiers: \$targetIdentifiers) {
+    message
+    code
   }
 }
 EOF;
 }
 
 
-class RemoveSuperAdminUserResponse
+class RemoveUdfResponse
 {
 
     /**
-     * @var UsersInGroupListItem
+     * @var CommonMessage
      */
-    public $removeSuperAdminUser;
+    public $removeUdf;
 }
 
-class RemoveSuperAdminUserParam
+class RemoveUdfParam
 {
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
 
     /**
      * Required
      *
      * @var string
      */
-    public $_id;
+    public $key;
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $targetType UdfTargetType
+     * @param $key string
      */
-    public $username;
+    public function __construct($targetType, $key)
+    {
+        $this->targetType = $targetType;
+        $this->key = $key;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RemoveSuperAdminUserDocument,
-            "operationName" => "removeSuperAdminUser",
+            "query" => self::RemoveUdfDocument,
+            "operationName" => "removeUdf",
             "variables" => $this
         ];
     }
 
-    const RemoveSuperAdminUserDocument = <<<EOF
-mutation removeSuperAdminUser(\$_id: String!, \$username: String!) {
-  removeSuperAdminUser(_id: \$_id, username: \$username) {
-    email
-    username
-    _id
-    upgrade
+    const RemoveUdfDocument = <<<EOF
+mutation removeUdf(\$targetType: UDFTargetType!, \$key: String!) {
+  removeUdf(targetType: \$targetType, key: \$key) {
+    message
+    code
   }
 }
 EOF;
 }
 
 
-class RemoveUserClientsResponse
+class RemoveUdvResponse
 {
 
     /**
-     * @var UserClient[]
+     * @var UserDefinedData[]
      */
-    public $removeUserClients;
+    public $removeUdv;
 }
 
-class RemoveUserClientsParam
+class RemoveUdvParam
 {
 
     /**
-     * Optional
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * Required
      *
      * @var string
      */
-    public $ids;
+    public $targetId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * @param $targetType UdfTargetType
+     * @param $targetId string
+     * @param $key string
+     */
+    public function __construct($targetType, $targetId, $key)
+    {
+        $this->targetType = $targetType;
+        $this->targetId = $targetId;
+        $this->key = $key;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RemoveUserClientsDocument,
-            "operationName" => "removeUserClients",
+            "query" => self::RemoveUdvDocument,
+            "operationName" => "removeUdv",
             "variables" => $this
         ];
     }
 
-    const RemoveUserClientsDocument = <<<EOF
-mutation removeUserClients(\$ids: [String]) {
-  removeUserClients(ids: \$ids) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
-    createdAt
-    isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
+    const RemoveUdvDocument = <<<EOF
+mutation removeUdv(\$targetType: UDFTargetType!, \$targetId: String!, \$key: String!) {
+  removeUdv(targetType: \$targetType, targetId: \$targetId, key: \$key) {
+    key
+    dataType
+    value
   }
 }
 EOF;
@@ -23848,7 +11325,7 @@ class RemoveUserFromGroupResponse
 {
 
     /**
-     * @var UserGroup
+     * @var CommonMessage
      */
     public $removeUserFromGroup;
 }
@@ -23859,23 +11336,34 @@ class RemoveUserFromGroupParam
     /**
      * Required
      *
-     * @var string
+     * @var string[]
      */
-    public $client;
+    public $userIds;
 
     /**
-     * Required
+     * Optional
      *
      * @var string
      */
-    public $user;
+    public $code;
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $userIds string[]
      */
-    public $group;
+    public function __construct($userIds)
+    {
+        $this->userIds = $userIds;
+    }
+
+    /**
+     * @param $code string
+     * @return RemoveUserFromGroupParam
+     */
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -23887,326 +11375,67 @@ class RemoveUserFromGroupParam
     }
 
     const RemoveUserFromGroupDocument = <<<EOF
-mutation removeUserFromGroup(\$client: String!, \$user: String!, \$group: String!) {
-  removeUserFromGroup(client: \$client, user: \$user, group: \$group) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    client {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    group {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    createdAt
+mutation removeUserFromGroup(\$userIds: [String!]!, \$code: String) {
+  removeUserFromGroup(userIds: \$userIds, code: \$code) {
+    message
+    code
   }
 }
 EOF;
 }
 
 
-class RemoveUserFromRbacGroupResponse
+class RemoveWhitelistResponse
 {
 
     /**
-     * @var RBACGroup
+     * @var WhiteList[]
      */
-    public $removeUserFromRBACGroup;
+    public $removeWhitelist;
 }
 
-class RemoveUserFromRbacGroupParam
+class RemoveWhitelistParam
 {
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
 
     /**
      * Required
      *
-     * @var RemoveUserFromRbacGroupInput
+     * @var WhitelistType
      */
-    public $input;
+    public $type;
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $list;
+
+    /**
+     * @param $type WhitelistType
+     * @param $list string[]
+     */
+    public function __construct($type, $list)
+    {
+        $this->type = $type;
+        $this->list = $list;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RemoveUserFromRbacGroupDocument,
-            "operationName" => "removeUserFromRBACGroup",
+            "query" => self::RemoveWhitelistDocument,
+            "operationName" => "removeWhitelist",
             "variables" => $this
         ];
     }
 
-    const RemoveUserFromRbacGroupDocument = <<<EOF
-mutation removeUserFromRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemoveUserFromRBACGroupInput!) {
-  removeUserFromRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
+    const RemoveWhitelistDocument = <<<EOF
+mutation removeWhitelist(\$type: WhitelistType!, \$list: [String!]!) {
+  removeWhitelist(type: \$type, list: \$list) {
     createdAt
     updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveUserFromRbacGroupBatchResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $removeUserFromRBACGroupBatch;
-}
-
-class RemoveUserFromRbacGroupBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RemoveUserFromRbacGroupBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveUserFromRbacGroupBatchDocument,
-            "operationName" => "removeUserFromRBACGroupBatch",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveUserFromRbacGroupBatchDocument = <<<EOF
-mutation removeUserFromRBACGroupBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RemoveUserFromRBACGroupBatchInput!) {
-  removeUserFromRBACGroupBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveUserMetadataResponse
-{
-
-    /**
-     * @var UserMetaDataList
-     */
-    public $removeUserMetadata;
-}
-
-class RemoveUserMetadataParam
-{
-
-    /**
-     * Required
-     *
-     * @var RemoveUserMetadataInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveUserMetadataDocument,
-            "operationName" => "removeUserMetadata",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveUserMetadataDocument = <<<EOF
-mutation removeUserMetadata(\$input: RemoveUserMetadataInput!) {
-  removeUserMetadata(input: \$input) {
-    totalCount
-    list {
-      key
-      value
-    }
-  }
-}
-EOF;
-}
-
-
-class RemoveUsersResponse
-{
-
-    /**
-     * @var User[]
-     */
-    public $removeUsers;
-}
-
-class RemoveUsersParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $ids;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $registerInClient;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $operator;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RemoveUsersDocument,
-            "operationName" => "removeUsers",
-            "variables" => $this
-        ];
-    }
-
-    const RemoveUsersDocument = <<<EOF
-mutation removeUsers(\$ids: [String], \$registerInClient: String, \$operator: String) {
-  removeUsers(ids: \$ids, registerInClient: \$registerInClient, operator: \$operator) {
-    _id
+    value
   }
 }
 EOF;
@@ -24217,638 +11446,13 @@ class ResetPasswordResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var CommonMessage
      */
     public $resetPassword;
 }
 
 class ResetPasswordParam
 {
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $verifyCode;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ResetPasswordDocument,
-            "operationName" => "resetPassword",
-            "variables" => $this
-        ];
-    }
-
-    const ResetPasswordDocument = <<<EOF
-mutation resetPassword(\$email: String!, \$clientId: String!, \$password: String!, \$verifyCode: String!) {
-  changePassword(email: \$email, client: \$clientId, password: \$password, verifyCode: \$verifyCode) {
-    _id
-    email
-    emailVerified
-    username
-    nickname
-    company
-    photo
-    browser
-    registerInClient
-    registerMethod
-    oauth
-    token
-    tokenExpiredAt
-    loginsCount
-    lastLogin
-    lastIP
-    signedUp
-    blocked
-    isDeleted
-  }
-}
-EOF;
-}
-
-
-class ResetUserPoolFromWechatResponse
-{
-
-    /**
-     * @var PagedUsers
-     */
-    public $resetUserPoolFromWechat;
-}
-
-class ResetUserPoolFromWechatParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $registerMethod;
-
-    /**
-     * Required
-     *
-     * @var int
-     */
-    public $limit;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ResetUserPoolFromWechatDocument,
-            "operationName" => "resetUserPoolFromWechat",
-            "variables" => $this
-        ];
-    }
-
-    const ResetUserPoolFromWechatDocument = <<<EOF
-mutation resetUserPoolFromWechat(\$client: String!, \$registerMethod: String!, \$limit: Int!) {
-  resetUserPoolFromWechat(client: \$client, registerMethod: \$registerMethod, limit: \$limit) {
-    list {
-      _id
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      username
-      nickname
-      company
-      photo
-      browser
-      device
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      customData
-      metadata
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class RevokeRbacRoleFromUserResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $revokeRBACRoleFromUser;
-}
-
-class RevokeRbacRoleFromUserParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RevokeRbacRoleFromUserInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RevokeRbacRoleFromUserDocument,
-            "operationName" => "revokeRBACRoleFromUser",
-            "variables" => $this
-        ];
-    }
-
-    const RevokeRbacRoleFromUserDocument = <<<EOF
-mutation revokeRBACRoleFromUser(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RevokeRBACRoleFromUserInput!) {
-  revokeRBACRoleFromUser(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RevokeRbacRoleFromUserBatchResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $revokeRBACRoleFromUserBatch;
-}
-
-class RevokeRbacRoleFromUserBatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var RevokeRbacRoleFromUserBatchInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RevokeRbacRoleFromUserBatchDocument,
-            "operationName" => "revokeRBACRoleFromUserBatch",
-            "variables" => $this
-        ];
-    }
-
-    const RevokeRbacRoleFromUserBatchDocument = <<<EOF
-mutation revokeRBACRoleFromUserBatch(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: RevokeRBACRoleFromUserBatchInput!) {
-  revokeRBACRoleFromUserBatch(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class SendChangeEmailVerifyCodeResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $sendChangeEmailVerifyCode;
-}
-
-class SendChangeEmailVerifyCodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendChangeEmailVerifyCodeDocument,
-            "operationName" => "sendChangeEmailVerifyCode",
-            "variables" => $this
-        ];
-    }
-
-    const SendChangeEmailVerifyCodeDocument = <<<EOF
-mutation sendChangeEmailVerifyCode(\$userPoolId: String!, \$email: String!) {
-  sendChangeEmailVerifyCode(userPoolId: \$userPoolId, email: \$email) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class SendResetPasswordEmailResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $sendResetPasswordEmail;
-}
-
-class SendResetPasswordEmailParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendResetPasswordEmailDocument,
-            "operationName" => "sendResetPasswordEmail",
-            "variables" => $this
-        ];
-    }
-
-    const SendResetPasswordEmailDocument = <<<EOF
-mutation sendResetPasswordEmail(\$client: String!, \$email: String!) {
-  sendResetPasswordEmail(client: \$client, email: \$email) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class SendVerifyEmailResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $sendVerifyEmail;
-}
-
-class SendVerifyEmailParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $token;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SendVerifyEmailDocument,
-            "operationName" => "sendVerifyEmail",
-            "variables" => $this
-        ];
-    }
-
-    const SendVerifyEmailDocument = <<<EOF
-mutation sendVerifyEmail(\$email: String!, \$client: String!, \$token: String) {
-  sendVerifyEmail(email: \$email, client: \$client, token: \$token) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class SetInvitationStateResponse
-{
-
-    /**
-     * @var InvitationState
-     */
-    public $setInvitationState;
-}
-
-class SetInvitationStateParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enablePhone;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SetInvitationStateDocument,
-            "operationName" => "setInvitationState",
-            "variables" => $this
-        ];
-    }
-
-    const SetInvitationStateDocument = <<<EOF
-mutation setInvitationState(\$client: String!, \$enablePhone: Boolean) {
-  setInvitationState(client: \$client, enablePhone: \$enablePhone) {
-    client
-    enablePhone
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class SetRuleEnvResponse
-{
-
-    /**
-     * @var PagedRuleEnvVariable
-     */
-    public $setRuleEnv;
-}
-
-class SetRuleEnvParam
-{
-
-    /**
-     * Required
-     *
-     * @var SetRuleEnvInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SetRuleEnvDocument,
-            "operationName" => "setRuleEnv",
-            "variables" => $this
-        ];
-    }
-
-    const SetRuleEnvDocument = <<<EOF
-mutation setRuleEnv(\$input: SetRuleEnvInput!) {
-  setRuleEnv(input: \$input) {
-    totalCount
-    list {
-      key
-      value
-    }
-  }
-}
-EOF;
-}
-
-
-class SetUserMetadataResponse
-{
-
-    /**
-     * @var UserMetaDataList
-     */
-    public $setUserMetadata;
-}
-
-class SetUserMetadataParam
-{
-
-    /**
-     * Required
-     *
-     * @var SetUserMetadataInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::SetUserMetadataDocument,
-            "operationName" => "setUserMetadata",
-            "variables" => $this
-        ];
-    }
-
-    const SetUserMetadataDocument = <<<EOF
-mutation setUserMetadata(\$input: SetUserMetadataInput!) {
-  setUserMetadata(input: \$input) {
-    totalCount
-    list {
-      key
-      value
-    }
-  }
-}
-EOF;
-}
-
-
-class SignInResponse
-{
-
-    /**
-     * @var OidcPasswordModeUserInfo
-     */
-    public $signIn;
-}
-
-class SignInParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $oidcAppId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $password;
 
     /**
      * Optional
@@ -24862,65 +11466,319 @@ class SignInParam
      *
      * @var string
      */
-    public $unionid;
+    public $email;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $newPassword;
+
+    /**
+     * @param $code string
+     * @param $newPassword string
+     */
+    public function __construct($code, $newPassword)
+    {
+        $this->code = $code;
+        $this->newPassword = $newPassword;
+    }
+
+    /**
+     * @param $phone string
+     * @return ResetPasswordParam
+     */
+    public function withPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @param $email string
+     * @return ResetPasswordParam
+     */
+    public function withEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::ResetPasswordDocument,
+            "operationName" => "resetPassword",
+            "variables" => $this
+        ];
+    }
+
+    const ResetPasswordDocument = <<<EOF
+mutation resetPassword(\$phone: String, \$email: String, \$code: String!, \$newPassword: String!) {
+  resetPassword(phone: \$phone, email: \$email, code: \$code, newPassword: \$newPassword) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class RevokeRoleResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $revokeRole;
+}
+
+class RevokeRoleParam
+{
 
     /**
      * Optional
      *
      * @var string
      */
-    public $username;
+    public $roleCode;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $roleCodes;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $groupCodes;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     */
+    public $nodeCodes;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $roleCode string
+     * @return RevokeRoleParam
+     */
+    public function withRoleCode($roleCode)
+    {
+        $this->roleCode = $roleCode;
+        return $this;
+    }
+
+    /**
+     * @param $roleCodes string[]
+     * @return RevokeRoleParam
+     */
+    public function withRoleCodes($roleCodes)
+    {
+        $this->roleCodes = $roleCodes;
+        return $this;
+    }
+
+    /**
+     * @param $userIds string[]
+     * @return RevokeRoleParam
+     */
+    public function withUserIds($userIds)
+    {
+        $this->userIds = $userIds;
+        return $this;
+    }
+
+    /**
+     * @param $groupCodes string[]
+     * @return RevokeRoleParam
+     */
+    public function withGroupCodes($groupCodes)
+    {
+        $this->groupCodes = $groupCodes;
+        return $this;
+    }
+
+    /**
+     * @param $nodeCodes string[]
+     * @return RevokeRoleParam
+     */
+    public function withNodeCodes($nodeCodes)
+    {
+        $this->nodeCodes = $nodeCodes;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::SignInDocument,
-            "operationName" => "signIn",
+            "query" => self::RevokeRoleDocument,
+            "operationName" => "revokeRole",
             "variables" => $this
         ];
     }
 
-    const SignInDocument = <<<EOF
-mutation signIn(\$oidcAppId: String, \$userPoolId: String, \$email: String, \$password: String, \$phone: String, \$unionid: String, \$username: String) {
-  signIn(oidcAppId: \$oidcAppId, userPoolId: \$userPoolId, email: \$email, password: \$password, phone: \$phone, unionid: \$unionid, username: \$username) {
-    sub
-    birthdate
-    family_name
-    gender
-    given_name
-    locale
-    middle_name
-    name
-    nickname
-    picture
-    preferred_username
-    profile
-    updated_at
-    website
-    zoneinfo
-    username
-    _id
-    company
-    browser
-    device
-    logins_count
-    register_method
-    blocked
-    last_ip
-    register_in_userpool
-    last_login
-    signed_up
-    email
-    email_verified
-    phone_number
-    phone_number_verified
-    token
-    access_token
-    id_token
-    refresh_token
-    expires_in
-    token_type
-    scope
+    const RevokeRoleDocument = <<<EOF
+mutation revokeRole(\$roleCode: String, \$roleCodes: [String], \$userIds: [String!], \$groupCodes: [String!], \$nodeCodes: [String!]) {
+  revokeRole(roleCode: \$roleCode, roleCodes: \$roleCodes, userIds: \$userIds, groupCodes: \$groupCodes, nodeCodes: \$nodeCodes) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class SendEmailResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $sendEmail;
+}
+
+class SendEmailParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Required
+     *
+     * @var EmailScene
+     */
+    public $scene;
+
+    /**
+     * @param $email string
+     * @param $scene EmailScene
+     */
+    public function __construct($email, $scene)
+    {
+        $this->email = $email;
+        $this->scene = $scene;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SendEmailDocument,
+            "operationName" => "sendEmail",
+            "variables" => $this
+        ];
+    }
+
+    const SendEmailDocument = <<<EOF
+mutation sendEmail(\$email: String!, \$scene: EmailScene!) {
+  sendEmail(email: \$email, scene: \$scene) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+
+class SetUdvResponse
+{
+
+    /**
+     * @var UserDefinedData[]
+     */
+    public $setUdv;
+}
+
+class SetUdvParam
+{
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $value;
+
+    /**
+     * @param $targetType UdfTargetType
+     * @param $targetId string
+     * @param $key string
+     * @param $value string
+     */
+    public function __construct($targetType, $targetId, $key, $value)
+    {
+        $this->targetType = $targetType;
+        $this->targetId = $targetId;
+        $this->key = $key;
+        $this->value = $value;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SetUdvDocument,
+            "operationName" => "setUdv",
+            "variables" => $this
+        ];
+    }
+
+    const SetUdvDocument = <<<EOF
+mutation setUdv(\$targetType: UDFTargetType!, \$targetId: String!, \$key: String!, \$value: String!) {
+  setUdv(targetType: \$targetType, targetId: \$targetId, key: \$key, value: \$value) {
+    key
+    dataType
+    value
   }
 }
 EOF;
@@ -24939,19 +11797,6 @@ class UnbindEmailResponse
 class UnbindEmailParam
 {
 
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
 
     function createRequest()
     {
@@ -24963,23 +11808,22 @@ class UnbindEmailParam
     }
 
     const UnbindEmailDocument = <<<EOF
-mutation unbindEmail(\$user: String, \$client: String) {
-  unbindEmail(user: \$user, client: \$client) {
-    _id
+mutation unbindEmail {
+  unbindEmail {
+    id
+    arn
+    userPoolId
     username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -24990,6 +11834,8 @@ mutation unbindEmail(\$user: String, \$client: String) {
     blocked
     isDeleted
     device
+    browser
+    company
     name
     givenName
     familyName
@@ -25007,393 +11853,90 @@ mutation unbindEmail(\$user: String, \$client: String) {
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    oldPassword
-    metadata
   }
 }
 EOF;
 }
 
 
-class UnbindOtherOAuthResponse
+class UnbindPhoneResponse
 {
 
     /**
-     * @var UserOAuthBind
+     * @var User
      */
-    public $unbindOtherOAuth;
+    public $unbindPhone;
 }
 
-class UnbindOtherOAuthParam
+class UnbindPhoneParam
 {
 
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
 
     function createRequest()
     {
         return [
-            "query" => self::UnbindOtherOAuthDocument,
-            "operationName" => "unbindOtherOAuth",
+            "query" => self::UnbindPhoneDocument,
+            "operationName" => "unbindPhone",
             "variables" => $this
         ];
     }
 
-    const UnbindOtherOAuthDocument = <<<EOF
-mutation unbindOtherOAuth(\$type: String!, \$client: String, \$user: String) {
-  unbindOtherOAuth(type: \$type, client: \$client, user: \$user) {
-    _id
-    user
-    client
-    type
-    unionid
-    userInfo
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class UpdateAdConnectorResponse
-{
-
-    /**
-     * @var ADConnector
-     */
-    public $updateAdConnector;
-}
-
-class UpdateAdConnectorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $logo;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateAdConnectorDocument,
-            "operationName" => "updateAdConnector",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateAdConnectorDocument = <<<EOF
-mutation updateAdConnector(\$_id: String!, \$name: String, \$logo: String) {
-  updateAdConnector(_id: \$_id, name: \$name, logo: \$logo) {
-    _id
-    name
-    secret
-    salt
-    logo
-    enabled
+    const UnbindPhoneDocument = <<<EOF
+mutation unbindPhone {
+  unbindPhone {
+    id
+    arn
     userPoolId
-    status
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
     createdAt
-  }
-}
-EOF;
-}
-
-
-class UpdateClientWebhookResponse
-{
-
-    /**
-     * @var ClientWebhook
-     */
-    public $updateClientWebhook;
-}
-
-class UpdateClientWebhookParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $id;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $events;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $url;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $contentType;
-
-    /**
-     * Required
-     *
-     * @var bool
-     */
-    public $enable;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $isLastTimeSuccess;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateClientWebhookDocument,
-            "operationName" => "updateClientWebhook",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateClientWebhookDocument = <<<EOF
-mutation updateClientWebhook(\$id: String!, \$events: [String!]!, \$url: String!, \$contentType: String!, \$enable: Boolean!, \$secret: String, \$isLastTimeSuccess: Boolean) {
-  updateClientWebhook(id: \$id, events: \$events, url: \$url, contentType: \$contentType, enable: \$enable, secret: \$secret, isLastTimeSuccess: \$isLastTimeSuccess) {
-    _id
-    client
-    events {
-      name
-      label
-      description
-    }
-    url
-    isLastTimeSuccess
-    contentType
-    secret
-    enable
-  }
-}
-EOF;
-}
-
-
-class UpdateCollaboratorResponse
-{
-
-    /**
-     * @var Collaboration
-     */
-    public $updateCollaborator;
-}
-
-class UpdateCollaboratorParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $collaborationId;
-
-    /**
-     * Required
-     *
-     * @var PermissionDescriptorsInputType
-     */
-    public $permissionDescriptors;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateCollaboratorDocument,
-            "operationName" => "updateCollaborator",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateCollaboratorDocument = <<<EOF
-mutation updateCollaborator(\$collaborationId: String!, \$permissionDescriptors: [PermissionDescriptorsInputType]!) {
-  updateCollaborator(collaborationId: \$collaborationId, permissionDescriptors: \$permissionDescriptors) {
-    _id
-    createdAt
-    owner {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    collaborator {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    userPool {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    permissionDescriptors {
-      permissionId
-      name
-      operationAllow
-    }
+    updatedAt
   }
 }
 EOF;
@@ -25411,13 +11954,6 @@ class UpdateEmailResponse
 
 class UpdateEmailParam
 {
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
 
     /**
      * Required
@@ -25447,6 +11983,36 @@ class UpdateEmailParam
      */
     public $oldEmailCode;
 
+    /**
+     * @param $email string
+     * @param $emailCode string
+     */
+    public function __construct($email, $emailCode)
+    {
+        $this->email = $email;
+        $this->emailCode = $emailCode;
+    }
+
+    /**
+     * @param $oldEmail string
+     * @return UpdateEmailParam
+     */
+    public function withOldEmail($oldEmail)
+    {
+        $this->oldEmail = $oldEmail;
+        return $this;
+    }
+
+    /**
+     * @param $oldEmailCode string
+     * @return UpdateEmailParam
+     */
+    public function withOldEmailCode($oldEmailCode)
+    {
+        $this->oldEmailCode = $oldEmailCode;
+        return $this;
+    }
+
     function createRequest()
     {
         return [
@@ -25457,23 +12023,22 @@ class UpdateEmailParam
     }
 
     const UpdateEmailDocument = <<<EOF
-mutation updateEmail(\$userPoolId: String!, \$email: String!, \$emailCode: String!, \$oldEmail: String, \$oldEmailCode: String) {
-  updateEmail(userPoolId: \$userPoolId, email: \$email, emailCode: \$emailCode, oldEmail: \$oldEmail, oldEmailCode: \$oldEmailCode) {
-    _id
+mutation updateEmail(\$email: String!, \$emailCode: String!, \$oldEmail: String, \$oldEmailCode: String) {
+  updateEmail(email: \$email, emailCode: \$emailCode, oldEmail: \$oldEmail, oldEmailCode: \$oldEmailCode) {
+    id
+    arn
+    userPoolId
     username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -25484,6 +12049,8 @@ mutation updateEmail(\$userPoolId: String!, \$email: String!, \$emailCode: Strin
     blocked
     isDeleted
     device
+    browser
+    company
     name
     givenName
     familyName
@@ -25501,33 +12068,77 @@ mutation updateEmail(\$userPoolId: String!, \$email: String!, \$emailCode: Strin
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    oldPassword
-    metadata
   }
 }
 EOF;
 }
 
 
-class UpdatePasswordStrengthSettingsByUserPoolIdResponse
+class UpdateFunctionResponse
 {
 
     /**
-     * @var PasswordStrengthSettings
+     * @var Function
      */
-    public $updatePasswordStrengthSettingsByUserPoolId;
+    public $updateFunction;
 }
 
-class UpdatePasswordStrengthSettingsByUserPoolIdParam
+class UpdateFunctionParam
+{
+
+    /**
+     * Required
+     *
+     * @var UpdateFunctionInput
+     */
+    public $input;
+
+    /**
+     * @param $input UpdateFunctionInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UpdateFunctionDocument,
+            "operationName" => "updateFunction",
+            "variables" => $this
+        ];
+    }
+
+    const UpdateFunctionDocument = <<<EOF
+mutation updateFunction(\$input: UpdateFunctionInput!) {
+  updateFunction(input: \$input) {
+    id
+    name
+    sourceCode
+    description
+    url
+  }
+}
+EOF;
+}
+
+
+class UpdateGroupResponse
+{
+
+    /**
+     * @var Group
+     */
+    public $updateGroup;
+}
+
+class UpdateGroupParam
 {
 
     /**
@@ -25535,86 +12146,374 @@ class UpdatePasswordStrengthSettingsByUserPoolIdParam
      *
      * @var string
      */
-    public $userPoolId;
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $newCode;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $name string
+     * @return UpdateGroupParam
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $description string
+     * @return UpdateGroupParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $newCode string
+     * @return UpdateGroupParam
+     */
+    public function withNewCode($newCode)
+    {
+        $this->newCode = $newCode;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UpdateGroupDocument,
+            "operationName" => "updateGroup",
+            "variables" => $this
+        ];
+    }
+
+    const UpdateGroupDocument = <<<EOF
+mutation updateGroup(\$code: String!, \$name: String, \$description: String, \$newCode: String) {
+  updateGroup(code: \$code, name: \$name, description: \$description, newCode: \$newCode) {
+    code
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class UpdateNodeResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $updateNode;
+}
+
+class UpdateNodeParam
+{
 
     /**
      * Optional
      *
      * @var int
      */
-    public $pwdStrength;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdatePasswordStrengthSettingsByUserPoolIdDocument,
-            "operationName" => "updatePasswordStrengthSettingsByUserPoolId",
-            "variables" => $this
-        ];
-    }
-
-    const UpdatePasswordStrengthSettingsByUserPoolIdDocument = <<<EOF
-mutation updatePasswordStrengthSettingsByUserPoolId(\$userPoolId: String!, \$pwdStrength: Int) {
-  updatePasswordStrengthSettingsByUserPoolId(userPoolId: \$userPoolId, pwdStrength: \$pwdStrength) {
-    userPoolId
-    pwdStrength
-  }
-}
-EOF;
-}
-
-
-class UpdatePermissionsResponse
-{
+    public $page;
 
     /**
-     * @var Group
+     * Optional
+     *
+     * @var int
      */
-    public $updatePermissions;
-}
+    public $limit;
 
-class UpdatePermissionsParam
-{
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $includeChildrenNodes;
 
     /**
      * Required
      *
      * @var string
      */
-    public $role;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
+    public $id;
 
     /**
      * Optional
      *
      * @var string
      */
-    public $permissions;
+    public $name;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param $page int
+     * @return UpdateNodeParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return UpdateNodeParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return UpdateNodeParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return UpdateNodeParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
+
+    /**
+     * @param $name string
+     * @return UpdateNodeParam
+     */
+    public function withName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param $code string
+     * @return UpdateNodeParam
+     */
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @param $description string
+     * @return UpdateNodeParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::UpdatePermissionsDocument,
-            "operationName" => "updatePermissions",
+            "query" => self::UpdateNodeDocument,
+            "operationName" => "updateNode",
             "variables" => $this
         ];
     }
 
-    const UpdatePermissionsDocument = <<<EOF
-mutation updatePermissions(\$role: String!, \$client: String!, \$permissions: String) {
-  updatePermissions(role: \$role, client: \$client, permissions: \$permissions) {
-    _id
+    const UpdateNodeDocument = <<<EOF
+mutation updateNode(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$id: String!, \$name: String, \$code: String, \$description: String) {
+  updateNode(id: \$id, name: \$name, code: \$code, description: \$description) {
+    id
     name
-    descriptions
-    client
-    permissions
+    nameI18n
+    description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
     createdAt
+    updatedAt
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
+      totalCount
+    }
+  }
+}
+EOF;
+}
+
+
+class UpdatePasswordResponse
+{
+
+    /**
+     * @var User
+     */
+    public $updatePassword;
+}
+
+class UpdatePasswordParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $newPassword;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $oldPassword;
+
+    /**
+     * @param $newPassword string
+     */
+    public function __construct($newPassword)
+    {
+        $this->newPassword = $newPassword;
+    }
+
+    /**
+     * @param $oldPassword string
+     * @return UpdatePasswordParam
+     */
+    public function withOldPassword($oldPassword)
+    {
+        $this->oldPassword = $oldPassword;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UpdatePasswordDocument,
+            "operationName" => "updatePassword",
+            "variables" => $this
+        ];
+    }
+
+    const UpdatePasswordDocument = <<<EOF
+mutation updatePassword(\$newPassword: String!, \$oldPassword: String) {
+  updatePassword(newPassword: \$newPassword, oldPassword: \$oldPassword) {
+    id
+    arn
+    userPoolId
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
+    updatedAt
   }
 }
 EOF;
@@ -25632,13 +12531,6 @@ class UpdatePhoneResponse
 
 class UpdatePhoneParam
 {
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
 
     /**
      * Required
@@ -25668,6 +12560,36 @@ class UpdatePhoneParam
      */
     public $oldPhoneCode;
 
+    /**
+     * @param $phone string
+     * @param $phoneCode string
+     */
+    public function __construct($phone, $phoneCode)
+    {
+        $this->phone = $phone;
+        $this->phoneCode = $phoneCode;
+    }
+
+    /**
+     * @param $oldPhone string
+     * @return UpdatePhoneParam
+     */
+    public function withOldPhone($oldPhone)
+    {
+        $this->oldPhone = $oldPhone;
+        return $this;
+    }
+
+    /**
+     * @param $oldPhoneCode string
+     * @return UpdatePhoneParam
+     */
+    public function withOldPhoneCode($oldPhoneCode)
+    {
+        $this->oldPhoneCode = $oldPhoneCode;
+        return $this;
+    }
+
     function createRequest()
     {
         return [
@@ -25678,23 +12600,22 @@ class UpdatePhoneParam
     }
 
     const UpdatePhoneDocument = <<<EOF
-mutation updatePhone(\$userPoolId: String!, \$phone: String!, \$phoneCode: String!, \$oldPhone: String, \$oldPhoneCode: String) {
-  updatePhone(userPoolId: \$userPoolId, phone: \$phone, phoneCode: \$phoneCode, oldPhone: \$oldPhone, oldPhoneCode: \$oldPhoneCode) {
-    _id
+mutation updatePhone(\$phone: String!, \$phoneCode: String!, \$oldPhone: String, \$oldPhoneCode: String) {
+  updatePhone(phone: \$phone, phoneCode: \$phoneCode, oldPhone: \$oldPhone, oldPhoneCode: \$oldPhoneCode) {
+    id
+    arn
+    userPoolId
     username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -25705,6 +12626,8 @@ mutation updatePhone(\$userPoolId: String!, \$phone: String!, \$phoneCode: Strin
     blocked
     isDeleted
     device
+    browser
+    company
     name
     givenName
     familyName
@@ -25722,203 +12645,118 @@ mutation updatePhone(\$userPoolId: String!, \$phone: String!, \$phoneCode: Strin
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    oldPassword
-    metadata
   }
 }
 EOF;
 }
 
 
-class UpdateRbacGroupResponse
+class UpdatePolicyResponse
 {
 
     /**
-     * @var RBACGroup
+     * @var Policy
      */
-    public $updateRBACGroup;
+    public $updatePolicy;
 }
 
-class UpdateRbacGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var UpdateRbacGroupInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateRbacGroupDocument,
-            "operationName" => "updateRBACGroup",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateRbacGroupDocument = <<<EOF
-mutation updateRBACGroup(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: UpdateRBACGroupInput!) {
-  updateRBACGroup(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class UpdateRbacPermissionResponse
-{
-
-    /**
-     * @var RBACPermission
-     */
-    public $updateRBACPermission;
-}
-
-class UpdateRbacPermissionParam
+class UpdatePolicyParam
 {
 
     /**
      * Required
      *
-     * @var UpdateRbacPermissionInput
+     * @var string
      */
-    public $input;
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     * Optional
+     *
+     * @var PolicyStatementInput[]
+     */
+    public $statements;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $newCode;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $description string
+     * @return UpdatePolicyParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $statements PolicyStatementInput[]
+     * @return UpdatePolicyParam
+     */
+    public function withStatements($statements)
+    {
+        $this->statements = $statements;
+        return $this;
+    }
+
+    /**
+     * @param $newCode string
+     * @return UpdatePolicyParam
+     */
+    public function withNewCode($newCode)
+    {
+        $this->newCode = $newCode;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::UpdateRbacPermissionDocument,
-            "operationName" => "updateRBACPermission",
+            "query" => self::UpdatePolicyDocument,
+            "operationName" => "updatePolicy",
             "variables" => $this
         ];
     }
 
-    const UpdateRbacPermissionDocument = <<<EOF
-mutation updateRBACPermission(\$input: UpdateRBACPermissionInput!) {
-  updateRBACPermission(input: \$input) {
-    _id
-    name
-    userPoolId
+    const UpdatePolicyDocument = <<<EOF
+mutation updatePolicy(\$code: String!, \$description: String, \$statements: [PolicyStatementInput!], \$newCode: String) {
+  updatePolicy(code: \$code, description: \$description, statements: \$statements, newCode: \$newCode) {
+    code
+    isDefault
+    description
+    statements {
+      resource
+      actions
+      effect
+    }
     createdAt
     updatedAt
-    description
-  }
-}
-EOF;
-}
-
-
-class UpdateRbacRoleResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $updateRBACRole;
-}
-
-class UpdateRbacRoleParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var UpdateRbacRoleInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateRbacRoleDocument,
-            "operationName" => "updateRBACRole",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateRbacRoleDocument = <<<EOF
-mutation updateRBACRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$input: UpdateRBACRoleInput!) {
-  updateRBACRole(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
+    assignmentsCount
   }
 }
 EOF;
@@ -25929,7 +12767,7 @@ class UpdateRoleResponse
 {
 
     /**
-     * @var Group
+     * @var Role
      */
     public $updateRole;
 }
@@ -25942,35 +12780,49 @@ class UpdateRoleParam
      *
      * @var string
      */
-    public $_id;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
+    public $code;
 
     /**
      * Optional
      *
      * @var string
      */
-    public $descriptions;
+    public $description;
 
     /**
      * Optional
      *
      * @var string
      */
-    public $permissions;
+    public $newCode;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $description string
+     * @return UpdateRoleParam
+     */
+    public function withDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @param $newCode string
+     * @return UpdateRoleParam
+     */
+    public function withNewCode($newCode)
+    {
+        $this->newCode = $newCode;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -25982,144 +12834,25 @@ class UpdateRoleParam
     }
 
     const UpdateRoleDocument = <<<EOF
-mutation updateRole(\$_id: String!, \$client: String!, \$name: String!, \$descriptions: String, \$permissions: String) {
-  updateRole(_id: \$_id, client: \$client, name: \$name, descriptions: \$descriptions, permissions: \$permissions) {
-    _id
-    name
-    descriptions
-    client
-    permissions
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class UpdateRuleResponse
-{
-
-    /**
-     * @var Rule
-     */
-    public $updateRule;
-}
-
-class UpdateRuleParam
-{
-
-    /**
-     * Required
-     *
-     * @var UpdateRuleInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateRuleDocument,
-            "operationName" => "updateRule",
-            "variables" => $this
-        ];
-    }
-
-    const UpdateRuleDocument = <<<EOF
-mutation updateRule(\$input: UpdateRuleInput!) {
-  updateRule(input: \$input) {
-    _id
-    userPoolId
-    name
-    description
-    type
-    enabled
-    faasUrl
+mutation updateRole(\$code: String!, \$description: String, \$newCode: String) {
+  updateRole(code: \$code, description: \$description, newCode: \$newCode) {
     code
-    order
-    async
+    arn
+    description
+    isSystem
     createdAt
     updatedAt
-  }
-}
-EOF;
-}
-
-
-class UpdateRuleOrderResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $updateRuleOrder;
-}
-
-class UpdateRuleOrderParam
-{
-
-    /**
-     * Required
-     *
-     * @var UpdateRuleOrderInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateRuleOrderDocument,
-            "operationName" => "updateRuleOrder",
-            "variables" => $this
-        ];
+    users {
+      totalCount
     }
-
-    const UpdateRuleOrderDocument = <<<EOF
-mutation updateRuleOrder(\$input: UpdateRuleOrderInput!) {
-  updateRuleOrder(input: \$input) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class UpdateSuperAdminUserResponse
-{
-
-    /**
-     * @var UsersInGroupListItem
-     */
-    public $updateSuperAdminUser;
-}
-
-class UpdateSuperAdminUserParam
-{
-
-    /**
-     * Required
-     *
-     * @var SuperAdminUpdateInput
-     */
-    public $options;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UpdateSuperAdminUserDocument,
-            "operationName" => "updateSuperAdminUser",
-            "variables" => $this
-        ];
+    parent {
+      code
+      arn
+      description
+      isSystem
+      createdAt
+      updatedAt
     }
-
-    const UpdateSuperAdminUserDocument = <<<EOF
-mutation updateSuperAdminUser(\$options: SuperAdminUpdateInput!) {
-  updateSuperAdminUser(options: \$options) {
-    email
-    username
-    _id
-    upgrade
   }
 }
 EOF;
@@ -26139,11 +12872,36 @@ class UpdateUserParam
 {
 
     /**
+     * Optional
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
      * Required
      *
-     * @var UserUpdateInput
+     * @var UpdateUserInput
      */
-    public $options;
+    public $input;
+
+    /**
+     * @param $input UpdateUserInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
+
+    /**
+     * @param $id string
+     * @return UpdateUserParam
+     */
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -26155,23 +12913,22 @@ class UpdateUserParam
     }
 
     const UpdateUserDocument = <<<EOF
-mutation updateUser(\$options: UserUpdateInput!) {
-  updateUser(options: \$options) {
-    _id
+mutation updateUser(\$id: String, \$input: UpdateUserInput!) {
+  updateUser(id: \$id, input: \$input) {
+    id
+    arn
+    userPoolId
     username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -26182,6 +12939,8 @@ mutation updateUser(\$options: UserUpdateInput!) {
     blocked
     isDeleted
     device
+    browser
+    company
     name
     givenName
     familyName
@@ -26199,144 +12958,89 @@ mutation updateUser(\$options: UserUpdateInput!) {
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    thirdPartyIdentity {
-      provider
-      refreshToken
-      accessToken
-      expiresIn
-      updatedAt
-    }
-    oldPassword
-    metadata
   }
 }
 EOF;
 }
 
 
-class UpdateUserClientResponse
+class UpdateUserpoolResponse
 {
 
     /**
-     * @var UserClient
+     * @var UserPool
      */
-    public $updateUserClient;
+    public $updateUserpool;
 }
 
-class UpdateUserClientParam
+class UpdateUserpoolParam
 {
 
     /**
      * Required
      *
-     * @var UpdateUserClientInput
+     * @var UpdateUserpoolInput
      */
-    public $client;
+    public $input;
+
+    /**
+     * @param $input UpdateUserpoolInput
+     */
+    public function __construct($input)
+    {
+        $this->input = $input;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::UpdateUserClientDocument,
-            "operationName" => "updateUserClient",
+            "query" => self::UpdateUserpoolDocument,
+            "operationName" => "updateUserpool",
             "variables" => $this
         ];
     }
 
-    const UpdateUserClientDocument = <<<EOF
-mutation updateUserClient(\$client: UpdateUserClientInput!) {
-  updateUserClient(client: \$client) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
+    const UpdateUserpoolDocument = <<<EOF
+mutation updateUserpool(\$input: UpdateUserpoolInput!) {
+  updateUserpool(input: \$input) {
+    id
+    name
+    domain
+    description
+    secret
+    jwtSecret
+    userpoolTypes {
+      code
       name
       description
       image
-      example
+      sdks
     }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
     logo
+    createdAt
+    updatedAt
     emailVerifiedDefault
     sendWelcomeEmail
     registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
+    showWxQRCodeWhenRegisterDisabled
     allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
-    createdAt
+    tokenExpiresAfter
     isDeleted
     frequentRegisterCheck {
       timeInterval
       limit
-      enable
+      enabled
     }
     loginFailCheck {
       timeInterval
       limit
-      enable
+      enabled
     }
-    enableEmail
     changePhoneStrategy {
       verifyOldPhone
     }
@@ -26353,389 +13057,14 @@ mutation updateUserClient(\$client: UpdateUserClientInput!) {
       ticketExpriresAfter
       ticketExchangeUserInfoNeedSecret
     }
-  }
-}
-EOF;
-}
-
-
-class VerifyResetPasswordVerifyCodeResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $verifyResetPasswordVerifyCode;
-}
-
-class VerifyResetPasswordVerifyCodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $verifyCode;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::VerifyResetPasswordVerifyCodeDocument,
-            "operationName" => "verifyResetPasswordVerifyCode",
-            "variables" => $this
-        ];
+    whitelist {
+      phoneEnabled
+      emailEnabled
+      usernameEnabled
     }
-
-    const VerifyResetPasswordVerifyCodeDocument = <<<EOF
-mutation verifyResetPasswordVerifyCode(\$verifyCode: String!, \$email: String!, \$client: String!) {
-  verifyResetPasswordVerifyCode(verifyCode: \$verifyCode, email: \$email, client: \$client) {
-    message
-    code
-    status
-  }
-}
-EOF;
-}
-
-
-class GetOidcAppInfoResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $GetOIDCAppInfo;
-}
-
-class GetOidcAppInfoParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetOidcAppInfoDocument,
-            "operationName" => "GetOIDCAppInfo",
-            "variables" => $this
-        ];
-    }
-
-    const GetOidcAppInfoDocument = <<<EOF
-query GetOIDCAppInfo(\$appId: String!) {
-  GetOIDCAppInfo(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class GetOidcAppListResponse
-{
-
-    /**
-     * @var OIDCAppPagedList
-     */
-    public $GetOIDCAppList;
-}
-
-class GetOidcAppListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetOidcAppListDocument,
-            "operationName" => "GetOIDCAppList",
-            "variables" => $this
-        ];
-    }
-
-    const GetOidcAppListDocument = <<<EOF
-query GetOIDCAppList(\$clientId: String, \$page: Int, \$count: Int) {
-  GetOIDCAppList(clientId: \$clientId, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      name
-      domain
-      image
-      redirect_uris
-      client_id
-      client_secret
-      token_endpoint_auth_method
-      id_token_signed_response_alg
-      id_token_encrypted_response_alg
-      id_token_encrypted_response_enc
-      userinfo_signed_response_alg
-      userinfo_encrypted_response_alg
-      userinfo_encrypted_response_enc
-      request_object_signing_alg
-      request_object_encryption_alg
-      request_object_encryption_enc
-      jwks_uri
-      _jwks_uri
-      custom_jwks
-      jwks
-      _jwks
-      clientId
-      grant_types
-      response_types
-      description
-      homepageURL
-      isDeleted
-      isDefault
-      when
-      css
-      authorization_code_expire
-      id_token_expire
-      access_token_expire
-      cas_expire
-      loginUrl
-    }
-  }
-}
-EOF;
-}
-
-
-class GetSamlIdentityProviderInfoResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $GetSAMLIdentityProviderInfo;
-}
-
-class GetSamlIdentityProviderInfoParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetSamlIdentityProviderInfoDocument,
-            "operationName" => "GetSAMLIdentityProviderInfo",
-            "variables" => $this
-        ];
-    }
-
-    const GetSamlIdentityProviderInfoDocument = <<<EOF
-query GetSAMLIdentityProviderInfo(\$appId: String!) {
-  GetSAMLIdentityProviderInfo(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class GetSamlIdentityProviderListResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderAppPagedList
-     */
-    public $GetSAMLIdentityProviderList;
-}
-
-class GetSamlIdentityProviderListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetSamlIdentityProviderListDocument,
-            "operationName" => "GetSAMLIdentityProviderList",
-            "variables" => $this
-        ];
-    }
-
-    const GetSamlIdentityProviderListDocument = <<<EOF
-query GetSAMLIdentityProviderList(\$clientId: String, \$page: Int, \$count: Int) {
-  GetSAMLIdentityProviderList(clientId: \$clientId, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      name
-      domain
-      image
-      appSecret
-      appId
-      clientId
-      description
-      isDeleted
+    customSMSProvider {
       enabled
-      when
-      SPMetadata
-      attributeNameFormat
-      customAttributes
-      emailDomainTransformation
-      authnContextClassRef
-      IdPMetadata
-      assertionConsumerUrl
-      bindings
-      nameIds
-      attributes
-      enableSignRes
-      resSignAlgorithm
-      resAbstractAlgorithm
-      resSignPublicKey
-      resSignPrivateKey
-      resSignPrivateKeyPass
-      enableSignReq
-      reqSignPublicKey
-      enableEncryptRes
-      resEncryptPublicKey
-      css
+      provider
     }
   }
 }
@@ -26743,2205 +13072,16 @@ EOF;
 }
 
 
-class GetSamlServiceProviderInfoResponse
+class AccessTokenResponse
 {
 
     /**
-     * @var SAMLServiceProviderClient
+     * @var AccessTokenRes
      */
-    public $GetSAMLServiceProviderInfo;
+    public $accessToken;
 }
 
-class GetSamlServiceProviderInfoParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetSamlServiceProviderInfoDocument,
-            "operationName" => "GetSAMLServiceProviderInfo",
-            "variables" => $this
-        ];
-    }
-
-    const GetSamlServiceProviderInfoDocument = <<<EOF
-query GetSAMLServiceProviderInfo(\$appId: String!) {
-  GetSAMLServiceProviderInfo(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class GetSamlServiceProviderListResponse
-{
-
-    /**
-     * @var SAMLServiceProviderAppPagedList
-     */
-    public $GetSAMLServiceProviderList;
-}
-
-class GetSamlServiceProviderListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetSamlServiceProviderListDocument,
-            "operationName" => "GetSAMLServiceProviderList",
-            "variables" => $this
-        ];
-    }
-
-    const GetSamlServiceProviderListDocument = <<<EOF
-query GetSAMLServiceProviderList(\$clientId: String, \$page: Int, \$count: Int) {
-  GetSAMLServiceProviderList(clientId: \$clientId, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      name
-      domain
-      image
-      appSecret
-      defaultIdPMapId
-      appId
-      clientId
-      description
-      isDeleted
-      enabled
-      when
-      SPMetadata
-      IdPMetadata
-      IdPEntityID
-      redirectUrl
-      loginUrl
-      logoutUrl
-      nameId
-      enableSignRes
-      resSignPublicKey
-      hasResEncrypted
-      resEncryptAlgorithm
-      resAbstractAlgorithm
-      resDecryptPrivateKey
-      resDecryptPrivateKeyPass
-      resEncryptPublicKey
-      enableSignReq
-      reqSignAlgorithm
-      reqAbstractAlgorithm
-      reqSignPrivateKey
-      reqSignPrivateKeyPass
-      reqSignPublicKey
-      SPUrl
-    }
-  }
-}
-EOF;
-}
-
-
-class GetUserAuthorizedAppsResponse
-{
-
-    /**
-     * @var UserAuthorizedAppPagedList
-     */
-    public $GetUserAuthorizedApps;
-}
-
-class GetUserAuthorizedAppsParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetUserAuthorizedAppsDocument,
-            "operationName" => "GetUserAuthorizedApps",
-            "variables" => $this
-        ];
-    }
-
-    const GetUserAuthorizedAppsDocument = <<<EOF
-query GetUserAuthorizedApps(\$clientId: String, \$userId: String, \$page: Int, \$count: Int) {
-  GetUserAuthorizedApps(clientId: \$clientId, userId: \$userId, page: \$page, count: \$count) {
-    totalCount
-    OAuthApps {
-      _id
-      name
-      domain
-      image
-      redirectUris
-      appSecret
-      client_id
-      clientId
-      grants
-      description
-      homepageURL
-      isDeleted
-      when
-      css
-      loginUrl
-      casExpire
-    }
-    OIDCApps {
-      _id
-      name
-      domain
-      image
-      redirect_uris
-      client_id
-      client_secret
-      token_endpoint_auth_method
-      id_token_signed_response_alg
-      id_token_encrypted_response_alg
-      id_token_encrypted_response_enc
-      userinfo_signed_response_alg
-      userinfo_encrypted_response_alg
-      userinfo_encrypted_response_enc
-      request_object_signing_alg
-      request_object_encryption_alg
-      request_object_encryption_enc
-      jwks_uri
-      _jwks_uri
-      custom_jwks
-      jwks
-      _jwks
-      clientId
-      grant_types
-      response_types
-      description
-      homepageURL
-      isDeleted
-      isDefault
-      when
-      css
-      authorization_code_expire
-      id_token_expire
-      access_token_expire
-      cas_expire
-      loginUrl
-    }
-  }
-}
-EOF;
-}
-
-
-class PreviewEmailByTypeResponse
-{
-
-    /**
-     * @var string
-     */
-    public $PreviewEmailByType;
-}
-
-class PreviewEmailByTypeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $meta_data;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::PreviewEmailByTypeDocument,
-            "operationName" => "PreviewEmailByType",
-            "variables" => $this
-        ];
-    }
-
-    const PreviewEmailByTypeDocument = <<<EOF
-query PreviewEmailByType(\$type: String!, \$client: String!, \$meta_data: String) {
-  PreviewEmailByType(type: \$type, client: \$client, meta_data: \$meta_data)
-}
-EOF;
-}
-
-
-class QueryAppInfoByAppIdResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $QueryAppInfoByAppID;
-}
-
-class QueryAppInfoByAppIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $responseType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $redirectUrl;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryAppInfoByAppIdDocument,
-            "operationName" => "QueryAppInfoByAppID",
-            "variables" => $this
-        ];
-    }
-
-    const QueryAppInfoByAppIdDocument = <<<EOF
-query QueryAppInfoByAppID(\$appId: String, \$responseType: String, \$redirectUrl: String) {
-  QueryAppInfoByAppID(appId: \$appId, responseType: \$responseType, redirectUrl: \$redirectUrl) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class QueryAppInfoByDomainResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $QueryAppInfoByDomain;
-}
-
-class QueryAppInfoByDomainParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryAppInfoByDomainDocument,
-            "operationName" => "QueryAppInfoByDomain",
-            "variables" => $this
-        ];
-    }
-
-    const QueryAppInfoByDomainDocument = <<<EOF
-query QueryAppInfoByDomain(\$domain: String) {
-  QueryAppInfoByDomain(domain: \$domain) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class QueryClientHasLdapConfigsResponse
-{
-
-    /**
-     * @var ClientHasLDAPConfigs
-     */
-    public $QueryClientHasLDAPConfigs;
-}
-
-class QueryClientHasLdapConfigsParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryClientHasLdapConfigsDocument,
-            "operationName" => "QueryClientHasLDAPConfigs",
-            "variables" => $this
-        ];
-    }
-
-    const QueryClientHasLdapConfigsDocument = <<<EOF
-query QueryClientHasLDAPConfigs(\$clientId: String) {
-  QueryClientHasLDAPConfigs(clientId: \$clientId) {
-    result
-  }
-}
-EOF;
-}
-
-
-class QueryClientIdByAppIdResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $QueryClientIdByAppId;
-}
-
-class QueryClientIdByAppIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryClientIdByAppIdDocument,
-            "operationName" => "QueryClientIdByAppId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryClientIdByAppIdDocument = <<<EOF
-query QueryClientIdByAppId(\$appId: String) {
-  QueryClientIdByAppId(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
-    description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class QueryDefaultSamlIdentityProviderSettingsListResponse
-{
-
-    /**
-     * @var SAMLDefaultIdentityProviderSettingsList
-     */
-    public $QueryDefaultSAMLIdentityProviderSettingsList;
-}
-
-class QueryDefaultSamlIdentityProviderSettingsListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryDefaultSamlIdentityProviderSettingsListDocument,
-            "operationName" => "QueryDefaultSAMLIdentityProviderSettingsList",
-            "variables" => $this
-        ];
-    }
-
-    const QueryDefaultSamlIdentityProviderSettingsListDocument = <<<EOF
-query QueryDefaultSAMLIdentityProviderSettingsList(\$page: Int, \$count: Int) {
-  QueryDefaultSAMLIdentityProviderSettingsList(page: \$page, count: \$count) {
-    list {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class QueryLdapServerListResponse
-{
-
-    /**
-     * @var LDAPServerList
-     */
-    public $QueryLDAPServerList;
-}
-
-class QueryLdapServerListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryLdapServerListDocument,
-            "operationName" => "QueryLDAPServerList",
-            "variables" => $this
-        ];
-    }
-
-    const QueryLdapServerListDocument = <<<EOF
-query QueryLDAPServerList(\$clientId: String!, \$page: Int, \$count: Int) {
-  QueryLDAPServerList(clientId: \$clientId, page: \$page, count: \$count) {
-    list {
-      _id
-      name
-      clientId
-      userId
-      ldapLink
-      baseDN
-      searchStandard
-      emailPostfix
-      username
-      password
-      description
-      enabled
-      isDeleted
-      createdAt
-      updatedAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class QueryOidcAppInfoByAppIdResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $QueryOIDCAppInfoByAppID;
-}
-
-class QueryOidcAppInfoByAppIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $responseType;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $redirectUrl;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryOidcAppInfoByAppIdDocument,
-            "operationName" => "QueryOIDCAppInfoByAppID",
-            "variables" => $this
-        ];
-    }
-
-    const QueryOidcAppInfoByAppIdDocument = <<<EOF
-query QueryOIDCAppInfoByAppID(\$appId: String, \$responseType: String, \$redirectUrl: String) {
-  QueryOIDCAppInfoByAppID(appId: \$appId, responseType: \$responseType, redirectUrl: \$redirectUrl) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryOidcAppInfoByDomainResponse
-{
-
-    /**
-     * @var OIDCProviderClient
-     */
-    public $QueryOIDCAppInfoByDomain;
-}
-
-class QueryOidcAppInfoByDomainParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryOidcAppInfoByDomainDocument,
-            "operationName" => "QueryOIDCAppInfoByDomain",
-            "variables" => $this
-        ];
-    }
-
-    const QueryOidcAppInfoByDomainDocument = <<<EOF
-query QueryOIDCAppInfoByDomain(\$domain: String) {
-  QueryOIDCAppInfoByDomain(domain: \$domain) {
-    _id
-    name
-    domain
-    image
-    redirect_uris
-    client_id
-    client_secret
-    token_endpoint_auth_method
-    id_token_signed_response_alg
-    id_token_encrypted_response_alg
-    id_token_encrypted_response_enc
-    userinfo_signed_response_alg
-    userinfo_encrypted_response_alg
-    userinfo_encrypted_response_enc
-    request_object_signing_alg
-    request_object_encryption_alg
-    request_object_encryption_enc
-    jwks_uri
-    _jwks_uri
-    custom_jwks
-    jwks
-    _jwks
-    clientId
-    grant_types
-    response_types
-    description
-    homepageURL
-    isDeleted
-    isDefault
-    when
-    css
-    authorization_code_expire
-    id_token_expire
-    access_token_expire
-    cas_expire
-    loginUrl
-    customStyles {
-      forceLogin
-      hideQRCode
-      hideUP
-      hideUsername
-      hideRegister
-      hidePhone
-      hideSocial
-      hideClose
-      hidePhonePassword
-      defaultLoginMethod
-    }
-  }
-}
-EOF;
-}
-
-
-class QuerySamlIdentityProviderInfoByAppIdResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $QuerySAMLIdentityProviderInfoByAppID;
-}
-
-class QuerySamlIdentityProviderInfoByAppIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySamlIdentityProviderInfoByAppIdDocument,
-            "operationName" => "QuerySAMLIdentityProviderInfoByAppID",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySamlIdentityProviderInfoByAppIdDocument = <<<EOF
-query QuerySAMLIdentityProviderInfoByAppID(\$appId: String) {
-  QuerySAMLIdentityProviderInfoByAppID(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class QuerySamlIdentityProviderInfoByDomainResponse
-{
-
-    /**
-     * @var SAMLIdentityProviderClient
-     */
-    public $QuerySAMLIdentityProviderInfoByDomain;
-}
-
-class QuerySamlIdentityProviderInfoByDomainParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySamlIdentityProviderInfoByDomainDocument,
-            "operationName" => "QuerySAMLIdentityProviderInfoByDomain",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySamlIdentityProviderInfoByDomainDocument = <<<EOF
-query QuerySAMLIdentityProviderInfoByDomain(\$domain: String) {
-  QuerySAMLIdentityProviderInfoByDomain(domain: \$domain) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    attributeNameFormat
-    customAttributes
-    emailDomainTransformation
-    authnContextClassRef
-    IdPMetadata
-    assertionConsumerUrl
-    bindings
-    nameIds
-    attributes
-    enableSignRes
-    resSignAlgorithm
-    resAbstractAlgorithm
-    resSignPublicKey
-    resSignPrivateKey
-    resSignPrivateKeyPass
-    enableSignReq
-    reqSignPublicKey
-    enableEncryptRes
-    resEncryptPublicKey
-    css
-  }
-}
-EOF;
-}
-
-
-class QuerySamlServiceProviderInfoByAppIdResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $QuerySAMLServiceProviderInfoByAppID;
-}
-
-class QuerySamlServiceProviderInfoByAppIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySamlServiceProviderInfoByAppIdDocument,
-            "operationName" => "QuerySAMLServiceProviderInfoByAppID",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySamlServiceProviderInfoByAppIdDocument = <<<EOF
-query QuerySAMLServiceProviderInfoByAppID(\$appId: String!) {
-  QuerySAMLServiceProviderInfoByAppID(appId: \$appId) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class QuerySamlServiceProviderInfoByDomainResponse
-{
-
-    /**
-     * @var SAMLServiceProviderClient
-     */
-    public $QuerySAMLServiceProviderInfoByDomain;
-}
-
-class QuerySamlServiceProviderInfoByDomainParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domain;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySamlServiceProviderInfoByDomainDocument,
-            "operationName" => "QuerySAMLServiceProviderInfoByDomain",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySamlServiceProviderInfoByDomainDocument = <<<EOF
-query QuerySAMLServiceProviderInfoByDomain(\$domain: String!) {
-  QuerySAMLServiceProviderInfoByDomain(domain: \$domain) {
-    _id
-    name
-    domain
-    image
-    appSecret
-    defaultIdPMap {
-      _id
-      name
-      image
-      description
-      isDeleted
-    }
-    defaultIdPMapId
-    appId
-    clientId
-    description
-    isDeleted
-    enabled
-    when
-    SPMetadata
-    IdPMetadata
-    IdPEntityID
-    assertionConsumeService {
-      binding
-      url
-      isDefault
-    }
-    mappings {
-      username
-      nickname
-      photo
-      company
-      providerName
-      email
-    }
-    redirectUrl
-    loginUrl
-    logoutUrl
-    nameId
-    enableSignRes
-    resSignPublicKey
-    hasResEncrypted
-    resEncryptAlgorithm
-    resAbstractAlgorithm
-    resDecryptPrivateKey
-    resDecryptPrivateKeyPass
-    resEncryptPublicKey
-    enableSignReq
-    reqSignAlgorithm
-    reqAbstractAlgorithm
-    reqSignPrivateKey
-    reqSignPrivateKeyPass
-    reqSignPublicKey
-    SPUrl
-  }
-}
-EOF;
-}
-
-
-class ReadEmailProviderResponse
-{
-
-    /**
-     * @var EmailProviderList[]
-     */
-    public $ReadEmailProvider;
-}
-
-class ReadEmailProviderParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailProviderDocument,
-            "operationName" => "ReadEmailProvider",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailProviderDocument = <<<EOF
-query ReadEmailProvider(\$clientId: String) {
-  ReadEmailProvider(clientId: \$clientId) {
-    _id
-    name
-    image
-    description
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    client
-    user
-    status
-    provider {
-      _id
-      name
-      image
-      description
-      client
-      user
-      status
-    }
-  }
-}
-EOF;
-}
-
-
-class ReadEmailProviderByClientAndNameResponse
-{
-
-    /**
-     * @var EmailProviderWithClientList[]
-     */
-    public $ReadEmailProviderByClientAndName;
-}
-
-class ReadEmailProviderByClientAndNameParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailProviderByClientAndNameDocument,
-            "operationName" => "ReadEmailProviderByClientAndName",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailProviderByClientAndNameDocument = <<<EOF
-query ReadEmailProviderByClientAndName(\$clientId: String) {
-  ReadEmailProviderByClientAndName(clientId: \$clientId) {
-    _id
-    user
-    client
-    status
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    provider {
-      _id
-      name
-      image
-      description
-    }
-  }
-}
-EOF;
-}
-
-
-class ReadEmailProviderWithClientResponse
-{
-
-    /**
-     * @var EmailProviderWithClientList[]
-     */
-    public $ReadEmailProviderWithClient;
-}
-
-class ReadEmailProviderWithClientParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailProviderWithClientDocument,
-            "operationName" => "ReadEmailProviderWithClient",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailProviderWithClientDocument = <<<EOF
-query ReadEmailProviderWithClient {
-  ReadEmailProviderWithClient {
-    _id
-    user
-    client
-    status
-    fields {
-      label
-      type
-      placeholder
-      help
-      value
-      options
-    }
-    provider {
-      _id
-      name
-      image
-      description
-    }
-  }
-}
-EOF;
-}
-
-
-class ReadEmailSentListResponse
-{
-
-    /**
-     * @var Email
-     */
-    public $ReadEmailSentList;
-}
-
-class ReadEmailSentListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $sortBy;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailSentListDocument,
-            "operationName" => "ReadEmailSentList",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailSentListDocument = <<<EOF
-query ReadEmailSentList(\$page: Int, \$count: Int, \$sortBy: String) {
-  ReadEmailSentList(page: \$page, count: \$count, sortBy: \$sortBy) {
-    list {
-      _id
-      subject
-      content
-      sender
-      receivers
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class ReadEmailSentListByClientResponse
-{
-
-    /**
-     * @var EmailListPaged
-     */
-    public $ReadEmailSentListByClient;
-}
-
-class ReadEmailSentListByClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailSentListByClientDocument,
-            "operationName" => "ReadEmailSentListByClient",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailSentListByClientDocument = <<<EOF
-query ReadEmailSentListByClient(\$client: String!, \$page: Int, \$count: Int) {
-  ReadEmailSentListByClient(client: \$client, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      user
-      subject
-      content
-      sender
-      receivers
-      post
-      createdAt
-      rejected
-      isDeleted
-      client
-    }
-  }
-}
-EOF;
-}
-
-
-class ReadEmailTemplateByClientAndTypeResponse
-{
-
-    /**
-     * @var EmailTemplate
-     */
-    public $ReadEmailTemplateByClientAndType;
-}
-
-class ReadEmailTemplateByClientAndTypeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailTemplateByClientAndTypeDocument,
-            "operationName" => "ReadEmailTemplateByClientAndType",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailTemplateByClientAndTypeDocument = <<<EOF
-query ReadEmailTemplateByClientAndType(\$type: String!, \$client: String!) {
-  ReadEmailTemplateByClientAndType(type: \$type, client: \$client) {
-    _id
-    type
-    sender
-    object
-    hasURL
-    URLExpireTime
-    status
-    redirectTo
-    content
-  }
-}
-EOF;
-}
-
-
-class ReadEmailTemplatesByClientResponse
-{
-
-    /**
-     * @var EmailTemplateWithClient[]
-     */
-    public $ReadEmailTemplatesByClient;
-}
-
-class ReadEmailTemplatesByClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailTemplatesByClientDocument,
-            "operationName" => "ReadEmailTemplatesByClient",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailTemplatesByClientDocument = <<<EOF
-query ReadEmailTemplatesByClient(\$clientId: String!) {
-  ReadEmailTemplatesByClient(clientId: \$clientId) {
-    _id
-    user
-    client
-    template {
-      _id
-      type
-      sender
-      object
-      hasURL
-      URLExpireTime
-      status
-      redirectTo
-      content
-    }
-    type
-    sender
-    object
-    hasURL
-    URLExpireTime
-    redirectTo
-    status
-    content
-  }
-}
-EOF;
-}
-
-
-class ReadEmailTemplatesBySystemResponse
-{
-
-    /**
-     * @var EmailTemplateWithClient[]
-     */
-    public $ReadEmailTemplatesBySystem;
-}
-
-class ReadEmailTemplatesBySystemParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadEmailTemplatesBySystemDocument,
-            "operationName" => "ReadEmailTemplatesBySystem",
-            "variables" => $this
-        ];
-    }
-
-    const ReadEmailTemplatesBySystemDocument = <<<EOF
-query ReadEmailTemplatesBySystem {
-  ReadEmailTemplatesBySystem {
-    _id
-    user
-    client
-    template {
-      _id
-      type
-      sender
-      object
-      hasURL
-      URLExpireTime
-      status
-      redirectTo
-      content
-    }
-    type
-    sender
-    object
-    hasURL
-    URLExpireTime
-    redirectTo
-    status
-    content
-  }
-}
-EOF;
-}
-
-
-class ReadOauthListResponse
-{
-
-    /**
-     * @var OAuthList[]
-     */
-    public $ReadOauthList;
-}
-
-class ReadOauthListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $dontGetURL;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $useGuard;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadOauthListDocument,
-            "operationName" => "ReadOauthList",
-            "variables" => $this
-        ];
-    }
-
-    const ReadOauthListDocument = <<<EOF
-query ReadOauthList(\$clientId: String, \$dontGetURL: Boolean, \$useGuard: Boolean) {
-  ReadOauthList(clientId: \$clientId, dontGetURL: \$dontGetURL, useGuard: \$useGuard) {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class ReadOrdersResponse
-{
-
-    /**
-     * @var PagedOrders
-     */
-    public $ReadOrders;
-}
-
-class ReadOrdersParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadOrdersDocument,
-            "operationName" => "ReadOrders",
-            "variables" => $this
-        ];
-    }
-
-    const ReadOrdersDocument = <<<EOF
-query ReadOrders(\$user: String, \$page: Int, \$count: Int) {
-  ReadOrders(user: \$user, page: \$page, count: \$count) {
-    list {
-      _id
-      client
-      user
-      timeOfPurchase
-      flowNumber
-      price
-      createdAt
-      completed
-      payMethod
-      endAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class ReadSamlspListResponse
-{
-
-    /**
-     * @var SAMLSPListItem[]
-     */
-    public $ReadSAMLSPList;
-}
-
-class ReadSamlspListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadSamlspListDocument,
-            "operationName" => "ReadSAMLSPList",
-            "variables" => $this
-        ];
-    }
-
-    const ReadSamlspListDocument = <<<EOF
-query ReadSAMLSPList(\$clientId: String!) {
-  ReadSAMLSPList(clientId: \$clientId) {
-    providerName
-    url
-    logo
-  }
-}
-EOF;
-}
-
-
-class ReadSystemPricingResponse
-{
-
-    /**
-     * @var PricingList[]
-     */
-    public $ReadSystemPricing;
-}
-
-class ReadSystemPricingParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadSystemPricingDocument,
-            "operationName" => "ReadSystemPricing",
-            "variables" => $this
-        ];
-    }
-
-    const ReadSystemPricingDocument = <<<EOF
-query ReadSystemPricing {
-  ReadSystemPricing {
-    _id
-    type
-    startNumber
-    freeNumber
-    startPrice
-    maxNumber
-    d
-    features
-  }
-}
-EOF;
-}
-
-
-class ReadUserPricingResponse
-{
-
-    /**
-     * @var UserPricingType
-     */
-    public $ReadUserPricing;
-}
-
-class ReadUserPricingParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ReadUserPricingDocument,
-            "operationName" => "ReadUserPricing",
-            "variables" => $this
-        ];
-    }
-
-    const ReadUserPricingDocument = <<<EOF
-query ReadUserPricing(\$userId: String, \$clientId: String) {
-  ReadUserPricing(userId: \$userId, clientId: \$clientId) {
-    user
-    client
-    isFree
-    pricing {
-      number
-    }
-    freeNumber
-  }
-}
-EOF;
-}
-
-
-class TestLdapServerResponse
-{
-
-    /**
-     * @var LDAPServerTesterType
-     */
-    public $TestLDAPServer;
-}
-
-class TestLdapServerParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapLink;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $baseDN;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $searchStandard;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $emailPostfix;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::TestLdapServerDocument,
-            "operationName" => "TestLDAPServer",
-            "variables" => $this
-        ];
-    }
-
-    const TestLdapServerDocument = <<<EOF
-query TestLDAPServer(\$name: String!, \$clientId: String!, \$userId: String!, \$ldapLink: String!, \$baseDN: String!, \$searchStandard: String!, \$username: String!, \$password: String!, \$emailPostfix: String, \$description: String, \$enabled: Boolean) {
-  TestLDAPServer(name: \$name, clientId: \$clientId, userId: \$userId, ldapLink: \$ldapLink, baseDN: \$baseDN, searchStandard: \$searchStandard, username: \$username, password: \$password, emailPostfix: \$emailPostfix, description: \$description, enabled: \$enabled) {
-    result
-  }
-}
-EOF;
-}
-
-
-class TestLdapUserResponse
-{
-
-    /**
-     * @var LDAPUserTesterType
-     */
-    public $TestLDAPUser;
-}
-
-class TestLdapUserParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $testUsername;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $testPassword;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $name;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $ldapLink;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $baseDN;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $searchStandard;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $username;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $emailPostfix;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $description;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $enabled;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::TestLdapUserDocument,
-            "operationName" => "TestLDAPUser",
-            "variables" => $this
-        ];
-    }
-
-    const TestLdapUserDocument = <<<EOF
-query TestLDAPUser(\$testUsername: String!, \$testPassword: String!, \$name: String!, \$clientId: String!, \$userId: String!, \$ldapLink: String!, \$baseDN: String!, \$searchStandard: String!, \$username: String!, \$password: String!, \$emailPostfix: String, \$description: String, \$enabled: Boolean) {
-  TestLDAPUser(testUsername: \$testUsername, testPassword: \$testPassword, name: \$name, clientId: \$clientId, userId: \$userId, ldapLink: \$ldapLink, baseDN: \$baseDN, searchStandard: \$searchStandard, username: \$username, password: \$password, emailPostfix: \$emailPostfix, description: \$description, enabled: \$enabled) {
-    result
-  }
-}
-EOF;
-}
-
-
-class AdConnectorByProviderResponse
-{
-
-    /**
-     * @var ADConnctorCommonInfo
-     */
-    public $adConnectorByProvider;
-}
-
-class AdConnectorByProviderParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $providerId;
-
-    /**
-     * Required
-     *
-     * @var ProviderType
-     */
-    public $providerType;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AdConnectorByProviderDocument,
-            "operationName" => "adConnectorByProvider",
-            "variables" => $this
-        ];
-    }
-
-    const AdConnectorByProviderDocument = <<<EOF
-query adConnectorByProvider(\$providerId: String!, \$providerType: providerType!) {
-  adConnectorByProvider(providerId: \$providerId, providerType: \$providerType) {
-    _id
-    name
-    logo
-    status
-  }
-}
-EOF;
-}
-
-
-class AdConnectorListResponse
-{
-
-    /**
-     * @var ADConnector[]
-     */
-    public $adConnectorList;
-}
-
-class AdConnectorListParam
+class AccessTokenParam
 {
 
     /**
@@ -28952,159 +13092,37 @@ class AdConnectorListParam
     public $userPoolId;
 
     /**
-     * Optional
-     *
-     * @var ProviderType
-     */
-    public $providerType;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AdConnectorListDocument,
-            "operationName" => "adConnectorList",
-            "variables" => $this
-        ];
-    }
-
-    const AdConnectorListDocument = <<<EOF
-query adConnectorList(\$userPoolId: String!, \$providerType: providerType) {
-  adConnectorList(userPoolId: \$userPoolId, providerType: \$providerType) {
-    _id
-    name
-    secret
-    salt
-    logo
-    enabled
-    userPoolId
-    status
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class BindedOAuthListResponse
-{
-
-    /**
-     * @var UserOAuthBind[]
-     */
-    public $bindedOAuthList;
-}
-
-class BindedOAuthListParam
-{
-
-    /**
      * Required
      *
      * @var string
      */
-    public $client;
+    public $secret;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $userPoolId string
+     * @param $secret string
      */
-    public $user;
+    public function __construct($userPoolId, $secret)
+    {
+        $this->userPoolId = $userPoolId;
+        $this->secret = $secret;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::BindedOAuthListDocument,
-            "operationName" => "bindedOAuthList",
+            "query" => self::AccessTokenDocument,
+            "operationName" => "accessToken",
             "variables" => $this
         ];
     }
 
-    const BindedOAuthListDocument = <<<EOF
-query bindedOAuthList(\$client: String!, \$user: String) {
-  bindedOAuthList(client: \$client, user: \$user) {
-    _id
-    user
-    client
-    type
-    unionid
-    userInfo
-    createdAt
-  }
-}
-EOF;
-}
-
-
-class CheckAdConnectorStatusResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $checkAdConnectorStatus;
-}
-
-class CheckAdConnectorStatusParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $adConnectorId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CheckAdConnectorStatusDocument,
-            "operationName" => "checkAdConnectorStatus",
-            "variables" => $this
-        ];
-    }
-
-    const CheckAdConnectorStatusDocument = <<<EOF
-query checkAdConnectorStatus(\$adConnectorId: String!) {
-  checkAdConnectorStatus(adConnectorId: \$adConnectorId)
-}
-EOF;
-}
-
-
-class CheckIsReservedDomainResponse
-{
-
-    /**
-     * @var IsReservedDomain
-     */
-    public $checkIsReservedDomain;
-}
-
-class CheckIsReservedDomainParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $domainValue;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CheckIsReservedDomainDocument,
-            "operationName" => "checkIsReservedDomain",
-            "variables" => $this
-        ];
-    }
-
-    const CheckIsReservedDomainDocument = <<<EOF
-query checkIsReservedDomain(\$domainValue: String!) {
-  checkIsReservedDomain(domainValue: \$domainValue) {
-    domainValue
-    isReserved
+    const AccessTokenDocument = <<<EOF
+query accessToken(\$userPoolId: String!, \$secret: String!) {
+  accessToken(userPoolId: \$userPoolId, secret: \$secret) {
+    accessToken
+    exp
+    iat
   }
 }
 EOF;
@@ -29115,7 +13133,7 @@ class CheckLoginStatusResponse
 {
 
     /**
-     * @var JWTDecodedDataCheckLogin
+     * @var JWTTokenStatus
      */
     public $checkLoginStatus;
 }
@@ -29130,6 +13148,21 @@ class CheckLoginStatusParam
      */
     public $token;
 
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $token string
+     * @return CheckLoginStatusParam
+     */
+    public function withToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
     function createRequest()
     {
         return [
@@ -29142,350 +13175,32 @@ class CheckLoginStatusParam
     const CheckLoginStatusDocument = <<<EOF
 query checkLoginStatus(\$token: String) {
   checkLoginStatus(token: \$token) {
-    message
     code
-    status
-    token {
-      iat
-      exp
-    }
-  }
-}
-EOF;
-}
-
-
-class CheckPhoneCodeResponse
-{
-
-    /**
-     * @var CommonMessage
-     */
-    public $checkPhoneCode;
-}
-
-class CheckPhoneCodeParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $phoneCode;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::CheckPhoneCodeDocument,
-            "operationName" => "checkPhoneCode",
-            "variables" => $this
-        ];
-    }
-
-    const CheckPhoneCodeDocument = <<<EOF
-query checkPhoneCode(\$userPoolId: String!, \$phone: String!, \$phoneCode: String!) {
-  checkPhoneCode(userPoolId: \$userPoolId, phone: \$phone, phoneCode: \$phoneCode) {
     message
-    code
     status
-  }
-}
-EOF;
-}
-
-
-class ClientResponse
-{
-
-    /**
-     * @var UserClient
-     */
-    public $client;
-}
-
-class ClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $id;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $fromAdmin;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ClientDocument,
-            "operationName" => "client",
-            "variables" => $this
-        ];
-    }
-
-    const ClientDocument = <<<EOF
-query client(\$id: String!, \$userId: String, \$fromAdmin: Boolean) {
-  client(id: \$id, userId: \$userId, fromAdmin: \$fromAdmin) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
-    createdAt
-    isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
-  }
-}
-EOF;
-}
-
-
-class ClientRolesResponse
-{
-
-    /**
-     * @var PagedRoles
-     */
-    public $clientRoles;
-}
-
-class ClientRolesParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ClientRolesDocument,
-            "operationName" => "clientRoles",
-            "variables" => $this
-        ];
-    }
-
-    const ClientRolesDocument = <<<EOF
-query clientRoles(\$client: String!, \$page: Int, \$count: Int) {
-  clientRoles(client: \$client, page: \$page, count: \$count) {
-    list {
-      _id
-      name
-      descriptions
-      client
-      permissions
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class DecodeJwtTokenResponse
-{
-
-    /**
-     * @var JwtDecodedData
-     */
-    public $decodeJwtToken;
-}
-
-class DecodeJwtTokenParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $token;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::DecodeJwtTokenDocument,
-            "operationName" => "decodeJwtToken",
-            "variables" => $this
-        ];
-    }
-
-    const DecodeJwtTokenDocument = <<<EOF
-query decodeJwtToken(\$token: String) {
-  decodeJwtToken(token: \$token) {
-    data {
-      email
-      id
-      clientId
-      unionid
-    }
-    status {
-      message
-      code
-      status
-    }
-    iat
     exp
+    iat
+    data {
+      id
+      userPoolId
+      arn
+    }
   }
 }
 EOF;
 }
 
 
-class EmailDomainTopNListResponse
+class CheckPasswordStrengthResponse
 {
 
     /**
-     * @var LoginTopEmailList[]
+     * @var CheckPasswordStrengthResult
      */
-    public $emailDomainTopNList;
+    public $checkPasswordStrength;
 }
 
-class EmailDomainTopNListParam
+class CheckPasswordStrengthParam
 {
 
     /**
@@ -29493,153 +13208,46 @@ class EmailDomainTopNListParam
      *
      * @var string
      */
-    public $userPoolId;
+    public $password;
+
+    /**
+     * @param $password string
+     */
+    public function __construct($password)
+    {
+        $this->password = $password;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::EmailDomainTopNListDocument,
-            "operationName" => "emailDomainTopNList",
+            "query" => self::CheckPasswordStrengthDocument,
+            "operationName" => "checkPasswordStrength",
             "variables" => $this
         ];
     }
 
-    const EmailDomainTopNListDocument = <<<EOF
-query emailDomainTopNList(\$userPoolId: String!) {
-  emailDomainTopNList(userPoolId: \$userPoolId) {
-    domain
-    count
+    const CheckPasswordStrengthDocument = <<<EOF
+query checkPasswordStrength(\$password: String!) {
+  checkPasswordStrength(password: \$password) {
+    valid
+    message
   }
 }
 EOF;
 }
 
 
-class FindClientsByIdArrayResponse
+class ChildrenNodesResponse
 {
 
     /**
-     * @var PagedUserClientList
+     * @var Node[]
      */
-    public $findClientsByIdArray;
+    public $childrenNodes;
 }
 
-class FindClientsByIdArrayParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientsId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::FindClientsByIdArrayDocument,
-            "operationName" => "findClientsByIdArray",
-            "variables" => $this
-        ];
-    }
-
-    const FindClientsByIdArrayDocument = <<<EOF
-query findClientsByIdArray(\$clientsId: [String]) {
-  findClientsByIdArray(clientsId: \$clientsId) {
-    list {
-      _id
-      name
-      createdAt
-      usersCount
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class GetAccessTokenByAppSecretResponse
-{
-
-    /**
-     * @var string
-     */
-    public $getAccessTokenByAppSecret;
-}
-
-class GetAccessTokenByAppSecretParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $retUserId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $timestamp;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $signature;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $nonce;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetAccessTokenByAppSecretDocument,
-            "operationName" => "getAccessTokenByAppSecret",
-            "variables" => $this
-        ];
-    }
-
-    const GetAccessTokenByAppSecretDocument = <<<EOF
-query getAccessTokenByAppSecret(\$secret: String, \$clientId: String, \$retUserId: Boolean, \$timestamp: String, \$signature: String, \$nonce: Int) {
-  getAccessTokenByAppSecret(secret: \$secret, clientId: \$clientId, retUserId: \$retUserId, timestamp: \$timestamp, signature: \$signature, nonce: \$nonce)
-}
-EOF;
-}
-
-
-class GetAllWebhooksResponse
-{
-
-    /**
-     * @var ClientWebhook[]
-     */
-    public $getAllWebhooks;
-}
-
-class GetAllWebhooksParam
+class ChildrenNodesParam
 {
 
     /**
@@ -29647,931 +13255,107 @@ class GetAllWebhooksParam
      *
      * @var string
      */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetAllWebhooksDocument,
-            "operationName" => "getAllWebhooks",
-            "variables" => $this
-        ];
-    }
-
-    const GetAllWebhooksDocument = <<<EOF
-query getAllWebhooks(\$client: String!) {
-  getAllWebhooks(client: \$client) {
-    _id
-    client
-    events {
-      name
-      label
-      description
-    }
-    url
-    isLastTimeSuccess
-    contentType
-    secret
-    enable
-  }
-}
-EOF;
-}
-
-
-class GetAppSecretByClientIdResponse
-{
-
-    /**
-     * @var AppSecretByClientId
-     */
-    public $getAppSecretByClientId;
-}
-
-class GetAppSecretByClientIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetAppSecretByClientIdDocument,
-            "operationName" => "getAppSecretByClientId",
-            "variables" => $this
-        ];
-    }
-
-    const GetAppSecretByClientIdDocument = <<<EOF
-query getAppSecretByClientId(\$token: String, \$clientId: String) {
-  getAppSecretByClientId(token: \$token, clientId: \$clientId) {
-    secret
-    clientId
-  }
-}
-EOF;
-}
-
-
-class GetClientWhenSdkInitResponse
-{
-
-    /**
-     * @var ClientInfoAndAccessToken
-     */
-    public $getClientWhenSdkInit;
-}
-
-class GetClientWhenSdkInitParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $retUserId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $timestamp;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $signature;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $nonce;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetClientWhenSdkInitDocument,
-            "operationName" => "getClientWhenSdkInit",
-            "variables" => $this
-        ];
-    }
-
-    const GetClientWhenSdkInitDocument = <<<EOF
-query getClientWhenSdkInit(\$secret: String, \$clientId: String, \$retUserId: Boolean, \$timestamp: String, \$signature: String, \$nonce: Int) {
-  getClientWhenSdkInit(secret: \$secret, clientId: \$clientId, retUserId: \$retUserId, timestamp: \$timestamp, signature: \$signature, nonce: \$nonce) {
-    clientInfo {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    accessToken
-  }
-}
-EOF;
-}
-
-
-class GetCustomMfaResponse
-{
-
-    /**
-     * @var PagedCustomMFAList
-     */
-    public $getCustomMFA;
-}
-
-class GetCustomMfaParam
-{
+    public $orgId;
 
     /**
      * Required
      *
      * @var string
      */
-    public $userIdInMiniLogin;
+    public $nodeId;
 
     /**
-     * Optional
-     *
-     * @var int
+     * @param $orgId string
+     * @param $nodeId string
      */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
+    public function __construct($orgId, $nodeId)
+    {
+        $this->orgId = $orgId;
+        $this->nodeId = $nodeId;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::GetCustomMfaDocument,
-            "operationName" => "getCustomMFA",
+            "query" => self::ChildrenNodesDocument,
+            "operationName" => "childrenNodes",
             "variables" => $this
         ];
     }
 
-    const GetCustomMfaDocument = <<<EOF
-query getCustomMFA(\$userIdInMiniLogin: String!, \$page: Int, \$count: Int) {
-  getCustomMFA(userIdInMiniLogin: \$userIdInMiniLogin, page: \$page, count: \$count) {
-    list {
-      _id
-      userIdInMiniLogin
-      remark
-      name
-      secret
-    }
-    total
-  }
-}
-EOF;
-}
-
-
-class GetOAuthedAppInfoResponse
-{
-
-    /**
-     * @var OAuthProviderClient
-     */
-    public $getOAuthedAppInfo;
-}
-
-class GetOAuthedAppInfoParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetOAuthedAppInfoDocument,
-            "operationName" => "getOAuthedAppInfo",
-            "variables" => $this
-        ];
-    }
-
-    const GetOAuthedAppInfoDocument = <<<EOF
-query getOAuthedAppInfo(\$appId: String!) {
-  getOAuthedAppInfo(appId: \$appId) {
-    _id
+    const ChildrenNodesDocument = <<<EOF
+query childrenNodes(\$orgId: String!, \$nodeId: String!) {
+  childrenNodes(orgId: \$orgId, nodeId: \$nodeId) {
+    id
     name
-    domain
-    image
-    redirectUris
-    appSecret
-    client_id
-    clientId
-    grants
+    nameI18n
     description
-    homepageURL
-    isDeleted
-    when
-    css
-    loginUrl
-    casExpire
-  }
-}
-EOF;
-}
-
-
-class GetOAuthedAppListResponse
-{
-
-    /**
-     * @var OAuthAppPagedList
-     */
-    public $getOAuthedAppList;
-}
-
-class GetOAuthedAppListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetOAuthedAppListDocument,
-            "operationName" => "getOAuthedAppList",
-            "variables" => $this
-        ];
-    }
-
-    const GetOAuthedAppListDocument = <<<EOF
-query getOAuthedAppList(\$clientId: String, \$page: Int, \$count: Int) {
-  getOAuthedAppList(clientId: \$clientId, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      name
-      domain
-      image
-      redirectUris
-      appSecret
-      client_id
-      clientId
-      grants
-      description
-      homepageURL
-      isDeleted
-      when
-      css
-      loginUrl
-      casExpire
-    }
-  }
-}
-EOF;
-}
-
-
-class GetUserLoginAreaStatisticOfClientResponse
-{
-
-    /**
-     * @var string
-     */
-    public $getUserLoginAreaStatisticOfClient;
-}
-
-class GetUserLoginAreaStatisticOfClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPool;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $start;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $end;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetUserLoginAreaStatisticOfClientDocument,
-            "operationName" => "getUserLoginAreaStatisticOfClient",
-            "variables" => $this
-        ];
-    }
-
-    const GetUserLoginAreaStatisticOfClientDocument = <<<EOF
-query getUserLoginAreaStatisticOfClient(\$userPool: String!, \$start: String, \$end: String) {
-  getUserLoginAreaStatisticOfClient(userPool: \$userPool, start: \$start, end: \$end)
-}
-EOF;
-}
-
-
-class GetUserPoolSettingsResponse
-{
-
-    /**
-     * @var UserClient
-     */
-    public $getUserPoolSettings;
-}
-
-class GetUserPoolSettingsParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetUserPoolSettingsDocument,
-            "operationName" => "getUserPoolSettings",
-            "variables" => $this
-        ];
-    }
-
-    const GetUserPoolSettingsDocument = <<<EOF
-query getUserPoolSettings(\$userPoolId: String!) {
-  getUserPoolSettings(userPoolId: \$userPoolId) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
     createdAt
-    isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
+    updatedAt
+    children
   }
 }
 EOF;
 }
 
 
-class GetWebhookDetailResponse
+class EmailTemplatesResponse
 {
 
     /**
-     * @var ClientWebhook
+     * @var EmailTemplate[]
      */
-    public $getWebhookDetail;
+    public $emailTemplates;
 }
 
-class GetWebhookDetailParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetWebhookDetailDocument,
-            "operationName" => "getWebhookDetail",
-            "variables" => $this
-        ];
-    }
-
-    const GetWebhookDetailDocument = <<<EOF
-query getWebhookDetail(\$client: String!) {
-  getWebhookDetail(client: \$client) {
-    _id
-    client
-    events {
-      name
-      label
-      description
-    }
-    url
-    isLastTimeSuccess
-    contentType
-    secret
-    enable
-  }
-}
-EOF;
-}
-
-
-class GetWebhookLogDetailResponse
-{
-
-    /**
-     * @var WebhookLog
-     */
-    public $getWebhookLogDetail;
-}
-
-class GetWebhookLogDetailParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetWebhookLogDetailDocument,
-            "operationName" => "getWebhookLogDetail",
-            "variables" => $this
-        ];
-    }
-
-    const GetWebhookLogDetailDocument = <<<EOF
-query getWebhookLogDetail(\$id: String!) {
-  getWebhookLogDetail(id: \$id) {
-    _id
-    webhook
-    client
-    event
-    request {
-      headers
-      payload
-    }
-    response {
-      headers
-      body
-      statusCode
-    }
-    errorMessage
-    when
-  }
-}
-EOF;
-}
-
-
-class GetWebhookLogsResponse
-{
-
-    /**
-     * @var WebhookLog[]
-     */
-    public $getWebhookLogs;
-}
-
-class GetWebhookLogsParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $webhook;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::GetWebhookLogsDocument,
-            "operationName" => "getWebhookLogs",
-            "variables" => $this
-        ];
-    }
-
-    const GetWebhookLogsDocument = <<<EOF
-query getWebhookLogs(\$webhook: String!) {
-  getWebhookLogs(webhook: \$webhook) {
-    _id
-    webhook
-    client
-    event
-    request {
-      headers
-      payload
-    }
-    response {
-      headers
-      body
-      statusCode
-    }
-    errorMessage
-    when
-  }
-}
-EOF;
-}
-
-
-class GetWebhookSettingOptionsResponse
-{
-
-    /**
-     * @var WebhookSettingOptions
-     */
-    public $getWebhookSettingOptions;
-}
-
-class GetWebhookSettingOptionsParam
+class EmailTemplatesParam
 {
 
 
     function createRequest()
     {
         return [
-            "query" => self::GetWebhookSettingOptionsDocument,
-            "operationName" => "getWebhookSettingOptions",
+            "query" => self::EmailTemplatesDocument,
+            "operationName" => "emailTemplates",
             "variables" => $this
         ];
     }
 
-    const GetWebhookSettingOptionsDocument = <<<EOF
-query getWebhookSettingOptions {
-  getWebhookSettingOptions {
-    webhookEvents {
-      name
-      label
-      description
-    }
-    contentTypes {
-      name
-      label
-    }
-  }
-}
-EOF;
-}
-
-
-class InterConnectionsResponse
-{
-
-    /**
-     * @var InterConnection[]
-     */
-    public $interConnections;
-}
-
-class InterConnectionsParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::InterConnectionsDocument,
-            "operationName" => "interConnections",
-            "variables" => $this
-        ];
-    }
-
-    const InterConnectionsDocument = <<<EOF
-query interConnections(\$userPoolId: String!) {
-  interConnections(userPoolId: \$userPoolId) {
-    sourceUserId
-    sourceUserPoolId
-    targetUserId
-    targetUserPoolId
+    const EmailTemplatesDocument = <<<EOF
+query emailTemplates {
+  emailTemplates {
+    type
+    name
+    subject
+    sender
+    content
+    redirectTo
+    hasURL
+    expiresIn
     enabled
-    expiresdAt
+    isSystem
   }
 }
 EOF;
 }
 
 
-class IsAdConnectorAliveResponse
+class FindUserResponse
 {
 
     /**
-     * @var isAdConenctorAlive
+     * @var User
      */
-    public $isAdConnectorAlive;
+    public $findUser;
 }
 
-class IsAdConnectorAliveParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $adConnectorId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::IsAdConnectorAliveDocument,
-            "operationName" => "isAdConnectorAlive",
-            "variables" => $this
-        ];
-    }
-
-    const IsAdConnectorAliveDocument = <<<EOF
-query isAdConnectorAlive(\$adConnectorId: String) {
-  isAdConnectorAlive(adConnectorId: \$adConnectorId) {
-    isAlive
-  }
-}
-EOF;
-}
-
-
-class IsAppAuthorizedByUserResponse
-{
-
-    /**
-     * @var IsAppAuthorizedByUser
-     */
-    public $isAppAuthorizedByUser;
-}
-
-class IsAppAuthorizedByUserParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::IsAppAuthorizedByUserDocument,
-            "operationName" => "isAppAuthorizedByUser",
-            "variables" => $this
-        ];
-    }
-
-    const IsAppAuthorizedByUserDocument = <<<EOF
-query isAppAuthorizedByUser(\$userId: String, \$appId: String) {
-  isAppAuthorizedByUser(userId: \$userId, appId: \$appId) {
-    authorized
-  }
-}
-EOF;
-}
-
-
-class IsClientBelongToUserResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $isClientBelongToUser;
-}
-
-class IsClientBelongToUserParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var PermissionDescriptorsListInputType
-     */
-    public $permissionDescriptors;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::IsClientBelongToUserDocument,
-            "operationName" => "isClientBelongToUser",
-            "variables" => $this
-        ];
-    }
-
-    const IsClientBelongToUserDocument = <<<EOF
-query isClientBelongToUser(\$userId: String, \$clientId: String, \$permissionDescriptors: [PermissionDescriptorsListInputType]) {
-  isClientBelongToUser(userId: \$userId, clientId: \$clientId, permissionDescriptors: \$permissionDescriptors)
-}
-EOF;
-}
-
-
-class IsClientOfUserResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $isClientOfUser;
-}
-
-class IsClientOfUserParam
+class FindUserParam
 {
 
     /**
@@ -30586,27 +13370,797 @@ class IsClientOfUserParam
      *
      * @var string
      */
-    public $password;
+    public $phone;
 
     /**
      * Optional
      *
      * @var string
      */
-    public $clientId;
+    public $username;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $email string
+     * @return FindUserParam
+     */
+    public function withEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param $phone string
+     * @return FindUserParam
+     */
+    public function withPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @param $username string
+     * @return FindUserParam
+     */
+    public function withUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::IsClientOfUserDocument,
-            "operationName" => "isClientOfUser",
+            "query" => self::FindUserDocument,
+            "operationName" => "findUser",
             "variables" => $this
         ];
     }
 
-    const IsClientOfUserDocument = <<<EOF
-query isClientOfUser(\$email: String, \$password: String, \$clientId: String) {
-  isClientOfUser(email: \$email, password: \$password, clientId: \$clientId)
+    const FindUserDocument = <<<EOF
+query findUser(\$email: String, \$phone: String, \$username: String) {
+  findUser(email: \$email, phone: \$phone, username: \$username) {
+    id
+    arn
+    userPoolId
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class FunctionResponse
+{
+
+    /**
+     * @var Function
+     */
+    public $function;
+}
+
+class FunctionParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $id;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $id string
+     * @return FunctionParam
+     */
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::FunctionDocument,
+            "operationName" => "function",
+            "variables" => $this
+        ];
+    }
+
+    const FunctionDocument = <<<EOF
+query function(\$id: String) {
+  function(id: \$id) {
+    id
+    name
+    sourceCode
+    description
+    url
+  }
+}
+EOF;
+}
+
+
+class FunctionsResponse
+{
+
+    /**
+     * @var PaginatedFunctions
+     */
+    public $functions;
+}
+
+class FunctionsParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $page int
+     * @return FunctionsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return FunctionsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return FunctionsParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::FunctionsDocument,
+            "operationName" => "functions",
+            "variables" => $this
+        ];
+    }
+
+    const FunctionsDocument = <<<EOF
+query functions(\$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  functions(page: \$page, limit: \$limit, sortBy: \$sortBy) {
+    list {
+      id
+      name
+      sourceCode
+      description
+      url
+    }
+    totalCount
+  }
+}
+EOF;
+}
+
+
+class GetUserGroupsResponse
+{
+
+    /**
+     * @var User
+     */
+    public $getUserGroups;
+}
+
+class GetUserGroupsParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::GetUserGroupsDocument,
+            "operationName" => "getUserGroups",
+            "variables" => $this
+        ];
+    }
+
+    const GetUserGroupsDocument = <<<EOF
+query getUserGroups(\$id: String!) {
+  user(id: \$id) {
+    groups {
+      totalCount
+      list {
+        code
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
+EOF;
+}
+
+
+class GetUserRolesResponse
+{
+
+    /**
+     * @var User
+     */
+    public $getUserRoles;
+}
+
+class GetUserRolesParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::GetUserRolesDocument,
+            "operationName" => "getUserRoles",
+            "variables" => $this
+        ];
+    }
+
+    const GetUserRolesDocument = <<<EOF
+query getUserRoles(\$id: String!) {
+  user(id: \$id) {
+    roles {
+      totalCount
+      list {
+        code
+        arn
+        description
+        isSystem
+        createdAt
+        updatedAt
+        parent {
+          code
+          description
+          isSystem
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+}
+EOF;
+}
+
+
+class GroupResponse
+{
+
+    /**
+     * @var Group
+     */
+    public $group;
+}
+
+class GroupParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::GroupDocument,
+            "operationName" => "group",
+            "variables" => $this
+        ];
+    }
+
+    const GroupDocument = <<<EOF
+query group(\$code: String!) {
+  group(code: \$code) {
+    code
+    name
+    description
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class GroupWithUsersResponse
+{
+
+    /**
+     * @var Group
+     */
+    public $groupWithUsers;
+}
+
+class GroupWithUsersParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $page int
+     * @return GroupWithUsersParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return GroupWithUsersParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::GroupWithUsersDocument,
+            "operationName" => "groupWithUsers",
+            "variables" => $this
+        ];
+    }
+
+    const GroupWithUsersDocument = <<<EOF
+query groupWithUsers(\$code: String!, \$page: Int, \$limit: Int) {
+  group(code: \$code) {
+    users(page: \$page, limit: \$limit) {
+      totalCount
+      list {
+        id
+        arn
+        userPoolId
+        username
+        email
+        emailVerified
+        phone
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
+EOF;
+}
+
+
+class GroupsResponse
+{
+
+    /**
+     * @var PaginatedGroups
+     */
+    public $groups;
+}
+
+class GroupsParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $userId;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $userId string
+     * @return GroupsParam
+     */
+    public function withUserId($userId)
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    /**
+     * @param $page int
+     * @return GroupsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return GroupsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return GroupsParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::GroupsDocument,
+            "operationName" => "groups",
+            "variables" => $this
+        ];
+    }
+
+    const GroupsDocument = <<<EOF
+query groups(\$userId: String, \$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  groups(userId: \$userId, page: \$page, limit: \$limit, sortBy: \$sortBy) {
+    totalCount
+    list {
+      code
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+}
+EOF;
+}
+
+
+class IsActionAllowedResponse
+{
+
+    /**
+     * @var bool
+     */
+    public $isActionAllowed;
+}
+
+class IsActionAllowedParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $action;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userId;
+
+    /**
+     * @param $resource string
+     * @param $action string
+     * @param $userId string
+     */
+    public function __construct($resource, $action, $userId)
+    {
+        $this->resource = $resource;
+        $this->action = $action;
+        $this->userId = $userId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::IsActionAllowedDocument,
+            "operationName" => "isActionAllowed",
+            "variables" => $this
+        ];
+    }
+
+    const IsActionAllowedDocument = <<<EOF
+query isActionAllowed(\$resource: String!, \$action: String!, \$userId: String!) {
+  isActionAllowed(resource: \$resource, action: \$action, userId: \$userId)
+}
+EOF;
+}
+
+
+class IsActionDeniedResponse
+{
+
+    /**
+     * @var bool
+     */
+    public $isActionDenied;
+}
+
+class IsActionDeniedParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $action;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userId;
+
+    /**
+     * @param $resource string
+     * @param $action string
+     * @param $userId string
+     */
+    public function __construct($resource, $action, $userId)
+    {
+        $this->resource = $resource;
+        $this->action = $action;
+        $this->userId = $userId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::IsActionDeniedDocument,
+            "operationName" => "isActionDenied",
+            "variables" => $this
+        ];
+    }
+
+    const IsActionDeniedDocument = <<<EOF
+query isActionDenied(\$resource: String!, \$action: String!, \$userId: String!) {
+  isActionDenied(resource: \$resource, action: \$action, userId: \$userId)
 }
 EOF;
 }
@@ -30631,6 +14185,14 @@ class IsDomainAvaliableParam
      */
     public $domain;
 
+    /**
+     * @param $domain string
+     */
+    public function __construct($domain)
+    {
+        $this->domain = $domain;
+    }
+
     function createRequest()
     {
         return [
@@ -30648,16 +14210,408 @@ EOF;
 }
 
 
-class IsLoginExpiredResponse
+class IsRootNodeResponse
 {
 
     /**
      * @var bool
      */
-    public $isLoginExpired;
+    public $isRootNode;
 }
 
-class IsLoginExpiredParam
+class IsRootNodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $nodeId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * @param $nodeId string
+     * @param $orgId string
+     */
+    public function __construct($nodeId, $orgId)
+    {
+        $this->nodeId = $nodeId;
+        $this->orgId = $orgId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::IsRootNodeDocument,
+            "operationName" => "isRootNode",
+            "variables" => $this
+        ];
+    }
+
+    const IsRootNodeDocument = <<<EOF
+query isRootNode(\$nodeId: String!, \$orgId: String!) {
+  isRootNode(nodeId: \$nodeId, orgId: \$orgId)
+}
+EOF;
+}
+
+
+class IsUserExistsResponse
+{
+
+    /**
+     * @var bool
+     */
+    public $isUserExists;
+}
+
+class IsUserExistsParam
+{
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $email;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $phone;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $username;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $email string
+     * @return IsUserExistsParam
+     */
+    public function withEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param $phone string
+     * @return IsUserExistsParam
+     */
+    public function withPhone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @param $username string
+     * @return IsUserExistsParam
+     */
+    public function withUsername($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::IsUserExistsDocument,
+            "operationName" => "isUserExists",
+            "variables" => $this
+        ];
+    }
+
+    const IsUserExistsDocument = <<<EOF
+query isUserExists(\$email: String, \$phone: String, \$username: String) {
+  isUserExists(email: \$email, phone: \$phone, username: \$username)
+}
+EOF;
+}
+
+
+class NodeByCodeResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $nodeByCode;
+}
+
+class NodeByCodeParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @param $orgId string
+     * @param $code string
+     */
+    public function __construct($orgId, $code)
+    {
+        $this->orgId = $orgId;
+        $this->code = $code;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::NodeByCodeDocument,
+            "operationName" => "nodeByCode",
+            "variables" => $this
+        ];
+    }
+
+    const NodeByCodeDocument = <<<EOF
+query nodeByCode(\$orgId: String!, \$code: String!) {
+  nodeByCode(orgId: \$orgId, code: \$code) {
+    id
+    name
+    nameI18n
+    description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
+    createdAt
+    updatedAt
+    children
+  }
+}
+EOF;
+}
+
+
+class NodeByCodeWithMembersResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $nodeByCodeWithMembers;
+}
+
+class NodeByCodeWithMembersParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $includeChildrenNodes;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $orgId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * @param $orgId string
+     * @param $code string
+     */
+    public function __construct($orgId, $code)
+    {
+        $this->orgId = $orgId;
+        $this->code = $code;
+    }
+
+    /**
+     * @param $page int
+     * @return NodeByCodeWithMembersParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return NodeByCodeWithMembersParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return NodeByCodeWithMembersParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return NodeByCodeWithMembersParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::NodeByCodeWithMembersDocument,
+            "operationName" => "nodeByCodeWithMembers",
+            "variables" => $this
+        ];
+    }
+
+    const NodeByCodeWithMembersDocument = <<<EOF
+query nodeByCodeWithMembers(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$orgId: String!, \$code: String!) {
+  nodeByCode(orgId: \$orgId, code: \$code) {
+    id
+    name
+    nameI18n
+    description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    createdAt
+    updatedAt
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
+      totalCount
+      list {
+        id
+        arn
+        userPoolId
+        username
+        email
+        emailVerified
+        phone
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
+EOF;
+}
+
+
+class NodeByIdResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $nodeById;
+}
+
+class NodeByIdParam
 {
 
     /**
@@ -30667,283 +14621,217 @@ class IsLoginExpiredParam
      */
     public $id;
 
-    function createRequest()
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
     {
-        return [
-            "query" => self::IsLoginExpiredDocument,
-            "operationName" => "isLoginExpired",
-            "variables" => $this
-        ];
+        $this->id = $id;
     }
-
-    const IsLoginExpiredDocument = <<<EOF
-query isLoginExpired(\$id: String!) {
-  isLoginExpired(id: \$id)
-}
-EOF;
-}
-
-
-class IsRootNodeOfOrgResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $isRootNodeOfOrg;
-}
-
-class IsRootNodeOfOrgParam
-{
-
-    /**
-     * Required
-     *
-     * @var IsRootNodeOfOrgInput
-     */
-    public $input;
 
     function createRequest()
     {
         return [
-            "query" => self::IsRootNodeOfOrgDocument,
-            "operationName" => "isRootNodeOfOrg",
+            "query" => self::NodeByIdDocument,
+            "operationName" => "nodeById",
             "variables" => $this
         ];
     }
 
-    const IsRootNodeOfOrgDocument = <<<EOF
-query isRootNodeOfOrg(\$input: IsRootNodeOfOrgInput!) {
-  isRootNodeOfOrg(input: \$input)
-}
-EOF;
-}
-
-
-class IsUserInGroupResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $isUserInGroup;
-}
-
-class IsUserInGroupParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $groupId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::IsUserInGroupDocument,
-            "operationName" => "isUserInGroup",
-            "variables" => $this
-        ];
-    }
-
-    const IsUserInGroupDocument = <<<EOF
-query isUserInGroup(\$groupId: String!, \$userId: String!) {
-  isUserInGroup(groupId: \$groupId, userId: \$userId)
-}
-EOF;
-}
-
-
-class LoginBySecretResponse
-{
-
-    /**
-     * @var string
-     */
-    public $loginBySecret;
-}
-
-class LoginBySecretParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $secret;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::LoginBySecretDocument,
-            "operationName" => "loginBySecret",
-            "variables" => $this
-        ];
-    }
-
-    const LoginBySecretDocument = <<<EOF
-query loginBySecret(\$clientId: String, \$secret: String) {
-  getAccessTokenByAppSecret(clientId: \$clientId, secret: \$secret)
-}
-EOF;
-}
-
-
-class LoginCountResponse
-{
-
-    /**
-     * @var UserLoginCount
-     */
-    public $loginCount;
-}
-
-class LoginCountParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $month;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::LoginCountDocument,
-            "operationName" => "loginCount",
-            "variables" => $this
-        ];
-    }
-
-    const LoginCountDocument = <<<EOF
-query loginCount(\$userId: String, \$clientId: String, \$month: String) {
-  loginCount(userId: \$userId, clientId: \$clientId, month: \$month) {
-    _id
-    client
-    count
-    month
-    isError
-    totalNumber
-  }
-}
-EOF;
-}
-
-
-class LoginHotDotPicDataResponse
-{
-
-    /**
-     * @var LoginHotDotPicData
-     */
-    public $loginHotDotPicData;
-}
-
-class LoginHotDotPicDataParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::LoginHotDotPicDataDocument,
-            "operationName" => "loginHotDotPicData",
-            "variables" => $this
-        ];
-    }
-
-    const LoginHotDotPicDataDocument = <<<EOF
-query loginHotDotPicData(\$client: String) {
-  loginHotDotPicData(client: \$client) {
-    list
-  }
-}
-EOF;
-}
-
-
-class NotBindOAuthListResponse
-{
-
-    /**
-     * @var NotBindOAuth[]
-     */
-    public $notBindOAuthList;
-}
-
-class NotBindOAuthListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $user;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::NotBindOAuthListDocument,
-            "operationName" => "notBindOAuthList",
-            "variables" => $this
-        ];
-    }
-
-    const NotBindOAuthListDocument = <<<EOF
-query notBindOAuthList(\$client: String, \$user: String) {
-  notBindOAuthList(client: \$client, user: \$user) {
-    type
-    oAuthUrl
-    image
+    const NodeByIdDocument = <<<EOF
+query nodeById(\$id: String!) {
+  nodeById(id: \$id) {
+    id
     name
-    binded
+    nameI18n
+    description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
+    createdAt
+    updatedAt
+    children
+  }
+}
+EOF;
+}
+
+
+class NodeByIdWithMembersResponse
+{
+
+    /**
+     * @var Node
+     */
+    public $nodeByIdWithMembers;
+}
+
+class NodeByIdWithMembersParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $includeChildrenNodes;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param $page int
+     * @return NodeByIdWithMembersParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return NodeByIdWithMembersParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return NodeByIdWithMembersParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return NodeByIdWithMembersParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::NodeByIdWithMembersDocument,
+            "operationName" => "nodeByIdWithMembers",
+            "variables" => $this
+        ];
+    }
+
+    const NodeByIdWithMembersDocument = <<<EOF
+query nodeByIdWithMembers(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$id: String!) {
+  nodeById(id: \$id) {
+    id
+    name
+    nameI18n
+    description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    createdAt
+    updatedAt
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
+      totalCount
+      list {
+        id
+        arn
+        userPoolId
+        username
+        email
+        emailVerified
+        phone
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
+        oauth
+        token
+        tokenExpiredAt
+        loginsCount
+        lastLogin
+        lastIP
+        signedUp
+        blocked
+        isDeleted
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
+      }
+    }
   }
 }
 EOF;
@@ -30967,7 +14855,15 @@ class OrgParam
      *
      * @var string
      */
-    public $_id;
+    public $id;
+
+    /**
+     * @param $id string
+     */
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 
     function createRequest()
     {
@@ -30979,250 +14875,38 @@ class OrgParam
     }
 
     const OrgDocument = <<<EOF
-query org(\$_id: String!) {
-  org(_id: \$_id) {
-    _id
-    nodes {
-      _id
+query org(\$id: String!) {
+  org(id: \$id) {
+    id
+    rootNode {
+      id
       name
+      nameI18n
       description
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
       createdAt
       updatedAt
       children
-      root
     }
-  }
-}
-EOF;
-}
-
-
-class OrgChildrenNodesResponse
-{
-
-    /**
-     * @var OrgChildNode[]
-     */
-    public $orgChildrenNodes;
-}
-
-class OrgChildrenNodesParam
-{
-
-    /**
-     * Required
-     *
-     * @var OrgChildrenNodesInput
-     */
-    public $input;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::OrgChildrenNodesDocument,
-            "operationName" => "orgChildrenNodes",
-            "variables" => $this
-        ];
-    }
-
-    const OrgChildrenNodesDocument = <<<EOF
-query orgChildrenNodes(\$input: OrgChildrenNodesInput!) {
-  orgChildrenNodes(input: \$input) {
-    group {
-      _id
-      userPoolId
+    nodes {
+      id
       name
+      nameI18n
       description
+      descriptionI18n
+      order
+      code
+      root
+      depth
+      path
       createdAt
       updatedAt
-    }
-    depth
-  }
-}
-EOF;
-}
-
-
-class OrgNodeUserListResponse
-{
-
-    /**
-     * @var PagedUsers
-     */
-    public $orgNodeUserList;
-}
-
-class OrgNodeUserListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $orgId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $nodeId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $includeChildrenNodes;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::OrgNodeUserListDocument,
-            "operationName" => "orgNodeUserList",
-            "variables" => $this
-        ];
-    }
-
-    const OrgNodeUserListDocument = <<<EOF
-query orgNodeUserList(\$orgId: String!, \$nodeId: String!, \$page: Int, \$count: Int, \$includeChildrenNodes: Boolean) {
-  orgNodeUserList(orgId: \$orgId, nodeId: \$nodeId, page: \$page, count: \$count, includeChildrenNodes: \$includeChildrenNodes) {
-    list {
-      _id
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      username
-      nickname
-      company
-      photo
-      browser
-      device
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      customData
-      metadata
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class OrgRootNodeResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $orgRootNode;
-}
-
-class OrgRootNodeParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::OrgRootNodeDocument,
-            "operationName" => "orgRootNode",
-            "variables" => $this
-        ];
-    }
-
-    const OrgRootNodeDocument = <<<EOF
-query orgRootNode(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$_id: String!) {
-  orgRootNode(_id: \$_id) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    roles {
-      totalCount
-    }
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
+      children
     }
   }
 }
@@ -31234,7 +14918,7 @@ class OrgsResponse
 {
 
     /**
-     * @var PagedOrg
+     * @var PaginatedOrgs
      */
     public $orgs;
 }
@@ -31243,11 +14927,60 @@ class OrgsParam
 {
 
     /**
-     * Required
+     * Optional
      *
-     * @var string
+     * @var int
      */
-    public $userPoolId;
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $page int
+     * @return OrgsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return OrgsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return OrgsParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -31259,20 +14992,40 @@ class OrgsParam
     }
 
     const OrgsDocument = <<<EOF
-query orgs(\$userPoolId: String!) {
-  orgs(userPoolId: \$userPoolId) {
+query orgs(\$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  orgs(page: \$page, limit: \$limit, sortBy: \$sortBy) {
     totalCount
     list {
-      _id
-      logo
-      nodes {
-        _id
+      id
+      rootNode {
+        id
         name
+        nameI18n
+        path
         description
+        descriptionI18n
+        order
+        code
+        root
+        depth
         createdAt
         updatedAt
         children
+      }
+      nodes {
+        id
+        name
+        path
+        nameI18n
+        description
+        descriptionI18n
+        order
+        code
         root
+        depth
+        createdAt
+        updatedAt
+        children
       }
     }
   }
@@ -31281,143 +15034,437 @@ EOF;
 }
 
 
-class PlatformUserGrowthTrendResponse
+class PoliciesResponse
 {
 
     /**
-     * @var DayUserGrowth[]
+     * @var PaginatedPolicies
      */
-    public $platformUserGrowthTrend;
+    public $policies;
 }
 
-class PlatformUserGrowthTrendParam
+class PoliciesParam
 {
 
     /**
      * Optional
      *
-     * @var string
+     * @var int
      */
-    public $today;
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $excludeDefault;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $page int
+     * @return PoliciesParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return PoliciesParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $excludeDefault bool
+     * @return PoliciesParam
+     */
+    public function withExcludeDefault($excludeDefault)
+    {
+        $this->excludeDefault = $excludeDefault;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::PlatformUserGrowthTrendDocument,
-            "operationName" => "platformUserGrowthTrend",
+            "query" => self::PoliciesDocument,
+            "operationName" => "policies",
             "variables" => $this
         ];
     }
 
-    const PlatformUserGrowthTrendDocument = <<<EOF
-query platformUserGrowthTrend(\$today: String) {
-  platformUserGrowthTrend(today: \$today) {
-    day
-    count
+    const PoliciesDocument = <<<EOF
+query policies(\$page: Int, \$limit: Int, \$excludeDefault: Boolean) {
+  policies(page: \$page, limit: \$limit, excludeDefault: \$excludeDefault) {
+    totalCount
+    list {
+      code
+      isDefault
+      description
+      createdAt
+      updatedAt
+      assignmentsCount
+      statements {
+        resource
+        actions
+        effect
+      }
+    }
   }
 }
 EOF;
 }
 
 
-class PreviewEmailTemplateResponse
+class PolicyResponse
 {
 
     /**
-     * @var CommonMessage
+     * @var Policy
      */
-    public $previewEmailTemplate;
+    public $policy;
 }
 
-class PreviewEmailTemplateParam
+class PolicyParam
 {
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      */
-    public $type;
+    public $code;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $code string
      */
-    public $client;
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::PreviewEmailTemplateDocument,
-            "operationName" => "previewEmailTemplate",
+            "query" => self::PolicyDocument,
+            "operationName" => "policy",
             "variables" => $this
         ];
     }
 
-    const PreviewEmailTemplateDocument = <<<EOF
-query previewEmailTemplate(\$type: String, \$client: String) {
-  previewEmailTemplate(type: \$type, client: \$client) {
-    message
+    const PolicyDocument = <<<EOF
+query policy(\$code: String!) {
+  policy(code: \$code) {
     code
-    status
+    assignmentsCount
+    isDefault
+    description
+    statements {
+      resource
+      actions
+      effect
+    }
+    createdAt
+    updatedAt
   }
 }
 EOF;
 }
 
 
-class ProviderListByAdConnectorResponse
+class PolicyAssignmentsResponse
 {
 
     /**
-     * @var ADConnectorEnabledProvider[]
+     * @var PaginatedPolicyAssignment
      */
-    public $providerListByADConnector;
+    public $policyAssignments;
 }
 
-class ProviderListByAdConnectorParam
+class PolicyAssignmentsParam
 {
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $code;
+
+    /**
+     * Optional
+     *
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $targetIdentifier;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $code string
+     * @return PolicyAssignmentsParam
+     */
+    public function withCode($code)
+    {
+        $this->code = $code;
+        return $this;
+    }
+
+    /**
+     * @param $targetType PolicyAssignmentTargetType
+     * @return PolicyAssignmentsParam
+     */
+    public function withTargetType($targetType)
+    {
+        $this->targetType = $targetType;
+        return $this;
+    }
+
+    /**
+     * @param $targetIdentifier string
+     * @return PolicyAssignmentsParam
+     */
+    public function withTargetIdentifier($targetIdentifier)
+    {
+        $this->targetIdentifier = $targetIdentifier;
+        return $this;
+    }
+
+    /**
+     * @param $page int
+     * @return PolicyAssignmentsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return PolicyAssignmentsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::PolicyAssignmentsDocument,
+            "operationName" => "policyAssignments",
+            "variables" => $this
+        ];
+    }
+
+    const PolicyAssignmentsDocument = <<<EOF
+query policyAssignments(\$code: String, \$targetType: PolicyAssignmentTargetType, \$targetIdentifier: String, \$page: Int, \$limit: Int) {
+  policyAssignments(code: \$code, targetType: \$targetType, targetIdentifier: \$targetIdentifier, page: \$page, limit: \$limit) {
+    totalCount
+    list {
+      code
+      targetType
+      targetIdentifier
+    }
+  }
+}
+EOF;
+}
+
+
+class PolicyWithAssignmentsResponse
+{
+
+    /**
+     * @var Policy
+     */
+    public $policyWithAssignments;
+}
+
+class PolicyWithAssignmentsParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
 
     /**
      * Required
      *
      * @var string
      */
-    public $_id;
+    public $code;
+
+    /**
+     * @param $code string
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @param $page int
+     * @return PolicyWithAssignmentsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return PolicyWithAssignmentsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::ProviderListByAdConnectorDocument,
-            "operationName" => "providerListByADConnector",
+            "query" => self::PolicyWithAssignmentsDocument,
+            "operationName" => "policyWithAssignments",
             "variables" => $this
         ];
     }
 
-    const ProviderListByAdConnectorDocument = <<<EOF
-query providerListByADConnector(\$_id: String!) {
-  providerListByADConnector(_id: \$_id) {
-    providerType
-    providerId
-    userPoolId
-    adConnectorId
+    const PolicyWithAssignmentsDocument = <<<EOF
+query policyWithAssignments(\$page: Int, \$limit: Int, \$code: String!) {
+  policy(code: \$code) {
+    code
+    isDefault
+    description
+    statements {
+      resource
+      actions
+      effect
+    }
+    createdAt
+    updatedAt
+    assignmentsCount
+    assignments(page: \$page, limit: \$limit) {
+      code
+      targetType
+      targetIdentifier
+    }
   }
 }
 EOF;
 }
 
 
-class QiNiuUploadTokenResponse
+class PreviewEmailResponse
 {
 
     /**
      * @var string
      */
-    public $qiNiuUploadToken;
+    public $previewEmail;
 }
 
-class QiNiuUploadTokenParam
+class PreviewEmailParam
+{
+
+    /**
+     * Required
+     *
+     * @var EmailTemplateType
+     */
+    public $type;
+
+    /**
+     * @param $type EmailTemplateType
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::PreviewEmailDocument,
+            "operationName" => "previewEmail",
+            "variables" => $this
+        ];
+    }
+
+    const PreviewEmailDocument = <<<EOF
+query previewEmail(\$type: EmailTemplateType!) {
+  previewEmail(type: \$type)
+}
+EOF;
+}
+
+
+class QiniuUptokenResponse
+{
+
+    /**
+     * @var string
+     */
+    public $qiniuUptoken;
+}
+
+class QiniuUptokenParam
 {
 
     /**
@@ -31427,809 +15474,33 @@ class QiNiuUploadTokenParam
      */
     public $type;
 
-    function createRequest()
+    public function __construct()
     {
-        return [
-            "query" => self::QiNiuUploadTokenDocument,
-            "operationName" => "qiNiuUploadToken",
-            "variables" => $this
-        ];
+
     }
 
-    const QiNiuUploadTokenDocument = <<<EOF
-query qiNiuUploadToken(\$type: String) {
-  qiNiuUploadToken(type: \$type)
-}
-EOF;
-}
-
-
-class QpsByTimeResponse
-{
-
     /**
-     * @var QpsByTime[]
+     * @param $type string
+     * @return QiniuUptokenParam
      */
-    public $qpsByTime;
-}
-
-class QpsByTimeParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $startTime;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $endTime;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $currentTime;
+    public function withType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::QpsByTimeDocument,
-            "operationName" => "qpsByTime",
+            "query" => self::QiniuUptokenDocument,
+            "operationName" => "qiniuUptoken",
             "variables" => $this
         ];
     }
 
-    const QpsByTimeDocument = <<<EOF
-query qpsByTime(\$startTime: String, \$endTime: String, \$currentTime: String) {
-  qpsByTime(startTime: \$startTime, endTime: \$endTime, currentTime: \$currentTime) {
-    qps
-    time
-  }
-}
-EOF;
-}
-
-
-class QueryAuthAuditRecordsResponse
-{
-
-    /**
-     * @var AuthAuditRecordsList
-     */
-    public $queryAuthAuditRecords;
-}
-
-class QueryAuthAuditRecordsParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryAuthAuditRecordsDocument,
-            "operationName" => "queryAuthAuditRecords",
-            "variables" => $this
-        ];
-    }
-
-    const QueryAuthAuditRecordsDocument = <<<EOF
-query queryAuthAuditRecords(\$userPoolId: String!, \$sortBy: String, \$page: Int, \$count: Int) {
-  queryAuthAuditRecords(userPoolId: \$userPoolId, sortBy: \$sortBy, page: \$page, count: \$count) {
-    list {
-      userPoolId
-      appType
-      appId
-      event
-      userId
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class QueryAuthorizedUserPoolResponse
-{
-
-    /**
-     * @var PagedUserPoolWithMFA
-     */
-    public $queryAuthorizedUserPool;
-}
-
-class QueryAuthorizedUserPoolParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $unionid;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $openid;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryAuthorizedUserPoolDocument,
-            "operationName" => "queryAuthorizedUserPool",
-            "variables" => $this
-        ];
-    }
-
-    const QueryAuthorizedUserPoolDocument = <<<EOF
-query queryAuthorizedUserPool(\$unionid: String, \$phone: String, \$openid: String, \$page: Int, \$count: Int) {
-  queryAuthorizedUserPool(unionid: \$unionid, phone: \$phone, openid: \$openid, page: \$page, count: \$count) {
-    list {
-      userId
-    }
-    total
-  }
-}
-EOF;
-}
-
-
-class QueryClientResponse
-{
-
-    /**
-     * @var UserClient
-     */
-    public $queryClient;
-}
-
-class QueryClientParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryClientDocument,
-            "operationName" => "queryClient",
-            "variables" => $this
-        ];
-    }
-
-    const QueryClientDocument = <<<EOF
-query queryClient(\$id: String!) {
-  queryClient(id: \$id) {
-    _id
-    user {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    clientType {
-      _id
-      name
-      description
-      image
-      example
-    }
-    userPoolTypes {
-      _id
-      name
-      description
-      image
-      example
-    }
-    usersCount
-    logo
-    emailVerifiedDefault
-    sendWelcomeEmail
-    registerDisabled
-    showWXMPQRCode
-    useMiniLogin
-    useSelfWxapp
-    allowedOrigins
-    name
-    secret
-    token
-    descriptions
-    jwtExpired
-    createdAt
-    isDeleted
-    frequentRegisterCheck {
-      timeInterval
-      limit
-      enable
-    }
-    loginFailCheck {
-      timeInterval
-      limit
-      enable
-    }
-    enableEmail
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-    qrcodeLoginStrategy {
-      qrcodeExpiresAfter
-      returnFullUserInfo
-      allowExchangeUserInfoFromBrowser
-      ticketExpiresAfter
-    }
-    app2WxappLoginStrategy {
-      ticketExpriresAfter
-      ticketExchangeUserInfoNeedSecret
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryCollaborationByUserPoolIdAndUserIdResponse
-{
-
-    /**
-     * @var Collaboration
-     */
-    public $queryCollaborationByUserPoolIdAndUserId;
-}
-
-class QueryCollaborationByUserPoolIdAndUserIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryCollaborationByUserPoolIdAndUserIdDocument,
-            "operationName" => "queryCollaborationByUserPoolIdAndUserId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryCollaborationByUserPoolIdAndUserIdDocument = <<<EOF
-query queryCollaborationByUserPoolIdAndUserId(\$userId: String!, \$userPoolId: String!) {
-  queryCollaborationByUserPoolIdAndUserId(userId: \$userId, userPoolId: \$userPoolId) {
-    _id
-    createdAt
-    owner {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    collaborator {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    userPool {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    permissionDescriptors {
-      permissionId
-      name
-      operationAllow
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryCollaborativeUserPoolByUserIdResponse
-{
-
-    /**
-     * @var CollaborativeUserPoolList
-     */
-    public $queryCollaborativeUserPoolByUserId;
-}
-
-class QueryCollaborativeUserPoolByUserIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryCollaborativeUserPoolByUserIdDocument,
-            "operationName" => "queryCollaborativeUserPoolByUserId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryCollaborativeUserPoolByUserIdDocument = <<<EOF
-query queryCollaborativeUserPoolByUserId(\$userId: String!, \$page: Int, \$count: Int) {
-  queryCollaborativeUserPoolByUserId(userId: \$userId, page: \$page, count: \$count) {
-    list {
-      _id
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class QueryCollaboratorPermissionsResponse
-{
-
-    /**
-     * @var CollaboratorPermissions
-     */
-    public $queryCollaboratorPermissions;
-}
-
-class QueryCollaboratorPermissionsParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $collaborationId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryCollaboratorPermissionsDocument,
-            "operationName" => "queryCollaboratorPermissions",
-            "variables" => $this
-        ];
-    }
-
-    const QueryCollaboratorPermissionsDocument = <<<EOF
-query queryCollaboratorPermissions(\$userId: String, \$collaborationId: String) {
-  queryCollaboratorPermissions(userId: \$userId, collaborationId: \$collaborationId) {
-    collaborator {
-      _id
-      username
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      nickname
-      company
-      photo
-      browser
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
-      isDeleted
-      device
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      oldPassword
-      metadata
-    }
-    list {
-      permissionId
-      name
-      operationAllow
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryCollaboratorsByUserPoolIdResponse
-{
-
-    /**
-     * @var Collaborators
-     */
-    public $queryCollaboratorsByUserPoolId;
-}
-
-class QueryCollaboratorsByUserPoolIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryCollaboratorsByUserPoolIdDocument,
-            "operationName" => "queryCollaboratorsByUserPoolId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryCollaboratorsByUserPoolIdDocument = <<<EOF
-query queryCollaboratorsByUserPoolId(\$userPoolId: String!, \$count: Int, \$page: Int) {
-  queryCollaboratorsByUserPoolId(userPoolId: \$userPoolId, count: \$count, page: \$page) {
-    collaborationId
-    list {
-      _id
-      createdAt
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryInvitationResponse
-{
-
-    /**
-     * @var Invitation[]
-     */
-    public $queryInvitation;
-}
-
-class QueryInvitationParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryInvitationDocument,
-            "operationName" => "queryInvitation",
-            "variables" => $this
-        ];
-    }
-
-    const QueryInvitationDocument = <<<EOF
-query queryInvitation(\$client: String!) {
-  queryInvitation(client: \$client) {
-    client
-    phone
-    isDeleted
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class QueryInvitationStateResponse
-{
-
-    /**
-     * @var InvitationState
-     */
-    public $queryInvitationState;
-}
-
-class QueryInvitationStateParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryInvitationStateDocument,
-            "operationName" => "queryInvitationState",
-            "variables" => $this
-        ];
-    }
-
-    const QueryInvitationStateDocument = <<<EOF
-query queryInvitationState(\$client: String!) {
-  queryInvitationState(client: \$client) {
-    client
-    enablePhone
-    createdAt
-    updatedAt
-  }
+    const QiniuUptokenDocument = <<<EOF
+query qiniuUptoken(\$type: String) {
+  qiniuUptoken(type: \$type)
 }
 EOF;
 }
@@ -32239,9 +15510,9 @@ class QueryMfaResponse
 {
 
     /**
-     * @var MFA
+     * @var Mfa
      */
-    public $queryMFA;
+    public $queryMfa;
 }
 
 class QueryMfaParam
@@ -32252,7 +15523,7 @@ class QueryMfaParam
      *
      * @var string
      */
-    public $_id;
+    public $id;
 
     /**
      * Optional
@@ -32268,39 +15539,74 @@ class QueryMfaParam
      */
     public $userPoolId;
 
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $id string
+     * @return QueryMfaParam
+     */
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @param $userId string
+     * @return QueryMfaParam
+     */
+    public function withUserId($userId)
+    {
+        $this->userId = $userId;
+        return $this;
+    }
+
+    /**
+     * @param $userPoolId string
+     * @return QueryMfaParam
+     */
+    public function withUserPoolId($userPoolId)
+    {
+        $this->userPoolId = $userPoolId;
+        return $this;
+    }
+
     function createRequest()
     {
         return [
             "query" => self::QueryMfaDocument,
-            "operationName" => "queryMFA",
+            "operationName" => "queryMfa",
             "variables" => $this
         ];
     }
 
     const QueryMfaDocument = <<<EOF
-query queryMFA(\$_id: String, \$userId: String, \$userPoolId: String) {
-  queryMFA(_id: \$_id, userId: \$userId, userPoolId: \$userPoolId) {
-    _id
+query queryMfa(\$id: String, \$userId: String, \$userPoolId: String) {
+  queryMfa(id: \$id, userId: \$userId, userPoolId: \$userPoolId) {
+    id
     userId
     userPoolId
     enable
-    shareKey
+    secret
   }
 }
 EOF;
 }
 
 
-class QueryOperationLogsResponse
+class RoleResponse
 {
 
     /**
-     * @var OperationLogsList
+     * @var Role
      */
-    public $queryOperationLogs;
+    public $role;
 }
 
-class QueryOperationLogsParam
+class RoleParam
 {
 
     /**
@@ -32308,286 +15614,61 @@ class QueryOperationLogsParam
      *
      * @var string
      */
-    public $userPoolId;
+    public $code;
 
     /**
-     * Required
-     *
-     * @var string
+     * @param $code string
      */
-    public $coll;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::QueryOperationLogsDocument,
-            "operationName" => "queryOperationLogs",
+            "query" => self::RoleDocument,
+            "operationName" => "role",
             "variables" => $this
         ];
     }
 
-    const QueryOperationLogsDocument = <<<EOF
-query queryOperationLogs(\$userPoolId: String!, \$coll: String!, \$page: Int, \$count: Int) {
-  queryOperationLogs(userPoolId: \$userPoolId, coll: \$coll, page: \$page, count: \$count) {
-    totalCount
-    list {
-      operatorId
-      operatorName
-      operatorAvatar
-      isAdmin
-      isCollaborator
-      isOwner
-      operationType
-      updatedFields
-      removedFields
-      operateAt
-      fullDocument
-      coll
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryPasswordFaasEnabledResponse
-{
-
-    /**
-     * @var PaaswordFaas
-     */
-    public $queryPasswordFaasEnabled;
-}
-
-class QueryPasswordFaasEnabledParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryPasswordFaasEnabledDocument,
-            "operationName" => "queryPasswordFaasEnabled",
-            "variables" => $this
-        ];
-    }
-
-    const QueryPasswordFaasEnabledDocument = <<<EOF
-query queryPasswordFaasEnabled(\$client: String!) {
-  queryPasswordFaasEnabled(client: \$client) {
-    encryptUrl
-    decryptUrl
-    user
-    client
-    logs
-    enable
+    const RoleDocument = <<<EOF
+query role(\$code: String!) {
+  role(code: \$code) {
+    code
+    arn
+    description
+    isSystem
     createdAt
     updatedAt
-  }
-}
-EOF;
-}
-
-
-class QueryPasswordStrengthSettingsByUserPoolIdResponse
-{
-
-    /**
-     * @var PasswordStrengthSettings
-     */
-    public $queryPasswordStrengthSettingsByUserPoolId;
-}
-
-class QueryPasswordStrengthSettingsByUserPoolIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryPasswordStrengthSettingsByUserPoolIdDocument,
-            "operationName" => "queryPasswordStrengthSettingsByUserPoolId",
-            "variables" => $this
-        ];
+    users {
+      totalCount
     }
-
-    const QueryPasswordStrengthSettingsByUserPoolIdDocument = <<<EOF
-query queryPasswordStrengthSettingsByUserPoolId(\$userPoolId: String!) {
-  queryPasswordStrengthSettingsByUserPoolId(userPoolId: \$userPoolId) {
-    userPoolId
-    pwdStrength
-  }
-}
-EOF;
-}
-
-
-class QueryPermissionListResponse
-{
-
-    /**
-     * @var PermissionList
-     */
-    public $queryPermissionList;
-}
-
-class QueryPermissionListParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryPermissionListDocument,
-            "operationName" => "queryPermissionList",
-            "variables" => $this
-        ];
-    }
-
-    const QueryPermissionListDocument = <<<EOF
-query queryPermissionList {
-  queryPermissionList {
-    list {
-      _id
-      name
-      affect
+    parent {
+      code
+      arn
       description
+      isSystem
+      createdAt
+      updatedAt
     }
-    totalCount
   }
 }
 EOF;
 }
 
 
-class QueryProviderInfoByAppIdResponse
+class RoleWithUsersResponse
 {
 
     /**
-     * @var ProviderGeneralInfo
+     * @var Role
      */
-    public $queryProviderInfoByAppId;
+    public $roleWithUsers;
 }
 
-class QueryProviderInfoByAppIdParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryProviderInfoByAppIdDocument,
-            "operationName" => "queryProviderInfoByAppId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryProviderInfoByAppIdDocument = <<<EOF
-query queryProviderInfoByAppId(\$appId: String) {
-  queryProviderInfoByAppId(appId: \$appId) {
-    _id
-    type
-    name
-    image
-    domain
-    clientId
-    client_id
-    css
-    redirect_uris
-  }
-}
-EOF;
-}
-
-
-class QueryProviderInfoByDomainResponse
-{
-
-    /**
-     * @var ProviderGeneralInfo
-     */
-    public $queryProviderInfoByDomain;
-}
-
-class QueryProviderInfoByDomainParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $domain;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryProviderInfoByDomainDocument,
-            "operationName" => "queryProviderInfoByDomain",
-            "variables" => $this
-        ];
-    }
-
-    const QueryProviderInfoByDomainDocument = <<<EOF
-query queryProviderInfoByDomain(\$domain: String) {
-  queryProviderInfoByDomain(domain: \$domain) {
-    _id
-    type
-    name
-    image
-    domain
-    clientId
-    client_id
-    css
-    redirect_uris
-  }
-}
-EOF;
-}
-
-
-class QueryRbacGroupUserListResponse
-{
-
-    /**
-     * @var RBACGroup
-     */
-    public $QueryRBACGroupUserList;
-}
-
-class QueryRbacGroupUserListParam
+class RoleWithUsersParam
 {
 
     /**
@@ -32595,56 +15676,45 @@ class QueryRbacGroupUserListParam
      *
      * @var string
      */
-    public $_id;
+    public $code;
 
     /**
-     * Optional
-     *
-     * @var SortByEnum
+     * @param $code string
      */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::QueryRbacGroupUserListDocument,
-            "operationName" => "QueryRBACGroupUserList",
+            "query" => self::RoleWithUsersDocument,
+            "operationName" => "roleWithUsers",
             "variables" => $this
         ];
     }
 
-    const QueryRbacGroupUserListDocument = <<<EOF
-query QueryRBACGroupUserList(\$_id: String!, \$sortBy: SortByEnum = CREATEDAT_DESC, \$page: Int = 0, \$count: Int = 10) {
-  rbacGroup(_id: \$_id) {
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
+    const RoleWithUsersDocument = <<<EOF
+query roleWithUsers(\$code: String!) {
+  role(code: \$code) {
+    users {
       totalCount
       list {
-        _id
-        unionid
+        id
+        arn
+        userPoolId
+        username
         email
         emailVerified
-        username
-        nickname
-        company
-        photo
         phone
-        browser
-        registerInClient
-        registerMethod
+        phoneVerified
+        unionid
+        openid
+        nickname
+        registerSource
+        photo
+        password
         oauth
         token
         tokenExpiredAt
@@ -32654,7 +15724,31 @@ query QueryRBACGroupUserList(\$_id: String!, \$sortBy: SortByEnum = CREATEDAT_DE
         signedUp
         blocked
         isDeleted
-        metadata
+        device
+        browser
+        company
+        name
+        givenName
+        familyName
+        middleName
+        profile
+        preferredUsername
+        website
+        gender
+        birthdate
+        zoneinfo
+        locale
+        address
+        formatted
+        streetAddress
+        locality
+        region
+        postalCode
+        city
+        province
+        country
+        createdAt
+        updatedAt
       }
     }
   }
@@ -32663,218 +15757,31 @@ EOF;
 }
 
 
-class QueryRoleByUserIdResponse
+class RolesResponse
 {
 
     /**
-     * @var PagedUserGroup
+     * @var PaginatedRoles
      */
-    public $queryRoleByUserId;
+    public $roles;
 }
 
-class QueryRoleByUserIdParam
+class RolesParam
 {
 
     /**
-     * Required
+     * Optional
      *
-     * @var string
+     * @var int
      */
-    public $user;
+    public $page;
 
     /**
-     * Required
+     * Optional
      *
-     * @var string
+     * @var int
      */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryRoleByUserIdDocument,
-            "operationName" => "queryRoleByUserId",
-            "variables" => $this
-        ];
-    }
-
-    const QueryRoleByUserIdDocument = <<<EOF
-query queryRoleByUserId(\$user: String!, \$client: String!) {
-  queryRoleByUserId(user: \$user, client: \$client) {
-    list {
-      _id
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class QuerySmsSendCountResponse
-{
-
-    /**
-     * @var SMSCountInfo
-     */
-    public $querySMSSendCount;
-}
-
-class QuerySmsSendCountParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySmsSendCountDocument,
-            "operationName" => "querySMSSendCount",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySmsSendCountDocument = <<<EOF
-query querySMSSendCount(\$userPoolId: String!) {
-  querySMSSendCount(userPoolId: \$userPoolId) {
-    count
-    limitCount
-  }
-}
-EOF;
-}
-
-
-class QuerySystemOAuthSettingResponse
-{
-
-    /**
-     * @var OAuthList[]
-     */
-    public $querySystemOAuthSetting;
-}
-
-class QuerySystemOAuthSettingParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QuerySystemOAuthSettingDocument,
-            "operationName" => "querySystemOAuthSetting",
-            "variables" => $this
-        ];
-    }
-
-    const QuerySystemOAuthSettingDocument = <<<EOF
-query querySystemOAuthSetting {
-  querySystemOAuthSetting {
-    _id
-    name
-    alias
-    image
-    description
-    enabled
-    url
-    client
-    user
-    oAuthUrl
-    wxappLogo
-    fields {
-      label
-      type
-      placeholder
-      value
-      checked
-    }
-    oauth {
-      _id
-      name
-      alias
-      image
-      description
-      enabled
-      url
-      client
-      user
-      oAuthUrl
-      wxappLogo
-    }
-  }
-}
-EOF;
-}
-
-
-class QueryUserPoolCommonInfoResponse
-{
-
-    /**
-     * @var UserPoolCommonInfo
-     */
-    public $queryUserPoolCommonInfo;
-}
-
-class QueryUserPoolCommonInfoParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::QueryUserPoolCommonInfoDocument,
-            "operationName" => "queryUserPoolCommonInfo",
-            "variables" => $this
-        ];
-    }
-
-    const QueryUserPoolCommonInfoDocument = <<<EOF
-query queryUserPoolCommonInfo(\$userPoolId: String!) {
-  queryUserPoolCommonInfo(userPoolId: \$userPoolId) {
-    _id
-    changePhoneStrategy {
-      verifyOldPhone
-    }
-    changeEmailStrategy {
-      verifyOldEmail
-    }
-  }
-}
-EOF;
-}
-
-
-class RbacGroupListResponse
-{
-
-    /**
-     * @var PagedRBACGroup
-     */
-    public $rbacGroupList;
-}
-
-class RbacGroupListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
+    public $limit;
 
     /**
      * Optional
@@ -32883,614 +15790,68 @@ class RbacGroupListParam
      */
     public $sortBy;
 
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
+    public function __construct()
+    {
+
+    }
 
     /**
-     * Optional
-     *
-     * @var int
+     * @param $page int
+     * @return RolesParam
      */
-    public $count;
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return RolesParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return RolesParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::RbacGroupListDocument,
-            "operationName" => "rbacGroupList",
+            "query" => self::RolesDocument,
+            "operationName" => "roles",
             "variables" => $this
         ];
     }
 
-    const RbacGroupListDocument = <<<EOF
-query rbacGroupList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: Int, \$count: Int) {
-  rbacGroupList(userPoolId: \$userPoolId, sortBy: \$sortBy, page: \$page, count: \$count) {
+    const RolesDocument = <<<EOF
+query roles(\$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  roles(page: \$page, limit: \$limit, sortBy: \$sortBy) {
     totalCount
     list {
-      _id
-      userPoolId
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-}
-EOF;
-}
-
-
-class RbacPermissionResponse
-{
-
-    /**
-     * @var RBACPermission
-     */
-    public $rbacPermission;
-}
-
-class RbacPermissionParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RbacPermissionDocument,
-            "operationName" => "rbacPermission",
-            "variables" => $this
-        ];
-    }
-
-    const RbacPermissionDocument = <<<EOF
-query rbacPermission(\$_id: String!) {
-  rbacPermission(_id: \$_id) {
-    _id
-    name
-    userPoolId
-    createdAt
-    updatedAt
-    description
-  }
-}
-EOF;
-}
-
-
-class RbacPermissionListResponse
-{
-
-    /**
-     * @var PagedRBACPermission
-     */
-    public $rbacPermissionList;
-}
-
-class RbacPermissionListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RbacPermissionListDocument,
-            "operationName" => "rbacPermissionList",
-            "variables" => $this
-        ];
-    }
-
-    const RbacPermissionListDocument = <<<EOF
-query rbacPermissionList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: Int, \$count: Int) {
-  rbacPermissionList(userPoolId: \$userPoolId, sortBy: \$sortBy, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      name
-      userPoolId
-      createdAt
-      updatedAt
-      description
-    }
-  }
-}
-EOF;
-}
-
-
-class RbacRoleResponse
-{
-
-    /**
-     * @var RBACRole
-     */
-    public $rbacRole;
-}
-
-class RbacRoleParam
-{
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RbacRoleDocument,
-            "operationName" => "rbacRole",
-            "variables" => $this
-        ];
-    }
-
-    const RbacRoleDocument = <<<EOF
-query rbacRole(\$sortBy: SortByEnum, \$page: Int, \$count: Int, \$_id: String!) {
-  rbacRole(_id: \$_id) {
-    _id
-    userPoolId
-    name
-    description
-    createdAt
-    updatedAt
-    permissions {
-      totalCount
-    }
-    users(sortBy: \$sortBy, page: \$page, count: \$count) {
-      totalCount
-    }
-  }
-}
-EOF;
-}
-
-
-class RbacRoleListResponse
-{
-
-    /**
-     * @var PagedRBACRole
-     */
-    public $rbacRoleList;
-}
-
-class RbacRoleListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var SortByEnum
-     */
-    public $sortBy;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RbacRoleListDocument,
-            "operationName" => "rbacRoleList",
-            "variables" => $this
-        ];
-    }
-
-    const RbacRoleListDocument = <<<EOF
-query rbacRoleList(\$userPoolId: String!, \$sortBy: SortByEnum, \$page: Int, \$count: Int) {
-  rbacRoleList(userPoolId: \$userPoolId, sortBy: \$sortBy, page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      userPoolId
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-}
-EOF;
-}
-
-
-class RecentServiceCallResponse
-{
-
-    /**
-     * @var DayServiceCallListOfAllServices
-     */
-    public $recentServiceCall;
-}
-
-class RecentServiceCallParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $today;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RecentServiceCallDocument,
-            "operationName" => "recentServiceCall",
-            "variables" => $this
-        ];
-    }
-
-    const RecentServiceCallDocument = <<<EOF
-query recentServiceCall(\$today: String) {
-  recentServiceCall(today: \$today) {
-    userService {
-      day
-      count
-    }
-    emailService {
-      day
-      count
-    }
-    oAuthService {
-      day
-      count
-    }
-    payService {
-      day
-      count
-    }
-  }
-}
-EOF;
-}
-
-
-class RegisterEveryDayCountResponse
-{
-
-    /**
-     * @var RegisterEveryDayCount
-     */
-    public $registerEveryDayCount;
-}
-
-class RegisterEveryDayCountParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $client;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RegisterEveryDayCountDocument,
-            "operationName" => "registerEveryDayCount",
-            "variables" => $this
-        ];
-    }
-
-    const RegisterEveryDayCountDocument = <<<EOF
-query registerEveryDayCount(\$client: String) {
-  registerEveryDayCount(client: \$client) {
-    list
-  }
-}
-EOF;
-}
-
-
-class RegisterMethodTopListResponse
-{
-
-    /**
-     * @var RegisterMethodList[]
-     */
-    public $registerMethodTopList;
-}
-
-class RegisterMethodTopListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RegisterMethodTopListDocument,
-            "operationName" => "registerMethodTopList",
-            "variables" => $this
-        ];
-    }
-
-    const RegisterMethodTopListDocument = <<<EOF
-query registerMethodTopList(\$userPoolId: String!) {
-  registerMethodTopList(userPoolId: \$userPoolId) {
-    method
-    count
-  }
-}
-EOF;
-}
-
-
-class RequestListResponse
-{
-
-    /**
-     * @var PagedRequestList
-     */
-    public $requestList;
-}
-
-class RequestListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RequestListDocument,
-            "operationName" => "requestList",
-            "variables" => $this
-        ];
-    }
-
-    const RequestListDocument = <<<EOF
-query requestList(\$page: Int, \$count: Int) {
-  requestList(page: \$page, count: \$count) {
-    totalCount
-    list {
-      _id
-      when
-      where
-      ip
-      size
-      responseTime
-      service
-    }
-  }
-}
-EOF;
-}
-
-
-class RuleByIdResponse
-{
-
-    /**
-     * @var Rule
-     */
-    public $ruleById;
-}
-
-class RuleByIdParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RuleByIdDocument,
-            "operationName" => "ruleById",
-            "variables" => $this
-        ];
-    }
-
-    const RuleByIdDocument = <<<EOF
-query ruleById(\$_id: String!) {
-  ruleById(_id: \$_id) {
-    _id
-    userPoolId
-    name
-    description
-    type
-    enabled
-    faasUrl
-    code
-    order
-    async
-    createdAt
-    updatedAt
-  }
-}
-EOF;
-}
-
-
-class RuleEnvResponse
-{
-
-    /**
-     * @var PagedRuleEnvVariable
-     */
-    public $ruleEnv;
-}
-
-class RuleEnvParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RuleEnvDocument,
-            "operationName" => "ruleEnv",
-            "variables" => $this
-        ];
-    }
-
-    const RuleEnvDocument = <<<EOF
-query ruleEnv(\$userPoolId: String!) {
-  ruleEnv(userPoolId: \$userPoolId) {
-    totalCount
-    list {
-      key
-      value
-    }
-  }
-}
-EOF;
-}
-
-
-class RulesResponse
-{
-
-    /**
-     * @var PagedRules
-     */
-    public $rules;
-}
-
-class RulesParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::RulesDocument,
-            "operationName" => "rules",
-            "variables" => $this
-        ];
-    }
-
-    const RulesDocument = <<<EOF
-query rules(\$userPoolId: String!) {
-  rules(userPoolId: \$userPoolId) {
-    totalCount
-    list {
-      _id
-      userPoolId
-      name
-      description
-      type
-      enabled
-      faasUrl
       code
-      order
-      async
+      arn
+      description
+      isSystem
       createdAt
       updatedAt
+      parent {
+        code
+        description
+        isSystem
+        createdAt
+        updatedAt
+      }
     }
   }
 }
@@ -33498,17 +15859,45 @@ EOF;
 }
 
 
-class SearchOrgNodesResponse
+class RootNodeResponse
 {
 
     /**
-     * @var RBACGroup[]
+     * @var Node
      */
-    public $searchOrgNodes;
+    public $rootNode;
 }
 
-class SearchOrgNodesParam
+class RootNodeParam
 {
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    /**
+     * Optional
+     *
+     * @var bool
+     */
+    public $includeChildrenNodes;
 
     /**
      * Required
@@ -33518,36 +15907,81 @@ class SearchOrgNodesParam
     public $orgId;
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $orgId string
      */
-    public $name;
+    public function __construct($orgId)
+    {
+        $this->orgId = $orgId;
+    }
 
     /**
-     * Optional
-     *
-     * @var KeyValuePair
+     * @param $page int
+     * @return RootNodeParam
      */
-    public $metadata;
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return RootNodeParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return RootNodeParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    /**
+     * @param $includeChildrenNodes bool
+     * @return RootNodeParam
+     */
+    public function withIncludeChildrenNodes($includeChildrenNodes)
+    {
+        $this->includeChildrenNodes = $includeChildrenNodes;
+        return $this;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::SearchOrgNodesDocument,
-            "operationName" => "searchOrgNodes",
+            "query" => self::RootNodeDocument,
+            "operationName" => "rootNode",
             "variables" => $this
         ];
     }
 
-    const SearchOrgNodesDocument = <<<EOF
-query searchOrgNodes(\$orgId: String!, \$name: String, \$metadata: [KeyValuePair!]) {
-  searchOrgNodes(orgId: \$orgId, name: \$name, metadata: \$metadata) {
-    _id
+    const RootNodeDocument = <<<EOF
+query rootNode(\$page: Int, \$limit: Int, \$sortBy: SortByEnum, \$includeChildrenNodes: Boolean, \$orgId: String!) {
+  rootNode(orgId: \$orgId) {
+    id
     name
+    nameI18n
     description
+    descriptionI18n
+    order
+    code
+    root
+    depth
+    path
     createdAt
     updatedAt
+    children
+    users(page: \$page, limit: \$limit, sortBy: \$sortBy, includeChildrenNodes: \$includeChildrenNodes) {
+      totalCount
+    }
   }
 }
 EOF;
@@ -33558,7 +15992,7 @@ class SearchUserResponse
 {
 
     /**
-     * @var PagedUsers
+     * @var PaginatedUsers
      */
     public $searchUser;
 }
@@ -33571,21 +16005,14 @@ class SearchUserParam
      *
      * @var string
      */
-    public $type;
+    public $query;
 
     /**
-     * Required
+     * Optional
      *
-     * @var string
+     * @var string[]
      */
-    public $value;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $registerInClient;
+    public $fields;
 
     /**
      * Optional
@@ -33599,7 +16026,45 @@ class SearchUserParam
      *
      * @var int
      */
-    public $count;
+    public $limit;
+
+    /**
+     * @param $query string
+     */
+    public function __construct($query)
+    {
+        $this->query = $query;
+    }
+
+    /**
+     * @param $fields string[]
+     * @return SearchUserParam
+     */
+    public function withFields($fields)
+    {
+        $this->fields = $fields;
+        return $this;
+    }
+
+    /**
+     * @param $page int
+     * @return SearchUserParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return SearchUserParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -33611,25 +16076,24 @@ class SearchUserParam
     }
 
     const SearchUserDocument = <<<EOF
-query searchUser(\$type: String!, \$value: String!, \$registerInClient: String!, \$page: Int, \$count: Int) {
-  searchUser(type: \$type, value: \$value, registerInClient: \$registerInClient, page: \$page, count: \$count) {
+query searchUser(\$query: String!, \$fields: [String], \$page: Int, \$limit: Int) {
+  searchUser(query: \$query, fields: \$fields, page: \$page, limit: \$limit) {
+    totalCount
     list {
-      _id
+      id
+      arn
+      userPoolId
+      username
       email
-      unionid
-      openid
       emailVerified
       phone
       phoneVerified
-      username
+      unionid
+      openid
       nickname
-      company
+      registerSource
       photo
-      browser
-      device
       password
-      registerInClient
-      registerMethod
       oauth
       token
       tokenExpiredAt
@@ -33639,6 +16103,9 @@ query searchUser(\$type: String!, \$value: String!, \$registerInClient: String!,
       signedUp
       blocked
       isDeleted
+      device
+      browser
+      company
       name
       givenName
       familyName
@@ -33656,153 +16123,333 @@ query searchUser(\$type: String!, \$value: String!, \$registerInClient: String!,
       locality
       region
       postalCode
+      city
+      province
       country
+      createdAt
       updatedAt
-      customData
-      metadata
     }
-    totalCount
   }
 }
 EOF;
 }
 
 
-class SearchUserBasicInfoByIdResponse
+class SocialConnectionResponse
 {
 
     /**
-     * @var BasicUserInfo
+     * @var SocialConnection
      */
-    public $searchUserBasicInfoById;
+    public $socialConnection;
 }
 
-class SearchUserBasicInfoByIdParam
+class SocialConnectionParam
 {
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      */
-    public $userId;
+    public $provider;
+
+    /**
+     * @param $provider string
+     */
+    public function __construct($provider)
+    {
+        $this->provider = $provider;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::SearchUserBasicInfoByIdDocument,
-            "operationName" => "searchUserBasicInfoById",
+            "query" => self::SocialConnectionDocument,
+            "operationName" => "socialConnection",
             "variables" => $this
         ];
     }
 
-    const SearchUserBasicInfoByIdDocument = <<<EOF
-query searchUserBasicInfoById(\$userId: String) {
-  searchUserBasicInfoById(userId: \$userId) {
-    _id
-    username
-    photo
-    email
+    const SocialConnectionDocument = <<<EOF
+query socialConnection(\$provider: String!) {
+  socialConnection(provider: \$provider) {
+    provider
+    name
+    logo
+    description
+    fields {
+      key
+      label
+      type
+      placeholder
+    }
   }
 }
 EOF;
 }
 
 
-class StatisticResponse
+class SocialConnectionInstanceResponse
 {
 
     /**
-     * @var Statistic
+     * @var SocialConnectionInstance
      */
-    public $statistic;
+    public $socialConnectionInstance;
 }
 
-class StatisticParam
+class SocialConnectionInstanceParam
 {
 
     /**
-     * Optional
+     * Required
      *
      * @var string
      */
-    public $sortBy;
+    public $provider;
 
     /**
-     * Optional
-     *
-     * @var int
+     * @param $provider string
      */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
+    public function __construct($provider)
+    {
+        $this->provider = $provider;
+    }
 
     function createRequest()
     {
         return [
-            "query" => self::StatisticDocument,
-            "operationName" => "statistic",
+            "query" => self::SocialConnectionInstanceDocument,
+            "operationName" => "socialConnectionInstance",
             "variables" => $this
         ];
     }
 
-    const StatisticDocument = <<<EOF
-query statistic(\$sortBy: String, \$page: Int, \$count: Int) {
-  statistic(sortBy: \$sortBy, page: \$page, count: \$count) {
-    list {
-      _id
-      username
-      email
-      loginsCount
-      appsCount
-      OAuthCount
+    const SocialConnectionInstanceDocument = <<<EOF
+query socialConnectionInstance(\$provider: String!) {
+  socialConnectionInstance(provider: \$provider) {
+    provider
+    enabled
+    fields {
+      key
+      value
     }
-    totalCount
   }
 }
 EOF;
 }
 
 
-class TodayGeoDistributionResponse
+class SocialConnectionInstancesResponse
 {
 
     /**
-     * @var GeographicalDistributionList[]
+     * @var SocialConnectionInstance[]
      */
-    public $todayGeoDistribution;
+    public $socialConnectionInstances;
 }
 
-class TodayGeoDistributionParam
+class SocialConnectionInstancesParam
 {
 
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $today;
 
     function createRequest()
     {
         return [
-            "query" => self::TodayGeoDistributionDocument,
-            "operationName" => "todayGeoDistribution",
+            "query" => self::SocialConnectionInstancesDocument,
+            "operationName" => "socialConnectionInstances",
             "variables" => $this
         ];
     }
 
-    const TodayGeoDistributionDocument = <<<EOF
-query todayGeoDistribution(\$today: String) {
-  todayGeoDistribution(today: \$today) {
-    city
-    size
-    point
+    const SocialConnectionInstancesDocument = <<<EOF
+query socialConnectionInstances {
+  socialConnectionInstances {
+    provider
+    enabled
+    fields {
+      key
+      value
+    }
+  }
+}
+EOF;
+}
+
+
+class SocialConnectionsResponse
+{
+
+    /**
+     * @var SocialConnection[]
+     */
+    public $socialConnections;
+}
+
+class SocialConnectionsParam
+{
+
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SocialConnectionsDocument,
+            "operationName" => "socialConnections",
+            "variables" => $this
+        ];
+    }
+
+    const SocialConnectionsDocument = <<<EOF
+query socialConnections {
+  socialConnections {
+    provider
+    name
+    logo
+    description
+    fields {
+      key
+      label
+      type
+      placeholder
+    }
+  }
+}
+EOF;
+}
+
+
+class TemplateCodeResponse
+{
+
+    /**
+     * @var string
+     */
+    public $templateCode;
+}
+
+class TemplateCodeParam
+{
+
+
+    function createRequest()
+    {
+        return [
+            "query" => self::TemplateCodeDocument,
+            "operationName" => "templateCode",
+            "variables" => $this
+        ];
+    }
+
+    const TemplateCodeDocument = <<<EOF
+query templateCode {
+  templateCode
+}
+EOF;
+}
+
+
+class UdfResponse
+{
+
+    /**
+     * @var UserDefinedField[]
+     */
+    public $udf;
+}
+
+class UdfParam
+{
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * @param $targetType UdfTargetType
+     */
+    public function __construct($targetType)
+    {
+        $this->targetType = $targetType;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UdfDocument,
+            "operationName" => "udf",
+            "variables" => $this
+        ];
+    }
+
+    const UdfDocument = <<<EOF
+query udf(\$targetType: UDFTargetType!) {
+  udf(targetType: \$targetType) {
+    targetType
+    dataType
+    key
+    label
+    options
+  }
+}
+EOF;
+}
+
+
+class UdvResponse
+{
+
+    /**
+     * @var UserDefinedData[]
+     */
+    public $udv;
+}
+
+class UdvParam
+{
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetId;
+
+    /**
+     * @param $targetType UdfTargetType
+     * @param $targetId string
+     */
+    public function __construct($targetType, $targetId)
+    {
+        $this->targetType = $targetType;
+        $this->targetId = $targetId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UdvDocument,
+            "operationName" => "udv",
+            "variables" => $this
+        ];
+    }
+
+    const UdvDocument = <<<EOF
+query udv(\$targetType: UDFTargetType!, \$targetId: String!) {
+  udv(targetType: \$targetType, targetId: \$targetId) {
+    key
+    dataType
+    value
   }
 }
 EOF;
@@ -33813,7 +16460,7 @@ class UserResponse
 {
 
     /**
-     * @var ExtendUser
+     * @var User
      */
     public $user;
 }
@@ -33828,40 +16475,20 @@ class UserParam
      */
     public $id;
 
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $registerInClient;
+    public function __construct()
+    {
+
+    }
 
     /**
-     * Optional
-     *
-     * @var string
+     * @param $id string
+     * @return UserParam
      */
-    public $token;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $auth;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $userLoginHistoryPage;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $userLoginHistoryCount;
+    public function withId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -33873,24 +16500,22 @@ class UserParam
     }
 
     const UserDocument = <<<EOF
-query user(\$id: String, \$registerInClient: String, \$token: String, \$auth: Boolean, \$userLoginHistoryPage: Int, \$userLoginHistoryCount: Int) {
-  user(id: \$id, registerInClient: \$registerInClient, token: \$token, auth: \$auth, userLoginHistoryPage: \$userLoginHistoryPage, userLoginHistoryCount: \$userLoginHistoryCount) {
-    _id
+query user(\$id: String) {
+  user(id: \$id) {
+    id
+    arn
+    userPoolId
+    username
     email
-    unionid
-    openid
     emailVerified
     phone
     phoneVerified
-    username
+    unionid
+    openid
     nickname
-    company
+    registerSource
     photo
-    browser
-    device
     password
-    registerInClient
-    registerMethod
     oauth
     token
     tokenExpiredAt
@@ -33900,6 +16525,9 @@ query user(\$id: String, \$registerInClient: String, \$token: String, \$auth: Bo
     signedUp
     blocked
     isDeleted
+    device
+    browser
+    company
     name
     givenName
     familyName
@@ -33917,658 +16545,334 @@ query user(\$id: String, \$registerInClient: String, \$token: String, \$auth: Bo
     locality
     region
     postalCode
+    city
+    province
     country
+    createdAt
     updatedAt
-    metadata
   }
 }
 EOF;
 }
 
 
-class UserAnalyticsResponse
+class UserBatchResponse
 {
 
     /**
-     * @var UserAnalytics
+     * @var User[]
      */
-    public $userAnalytics;
+    public $userBatch;
 }
 
-class UserAnalyticsParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserAnalyticsDocument,
-            "operationName" => "userAnalytics",
-            "variables" => $this
-        ];
-    }
-
-    const UserAnalyticsDocument = <<<EOF
-query userAnalytics(\$clientId: String) {
-  userAnalytics(clientId: \$clientId) {
-    usersAddedToday {
-      length
-    }
-    usersAddedLastWeek {
-      length
-    }
-    usersLoginLastWeek {
-      length
-    }
-    totalUsers {
-      length
-    }
-    allUsers
-    totalApps
-  }
-}
-EOF;
-}
-
-
-class UserClientListResponse
-{
-
-    /**
-     * @var PagedUserClientList
-     */
-    public $userClientList;
-}
-
-class UserClientListParam
-{
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $sortBy;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserClientListDocument,
-            "operationName" => "userClientList",
-            "variables" => $this
-        ];
-    }
-
-    const UserClientListDocument = <<<EOF
-query userClientList(\$page: Int, \$count: Int, \$sortBy: String) {
-  userClientList(page: \$page, count: \$count, sortBy: \$sortBy) {
-    list {
-      _id
-      name
-      createdAt
-      usersCount
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UserClientTypesResponse
-{
-
-    /**
-     * @var UserClientType[]
-     */
-    public $userClientTypes;
-}
-
-class UserClientTypesParam
-{
-
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserClientTypesDocument,
-            "operationName" => "userClientTypes",
-            "variables" => $this
-        ];
-    }
-
-    const UserClientTypesDocument = <<<EOF
-query userClientTypes {
-  userClientTypes {
-    _id
-    name
-    description
-    image
-    example
-  }
-}
-EOF;
-}
-
-
-class UserClientsResponse
-{
-
-    /**
-     * @var PagedUserClients
-     */
-    public $userClients;
-}
-
-class UserClientsParam
+class UserBatchParam
 {
 
     /**
      * Required
      *
-     * @var string
-     */
-    public $userId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var bool
-     */
-    public $computeUsersCount;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserClientsDocument,
-            "operationName" => "userClients",
-            "variables" => $this
-        ];
-    }
-
-    const UserClientsDocument = <<<EOF
-query userClients(\$userId: String!, \$page: Int, \$count: Int, \$computeUsersCount: Boolean) {
-  userClients(userId: \$userId, page: \$page, count: \$count, computeUsersCount: \$computeUsersCount) {
-    list {
-      _id
-      usersCount
-      logo
-      emailVerifiedDefault
-      sendWelcomeEmail
-      registerDisabled
-      showWXMPQRCode
-      useMiniLogin
-      useSelfWxapp
-      allowedOrigins
-      name
-      secret
-      token
-      descriptions
-      jwtExpired
-      createdAt
-      isDeleted
-      enableEmail
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UserExistResponse
-{
-
-    /**
-     * @var bool
-     */
-    public $userExist;
-}
-
-class UserExistParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $phone;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $username;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserExistDocument,
-            "operationName" => "userExist",
-            "variables" => $this
-        ];
-    }
-
-    const UserExistDocument = <<<EOF
-query userExist(\$userPoolId: String!, \$email: String, \$phone: String, \$username: String) {
-  userExist(userPoolId: \$userPoolId, email: \$email, phone: \$phone, username: \$username)
-}
-EOF;
-}
-
-
-class UserGroupResponse
-{
-
-    /**
-     * @var PagedUserGroup
-     */
-    public $userGroup;
-}
-
-class UserGroupParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $group;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $client;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserGroupDocument,
-            "operationName" => "userGroup",
-            "variables" => $this
-        ];
-    }
-
-    const UserGroupDocument = <<<EOF
-query userGroup(\$group: String!, \$client: String!, \$page: Int, \$count: Int) {
-  userGroup(group: \$group, client: \$client, page: \$page, count: \$count) {
-    list {
-      _id
-      createdAt
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UserGroupListResponse
-{
-
-    /**
-     * @var UserGroupList
-     */
-    public $userGroupList;
-}
-
-class UserGroupListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserGroupListDocument,
-            "operationName" => "userGroupList",
-            "variables" => $this
-        ];
-    }
-
-    const UserGroupListDocument = <<<EOF
-query userGroupList(\$_id: String!) {
-  userGroupList(_id: \$_id) {
-    totalCount
-    list {
-      _id
-      userPoolId
-      name
-      description
-      createdAt
-      updatedAt
-    }
-    rawList
-  }
-}
-EOF;
-}
-
-
-class UserMetadataResponse
-{
-
-    /**
-     * @var UserMetaDataList
-     */
-    public $userMetadata;
-}
-
-class UserMetadataParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserMetadataDocument,
-            "operationName" => "userMetadata",
-            "variables" => $this
-        ];
-    }
-
-    const UserMetadataDocument = <<<EOF
-query userMetadata(\$_id: String!) {
-  userMetadata(_id: \$_id) {
-    totalCount
-    list {
-      key
-      value
-    }
-  }
-}
-EOF;
-}
-
-
-class UserOAuthCountResponse
-{
-
-    /**
-     * @var int[]
-     */
-    public $userOAuthCount;
-}
-
-class UserOAuthCountParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userIds;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserOAuthCountDocument,
-            "operationName" => "userOAuthCount",
-            "variables" => $this
-        ];
-    }
-
-    const UserOAuthCountDocument = <<<EOF
-query userOAuthCount(\$userIds: [String]) {
-  userOAuthCount(userIds: \$userIds)
-}
-EOF;
-}
-
-
-class UserPatchResponse
-{
-
-    /**
-     * @var PatchExtendUser
-     */
-    public $userPatch;
-}
-
-class UserPatchParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
+     * @var string[]
      */
     public $ids;
 
+    /**
+     * @param $ids string[]
+     */
+    public function __construct($ids)
+    {
+        $this->ids = $ids;
+    }
+
     function createRequest()
     {
         return [
-            "query" => self::UserPatchDocument,
-            "operationName" => "userPatch",
+            "query" => self::UserBatchDocument,
+            "operationName" => "userBatch",
             "variables" => $this
         ];
     }
 
-    const UserPatchDocument = <<<EOF
-query userPatch(\$ids: String) {
-  userPatch(ids: \$ids) {
+    const UserBatchDocument = <<<EOF
+query userBatch(\$ids: [String!]!) {
+  userBatch(ids: \$ids) {
+    id
+    arn
+    userPoolId
+    username
+    email
+    emailVerified
+    phone
+    phoneVerified
+    unionid
+    openid
+    nickname
+    registerSource
+    photo
+    password
+    oauth
+    token
+    tokenExpiredAt
+    loginsCount
+    lastLogin
+    lastIP
+    signedUp
+    blocked
+    isDeleted
+    device
+    browser
+    company
+    name
+    givenName
+    familyName
+    middleName
+    profile
+    preferredUsername
+    website
+    gender
+    birthdate
+    zoneinfo
+    locale
+    address
+    formatted
+    streetAddress
+    locality
+    region
+    postalCode
+    city
+    province
+    country
+    createdAt
+    updatedAt
+  }
+}
+EOF;
+}
+
+
+class UserpoolResponse
+{
+
+    /**
+     * @var UserPool
+     */
+    public $userpool;
+}
+
+class UserpoolParam
+{
+
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UserpoolDocument,
+            "operationName" => "userpool",
+            "variables" => $this
+        ];
+    }
+
+    const UserpoolDocument = <<<EOF
+query userpool {
+  userpool {
+    id
+    name
+    domain
+    description
+    secret
+    jwtSecret
+    userpoolTypes {
+      code
+      name
+      description
+      image
+      sdks
+    }
+    logo
+    createdAt
+    updatedAt
+    emailVerifiedDefault
+    sendWelcomeEmail
+    registerDisabled
+    showWxQRCodeWhenRegisterDisabled
+    allowedOrigins
+    tokenExpiresAfter
+    isDeleted
+    frequentRegisterCheck {
+      timeInterval
+      limit
+      enabled
+    }
+    loginFailCheck {
+      timeInterval
+      limit
+      enabled
+    }
+    changePhoneStrategy {
+      verifyOldPhone
+    }
+    changeEmailStrategy {
+      verifyOldEmail
+    }
+    qrcodeLoginStrategy {
+      qrcodeExpiresAfter
+      returnFullUserInfo
+      allowExchangeUserInfoFromBrowser
+      ticketExpiresAfter
+    }
+    app2WxappLoginStrategy {
+      ticketExpriresAfter
+      ticketExchangeUserInfoNeedSecret
+    }
+    whitelist {
+      phoneEnabled
+      emailEnabled
+      usernameEnabled
+    }
+    customSMSProvider {
+      enabled
+      provider
+    }
+  }
+}
+EOF;
+}
+
+
+class UserpoolTypesResponse
+{
+
+    /**
+     * @var UserPoolType[]
+     */
+    public $userpoolTypes;
+}
+
+class UserpoolTypesParam
+{
+
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UserpoolTypesDocument,
+            "operationName" => "userpoolTypes",
+            "variables" => $this
+        ];
+    }
+
+    const UserpoolTypesDocument = <<<EOF
+query userpoolTypes {
+  userpoolTypes {
+    code
+    name
+    description
+    image
+    sdks
+  }
+}
+EOF;
+}
+
+
+class UserpoolsResponse
+{
+
+    /**
+     * @var PaginatedUserpool
+     */
+    public $userpools;
+}
+
+class UserpoolsParam
+{
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $page;
+
+    /**
+     * Optional
+     *
+     * @var int
+     */
+    public $limit;
+
+    /**
+     * Optional
+     *
+     * @var SortByEnum
+     */
+    public $sortBy;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $page int
+     * @return UserpoolsParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return UserpoolsParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return UserpoolsParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::UserpoolsDocument,
+            "operationName" => "userpools",
+            "variables" => $this
+        ];
+    }
+
+    const UserpoolsDocument = <<<EOF
+query userpools(\$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  userpools(page: \$page, limit: \$limit, sortBy: \$sortBy) {
+    totalCount
     list {
-      _id
-      email
-      unionid
-      openid
-      emailVerified
-      phone
-      phoneVerified
-      username
-      nickname
-      company
-      photo
-      browser
-      device
-      password
-      registerInClient
-      registerMethod
-      oauth
-      token
-      tokenExpiredAt
-      loginsCount
-      lastLogin
-      lastIP
-      signedUp
-      blocked
+      id
+      name
+      domain
+      description
+      secret
+      jwtSecret
+      logo
+      createdAt
+      updatedAt
+      emailVerifiedDefault
+      sendWelcomeEmail
+      registerDisabled
+      showWxQRCodeWhenRegisterDisabled
+      allowedOrigins
+      tokenExpiresAfter
       isDeleted
-      name
-      givenName
-      familyName
-      middleName
-      profile
-      preferredUsername
-      website
-      gender
-      birthdate
-      zoneinfo
-      locale
-      address
-      formatted
-      streetAddress
-      locality
-      region
-      postalCode
-      country
-      updatedAt
-      customData
-      metadata
     }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UserPermissionListResponse
-{
-
-    /**
-     * @var UserPermissionList
-     */
-    public $userPermissionList;
-}
-
-class UserPermissionListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserPermissionListDocument,
-            "operationName" => "userPermissionList",
-            "variables" => $this
-        ];
-    }
-
-    const UserPermissionListDocument = <<<EOF
-query userPermissionList(\$_id: String!) {
-  userPermissionList(_id: \$_id) {
-    totalCount
-    list {
-      _id
-      name
-      userPoolId
-      createdAt
-      updatedAt
-      description
-    }
-    rawList
-  }
-}
-EOF;
-}
-
-
-class UserRoleListResponse
-{
-
-    /**
-     * @var UserRoleList
-     */
-    public $userRoleList;
-}
-
-class UserRoleListParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $_id;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UserRoleListDocument,
-            "operationName" => "userRoleList",
-            "variables" => $this
-        ];
-    }
-
-    const UserRoleListDocument = <<<EOF
-query userRoleList(\$_id: String!) {
-  userRoleList(_id: \$_id) {
-    totalCount
-    list {
-      _id
-      userPoolId
-      name
-      description
-      createdAt
-      updatedAt
-    }
-    rawList
   }
 }
 EOF;
@@ -34579,20 +16883,13 @@ class UsersResponse
 {
 
     /**
-     * @var PagedUsers
+     * @var PaginatedUsers
      */
     public $users;
 }
 
 class UsersParam
 {
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $registerInClient;
 
     /**
      * Optional
@@ -34606,14 +16903,49 @@ class UsersParam
      *
      * @var int
      */
-    public $count;
+    public $limit;
 
     /**
      * Optional
      *
-     * @var bool
+     * @var SortByEnum
      */
-    public $populate;
+    public $sortBy;
+
+    public function __construct()
+    {
+
+    }
+
+    /**
+     * @param $page int
+     * @return UsersParam
+     */
+    public function withPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    /**
+     * @param $limit int
+     * @return UsersParam
+     */
+    public function withLimit($limit)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * @param $sortBy SortByEnum
+     * @return UsersParam
+     */
+    public function withSortBy($sortBy)
+    {
+        $this->sortBy = $sortBy;
+        return $this;
+    }
 
     function createRequest()
     {
@@ -34625,25 +16957,24 @@ class UsersParam
     }
 
     const UsersDocument = <<<EOF
-query users(\$registerInClient: String, \$page: Int, \$count: Int, \$populate: Boolean) {
-  users(registerInClient: \$registerInClient, page: \$page, count: \$count, populate: \$populate) {
+query users(\$page: Int, \$limit: Int, \$sortBy: SortByEnum) {
+  users(page: \$page, limit: \$limit, sortBy: \$sortBy) {
+    totalCount
     list {
-      _id
+      id
+      arn
+      userPoolId
+      username
       email
-      unionid
-      openid
       emailVerified
       phone
       phoneVerified
-      username
+      unionid
+      openid
       nickname
-      company
+      registerSource
       photo
-      browser
-      device
       password
-      registerInClient
-      registerMethod
       oauth
       token
       tokenExpiredAt
@@ -34653,6 +16984,9 @@ query users(\$registerInClient: String, \$page: Int, \$count: Int, \$populate: B
       signedUp
       blocked
       isDeleted
+      device
+      browser
+      company
       name
       givenName
       familyName
@@ -34670,253 +17004,60 @@ query users(\$registerInClient: String, \$page: Int, \$count: Int, \$populate: B
       locality
       region
       postalCode
+      city
+      province
       country
-      updatedAt
-      customData
-      metadata
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UsersByOidcAppResponse
-{
-
-    /**
-     * @var UserIds
-     */
-    public $usersByOidcApp;
-}
-
-class UsersByOidcAppParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $userPoolId;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $appId;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UsersByOidcAppDocument,
-            "operationName" => "usersByOidcApp",
-            "variables" => $this
-        ];
-    }
-
-    const UsersByOidcAppDocument = <<<EOF
-query usersByOidcApp(\$userPoolId: String, \$page: Int, \$count: Int, \$appId: String) {
-  usersByOidcApp(userPoolId: \$userPoolId, page: \$page, count: \$count, appId: \$appId) {
-    list
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class UsersInGroupResponse
-{
-
-    /**
-     * @var UsersInGroup
-     */
-    public $usersInGroup;
-}
-
-class UsersInGroupParam
-{
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $group;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::UsersInGroupDocument,
-            "operationName" => "usersInGroup",
-            "variables" => $this
-        ];
-    }
-
-    const UsersInGroupDocument = <<<EOF
-query usersInGroup(\$group: String, \$page: Int, \$count: Int) {
-  usersInGroup(group: \$group, page: \$page, count: \$count) {
-    list {
-      email
-      username
-      _id
-      upgrade
-    }
-    totalCount
-  }
-}
-EOF;
-}
-
-
-class ValidatePasswordResponse
-{
-
-    /**
-     * @var ValidateResult
-     */
-    public $validatePassword;
-}
-
-class ValidatePasswordParam
-{
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $userPool;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $encryptedPassword;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::ValidatePasswordDocument,
-            "operationName" => "validatePassword",
-            "variables" => $this
-        ];
-    }
-
-    const ValidatePasswordDocument = <<<EOF
-query validatePassword(\$userPool: String!, \$password: String!, \$encryptedPassword: String!) {
-  validatePassword(userPool: \$userPool, password: \$password, encryptedPassword: \$encryptedPassword) {
-    isValid
-  }
-}
-EOF;
-}
-
-
-class WxQrCodeLogResponse
-{
-
-    /**
-     * @var WxQRCodeLog
-     */
-    public $wxQRCodeLog;
-}
-
-class WxQrCodeLogParam
-{
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $page;
-
-    /**
-     * Optional
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $clientId;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $sortBy;
-
-    function createRequest()
-    {
-        return [
-            "query" => self::WxQrCodeLogDocument,
-            "operationName" => "wxQRCodeLog",
-            "variables" => $this
-        ];
-    }
-
-    const WxQrCodeLogDocument = <<<EOF
-query wxQRCodeLog(\$page: Int, \$count: Int, \$clientId: String, \$sortBy: String) {
-  wxQRCodeLog(page: \$page, count: \$count, clientId: \$clientId, sortBy: \$sortBy) {
-    list {
-      random
-      expiredAt
       createdAt
-      success
-      qrcode
-      used
-      accessToken
-      openid
-      userInfo
-      redirect
+      updatedAt
     }
-    totalCount
+  }
+}
+EOF;
+}
+
+
+class WhitelistResponse
+{
+
+    /**
+     * @var WhiteList[]
+     */
+    public $whitelist;
+}
+
+class WhitelistParam
+{
+
+    /**
+     * Required
+     *
+     * @var WhitelistType
+     */
+    public $type;
+
+    /**
+     * @param $type WhitelistType
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::WhitelistDocument,
+            "operationName" => "whitelist",
+            "variables" => $this
+        ];
+    }
+
+    const WhitelistDocument = <<<EOF
+query whitelist(\$type: WhitelistType!) {
+  whitelist(type: \$type) {
+    createdAt
+    updatedAt
+    value
   }
 }
 EOF;
