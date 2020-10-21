@@ -14,9 +14,9 @@ class ManagementClient extends BaseClient
      */
     private $secret;
 
-    public function __construct($userPoolId, $secret, $options)
+    public function __construct($userPoolId, $secret)
     {
-        parent::__construct($userPoolId, $options);
+        parent::__construct($userPoolId);
         $this->$secret = $secret;
     }
 

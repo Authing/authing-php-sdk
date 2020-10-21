@@ -7,7 +7,7 @@ use Exception;
 
 abstract class BaseClient
 {
-    protected $accessToken = '';
+    protected $userPoolId;
 
     private $host = 'https://core.authing.cn';
 
@@ -25,33 +25,41 @@ GKl64GDcIq3au+aqJQIDAQAB
 -----END PUBLIC KEY-----
 PUBLICKKEY;
 
-    private $options;
+    protected $accessToken = '';
 
     /**
      * Client constructor.
      * @param $userPoolId string
-     * @param $options array
      * @throws InvalidArgumentException
-     * @throws Exception
      */
-    public function __construct($userPoolId, $options)
+    public function __construct($userPoolId)
     {
-        $this->options = $this->createOptions($options);
+        if (!isset($userPoolId)) {
+            throw new InvalidArgumentException("Invalid userPoolId");
+        }
+
+        $this->userPoolId = $userPoolId;
     }
 
     /**
-     * @param $options
-     * @return mixed
-     * @throws InvalidArgumentException
+     * @param $host string 用户池 ID
      */
-    private function createOptions($options)
-    {
-        if (is_array($options)) {
-            if (isset($options['clientId']) && isset($options['secret'])) {
-                return $options;
-            }
-        }
-        throw new InvalidArgumentException("Invalid type for client options.");
+    public function setHost($host) {
+        $this->host = $host;
+    }
+
+    /**
+     * @param $publicKey string 加密公钥
+     */
+    public function setPublicKey($publicKey) {
+        $this->publicKey = $publicKey;
+    }
+
+    /**
+     * @param $accessToken string
+     */
+    public function setAccessToken($accessToken) {
+        $this->accessToken = $accessToken;
     }
 
     /**
@@ -74,7 +82,7 @@ PUBLICKKEY;
      */
     public function request($data)
     {
-        $result = $this->send($this->host . '/v2/graphql', $this->objectToArray($data));
+        $result = $this->send($this->host . '/graphql/v2', $this->objectToArray($data));
         $this->checkResult($result);
         return $this->arrayToObject($this->firstElement($result['data']));
     }

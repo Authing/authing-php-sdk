@@ -9,9 +9,9 @@ require_once __DIR__ . '/CodeGen.php';
 
 class AuthenticationClient extends BaseClient
 {
-    public function __construct($userPoolId, $options)
+    public function __construct($userPoolId)
     {
-        parent::__construct($userPoolId, $options);
+        parent::__construct($userPoolId);
     }
 
     /**
