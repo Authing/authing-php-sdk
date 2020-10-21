@@ -196,7 +196,7 @@ class UsersManagementClient
      * @param $userId string  用户 ID
      * @param $page int 分页页数
      * @param $limit int 分页大小
-     * @return PaginatedPolicyAssignment
+     * @return PaginatedPolicyAssignments
      * @throws Exception
      */
     public function listPolicies($userId, $page = 1, $limit = 10)
@@ -218,7 +218,7 @@ class UsersManagementClient
      */
     public function addPolicies($userId, $policies)
     {
-        $param = (new AddPolicyAssignmentsParam($policies, PolicyAssignmentTargetType::USER))->withTargetIdentifiers($userId);
+        $param = (new AddPolicyAssignmentsParam($policies, PolicyAssignmentTargetType::USER))->withTargetIdentifiers([$userId]);
         return $this->client->request($param->createRequest());
     }
 
@@ -230,7 +230,7 @@ class UsersManagementClient
      */
     public function removePolicies($userId, $policies)
     {
-        $param = (new RemovePolicyAssignmentsParam($policies, PolicyAssignmentTargetType::USER))->withTargetIdentifiers($userId);
+        $param = (new RemovePolicyAssignmentsParam($policies, PolicyAssignmentTargetType::USER))->withTargetIdentifiers([$userId]);
         return $this->client->request($param->createRequest());
     }
 }

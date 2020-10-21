@@ -140,7 +140,7 @@ class RolesManagementClient
      * @param $code string 角色唯一 ID
      * @param $page int 分页页数
      * @param $limit int 分页大小
-     * @return PaginatedPolicyAssignment
+     * @return PaginatedPolicyAssignments
      * @throws Exception
      */
     public function listPolicies($code, $page = 1, $limit = 10)

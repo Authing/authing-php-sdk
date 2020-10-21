@@ -225,7 +225,7 @@ class Query
     /**
      * Required
      *
-     * @var PaginatedPolicyAssignment
+     * @var PaginatedPolicyAssignments
      *
      */
     public $policyAssignments;
@@ -1759,7 +1759,7 @@ class PaginatedPolicies
     public $list;
 }
 
-class PaginatedPolicyAssignment
+class PaginatedPolicyAssignments
 {
     /**
      * Required
@@ -2893,7 +2893,7 @@ class Mutation
      * 批量删除角色
      * Required
      *
-     * @var BatchOperationResult
+     * @var CommonMessage
      *
      */
     public $deleteRoles;
@@ -2922,7 +2922,7 @@ class Mutation
      * @var UserDefinedField
      *
      */
-    public $addUdf;
+    public $setUdf;
 
     /**
      * Optional
@@ -3734,6 +3734,14 @@ class LoginByEmailInput
     public $autoRegister;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $email string email
      * @param $password string password
      */
@@ -3761,6 +3769,16 @@ class LoginByEmailInput
     public function withAutoRegister($autoRegister)
     {
         $this->autoRegister = $autoRegister;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return LoginByEmailInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -3806,6 +3824,14 @@ class LoginByUsernameInput
     public $autoRegister;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $username string username
      * @param $password string password
      */
@@ -3833,6 +3859,16 @@ class LoginByUsernameInput
     public function withAutoRegister($autoRegister)
     {
         $this->autoRegister = $autoRegister;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return LoginByUsernameInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -3869,6 +3905,14 @@ class LoginByPhoneCodeInput
     public $autoRegister;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $phone string phone
      * @param $code string code
      */
@@ -3886,6 +3930,16 @@ class LoginByPhoneCodeInput
     public function withAutoRegister($autoRegister)
     {
         $this->autoRegister = $autoRegister;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return LoginByPhoneCodeInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -3931,6 +3985,14 @@ class LoginByPhonePasswordInput
     public $autoRegister;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $phone string phone
      * @param $password string password
      */
@@ -3958,6 +4020,16 @@ class LoginByPhonePasswordInput
     public function withAutoRegister($autoRegister)
     {
         $this->autoRegister = $autoRegister;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return LoginByPhonePasswordInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -4061,6 +4133,14 @@ class RegisterByUsernameInput
     public $generateToken;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $username string username
      * @param $password string password
      */
@@ -4098,6 +4178,16 @@ class RegisterByUsernameInput
     public function withGenerateToken($generateToken)
     {
         $this->generateToken = $generateToken;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return RegisterByUsernameInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -4665,6 +4755,14 @@ class RegisterByEmailInput
     public $generateToken;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $email string email
      * @param $password string password
      */
@@ -4702,6 +4800,16 @@ class RegisterByEmailInput
     public function withGenerateToken($generateToken)
     {
         $this->generateToken = $generateToken;
+        return $this;
+    }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return RegisterByEmailInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
         return $this;
     }
 }
@@ -4761,6 +4869,14 @@ class RegisterByPhoneCodeInput
     public $generateToken;
 
     /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $clientIp;
+
+    /**
      * @param $phone string phone
      * @param $code string code
      */
@@ -4810,48 +4926,18 @@ class RegisterByPhoneCodeInput
         $this->generateToken = $generateToken;
         return $this;
     }
+
+    /**
+     * @param $clientIp string clientIp
+     * @return RegisterByPhoneCodeInput
+     */
+    public function withClientIp($clientIp)
+    {
+        $this->clientIp = $clientIp;
+        return $this;
+    }
 }
 
-
-/**
- * 批量删除返回结果
- */
-class BatchOperationResult
-{
-    /**
-     * 删除成功的个数
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $succeedCount;
-
-    /**
-     * 删除失败的个数
-     * Required
-     *
-     * @var int
-     *
-     */
-    public $failedCount;
-
-    /**
-     * Optional
-     *
-     * @var string
-     *
-     */
-    public $message;
-
-    /**
-     * Optional
-     *
-     * @var string[]
-     *
-     */
-    public $errors;
-}
 
 class RefreshToken
 {
@@ -7226,6 +7312,46 @@ class RefreshAccessTokenRes
     public $iat;
 }
 
+/**
+ * 批量删除返回结果
+ */
+class BatchOperationResult
+{
+    /**
+     * 删除成功的个数
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $succeedCount;
+
+    /**
+     * 删除失败的个数
+     * Required
+     *
+     * @var int
+     *
+     */
+    public $failedCount;
+
+    /**
+     * Optional
+     *
+     * @var string
+     *
+     */
+    public $message;
+
+    /**
+     * Optional
+     *
+     * @var string[]
+     *
+     */
+    public $errors;
+}
+
 class KeyValuePair
 {
     /**
@@ -7747,100 +7873,6 @@ mutation addPolicyAssignments(\$policies: [String!]!, \$targetType: PolicyAssign
   addPolicyAssignments(policies: \$policies, targetType: \$targetType, targetIdentifiers: \$targetIdentifiers) {
     message
     code
-  }
-}
-EOF;
-}
-
-
-class AddUdfResponse
-{
-
-    /**
-     * @var UserDefinedField
-     */
-    public $addUdf;
-}
-
-class AddUdfParam
-{
-
-    /**
-     * Required
-     *
-     * @var UdfTargetType
-     */
-    public $targetType;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $key;
-
-    /**
-     * Required
-     *
-     * @var UdfDataType
-     */
-    public $dataType;
-
-    /**
-     * Required
-     *
-     * @var string
-     */
-    public $label;
-
-    /**
-     * Optional
-     *
-     * @var string
-     */
-    public $options;
-
-    /**
-     * @param $targetType UdfTargetType
-     * @param $key string
-     * @param $dataType UdfDataType
-     * @param $label string
-     */
-    public function __construct($targetType, $key, $dataType, $label)
-    {
-        $this->targetType = $targetType;
-        $this->key = $key;
-        $this->dataType = $dataType;
-        $this->label = $label;
-    }
-
-    /**
-     * @param $options string
-     * @return AddUdfParam
-     */
-    public function withOptions($options)
-    {
-        $this->options = $options;
-        return $this;
-    }
-
-    function createRequest()
-    {
-        return [
-            "query" => self::AddUdfDocument,
-            "operationName" => "addUdf",
-            "variables" => $this
-        ];
-    }
-
-    const AddUdfDocument = <<<EOF
-mutation addUdf(\$targetType: UDFTargetType!, \$key: String!, \$dataType: UDFDataType!, \$label: String!, \$options: String) {
-  addUdf(targetType: \$targetType, key: \$key, dataType: \$dataType, label: \$label, options: \$options) {
-    targetType
-    dataType
-    key
-    label
-    options
   }
 }
 EOF;
@@ -9500,14 +9532,14 @@ class DeletePoliciesParam
      *
      * @var string[]
      */
-    public $codes;
+    public $codeList;
 
     /**
-     * @param $codes string[]
+     * @param $codeList string[]
      */
-    public function __construct($codes)
+    public function __construct($codeList)
     {
-        $this->codes = $codes;
+        $this->codeList = $codeList;
     }
 
     function createRequest()
@@ -9520,8 +9552,8 @@ class DeletePoliciesParam
     }
 
     const DeletePoliciesDocument = <<<EOF
-mutation deletePolicies(\$codes: [String!]!) {
-  deletePolicies(codes: \$codes) {
+mutation deletePolicies(\$codeList: [String!]!) {
+  deletePolicies(codeList: \$codeList) {
     message
     code
   }
@@ -9628,7 +9660,7 @@ class DeleteRolesResponse
 {
 
     /**
-     * @var BatchOperationResult
+     * @var CommonMessage
      */
     public $deleteRoles;
 }
@@ -9641,14 +9673,14 @@ class DeleteRolesParam
      *
      * @var string[]
      */
-    public $codes;
+    public $codeList;
 
     /**
-     * @param $codes string[]
+     * @param $codeList string[]
      */
-    public function __construct($codes)
+    public function __construct($codeList)
     {
-        $this->codes = $codes;
+        $this->codeList = $codeList;
     }
 
     function createRequest()
@@ -9661,12 +9693,10 @@ class DeleteRolesParam
     }
 
     const DeleteRolesDocument = <<<EOF
-mutation deleteRoles(\$codes: [String!]!) {
-  deleteRoles(codes: \$codes) {
-    succeedCount
-    failedCount
+mutation deleteRoles(\$codeList: [String!]!) {
+  deleteRoles(codeList: \$codeList) {
     message
-    errors
+    code
   }
 }
 EOF;
@@ -11704,6 +11734,100 @@ mutation sendEmail(\$email: String!, \$scene: EmailScene!) {
   sendEmail(email: \$email, scene: \$scene) {
     message
     code
+  }
+}
+EOF;
+}
+
+
+class SetUdfResponse
+{
+
+    /**
+     * @var UserDefinedField
+     */
+    public $setUdf;
+}
+
+class SetUdfParam
+{
+
+    /**
+     * Required
+     *
+     * @var UdfTargetType
+     */
+    public $targetType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $key;
+
+    /**
+     * Required
+     *
+     * @var UdfDataType
+     */
+    public $dataType;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $label;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $options;
+
+    /**
+     * @param $targetType UdfTargetType
+     * @param $key string
+     * @param $dataType UdfDataType
+     * @param $label string
+     */
+    public function __construct($targetType, $key, $dataType, $label)
+    {
+        $this->targetType = $targetType;
+        $this->key = $key;
+        $this->dataType = $dataType;
+        $this->label = $label;
+    }
+
+    /**
+     * @param $options string
+     * @return SetUdfParam
+     */
+    public function withOptions($options)
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SetUdfDocument,
+            "operationName" => "setUdf",
+            "variables" => $this
+        ];
+    }
+
+    const SetUdfDocument = <<<EOF
+mutation setUdf(\$targetType: UDFTargetType!, \$key: String!, \$dataType: UDFDataType!, \$label: String!, \$options: String) {
+  setUdf(targetType: \$targetType, key: \$key, dataType: \$dataType, label: \$label, options: \$options) {
+    targetType
+    dataType
+    key
+    label
+    options
   }
 }
 EOF;
@@ -15194,7 +15318,7 @@ class PolicyAssignmentsResponse
 {
 
     /**
-     * @var PaginatedPolicyAssignment
+     * @var PaginatedPolicyAssignments
      */
     public $policyAssignments;
 }
