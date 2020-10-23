@@ -1,14 +1,15 @@
 <?php
 
-use Authing\AuthenticationClient;
-use Authing\EmailScene;
-use Authing\LoginByEmailInput;
-use Authing\LoginByPhoneCodeInput;
-use Authing\LoginByPhonePasswordInput;
-use Authing\LoginByUsernameInput;
-use Authing\RegisterByEmailInput;
-use Authing\RegisterByPhoneCodeInput;
-use Authing\RegisterByUsernameInput;
+use Authing\Auth\AuthenticationClient;
+use Authing\Types\EmailScene;
+use Authing\Types\LoginByEmailInput;
+use Authing\Types\LoginByPhoneCodeInput;
+use Authing\Types\LoginByPhonePasswordInput;
+use Authing\Types\LoginByUsernameInput;
+use Authing\Types\RegisterByEmailInput;
+use Authing\Types\RegisterByPhoneCodeInput;
+use Authing\Types\RegisterByUsernameInput;
+use Authing\Types\UpdateUserInput;
 use PHPUnit\Framework\TestCase;
 
 class AuthenticationClientTest extends TestCase {
@@ -23,6 +24,7 @@ class AuthenticationClientTest extends TestCase {
 
     protected function setUp(): void {
         $this->client = new AuthenticationClient("59f86b4832eb28071bdd9214");
+        $this->client->setHost("http://localhost:3000");
     }
 
     protected function tearDown(): void {
@@ -31,8 +33,12 @@ class AuthenticationClientTest extends TestCase {
 
     public function testGetCurrentUser()
     {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $user = $this->client->getCurrentUser();
-        $this->assertNotEquals($user, null);
+        $this->assertNotEquals(null, $user);
     }
 
     /**
@@ -70,7 +76,7 @@ class AuthenticationClientTest extends TestCase {
      * @throws Exception
      */
     public function testLoginByEmail() {
-        $email = $this->randomString() . "@gmail.com";
+        $email = "test@test.com";
         $password = "123456";
         $user = $this->client->loginByEmail(new LoginByEmailInput($email, $password));
         $this->assertEquals($user->email, $email);
@@ -80,7 +86,7 @@ class AuthenticationClientTest extends TestCase {
      * @throws Exception
      */
     public function testLoginByUsername() {
-        $username = $this->randomString();
+        $username = "test";
         $password = "123456";
         $user = $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
         $this->assertEquals($user->username, $username);
@@ -111,7 +117,8 @@ class AuthenticationClientTest extends TestCase {
      */
     public function testSendSmsCode() {
         $phone = "17611161550";
-        $this->client->sendSmsCode($phone);
+        $message = $this->client->sendSmsCode($phone);
+        $this->assertEquals(200, $message->code);
     }
 
     /**
@@ -126,8 +133,12 @@ class AuthenticationClientTest extends TestCase {
      * @throws Exception
      */
     public function testCheckLoginStatus() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $status = $this->client->checkLoginStatus();
-        $this->assertEquals($status->code, 200);
+        $this->assertEquals(200, $status->code);
     }
 
     public function testResetPasswordByPhoneCode() {
@@ -145,38 +156,66 @@ class AuthenticationClientTest extends TestCase {
     }
 
     public function testUpdateProfile() {
-        $user = $this->client->updateProfile((new \Authing\UpdateUserInput())->withNickname("nickname"));
-        $this->assertEquals($user->nickname, 'nickname');
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
+        $user = $this->client->updateProfile((new UpdateUserInput())->withNickname("nickname"));
+        $this->assertEquals('nickname', $user->nickname);
     }
 
     public function testUpdatePassword() {
-        $user = $this->client->updatePassword("", "");
-        $this->assertEquals($user !== null, true);
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
+        $user = $this->client->updatePassword("111111", "123456");
+        $this->assertEquals(true, $user !== null);
     }
 
     public function testUpdateEmail() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $user = $this->client->updateEmail("1498881550@qq.com", "1234");
-        $this->assertEquals($user !== null, true);
+        $this->assertEquals(true, $user !== null);
     }
 
     public function testUpdatePhone() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $user = $this->client->updatePhone("17611161550", "1234");
-        $this->assertEquals($user !== null, true);
+        $this->assertEquals(true, $user !== null);
     }
 
     public function testRefreshToken() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $token = $this->client->refreshToken();
-        $this->assertEquals($token->token !== null, true);
+        $this->assertEquals(true, $token->token !== null);
     }
 
     public function testBindPhone() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $user = $this->client->bindPhone("17611161550", "1234");
-        $this->assertEquals($user !== null, true);
+        $this->assertEquals(true, $user !== null);
     }
 
     public function testUnbindPhone() {
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
         $user = $this->client->unBindPhone();
-        $this->assertEquals($user !== null, true);
+        $this->assertEquals(true, $user !== null);
     }
 
     public function logout() {

@@ -69,6 +69,8 @@ PUBLICKKEY;
      */
     public function encrypt($password)
     {
+        if (!$password) return null;
+
         $newPassword = '';
         openssl_public_encrypt($password, $newPassword, $this->publicKey);
         return base64_encode($newPassword);
@@ -175,11 +177,11 @@ PUBLICKKEY;
 
         // set header
         $h = [
-            "content-type: application/json",
-            "Authorization: Bearer {$this->accessToken}",
-            "x-authing-userpool-id： {$this->options['clientId']}",
-            "x-authing-request-from: {$this->_type}",
-            "x-authing-sdk-version: {$this->_version}",
+            "Content-type: application/json",
+            "Authorization: Bearer $this->accessToken",
+            "x-authing-userpool-id: $this->userPoolId",
+            "x-authing-request-from: $this->_type",
+            "x-authing-sdk-version: $this->_version",
         ];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $h);
 
@@ -195,7 +197,7 @@ PUBLICKKEY;
 
         if (curl_errno($ch) === 0) {
             $info = curl_getinfo($ch);
-            if (!empty($info['http_code']) && $info['http_code'] == 200) {
+            if (!empty($info['http_code']) && ($info['http_code'] == 200 || $info['http_code'] == 201)) {
                 $res = json_decode($response, true);
                 if (json_last_error() == JSON_ERROR_NONE) {
                     $return = $res;
