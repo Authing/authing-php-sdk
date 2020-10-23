@@ -36,9 +36,10 @@ class UdfManagementClient
      * @return UserDefinedField[]
      * @throws Exception
      */
-    public function paginate($targetType) {
+    public function paginate($targetType)
+    {
         $param = new UdfParam($targetType);
-        return $this->client->request($param->createRequest());
+        return (array)$this->client->request($param->createRequest());
     }
 
     /**
@@ -51,7 +52,8 @@ class UdfManagementClient
      * @return UserDefinedField
      * @throws Exception
      */
-    public function set($targetType, $key, $dataType, $label) {
+    public function set($targetType, $key, $dataType, $label)
+    {
         $param = new SetUdfParam($targetType, $key, $dataType, $label);
         return $this->client->request($param->createRequest());
     }
@@ -64,7 +66,8 @@ class UdfManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function remove($targetType, $key) {
+    public function remove($targetType, $key)
+    {
         $param = new RemoveUdfParam($targetType, $key);
         return $this->client->request($param->createRequest());
     }

@@ -11,6 +11,7 @@ use Authing\Types\DeleteRoleParam;
 use Authing\Types\DeleteRolesParam;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PaginatedRoles;
+use Authing\Types\PaginatedUsers;
 use Authing\Types\PolicyAssignmentsParam;
 use Authing\Types\PolicyAssignmentTargetType;
 use Authing\Types\RemovePolicyAssignmentsParam;
@@ -18,6 +19,7 @@ use Authing\Types\RevokeRoleParam;
 use Authing\Types\Role;
 use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
+use Authing\Types\RoleWithUsersParam;
 use Authing\Types\UpdateRoleParam;
 use Exception;
 
@@ -117,6 +119,19 @@ class RolesManagementClient
     public function deleteMany($codeList)
     {
         $param = new DeleteRolesParam($codeList);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 获取用户列表
+     *
+     * @param $code string 角色唯一标志
+     * @return PaginatedUsers
+     * @throws Exception
+     */
+    public function listUsers($code)
+    {
+        $param = new RoleWithUsersParam($code);
         return $this->client->request($param->createRequest());
     }
 

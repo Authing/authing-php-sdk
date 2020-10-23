@@ -70,6 +70,7 @@ class UsersManagementClient
      */
     public function create($input)
     {
+        $input->password = $this->client->encrypt($input->password);
         $param = new CreateUserParam($input);
         return $this->client->request($param->createRequest());
     }
@@ -84,10 +85,7 @@ class UsersManagementClient
      */
     public function update($userId, $input)
     {
-        if ($input->password) {
-            $input->password = $this->client->encrypt($input->password);
-        }
-
+        $input->password = $this->client->encrypt($input->password);
         $param = (new UpdateUserParam($input))->withId($userId);
         return $this->client->request($param->createRequest());
     }
