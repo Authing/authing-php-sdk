@@ -1,92 +1,141 @@
-# authing-php-sdk
+# Authing - Java
 
-Authing SDK for PHP 支持 PHP 5.4+。
+[[toc]]
 
-[官方文档请点击这里](https://docs.authing.cn)。
+Authing Java SDK 由两部分组成：`ManagementClient` 和 `AuthenticationClient`。`ManagementClient` 中进行的所有操作均以管理员的身份进行，包含管理用户、管理角色、管理权限策略、管理用户池配置等模块。`AuthenticationClient` 中的所有操作以当前终端用户的身份进行，包含登录、注册、修改用户资料、退出登录等方法。
+
+你应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次），而 `AuthenticationClient` 应该每次请求初始化一个。
 
 ## 安装
 
-#### composer
-
-当构建大规模应用时，我们推荐使用 `composer` 进行安装， 它可以与一些模块打包工具很好地配合使用。
+我们推荐使用 `composer` 进行安装， 它可以与一些模块打包工具很好地配合使用。
 
 ```shell
 # latest stable
 $ composer require authing-sdk/php
 ```
 
-#### no-composer
+## 使用用户管理模块
 
-如果不希望使用 `composer`，需要先克隆此项目并切换到 `no-composer` 分支：
+初始化 `ManagementClient` 需要 `userPoolId`（用户池 ID） 和 `secret`（用户池密钥）:
 
-```bash
-$ git clone https://github.com/Authing/authing-php-sdk.git
-$ git checkout no-composer
-```
-
-然后将 src 下的代码文件拷贝到项目目录中，
-并在入口文件顶部使用 `require` 或 `require_once` 进行引入即可。
-
-## 开始使用
+> 你可以在此[了解如何获取 UserPoolId 和 Secret](https://docs.authing.cn/others/faq.html) .
 
 ```php
-use Authing\AuthingApiClient;
+use Authing\Mgmt\ManagementClient;
 
-try {
-  $data = [
-    'clientId' => 'your id',
-    'secret'   => 'your secret',
-  ];
-
-  $client = new Client($data);
-
-  $client->login([
-    'email' => '376155014@qq.com',
-    'password' => '654321',
-  ]);
-} catch (\Exception $e) {
-  // 出错了
-  print_r($e->getMessage());
-}
+$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
 ```
 
-更多示例请查看 [test/index.php](./test/index.php)
+现在 `managementClient` 实例就可以使用了。例如可以获取用户池中的用户列表：
 
-[怎样获取 Client ID ?](https://docs.authing.cn/#/quick_start/howto)。
+```php
+use Authing\Mgmt\ManagementClient;
 
-获取 Client ID 和 Client Secret，请[点击这里](https://docs.authing.cn/#/quick_start/howto)。
+$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
+$users = $management->users()->paginate();
+```
+
+## 使用用户认证模块
+
+初始化 `AuthenticationClient` 需要 `userPoolId`（用户池 ID）：
+
+> 你可以在此[了解如何获取 UserPoolId](https://docs.authing.cn/others/faq.html) .
+
+```php
+use Authing\Auth\AuthenticationClient;
+
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+```
+
+接下来可以进行注册登录等操作：
+
+```php
+use Authing\Auth\AuthenticationClient;
+use Authing\Types\LoginByEmailInput;
+
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$user = $authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
+```
+
+完成登录之后，`update_profile` 等要求用户登录的方法就可用了：
+
+```php
+use Authing\Auth\AuthenticationClient;
+use Authing\Types\LoginByEmailInput;
+use Authing\Types\UpdateUserInput;
+
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
+
+$user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
+```
+
+你也可以在初始化后设置 `AccessToken` 参数, 不需要每次都调用 `LoginByXXX` 方法:
+
+```php
+use Authing\Auth\AuthenticationClient;
+
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication->setAccessToken("ACCESS_TOKEN");
+```
+
+再次执行 `UpdateProfile` 方法，发现也成功了:
+
+
+```php
+use Authing\Auth\AuthenticationClient;
+use Authing\Types\UpdateUserInput;
+
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication->setAccessToken("ACCESS_TOKEN");
+
+$user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
+```
 
 ## 错误处理
 
-统一使用 try...catch 处理错误
-
-了解更多报错的详情，请查看[错误代码列表](https://docs.authing.cn/#/quick_start/error_code)。
-
-[接口相关文档请点击这里](https://docs.authing.cn/sdk/open-graphql.html)。
-
-## 自定义接口请求
-
-SDK 中提供了所有线上 Graphql 的 Param、Response 类型，但由于工作量较大，并未封装完成所有的接口，
-如需调用还未封装的 Graphql 接口，可以继承 AuthingApiClient 类并实现对应的方法，例如：
+统一使用 try catch 处理：
 
 ```php
-class AuthingApiClientExtends extends AuthingApiClient
-{
-    public function __construct($options)
-    {
-        parent::__construct($options);
-    }
+use Authing\Auth\AuthenticationClient;
+use Authing\Types\UpdateUserInput;
 
-    public function signIn(SignInParam $param)
-    {
-        $this->checkParams($param, 'oidcAppId');
+$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication->setAccessToken("ACCESS_TOKEN");
 
-        $param->userPoolId = $this->options["clientId"];
-        if ($param->password != null) {
-            $param->password = self::passwordEncrypt($param->password);
-        }
-
-        return $this->request($param->createRequest());
-    }
+try {
+    $user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
+} catch (Exception $e) {
+    print_r($e);
 }
 ```
+
+## 获取帮助
+
+Join us on Gitter: [#authing-chat](https://gitter.im/authing-chat/community)
+
+## 接口索引
+
+可用的 Authentication 方法
+
+- 获取当前用户的用户资料: `getCurrentUser`
+- 使用邮箱注册: `registerByEmail`
+- 使用用户名注册: `registerByUsername`
+- 使用手机号验证码注册: `registerByPhoneCode`
+- 使用邮箱登录: `loginByEmail`
+- 使用用户名登录: `loginByUsername`
+- 使用手机号验证码登录 `loginByPhoneCode`
+- 使用手机号密码登录: `loginByPhonePassword`
+- 发送邮件: `sendEmail`
+- 发送短信验证码: `sendSmsCode`
+- 检查 token 的有效状态: `checkLoginStatus`
+- 使用手机号验证码重置密码: `resetPasswordByPhoneCode`
+- 使用邮件验证码重置密码: `resetPasswordByEmailCode`
+- 更新用户资料: `updateProfile`
+- 更新密码: `updatePassword`
+- 更新手机号: `updatePhone`
+- 更新邮箱: `updateEmail`
+- 刷新 token: `refreshToken`
+- 绑定手机号: `bindPhone`
+- 解绑手机号: `unbindPhone`
