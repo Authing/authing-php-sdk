@@ -91,12 +91,32 @@ PUBLICKKEY;
 
     /**
      * @param $path string
+     * @return object
+     * @throws Exception
+     */
+    public function httpGet($path) {
+        $result = $this->send($this->host . $path, null, 'GET');
+        return $this->arrayToObject($result);
+    }
+
+    /**
+     * @param $path string
      * @param $data object | array
      * @return object
      * @throws Exception
      */
-    public function post($path, $data) {
+    public function httpPost($path, $data) {
         $result = $this->send($this->host . $path, $this->objectToArray($data));
+        return $this->arrayToObject($result);
+    }
+
+    /**
+     * @param $path string
+     * @return object
+     * @throws Exception
+     */
+    public function httpDelete($path) {
+        $result = $this->send($this->host . $path, null, 'DELETE');
         return $this->arrayToObject($result);
     }
 
@@ -159,13 +179,13 @@ PUBLICKKEY;
     /**
      * @param string $url request url
      * @param string|array $data post body
+     * @param string $method http method
      * @param int $time timeout time
      * @return mixed
      * @throws Exception
      */
-    private function send($url, $data = '', $time = 30000)
+    private function send($url, $data = '', $method = 'POST', $time = 30000)
     {
-
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -185,9 +205,19 @@ PUBLICKKEY;
         ];
         curl_setopt($ch, CURLOPT_HTTPHEADER, $h);
 
-        if ($data != '') {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+        switch ($method) {
+            case "POST":
+                curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                break;
+            case "PUT":
+                curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                break;
+            case "DELETE":
+                curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                break;
         }
 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 3000);

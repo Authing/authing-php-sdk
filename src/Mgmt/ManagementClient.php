@@ -85,4 +85,29 @@ class ManagementClient extends BaseClient
     public function policies() {
         return new PoliciesManagementClient($this);
     }
+
+    /**
+     * 获取用户池管理模块
+     *
+     * @return UserpoolManagementClient
+     */
+    public function userpool() {
+        return new UserpoolManagementClient($this);
+    }
+
+    /**
+     * 获取白名单管理模块
+     *
+     * @return WhitelistManagementClient
+     */
+    public function whitelist() {
+        return new WhitelistManagementClient($this);
+    }
+
+    /**
+     * @return GroupsManagementClient
+     */
+    public function groups() {
+        return new GroupsManagementClient($this);
+    }
 }

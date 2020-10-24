@@ -125,7 +125,7 @@ class AuthenticationClient extends BaseClient
      * @throws Exception
      */
     function sendSmsCode($phone) {
-        return $this->post( "/api/v2/sms/send", [
+        return $this->httpPost( "/api/v2/sms/send", [
             "phone" => $phone
         ]);
     }

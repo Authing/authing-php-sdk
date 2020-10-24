@@ -25,6 +25,8 @@ $ composer require authing-sdk/php
 use Authing\Mgmt\ManagementClient;
 
 $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
+// 获取管理员权限
+$management->requestToken();
 ```
 
 现在 `managementClient` 实例就可以使用了。例如可以获取用户池中的用户列表：
@@ -33,6 +35,8 @@ $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECR
 use Authing\Mgmt\ManagementClient;
 
 $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
+// 获取管理员权限
+$management->requestToken();
 $users = $management->users()->paginate();
 ```
 
