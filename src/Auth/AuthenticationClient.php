@@ -25,8 +25,12 @@ use Authing\Types\RegisterByPhoneCodeInput;
 use Authing\Types\RegisterByPhoneCodeParam;
 use Authing\Types\RegisterByUsernameInput;
 use Authing\Types\RegisterByUsernameParam;
+use Authing\Types\RemoveUdvParam;
 use Authing\Types\ResetPasswordParam;
 use Authing\Types\SendEmailParam;
+use Authing\Types\SetUdvParam;
+use Authing\Types\UDFTargetType;
+use Authing\Types\UdvParam;
 use Authing\Types\UnbindPhoneParam;
 use Authing\Types\UpdateEmailParam;
 use Authing\Types\UpdatePasswordParam;
@@ -34,6 +38,7 @@ use Authing\Types\UpdatePhoneParam;
 use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
+use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Exception;
 use Authing\BaseClient;
@@ -366,5 +371,44 @@ class AuthenticationClient extends BaseClient
         $param = new UpdateUserParam((new UpdateUserInput())->withTokenExpiredAt('0'));
         $this->request($param->createRequest());
         $this->accessToken = '';
+    }
+
+    /**
+     * 获取当前用户的自定义数据列表
+     *
+     * @return UserDefinedData[]
+     * @throws Exception
+     */
+    function listUdv() {
+        $user = $this->getCurrentUser();
+        $param = new UdvParam(UdfTargetType::User, $user->id);
+        return $this->request($param->createRequest());
+    }
+
+    /**
+     * 添加自定义数据
+     *
+     * @param $key string 自定义字段 key
+     * @param $value string 自定义字段值
+     * @return CommonMessage
+     * @throws Exception
+     */
+    function setUdv($key, $value) {
+        $user = $this->getCurrentUser();
+        $param = new SetUdvParam(UdfTargetType::User, $user->id, $key, json_encode($value));
+        return $this->request($param->createRequest());
+    }
+
+    /**
+     * 删除自定义数据
+     *
+     * @param $key string 自定义字段 key
+     * @return CommonMessage
+     * @throws Exception
+     */
+    function removeUdv($key) {
+        $user = $this->getCurrentUser();
+        $param = new RemoveUdvParam(UdfTargetType::User, $user->id, $key);
+        return $this->request($param->createRequest());
     }
 }

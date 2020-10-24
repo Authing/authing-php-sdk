@@ -4,6 +4,7 @@
 namespace Authing\Mgmt;
 
 use Authing\Types\AddPolicyAssignmentsParam;
+use Authing\Types\AddUserToGroupParam;
 use Authing\Types\AssignRoleParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CommonMessage;
@@ -11,8 +12,11 @@ use Authing\Types\CreateUserInput;
 use Authing\Types\CreateUserParam;
 use Authing\Types\DeleteUserParam;
 use Authing\Types\DeleteUsersParam;
+use Authing\Types\GetUserGroupsParam;
 use Authing\Types\GetUserRolesParam;
+use Authing\Types\IsUserExistsParam;
 use Authing\Types\JWTTokenStatus;
+use Authing\Types\PaginatedGroups;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PaginatedRoles;
 use Authing\Types\PaginatedUsers;
@@ -21,12 +25,18 @@ use Authing\Types\PolicyAssignmentTargetType;
 use Authing\Types\RefreshToken;
 use Authing\Types\RefreshTokenParam;
 use Authing\Types\RemovePolicyAssignmentsParam;
+use Authing\Types\RemoveUdvParam;
+use Authing\Types\RemoveUserFromGroupParam;
 use Authing\Types\RevokeRoleParam;
 use Authing\Types\SearchUserParam;
+use Authing\Types\SetUdvParam;
+use Authing\Types\UDFTargetType;
+use Authing\Types\UdvParam;
 use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
 use Authing\Types\UserBatchParam;
+use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
 use Exception;
@@ -156,6 +166,17 @@ class UsersManagementClient
     }
 
     /**
+     * 检查用户是否存在，目前可检测的字段有用户名、邮箱、手机号。
+     *
+     * @param $param IsUserExistsParam
+     * @return boolean
+     * @throws Exception
+     */
+    public function exists($param) {
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
      * @param $token string 用户的 access token
      * @return JWTTokenStatus
      * @throws Exception
@@ -163,6 +184,44 @@ class UsersManagementClient
     public function checkLoginStatus($token)
     {
         $param = (new CheckLoginStatusParam())->withToken($token);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 获取用户分组列表
+     *
+     * @param $userId string 用户 ID
+     * @return PaginatedGroups
+     * @throws Exception
+     */
+    public function listGroups($userId) {
+        $param = new GetUserGroupsParam($userId);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 将用户加入分组
+     *
+     * @param $userId string 用户 ID
+     * @param $group string 分组 ID
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function addGroups($userId, $group) {
+        $param = (new AddUserToGroupParam([$userId]))->withCode($group);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 退出分组
+     *
+     * @param $userId string 用户 ID
+     * @param $group string 分组 ID
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function removeGroup($userId, $group) {
+        $param = (new RemoveUserFromGroupParam([$userId]))->withCode($group);
         return $this->client->request($param->createRequest());
     }
 
@@ -253,6 +312,45 @@ class UsersManagementClient
     public function removePolicies($userId, $policies)
     {
         $param = (new RemovePolicyAssignmentsParam($policies, PolicyAssignmentTargetType::USER))->withTargetIdentifiers([$userId]);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 获取该用户的自定义数据列表
+     *
+     * @param $userId
+     * @return UserDefinedData[]
+     * @throws Exception
+     */
+    public function listUdv($userId) {
+        $param = new UdvParam(UDFTargetType::USER, $userId);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 设置自定义用户数据
+     *
+     * @param $userId string 用户 ID
+     * @param $key string 字段 key
+     * @param $value string 字段 value
+     * @return UserDefinedData
+     * @throws Exception
+     */
+    public function setUdv($userId, $key, $value) {
+        $param = new SetUdvParam(UDFTargetType::USER, $userId, $key, $value);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 删除自定义用户数据
+     *
+     * @param $userId string 用户 ID
+     * @param $key string 字段 key
+     * @return UserDefinedData
+     * @throws Exception
+     */
+    public function removeUdv($userId, $key) {
+        $param = new RemoveUdvParam(UDFTargetType::USER, $userId, $key);
         return $this->client->request($param->createRequest());
     }
 }
