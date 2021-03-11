@@ -1,7 +1,5 @@
 # Authing - PHP
 
-[[toc]]
-
 Authing PHP SDK 由两部分组成：`ManagementClient` 和 `AuthenticationClient`。`ManagementClient` 中进行的所有操作均以管理员的身份进行，包含管理用户、管理角色、管理权限策略、管理用户池配置等模块。`AuthenticationClient` 中的所有操作以当前终端用户的身份进行，包含登录、注册、修改用户资料、退出登录等方法。
 
 你应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次），而 `AuthenticationClient` 应该每次请求初始化一个。
@@ -15,11 +13,11 @@ Authing PHP SDK 由两部分组成：`ManagementClient` 和 `AuthenticationClien
 $ composer require authing-sdk/php
 ```
 
-## 使用用户管理模块
+## 使用管理模块
 
 初始化 `ManagementClient` 需要 `userPoolId`（用户池 ID） 和 `secret`（用户池密钥）:
 
-> 你可以在此[了解如何获取 UserPoolId 和 Secret](https://docs.authing.cn/others/faq.html) .
+> 你可以在此[了解如何获取 UserPoolId 和 Secret](https://docs.authing.cn/v2/guides/faqs/get-userpool-id-and-secret.html) .
 
 ```php
 use Authing\Mgmt\ManagementClient;
@@ -40,11 +38,11 @@ $management->requestToken();
 $users = $management->users()->paginate();
 ```
 
-## 使用用户认证模块
+## 使用认证模块
 
 初始化 `AuthenticationClient` 需要 `userPoolId`（用户池 ID）：
 
-> 你可以在此[了解如何获取 UserPoolId](https://docs.authing.cn/others/faq.html) .
+> 你可以在此[了解如何获取 UserPoolId](https://docs.authing.cn/v2/guides/faqs/get-userpool-id-and-secret.html) .
 
 ```php
 use Authing\Auth\AuthenticationClient;
@@ -86,7 +84,6 @@ $authentication->setAccessToken("ACCESS_TOKEN");
 
 再次执行 `UpdateProfile` 方法，发现也成功了:
 
-
 ```php
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\UpdateUserInput;
@@ -115,9 +112,9 @@ try {
 }
 ```
 
-## 获取帮助
+## 私有化部署
 
-Join us on Gitter: [#authing-chat](https://gitter.im/authing-chat/community)
+**私有化部署**场景需要指定你私有化的 Authing 服务的 GraphQL 端点（**不带协议头和 Path**），如果你不清楚可以联系 Authing IDaaS 服务管理员。
 
 ## 接口索引
 
@@ -144,7 +141,20 @@ Join us on Gitter: [#authing-chat](https://gitter.im/authing-chat/community)
 - 绑定手机号: `bindPhone`
 - 解绑手机号: `unbindPhone`
 
-完整的接口文档请见：
-- [https://docs.authing.co/sdk/sdk-for-php/authentication/](https://docs.authing.co/sdk/sdk-for-php/authentication/)
-- [https://docs.authing.co/sdk/sdk-for-php/management/](https://docs.authing.co/sdk/sdk-for-php/management/)
+详情请见：
+[用户认证模块](https://docs.authing.cn/v2/reference/sdk-for-php/authentication/)
 
+管理模块包含以下子模块：
+[管理用户](https://docs.authing.cn/v2/reference/sdk-for-php/management/UsersManagementClient.html)
+
+[管理角色](https://docs.authing.cn/v2/reference/sdk-for-php/management/RolesManagementClient.html)
+
+[管理策略](https://docs.authing.cn/v2/reference/sdk-for-php/management/PoliciesManagementClient.html)
+
+[管理权限、访问控制](https://docs.authing.cn/v2/reference/sdk-for-php/management/AclManagementClient.html)
+
+[管理用户自定义字段](https://docs.authing.cn/v2/reference/sdk-for-php/management/UdfManagementClient.html)
+
+## 获取帮助
+
+Join us on Gitter: [#authing-chat](https://gitter.im/authing-chat/community)
