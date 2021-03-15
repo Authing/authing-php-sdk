@@ -2,8 +2,7 @@
 
 
 namespace Authing\Auth;
-
-use Authing\InvalidArgumentException;
+use InvalidArgumentException;
 use Authing\Types\BindPhoneParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CommonMessage;
@@ -50,9 +49,9 @@ class AuthenticationClient extends BaseClient
      * @param $userPoolId string
      * @throws InvalidArgumentException
      */
-    public function __construct($userPoolId)
+    public function __construct($userPoolIdOrFunc)
     {
-        parent::__construct($userPoolId);
+        parent::__construct($userPoolIdOrFunc);
     }
 
     /**
@@ -381,7 +380,7 @@ class AuthenticationClient extends BaseClient
      */
     function listUdv() {
         $user = $this->getCurrentUser();
-        $param = new UdvParam(UdfTargetType::User, $user->id);
+        $param = new UdvParam(UdfTargetType::USER, $user->id);
         return $this->request($param->createRequest());
     }
 
@@ -395,12 +394,13 @@ class AuthenticationClient extends BaseClient
      */
     function setUdv($key, $value) {
         $user = $this->getCurrentUser();
-        $param = new SetUdvParam(UdfTargetType::User, $user->id, $key, json_encode($value));
+        $param = new SetUdvParam(UdfTargetType::USER, $user->id, $key, json_encode($value));
         return $this->request($param->createRequest());
     }
 
     /**
      * 删除自定义数据
+     * -
      *
      * @param $key string 自定义字段 key
      * @return CommonMessage
@@ -408,7 +408,7 @@ class AuthenticationClient extends BaseClient
      */
     function removeUdv($key) {
         $user = $this->getCurrentUser();
-        $param = new RemoveUdvParam(UdfTargetType::User, $user->id, $key);
+        $param = new RemoveUdvParam(UdfTargetType::USER, $user->id, $key);
         return $this->request($param->createRequest());
     }
 }

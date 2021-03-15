@@ -8,6 +8,7 @@ use Exception;
 abstract class BaseClient
 {
     protected $userPoolId;
+    protected $appId;
 
     private $host = 'https://core.authing.cn';
 
@@ -16,7 +17,7 @@ abstract class BaseClient
     private $_version = "php:2.0.1";
 
     private $publicKey
-        = <<<PUBLICKKEY
+    = <<<PUBLICKKEY
 -----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4xKeUgQ+Aoz7TLfAfs9+paePb
 5KIofVthEopwrXFkp8OCeocaTHt9ICjTT2QeJh6cZaDaArfZ873GPUn00eOIZ7Ae
@@ -32,33 +33,52 @@ PUBLICKKEY;
      * @param $userPoolId string
      * @throws InvalidArgumentException
      */
-    public function __construct($userPoolId)
+    public function __construct($userPoolIdOrFunc)
     {
-        if (!isset($userPoolId)) {
-            throw new InvalidArgumentException("Invalid userPoolId");
+        if (!isset($userPoolIdOrFunc)) {
+            throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
-
-        $this->userPoolId = $userPoolId;
+        if (is_string($userPoolIdOrFunc)) {
+            // 传入的是 userPoolId
+            $this->userPoolId =
+                $userPoolIdOrFunc;
+        }
+        if (is_callable($userPoolIdOrFunc)) {
+            // 传入的是一个函数
+            $empty_object =
+                new \stdClass;
+            $userPoolIdOrFunc($empty_object);
+            if (isset($empty_object->userPoolId))
+                $this->userPoolId = $empty_object->userPoolId;
+            if (isset($empty_object->appId))
+                $this->appId = $empty_object->appId;
+        }
+        if (is_null($this->userPoolId) && is_null($this->appId)) {
+            throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
+        }
     }
 
     /**
      * @param $host string 用户池 ID
      */
-    public function setHost($host) {
+    public function setHost($host)
+    {
         $this->host = $host;
     }
 
     /**
      * @param $publicKey string 加密公钥
      */
-    public function setPublicKey($publicKey) {
+    public function setPublicKey($publicKey)
+    {
         $this->publicKey = $publicKey;
     }
 
     /**
      * @param $accessToken string
      */
-    public function setAccessToken($accessToken) {
+    public function setAccessToken($accessToken)
+    {
         $this->accessToken = $accessToken;
     }
 
@@ -94,7 +114,8 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpGet($path) {
+    public function httpGet($path)
+    {
         $result = $this->send($this->host . $path, null, 'GET');
         return $this->arrayToObject($result);
     }
@@ -105,7 +126,8 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpPost($path, $data) {
+    public function httpPost($path, $data)
+    {
         $result = $this->send($this->host . $path, $this->objectToArray($data));
         return $this->arrayToObject($result);
     }
@@ -115,7 +137,8 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpDelete($path) {
+    public function httpDelete($path)
+    {
         $result = $this->send($this->host . $path, null, 'DELETE');
         return $this->arrayToObject($result);
     }
@@ -126,7 +149,8 @@ PUBLICKKEY;
      */
     private function checkResult($result)
     {
-        $errors = $result['errors'];
+        if (isset($result['errors'])) 
+            $errors = $result['errors'];
         if (!empty($errors) && count($errors) > 0) {
             throw new Exception("Graphql request failed:\n" . var_export($errors));
         }
@@ -169,7 +193,8 @@ PUBLICKKEY;
      * @param $arr array
      * @return mixed|null
      */
-    private function firstElement($arr) {
+    private function firstElement($arr)
+    {
         foreach ($arr as $k => $v) {
             return $v;
         }
@@ -200,6 +225,7 @@ PUBLICKKEY;
             "Content-type: application/json",
             "Authorization: Bearer $this->accessToken",
             "x-authing-userpool-id: $this->userPoolId",
+            "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",
             "x-authing-sdk-version: $this->_version",
         ];
