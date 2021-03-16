@@ -2,11 +2,13 @@
 
 
 namespace Authing;
-
+use \GuzzleHttp;
 use Exception;
+use GuzzleHttp\Client;
 
 abstract class BaseClient
 {
+    protected $naiveHttpClient;
     protected $options;
     
     protected $userPoolId;
@@ -29,6 +31,7 @@ GKl64GDcIq3au+aqJQIDAQAB
 PUBLICKKEY;
 
     protected $accessToken = '';
+    protected $mfaToken = '';
 
     /**
      * Client constructor.
@@ -37,11 +40,12 @@ PUBLICKKEY;
      */
     public function __construct($userPoolIdOrFunc)
     {
+        $this->naiveHttpClient = new Client(['base_uri' => $this->host]);
         if (!isset($userPoolIdOrFunc)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
         if (is_string($userPoolIdOrFunc)) {
-            $this->options = $userPoolIdOrFunc;
+            // $this->options = $userPoolIdOrFunc;
             // 传入的是 userPoolId
             $this->userPoolId =
                 $userPoolIdOrFunc;
@@ -49,13 +53,13 @@ PUBLICKKEY;
         if (is_callable($userPoolIdOrFunc)) {
             $userPoolIdOrFunc($this->options);
             // 传入的是一个函数
-            $empty_object =
-                new \stdClass;
-            $userPoolIdOrFunc($empty_object);
-            if (isset($empty_object->userPoolId))
-                $this->userPoolId = $empty_object->userPoolId;
-            if (isset($empty_object->appId))
-                $this->appId = $empty_object->appId;
+            // $empty_object =
+            //     new \stdClass;
+            // $userPoolIdOrFunc($empty_object);
+            if (isset($this->options->userPoolId))
+                $this->userPoolId = $this->options->userPoolId;
+            if (isset($this->options->appId))
+                $this->appId = $this->options->appId;
         }
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
@@ -232,7 +236,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "Content-type: application/json",
-            "Authorization: Bearer $this->accessToken",
+            "Authorization: Bearer ".($this->mfaToken || $this->accessToken),
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",

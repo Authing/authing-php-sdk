@@ -39,7 +39,12 @@ use Authing\Types\UserBatchParam;
 use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
+use Authing\Types\UdfValueBatchParam;
+use Authing\Types\SetUdfValueBatchParam;
+use Authing\types\ListUserAuthorizedResourcesParam;
+use Error;
 use Exception;
+use stdClass;
 
 class UsersManagementClient
 {
@@ -352,5 +357,49 @@ class UsersManagementClient
     public function removeUdv($userId, $key) {
         $param = new RemoveUdvParam(UDFTargetType::USER, $userId, $key);
         return $this->client->request($param->createRequest());
+    }
+
+    function getUdfValueBatch($userIds) {
+        if(!isset($userIds) && !is_array($userIds)) {
+            throw new Error("userId 为数组 不能为空");
+        }
+        $param = new UdfValueBatchParam("User", $userIds);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    function setUdfValueBatch($input) {
+        if(!isset($input) && !is_array($input)) {
+            throw new Error("userId 为数组 不能为空");
+        }
+        foreach($input as $index => $val) {
+            foreach($val as $_key => $_val) {
+                $_ = new stdClass;
+                $_->targetId = $val->targetId;
+                $_->key = $_key;
+                $_->value = $_val;
+                array_push($input, $_);
+            }
+        }
+        $param = new SetUdfValueBatchParam("User", $input);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    public function listOrgs(string $userId)
+    {
+        $res = $this->client->httpGet('/api/v2/users/'.$userId.'/orgs');
+        return $res;
+    }
+
+    public function listAuthorizedResources(string $userId, string $namespace)
+    {
+        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace);
+        $resUser = $this->client->request($param->createRequest());
+        if ($resUser) {
+            return $resUser->authorizedResources;
+        } else {
+            throw new Exception("用户不存在");
+        }
     }
 }
