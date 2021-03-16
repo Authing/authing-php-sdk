@@ -7,6 +7,8 @@ use Exception;
 
 abstract class BaseClient
 {
+    protected $options;
+    
     protected $userPoolId;
     protected $appId;
 
@@ -39,11 +41,13 @@ PUBLICKKEY;
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
         if (is_string($userPoolIdOrFunc)) {
+            $this->options = $userPoolIdOrFunc;
             // 传入的是 userPoolId
             $this->userPoolId =
                 $userPoolIdOrFunc;
         }
         if (is_callable($userPoolIdOrFunc)) {
+            $userPoolIdOrFunc($this->options);
             // 传入的是一个函数
             $empty_object =
                 new \stdClass;
@@ -126,9 +130,14 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpPost($path, $data)
+    public function httpPost($path, $data, $flag = '')
     {
-        $result = $this->send($this->host . $path, $this->objectToArray($data));
+        if (isset($flag) && $flag) {
+            $path = $path;
+        } else {
+            $path = $this->host . $path;
+        }
+        $result = $this->send($path, $this->objectToArray($data));
         return $this->arrayToObject($result);
     }
 

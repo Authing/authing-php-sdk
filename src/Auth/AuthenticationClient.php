@@ -39,11 +39,19 @@ use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
 use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
-use Exception;
 use Authing\BaseClient;
+use Authing\Types\CheckPasswordStrengthParam;
+use Authing\Types\ListUserAuthorizedResourcesParam;
+use Exception;
+use stdClass;
+
 
 class AuthenticationClient extends BaseClient
 {
+
+    protected $user;
+
+    public $PasswordSecurityLevel=array("LOW"=>1,"MIDDLE"=>2,"HIGH"=>3);
     /**
      * AuthenticationClient constructor.
      * @param $userPoolId string
@@ -64,8 +72,24 @@ class AuthenticationClient extends BaseClient
         $param = new UserParam();
         $user = $this->request($param->createRequest());
         $this->accessToken = $user->token ?: $this->accessToken;
+        $this->user = $user;
         return $user;
     }
+
+    /**
+     * 设置当前用户
+     *
+     * @return User
+     * @throws Exception
+     */
+    function setCurrentUser() {
+        $param = new UserParam();
+        $user = $this->request($param->createRequest());
+        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->user = $user;
+        return $user;
+    }
+
 
     /**
      * 通过邮箱密码注册
@@ -409,6 +433,144 @@ class AuthenticationClient extends BaseClient
     function removeUdv($key) {
         $user = $this->getCurrentUser();
         $param = new RemoveUdvParam(UdfTargetType::USER, $user->id, $key);
+        return $this->request($param->createRequest());
+    }
+    
+        
+    /**
+     * 检查密码强度
+     *
+     * @param  $password string 需要检测的字符串
+     * @return void
+     */
+    function checkPasswordStrength($password) {
+        if(!isset($userPoolIdOrFunc)) {
+            throw new Exception("不允许为空");
+        }
+        $param = new CheckPasswordStrengthParam($password);
+        return $this->request($param->createRequest());
+    }
+
+    // function getUdfValue() {
+    //     $id = $this->user->id;
+    //     if ($id) {
+    //         $targetType = "USER";
+    //         $targetId = $id;
+    //         $param = new UdvParam($targetType, $targetId);
+    //         return $this->request($param->createRequest());
+    //     } else {
+    //         throw new Exception("未登录，请登录");
+    //     }
+    // }
+
+    // function setUdfValue($data) {
+    //     if(!isset($data)) {
+    //         throw new Exception("请输入需要修改的数据");
+    //     }
+    //     $id = $this->user->id;
+    //     if ($id) {
+    //         $targetType = "USER";
+    //         $targetId = $id;
+    //         $param = new SetUdvBatchDocument($targetType, $targetId);
+    //         return $this->request($param->createRequest());
+    //     } else {
+    //         throw new Exception("未登录，请登录");
+    //     }
+    // }
+
+        
+    // 不实现
+    function updateAvatar($src) {
+        if(!isset($set)) {
+            throw new Exception("请输入需要修改的数据");
+        } else {
+            $id = $this->user->id;
+            if ($id) {
+
+            } else {
+                throw new Exception("未登录，请登录");
+            }
+        }
+    }
+
+    function linkAccount($options) {
+        if(!isset($options)) {
+            throw new Exception("请输入需要修改的数据");
+        }
+        $data = new \stdClass;
+        $data->primaryUserToken = $options->primaryUserToken;
+        $data->secondaryUserToken = $options->secondaryUserToken;
+        $res = $this->httpPost("/api/v2/users/link", $data);
+        return $res;
+    }
+
+    function listOrg() {
+        return $this->httpGet('/api/v2/users/me/orgs');
+    }
+
+    function loginByLdap($username, $password, $options) {
+        if(!isset($username, $password)) {
+            throw new Exception("请输入必要的参数");
+        } else {
+            if(!isset($options)) {
+                $options = new stdClass;
+            }
+            $_ = new stdClass();
+            $_->username = $username;
+            $_->password = $password;
+            $user = $this->httpPost('/api/v2/ldap/verify-user', $_);
+            $this->setAccessToken($user->$user->token ?: $this->accessToken);
+            return $user;
+        }
+    }
+
+    function loginByAd($username, $password) {
+        $hostName = parse_url($this->options['host']);
+        if(!$hostName) {
+            throw new Exception("非法 域名");
+        } else {
+            $hostName = $hostName['host'];
+        }
+        $firstLevelDomain = array_slice(explode(".",$hostName), 1);
+        $websocketHost = $this->options["websocketHost"] || `https://ws.${firstLevelDomain}`;
+        $api = $websocketHost."/api/v2/ad/verify-user";
+        $_ = new stdClass;
+        $_->username = $username;
+        $_->password = $password;
+        $user = $this->httpPost($api, $_, true);
+        $this->setAccessToken($user->$user->token ?: $this->accessToken);
+        return $user;
+    }
+
+    function computedPasswordSecurityLevel($password) {
+        if(!isset($password) && !is_string($password)) {
+            throw new Exception("请输入字符串");
+        } 
+        $highLevel = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{12,}$/g";
+        $middleLevel = "/^(?=.*[a-zA-Z])(?=.*\\d)[^]{8,}$/g";
+        if (preg_match($middleLevel, $password)) {
+            return $this->PasswordSecurityLevel['HIGH'];
+        }
+        if (preg_match($highLevel, $password)) {
+            return $this->PasswordSecurityLevel['MIDDLE'];
+        }
+        return $this->PasswordSecurityLevel['LOW'];
+    }
+
+    function getSecurityLevel() {
+        $res = $this->httpGet('/api/v2/users/me/security-level');
+        return $res;
+    }
+
+    function listAuthorizedResources($namespace) {
+        $user = $this->getCurrentUser();
+        if (!$user) {
+            throw new Exception("未登录，请登录");
+        }
+        if (!isset($namespace) && !is_string($namespace)) {
+            throw new Exception("namespace 为必填");
+        }
+        $param = (new ListUserAuthorizedResourcesParam($user->id))->withNamespace($namespace);
         return $this->request($param->createRequest());
     }
 }
