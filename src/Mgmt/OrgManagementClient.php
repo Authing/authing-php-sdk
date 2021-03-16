@@ -19,6 +19,7 @@ use Authing\Types\PaginatedOrgs;
 use Authing\Types\PaginatedUsers;
 use Authing\Types\RootNodeParam;
 use Exception;
+use stdClass;
 
 class OrgManagementClient
 {
@@ -62,6 +63,12 @@ class OrgManagementClient
         return $this->client->request($param->createRequest());
     }
 
+    private function buildTree($org)
+    {
+        $org->tree = $this->buildTree(json_encode($org->nodes));
+        return $org;
+    }
+
     /**
      * 获取用户池组织机构列表
      *
@@ -73,7 +80,17 @@ class OrgManagementClient
     public function paginate($page = 1, $limit = 10) {
         $param = (new OrgsParam())->withPage($page)->withLimit($limit);
         // TODO: buildTree
-        return $this->client->request($param->createRequest());
+        $data = $this->client->request($param->createRequest());
+        $orgs = $data->orgs;
+        $list = $orgs->list;
+        array_map(function($org) {
+            $this->buildTree($org);
+        }, $list);
+        $totalCount = $orgs->totalCount;
+        $_ = new stdClass;
+        $_->totalCount = $totalCount;
+        $_->list = $list;
+        return $_;
     }
 
     public function addNode($orgId, $parentNodeId, $data) {
