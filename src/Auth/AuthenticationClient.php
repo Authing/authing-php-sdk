@@ -485,40 +485,12 @@ class AuthenticationClient extends BaseClient
      */
     function checkPasswordStrength($password)
     {
-        if (!isset($userPoolIdOrFunc)) {
+        if (!isset($password)) {
             throw new Exception("不允许为空");
         }
         $param = new CheckPasswordStrengthParam($password);
         return $this->request($param->createRequest());
     }
-
-    // function getUdfValue() {
-    //     $id = $this->user->id;
-    //     if ($id) {
-    //         $targetType = "USER";
-    //         $targetId = $id;
-    //         $param = new UdvParam($targetType, $targetId);
-    //         return $this->request($param->createRequest());
-    //     } else {
-    //         throw new Exception("未登录，请登录");
-    //     }
-    // }
-
-    // function setUdfValue($data) {
-    //     if(!isset($data)) {
-    //         throw new Exception("请输入需要修改的数据");
-    //     }
-    //     $id = $this->user->id;
-    //     if ($id) {
-    //         $targetType = "USER";
-    //         $targetId = $id;
-    //         $param = new SetUdvBatchDocument($targetType, $targetId);
-    //         return $this->request($param->createRequest());
-    //     } else {
-    //         throw new Exception("未登录，请登录");
-    //     }
-    // }
-
 
     // 不实现
     function updateAvatar($src)
@@ -551,7 +523,7 @@ class AuthenticationClient extends BaseClient
         return $this->httpGet('/api/v2/users/me/orgs');
     }
 
-    function loginByLdap($username, $password, $options)
+    function loginByLdap($username, $password, $options = "")
     {
         if (!isset($username, $password)) {
             throw new Exception("请输入必要的参数");
@@ -594,10 +566,10 @@ class AuthenticationClient extends BaseClient
         }
         $highLevel = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{12,}$/g";
         $middleLevel = "/^(?=.*[a-zA-Z])(?=.*\\d)[^]{8,}$/g";
-        if (preg_match($middleLevel, $password)) {
+        if (preg_match_all($middleLevel, $password)) {
             return $this->PasswordSecurityLevel['HIGH'];
         }
-        if (preg_match($highLevel, $password)) {
+        if (preg_match_all($highLevel, $password)) {
             return $this->PasswordSecurityLevel['MIDDLE'];
         }
         return $this->PasswordSecurityLevel['LOW'];
@@ -637,88 +609,120 @@ class AuthenticationClient extends BaseClient
             'code' => $code,
             'redirect_uri' => $this->options->redirectUri
         );
-        $api = '/oidc/token';
+        $api = '';
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
         $req = new Request('POST', $api, [
             'body' => $data,
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ]
+            'headers' => array_merge(
+                $this->getOidcHeaders(),
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ]
+            )
         ]);
         $tokenSet = $this->naiveHttpClient->send($req);
-        // $tokenSet->then(
-        //     function (ResponseInterface $res) {
-        //         echo $res->getStatusCode() . "\n";
-        //     },
-        //     function (RequestException $e) {
-        //         echo $e->getMessage() . "\n";
-        //         echo $e->getRequest()->getMethod();
-        //     }
-        // );
+        return $tokenSet;
     }
 
     function _generateBasicAuthToken(string $appId = "", string $secret = "")
     {
-        $id = $appId || $this->options->appId;
-        $secret = $secret || $this->options->secret;
-        $token = 'Basic' . base64_encode($id . ":" . $secret);
+        if ($appId) {
+            $id = $appId;
+        } else {
+            $id = $this->options->appId;
+        }
+        if ($secret) {
+            $secret = $secret;
+        } else {
+            $secret = $this->options->secret;
+        }
+        $token = 'Basic ' . base64_encode($id . ":" . $secret);
         return $token;
     }
 
     function _getAccessTokenByCodeWithClientSecretBasic(string $code)
     {
-        $api = '/oidc/token';
+        $api = '';
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
         $qstr = $this->_generateTokenRequest(
             [
+                'client_id' => $this->options->appId,
                 'grant_type' => 'authorization_code',
                 'code' => $code,
-                'redirect_uri' => $this->options->redirectUri
+                'redirect_uri' => $this->options->redirectUri,
             ]
         );
-        $tokenSet = $this->naiveHttpClient->request('POST', $api, [
-            "headers" => [
-                "Authorization" => $this->_generateBasicAuthToken()
-            ]
+        $response = $this->naiveHttpClient->request('POST', $api, [
+            "headers" =>
+            array_merge($this->getOidcHeaders(), [
+                "Authorization" => $this->_generateBasicAuthToken(),
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ]),
+            "body" => $qstr,
         ]);
-        return $tokenSet;
+        $body =
+            $response->getBody();
+        $stringBody = (string) $body;
+        return json_decode($stringBody);
     }
 
-    function _getAccessTokenByWithNone(string $code)
+    function _getAccessTokenByCodeWithNone(string $code)
     {
-        $api = '/oidc/token';
+        $api = '';
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
         $qstr = $this->_generateTokenRequest(
             [
                 "client_id" => $this->options->appId,
                 "grant_type" =>
                 'authorization_code',
-                "code"=> $code,
-                "redirect_uri"=> $this->options->redirectUri
+                "code" => $code,
+                "redirect_uri" => $this->options->redirectUri
             ]
         );
-        $tokenSet = $this->naiveHttpClient->request("POST", [
-            "body" => $qstr
+        $tokenSet = $this->naiveHttpClient->request("POST", $api, [
+            "body" => $qstr,
+            "headers" =>
+            $this->getOidcHeaders(),
         ]);
-        return $tokenSet;
+        return $tokenSet->getBody();
     }
 
     function getAccessTokenByCode(string $code)
     {
-        if (!$this->options->secret && $this->options->tokenEndPointAuthMethod !== 'none') {
+        if (
+            isset($this->options->secret) && 
+            !$this->options->secret &&
+            isset($this->options->tokenEndPointAuthMethod) &&
+            $this->options->tokenEndPointAuthMethod !== 'none'
+            ) {
             throw new Error('请在初始化 AuthenticationClient 时传入 appId 和 secret 参数');
         }
-        if (!$this->options->tokenEndPointAuthMethod === 'client_secret_post') {
+        if (isset($this->options->tokenEndPointAuthMethod) && $this->options->tokenEndPointAuthMethod === 'client_secret_post') {
             return $this->_getAccessTokenByCodeWithClientSecretPost($code);
         }
-        if (!$this->options->secret && $this->options->tokenEndPointAuthMethod === 'client_secret_post') {
+        if (isset($this->options->tokenEndPointAuthMethod)  && $this->options->tokenEndPointAuthMethod === 'client_secret_basic') {
             return $this->_getAccessTokenByCodeWithClientSecretBasic($code);
         }
-        if($this->options->tokenEndPointAuthMethod === 'none') {
-            return $this->_getAccessTokenByWithNone($code);
+        if (isset($this->options->tokenEndPointAuthMethod)  && $this->options->tokenEndPointAuthMethod === 'none') {
+            return $this->_getAccessTokenByCodeWithNone($code);
         }
     }
 
-    function getAccessTokenByClientCredentials(string $scope, array $options = [])
+    function getAccessTokenByClientCredentials(string $scope, array $options)
     {
-        if(!isset($scope) || $scope) {
+        if (!isset($scope) || $scope) {
             throw new Error(
                 '请传入 scope 参数，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
             );
@@ -729,32 +733,61 @@ class AuthenticationClient extends BaseClient
                 // '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数或者在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
             );
         }
-        $accessKey = $this->options->accessKey || $this->options->appId;
-        $accessSecret = $this->options->accessSecret || $this->options->secret;
+        $this->options->accessKey
+            ? $accessKey = $this->options->accessKey : $accessKey = $this->options->appId;
+        $this->options->accessSecret
+            ? $accessSecret = $this->options->accessSecret : $accessSecret = $this->options->secret;
         $qstr = $this->_generateTokenRequest([
             "client_id" => $accessKey,
-            "client_secret"=> $accessSecret,
-            "grant_type"=> 'client_credentials',
-            "scope"=> $scope
+            "client_secret" => $accessSecret,
+            "grant_type" => 'client_credentials',
+            "scope" => $scope
         ]);
-        $api = '/oidc/token';
+        $api = '';
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
         $tokenSet = $this->naiveHttpClient->request('POST', $api, [
-            "body"=> $qstr,
-            "headers"=> [
-                "Content-Type"=> 'application/x-www-form-urlencoded'
-            ]
+            "body" => $qstr,
+            "headers" => array_merge(
+                $this->getOidcHeaders(),
+                [
+                    "Content-Type" => 'application/x-www-form-urlencoded',
+                ]
+            )
         ]);
-        return $tokenSet;
+        return $tokenSet->getBody();
     }
 
     function getUserInfoByAccessToken(string $accessToken)
     {
-        $api = '/oidc/me';
-        $userInfo = $this->naiveHttpClient->request("GET", $api, [
-            'query' => [
-                'access_token'=> $accessToken
-            ]
+        $api = '';
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
+        $userInfo = $this->naiveHttpClient->request("POST", $api, [
+            'headers' => array_merge(
+                $this->getOidcHeaders(),
+                [
+                    'Authorization' => 'Bearer ' . $accessToken,
+                ]
+            )
         ]);
-        return $userInfo;
+        return $userInfo->getBody();
+    }
+
+    function getOidcHeaders()
+    {
+        $SDK_VERSION = "4.6.3";
+        return [
+            'x-authing-sdk-version' => 'php:' . $SDK_VERSION,
+            'x-authing-userpool-id' => (isset($this->options->userPoolId) ? $this->options->userPoolId : ""),
+            'x-authing-request-from' => (isset($this->options->requestFrom) ? $this->options->requestFrom : 'sdk'),
+            'x-authing-app-id' => (isset($this->options->appId) ? $this->options->appId : '')
+        ];
     }
 }

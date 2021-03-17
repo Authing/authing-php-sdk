@@ -177,7 +177,8 @@ class UsersManagementClient
      * @return boolean
      * @throws Exception
      */
-    public function exists($param) {
+    public function exists($ops) {
+        $param = $ops;
         return $this->client->request($param->createRequest());
     }
 

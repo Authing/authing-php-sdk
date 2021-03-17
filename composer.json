@@ -22,7 +22,7 @@
   ],
   "autoload": {
     "files": [
-      "src/Types/CodeGen.php"
+      "src/Types/CodeGen.v2.php"
     ],
     "psr-4": {
       "Authing\\": "src/"

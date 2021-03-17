@@ -7,6 +7,7 @@ use Authing\Types\AllowParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\IsActionAllowedParam;
 use Exception;
+use stdClass;
 
 class AclManagementClient
 {
@@ -52,4 +53,12 @@ class AclManagementClient
         $param = new IsActionAllowedParam($resource, $action, $userId);
         return $this->client->request($param->createRequest());
     }
+
+    // function listAuthorizedResources(string $userId,string $namespace, $resourceType) {
+    //     $ops = new stdClass;
+    //     if(isset($resource)) {
+    //         $ops = $resourceType;
+    //     }
+        
+    // }
 }

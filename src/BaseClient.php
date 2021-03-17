@@ -2,15 +2,17 @@
 
 
 namespace Authing;
+
 use \GuzzleHttp;
 use Exception;
 use GuzzleHttp\Client;
+use stdClass;
 
 abstract class BaseClient
 {
     protected $naiveHttpClient;
     protected $options;
-    
+
     protected $userPoolId;
     protected $appId;
 
@@ -40,7 +42,7 @@ PUBLICKKEY;
      */
     public function __construct($userPoolIdOrFunc)
     {
-        $this->naiveHttpClient = new Client(['base_uri' => $this->host]);
+
         if (!isset($userPoolIdOrFunc)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
@@ -51,6 +53,7 @@ PUBLICKKEY;
                 $userPoolIdOrFunc;
         }
         if (is_callable($userPoolIdOrFunc)) {
+            $this->options = new stdClass;
             $userPoolIdOrFunc($this->options);
             // 传入的是一个函数
             // $empty_object =
@@ -64,6 +67,7 @@ PUBLICKKEY;
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
+        $this->naiveHttpClient = new Client(['base_uri' => $this->options->host]);
     }
 
     /**
@@ -162,7 +166,7 @@ PUBLICKKEY;
      */
     private function checkResult($result)
     {
-        if (isset($result['errors'])) 
+        if (isset($result['errors']))
             $errors = $result['errors'];
         if (!empty($errors) && count($errors) > 0) {
             throw new Exception("Graphql request failed:\n" . var_export($errors));
@@ -236,7 +240,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "Content-type: application/json",
-            "Authorization: Bearer ".($this->mfaToken || $this->accessToken),
+            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken),
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",
