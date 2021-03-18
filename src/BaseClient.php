@@ -20,7 +20,7 @@ abstract class BaseClient
 
     private $_type = "SDK";
 
-    private $_version = "php:2.0.1";
+    private $_version = "php:4.1.0";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -69,7 +69,7 @@ PUBLICKKEY;
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
-        // $this->naiveHttpClient = new Client(['base_uri' => $this->options->host]);
+        $this->naiveHttpClient = new Client(['base_uri' => $this->host]);
     }
 
     /**
