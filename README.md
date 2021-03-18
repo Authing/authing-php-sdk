@@ -40,14 +40,16 @@ $users = $management->users()->paginate();
 
 ## 使用认证模块
 
-初始化 `AuthenticationClient` 需要 `userPoolId`（用户池 ID）：
+初始化 `AuthenticationClient` 需要 `appId`（应用 ID）：
 
-> 你可以在此[了解如何获取 UserPoolId](https://docs.authing.cn/v2/guides/faqs/get-userpool-id-and-secret.html) .
+> 你可以在此[了解如何获取 AppId](/guides/faqs/get-app-id-and-secret.md) .
 
 ```php
 use Authing\Auth\AuthenticationClient;
 
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication = new AuthenticationClient(function ($ops) {
+    $ops->appId = "---";
+});
 ```
 
 接下来可以进行注册登录等操作：
@@ -56,7 +58,9 @@ $authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\LoginByEmailInput;
 
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication = new AuthenticationClient(function ($ops) {
+    $ops->appId = "---";
+});
 $user = $authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
 ```
 
@@ -67,7 +71,9 @@ use Authing\Auth\AuthenticationClient;
 use Authing\Types\LoginByEmailInput;
 use Authing\Types\UpdateUserInput;
 
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication = new AuthenticationClient(function ($ops) {
+    $ops->appId = "---";
+});
 $authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
 
 $user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
@@ -78,7 +84,9 @@ $user = $authentication->updateProfile((new UpdateUserInput())->withNickname("ni
 ```php
 use Authing\Auth\AuthenticationClient;
 
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication = new AuthenticationClient(function ($ops) {
+    $ops->appId = "---";
+});
 $authentication->setAccessToken("ACCESS_TOKEN");
 ```
 
@@ -88,7 +96,9 @@ $authentication->setAccessToken("ACCESS_TOKEN");
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\UpdateUserInput;
 
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
+$authentication = new AuthenticationClient(function ($ops) {
+    $ops->appId = "---";
+});
 $authentication->setAccessToken("ACCESS_TOKEN");
 
 $user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
