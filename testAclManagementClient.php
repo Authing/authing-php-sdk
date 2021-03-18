@@ -9,7 +9,7 @@ use Authing\Types\LoginByUsernameInput;
 
 
 $authentication = new AuthenticationClient(function ($options) {
-    $options->appId = "5f97fb40d352ecf69ffe6d98";
+    $options->appId = "-";
 });
 
 $aclManagementClient = new AclManagementClient($authentication);

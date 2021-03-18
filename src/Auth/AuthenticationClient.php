@@ -564,8 +564,8 @@ class AuthenticationClient extends BaseClient
         if (!isset($password) && !is_string($password)) {
             throw new Exception("请输入字符串");
         }
-        $highLevel = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[^]{12,}$/g";
-        $middleLevel = "/^(?=.*[a-zA-Z])(?=.*\\d)[^]{8,}$/g";
+        $highLevel = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{12,}$/g";
+        $middleLevel = "/^(?=.*[a-zA-Z])(?=.*\d)[^]{8,}$/g";
         if (preg_match_all($middleLevel, $password)) {
             return $this->PasswordSecurityLevel['HIGH'];
         }
@@ -688,25 +688,31 @@ class AuthenticationClient extends BaseClient
                 "grant_type" =>
                 'authorization_code',
                 "code" => $code,
+                "client_secret"=> $this->options->secret,
                 "redirect_uri" => $this->options->redirectUri
             ]
         );
-        $tokenSet = $this->naiveHttpClient->request("POST", $api, [
+        $response = $this->naiveHttpClient->request("POST", $api, [
             "body" => $qstr,
             "headers" =>
-            $this->getOidcHeaders(),
+            array_merge($this->getOidcHeaders(), [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ]),
         ]);
-        return $tokenSet->getBody();
+        $body =
+            $response->getBody();
+        $stringBody = (string) $body;
+        return json_decode($stringBody);
     }
 
     function getAccessTokenByCode(string $code)
     {
         if (
-            isset($this->options->secret) && 
-            !$this->options->secret &&
-            isset($this->options->tokenEndPointAuthMethod) &&
-            $this->options->tokenEndPointAuthMethod !== 'none'
-            ) {
+            (!isset($this->options->secret) ||
+            !isset($this->options->tokenEndPointAuthMethod)) ||
+            (!$this->options->secret &&
+            $this->options->tokenEndPointAuthMethod !== 'none')
+        ) {
             throw new Error('请在初始化 AuthenticationClient 时传入 appId 和 secret 参数');
         }
         if (isset($this->options->tokenEndPointAuthMethod) && $this->options->tokenEndPointAuthMethod === 'client_secret_post') {
@@ -749,7 +755,7 @@ class AuthenticationClient extends BaseClient
         } else if ($this->options->protocol === 'oauth') {
             $api = '/oauth/token';
         }
-        $tokenSet = $this->naiveHttpClient->request('POST', $api, [
+        $response = $this->naiveHttpClient->request('POST', $api, [
             "body" => $qstr,
             "headers" => array_merge(
                 $this->getOidcHeaders(),
@@ -758,18 +764,21 @@ class AuthenticationClient extends BaseClient
                 ]
             )
         ]);
-        return $tokenSet->getBody();
+        $body =
+            $response->getBody();
+        $stringBody = (string) $body;
+        return json_decode($stringBody);
     }
 
     function getUserInfoByAccessToken(string $accessToken)
     {
         $api = '';
         if ($this->options->protocol === 'oidc') {
-            $api = '/oidc/token';
+            $api = '/oidc/me';
         } else if ($this->options->protocol === 'oauth') {
-            $api = '/oauth/token';
+            $api = '/oauth/me';
         }
-        $userInfo = $this->naiveHttpClient->request("POST", $api, [
+        $response = $this->naiveHttpClient->request("POST", $api, [
             'headers' => array_merge(
                 $this->getOidcHeaders(),
                 [
@@ -777,7 +786,10 @@ class AuthenticationClient extends BaseClient
                 ]
             )
         ]);
-        return $userInfo->getBody();
+        $body =
+            $response->getBody();
+        $stringBody = (string) $body;
+        return json_decode($stringBody);
     }
 
     function getOidcHeaders()

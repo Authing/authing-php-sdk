@@ -8,16 +8,16 @@ use Authing\Types\LoginByUsernameInput;
 
 
 $authentication = new AuthenticationClient(function ($options) {
-    $options->appId = "5f97fb40d352ecf69ffe6d98";
+    $options->appId = "-";
 });
 
 // $authentication = new AuthenticationClient('5f88506c81cd279930195660');
-$user = $authentication->loginByUsername(new LoginByUsernameInput("shubuzuo", "123456"));
+$user = $authentication->loginByUsername(new LoginByUsernameInput("-", "-"));
 
 $userManagementClient = new UsersManagementClient($authentication);
 
-// $userManagementClient = new UserManagementClientClient('5f88506c81cd279930195660');
-// $user = $userManagementClient->loginByUsername(new LoginByUsernameInput("shubuzuo", "123456"));
+// $userManagementClient = new UserManagementClientClient('-');
+// $user = $userManagementClient->loginByUsername(new LoginByUsernameInput("-", "-"));
 
 // $userManagementClient->setAccessToken($user->token);
 
@@ -25,7 +25,7 @@ $userManagementClient = new UsersManagementClient($authentication);
 // [ ] 批量设置自定义数据
 // [ ] 检查用户是否存在
 $_ = new stdClass;
-$_->username = "shubuzuo";
+$_->username = "-";
 // $_->email = "1409458062@qq.com";
 // $_->phone = 17630802710;
 // TODO: 有问题
