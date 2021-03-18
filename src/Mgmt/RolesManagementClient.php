@@ -21,7 +21,30 @@ use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
 use Authing\Types\RoleWithUsersParam;
 use Authing\Types\UpdateRoleParam;
+use Authing\Types\ListRoleAuthorizedResourcesParam;
+use stdClass;
+
+
+
 use Exception;
+
+function formatAuthorizedResources($obj) {
+    $authorizedResources = $obj->authorizedResources;
+    $list = $authorizedResources->list;
+    $total = $authorizedResources->totalCount;
+    array_map(function($_){
+        foreach($_ as $key => $value) {
+            if(!$_->$key) {
+                unset($_->$key);
+            }
+        }
+        return $_;
+    }, (array)$list);
+    $res = new stdClass;
+    $res->list = $list;
+    $res->totalCount = $total;
+    return $res;
+}
 
 class RolesManagementClient
 {
@@ -212,32 +235,16 @@ class RolesManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    function listAuthorizedResources($roleCode, $namespace, $opt = "")
+    function listAuthorizedResources($roleCode, $namespace, $opts = [])
     {
-        if($ops) {
-            $ops = $ops->$resourceType;
+        $resourceType = null;
+        if (count($opts) > 0) {
+            $resourceType = $opts['resourceType'];
         }
         $param = (new ListRoleAuthorizedResourcesParam($roleCode))->withNamespace($namespace)->withResourceType($resourceType);
-        $data = $this->request($param->createRequest());
+        $data = $this->client->request($param->createRequest());
          
-        return $this->formatAuthorizedResources($data);
+        return formatAuthorizedResources($data);
     }
 
-    function formatAuthorizedResources($obj) {
-        $authorizedResources = $obj->authorizedResources;
-        $list = $authorizedResources->list;
-        $total = $authorizedResources->tatalCount;
-        array_map(function($_){
-            foreach($_ as $key => $value) {
-                if($_->$key) {
-                    unset($_->$key);
-                }
-            }
-            return _;
-        }, $list);
-        $res = new stdClass;
-        $res->list = $list;
-        $res->totalCount = $total;
-        return $res;
-    }
 }

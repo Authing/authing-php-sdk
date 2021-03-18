@@ -6,17 +6,20 @@ use Authing\Types\LoginByEmailInput;
 use Authing\Types\LoginByUsernameInput;
 
 
-$authentication = new AuthenticationClient(function ($options) {
-    $options->appId = "-";
-    $options->secret = "-";
-    $options->host = "-";
-    $options->redirectUri = "-";
-    $options->protocol = "oidc";
-    $options->tokenEndPointAuthMethod = "none";
-});
+// $authentication = new AuthenticationClient(function ($options) {
+//     $options->appId = "-";
+//     $options->secret = "-";
+//     $options->host = "-";
+//     $options->redirectUri = "-";
+//     $options->protocol = "oidc";
+//     $options->tokenEndPointAuthMethod = "none";
+// });
 
-// // $authentication = new AuthenticationClient('-');
-// $user = $authentication->loginByUsername(new LoginByUsernameInput("-", "-"));
+$authentication = new AuthenticationClient(function($ops) {
+    $ops->appId = '5f97fb40d352ecf69ffe6d98';
+});
+$user = $authentication->loginByUsername(new LoginByUsernameInput("shubuzuo", "123456"));
+
 
 // $authentication->setAccessToken($user->token);
 
@@ -65,12 +68,14 @@ $authentication = new AuthenticationClient(function ($options) {
 // $data = $authentication->listAuthorizedResources('5f88506c705dc7fa80e5f39e');
 
 // 通过 浏览器 URL 跳转取得
-$code = "7JCgb9MfBmplCjIydOFarP48zg5O215Vtq9jD_gYNdE";
+// $code = "7JCgb9MfBmplCjIydOFarP48zg5O215Vtq9jD_gYNdE";
 // OIDC
 // $accessToken = $authentication->_getAccessTokenByCodeWithClientSecretBasic($code);
 // $accessToken = $authentication->getAccessTokenByCode($code);
 // $accessToken = $authentication->_getAccessTokenByCodeWithNone($code);
 // $accessToken = $authentication->getAccessTokenByClientCredentials($code);
-$accessToken = $authentication->getUserInfoByAccessToken($accessToken->access_token);
+// $accessToken = $authentication->getUserInfoByAccessToken($accessToken->access_token);
+
+// $data = $authentication->listAuthorizedResources('default');
 
 echo 'aa';

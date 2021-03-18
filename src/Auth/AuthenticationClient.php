@@ -50,6 +50,24 @@ use Error;
 use Exception;
 use stdClass;
 
+function formatAuthorizedResources($obj) {
+    $authorizedResources = $obj->authorizedResources;
+    $list = $authorizedResources->list;
+    $total = $authorizedResources->totalCount;
+    array_map(function($_){
+        foreach($_ as $key => $value) {
+            if(!$_->$key) {
+                unset($_->$key);
+            }
+        }
+        return $_;
+    }, (array)$list);
+    $res = new stdClass;
+    $res->list = $list;
+    $res->totalCount = $total;
+    return $res;
+}
+
 
 class AuthenticationClient extends BaseClient
 {
@@ -581,8 +599,12 @@ class AuthenticationClient extends BaseClient
         return $res;
     }
 
-    function listAuthorizedResources($namespace)
+    function listAuthorizedResources($namespace, $opts = [])
     {
+        $resourceType = null;
+        if (count($opts) > 0) {
+            $resourceType = $opts['resourceType'];
+        }
         $user = $this->getCurrentUser();
         if (!$user) {
             throw new Exception("未登录，请登录");
@@ -590,8 +612,8 @@ class AuthenticationClient extends BaseClient
         if (!isset($namespace) && !is_string($namespace)) {
             throw new Exception("namespace 为必填");
         }
-        $param = (new ListUserAuthorizedResourcesParam($user->id))->withNamespace($namespace);
-        return $this->request($param->createRequest());
+        $param = (new ListUserAuthorizedResourcesParam($user->id))->withNamespace($namespace)->withResourceType($resourceType);
+        return formatAuthorizedResources($this->request($param->createRequest()));
     }
 
     public function _generateTokenRequest($params)

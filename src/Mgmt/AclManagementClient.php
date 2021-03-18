@@ -6,8 +6,29 @@ namespace Authing\Mgmt;
 use Authing\Types\AllowParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\IsActionAllowedParam;
+use Authing\Types\PolicyAssignmentTargetType;
+use Authing\Types\AuthorizedResourcesParam;
+
 use Exception;
 use stdClass;
+
+function formatAuthorizedResources($obj) {
+    // $authorizedResources = $obj->authorizedResources;
+    $list = $obj->list;
+    $total = $obj->totalCount;
+    array_map(function($_){
+        foreach($_ as $key => $value) {
+            if(!$_->$key) {
+                unset($_->$key);
+            }
+        }
+        return $_;
+    }, (array)$list);
+    $res = new stdClass;
+    $res->list = $list;
+    $res->totalCount = $total;
+    return $res;
+}
 
 class AclManagementClient
 {
@@ -54,30 +75,17 @@ class AclManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    function listAuthorizedResources(string $userId,string $namespace, $resourceType, $ops = "") {
-        if($ops) {
-            $ops = $ops->$resourceType;
+    // targetType: PolicyAssignmentTargetType,
+    // targetIdentifier: string,
+    // namespace: string,
+    function listAuthorizedResources($targetType, string $targetIdentifier, string $namespace, $ops = []) {
+        $resourceType = null;
+        if(count($ops) > 0) {
+            $resourceType = $ops->$resourceType;
         }
-        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace)->withResourceType($resourceType);
-        $data = $this->formatAuthorizedResources($this->request($param->createRequest()));
+        $param = (new AuthorizedResourcesParam())->withTargetType($targetType)->withTargetIdentifier($targetIdentifier)->withNamespace($namespace)->withResourceType($resourceType);
+        $data = formatAuthorizedResources($this->client->request($param->createRequest()));
         return $data;
     }
 
-    function formatAuthorizedResources($obj) {
-        $authorizedResources = $obj->authorizedResources;
-        $list = $authorizedResources->list;
-        $total = $authorizedResources->tatalCount;
-        array_map(function($_){
-            foreach($_ as $key => $value) {
-                if($_->$key) {
-                    unset($_->$key);
-                }
-            }
-            return _;
-        }, $list);
-        $res = new stdClass;
-        $res->list = $list;
-        $res->totalCount = $total;
-        return $res;
-    }
 }

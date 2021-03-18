@@ -41,10 +41,29 @@ use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
 use Authing\Types\UdfValueBatchParam;
 use Authing\Types\SetUdfValueBatchParam;
-use Authing\types\ListUserAuthorizedResourcesParam;
+use Authing\Types\ListUserAuthorizedResourcesParam;
 use Error;
 use Exception;
 use stdClass;
+
+function formatAuthorizedResources($obj) {
+    $authorizedResources = $obj->authorizedResources;
+    $list = $authorizedResources->list;
+    $total = $authorizedResources->totalCount;
+    array_map(function($_){
+        foreach($_ as $key => $value) {
+            if(!$_->$key) {
+                unset($_->$key);
+            }
+        }
+        return $_;
+    }, (array)$list);
+    $res = new stdClass;
+    $res->list = $list;
+    $res->totalCount = $total;
+    return $res;
+}
+
 
 class UsersManagementClient
 {
@@ -393,14 +412,21 @@ class UsersManagementClient
         return $res;
     }
 
-    public function listAuthorizedResources(string $userId, string $namespace)
+    public function listAuthorizedResources(string $userId, string $namespace, $obj = [])
     {
-        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace);
+        $resourceType = null;
+        if (count($obj) > 0) {
+            $resourceType = $obj['resourceType'];
+        }
+        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace)->withResourceType($resourceType);
         $resUser = $this->client->request($param->createRequest());
         if ($resUser) {
-            return $resUser->authorizedResources;
+            $res = formatAuthorizedResources($resUser);
+            return $res;
         } else {
             throw new Exception("用户不存在");
         }
     }
+
+
 }

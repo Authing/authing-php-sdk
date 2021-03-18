@@ -49,6 +49,8 @@ PUBLICKKEY;
         if (is_string($userPoolIdOrFunc)) {
             // $this->options = $userPoolIdOrFunc;
             // 传入的是 userPoolId
+            // $this->appId =
+            //     $userPoolIdOrFunc;
             $this->userPoolId =
                 $userPoolIdOrFunc;
         }
@@ -67,7 +69,7 @@ PUBLICKKEY;
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
-        $this->naiveHttpClient = new Client(['base_uri' => $this->options->host]);
+        // $this->naiveHttpClient = new Client(['base_uri' => $this->options->host]);
     }
 
     /**
@@ -292,5 +294,23 @@ PUBLICKKEY;
                 "curl internal error, curlErrorCode is {$code},errorMsg: {$error}"
             );
         }
+    }
+
+    function formatAuthorizedResources($obj) {
+        $authorizedResources = $obj->authorizedResources;
+        $list = $authorizedResources->list;
+        $total = $authorizedResources->tatalCount;
+        array_map(function($_){
+            foreach($_ as $key => $value) {
+                if($_->$key) {
+                    unset($_->$key);
+                }
+            }
+            return _;
+        }, $list);
+        $res = new stdClass;
+        $res->list = $list;
+        $res->totalCount = $total;
+        return $res;
     }
 }

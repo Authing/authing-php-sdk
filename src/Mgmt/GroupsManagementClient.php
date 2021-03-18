@@ -16,7 +16,30 @@ use Authing\Types\PaginatedGroups;
 use Authing\Types\PaginatedUsers;
 use Authing\Types\RemoveUserFromGroupParam;
 use Authing\Types\UpdateGroupParam;
+use Authing\Types\ListGroupAuthorizedResourcesParam;
+
+use stdClass;
 use Exception;
+
+
+function formatAuthorizedResources($obj) {
+    $authorizedResources = $obj->authorizedResources;
+    $list = $authorizedResources->list;
+    $total = $authorizedResources->totalCount;
+    array_map(function($_){
+        foreach($_ as $key => $value) {
+            if(!$_->$key) {
+                unset($_->$key);
+            }
+        }
+        return $_;
+    }, (array)$list);
+    $res = new stdClass;
+    $res->list = $list;
+    $res->totalCount = $total;
+    return $res;
+}
+
 
 class GroupsManagementClient
 {
@@ -150,5 +173,17 @@ class GroupsManagementClient
     public function removeUsers($code, $userIds) {
         $param = (new RemoveUserFromGroupParam($userIds))->withCode($code);
         return $this->client->request($param->createRequest());
+    }
+
+    function listAuthorizedResources($groupCode, $namespace, $opts = [])
+    {
+        $resourceType = null;
+        if (count($opts) > 0) {
+            $resourceType = $opts['resourceType'];
+        }
+        $param = (new ListGroupAuthorizedResourcesParam($groupCode))->withNamespace($namespace)->withResourceType($resourceType);
+        $data = $this->client->request($param->createRequest());
+         
+        return formatAuthorizedResources($data);
     }
 }
