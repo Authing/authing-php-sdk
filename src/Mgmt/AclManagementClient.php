@@ -54,11 +54,30 @@ class AclManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    // function listAuthorizedResources(string $userId,string $namespace, $resourceType) {
-    //     $ops = new stdClass;
-    //     if(isset($resource)) {
-    //         $ops = $resourceType;
-    //     }
-        
-    // }
+    function listAuthorizedResources(string $userId,string $namespace, $resourceType, $ops = "") {
+        if($ops) {
+            $ops = $ops->$resourceType;
+        }
+        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace)->withResourceType($resourceType);
+        $data = $this->formatAuthorizedResources($this->request($param->createRequest()));
+        return $data;
+    }
+
+    function formatAuthorizedResources($obj) {
+        $authorizedResources = $obj->authorizedResources;
+        $list = $authorizedResources->list;
+        $total = $authorizedResources->tatalCount;
+        array_map(function($_){
+            foreach($_ as $key => $value) {
+                if($_->$key) {
+                    unset($_->$key);
+                }
+            }
+            return _;
+        }, $list);
+        $res = new stdClass;
+        $res->list = $list;
+        $res->totalCount = $total;
+        return $res;
+    }
 }

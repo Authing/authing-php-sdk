@@ -211,4 +211,33 @@ class RolesManagementClient
             ->withTargetIdentifiers([$code]);
         return $this->client->request($param->createRequest());
     }
+
+    function listAuthorizedResources($roleCode, $namespace, $opt = "")
+    {
+        if($ops) {
+            $ops = $ops->$resourceType;
+        }
+        $param = (new ListRoleAuthorizedResourcesParam($roleCode))->withNamespace($namespace)->withResourceType($resourceType);
+        $data = $this->request($param->createRequest());
+         
+        return $this->formatAuthorizedResources($data);
+    }
+
+    function formatAuthorizedResources($obj) {
+        $authorizedResources = $obj->authorizedResources;
+        $list = $authorizedResources->list;
+        $total = $authorizedResources->tatalCount;
+        array_map(function($_){
+            foreach($_ as $key => $value) {
+                if($_->$key) {
+                    unset($_->$key);
+                }
+            }
+            return _;
+        }, $list);
+        $res = new stdClass;
+        $res->list = $list;
+        $res->totalCount = $total;
+        return $res;
+    }
 }
