@@ -20,7 +20,7 @@ abstract class BaseClient
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.0";
+    private $_version = "php:4.1.1";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -171,7 +171,7 @@ PUBLICKKEY;
         if (isset($result['errors']))
             $errors = $result['errors'];
         if (!empty($errors) && count($errors) > 0) {
-            throw new Exception("Graphql request failed:\n" . var_export($errors));
+            throw new Exception("Graphql request failed:\n" . json_encode($errors));
         }
     }
 
@@ -296,17 +296,18 @@ PUBLICKKEY;
         }
     }
 
-    function formatAuthorizedResources($obj) {
+    function formatAuthorizedResources($obj)
+    {
         $authorizedResources = $obj->authorizedResources;
         $list = $authorizedResources->list;
         $total = $authorizedResources->tatalCount;
-        array_map(function($_){
-            foreach($_ as $key => $value) {
-                if($_->$key) {
+        array_map(function ($_) {
+            foreach ($_ as $key => $value) {
+                if ($_->$key) {
                     unset($_->$key);
                 }
             }
-            return _;
+            return $_;
         }, $list);
         $res = new stdClass;
         $res->list = $list;

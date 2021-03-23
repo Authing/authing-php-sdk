@@ -2,7 +2,7 @@
   "name": "authing-sdk/php",
   "description": "authing-php-sdk",
   "minimum-stability": "stable",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "require": {
     "php": ">=5.4",
     "ext-curl": "*",
@@ -22,6 +22,9 @@
   ],
   "autoload": {
     "files": [
+      "src/Types/CodeGen.v2.php"
+    ],
+    "classmap": [
       "src/Types/CodeGen.v2.php"
     ],
     "psr-4": {
