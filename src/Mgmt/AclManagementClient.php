@@ -81,7 +81,7 @@ class AclManagementClient
     function listAuthorizedResources($targetType, string $targetIdentifier, string $namespace, $ops = []) {
         $resourceType = null;
         if(count($ops) > 0) {
-            $resourceType = $ops->$resourceType;
+            $resourceType = $ops['resourceType'];
         }
         $param = (new AuthorizedResourcesParam())->withTargetType($targetType)->withTargetIdentifier($targetIdentifier)->withNamespace($namespace)->withResourceType($resourceType);
         $data = formatAuthorizedResources($this->client->request($param->createRequest()));

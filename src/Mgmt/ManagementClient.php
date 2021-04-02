@@ -3,13 +3,14 @@
 
 namespace Authing\Mgmt;
 
-use Authing\BaseClient;
-use Authing\InvalidArgumentException;
-use Authing\Types\AccessTokenParam;
-use Authing\Types\AccessTokenRes;
-use Authing\Types\UserParam;
-use Authing\Types\ListUserAuthorizedResourcesParam;
 use Exception;
+use Authing\BaseClient;
+use Authing\Types\UserParam;
+use Authing\Types\AccessTokenRes;
+use Authing\Types\AccessTokenParam;
+use Authing\InvalidArgumentException;
+use Authing\Mgmt\ApplicationsManagementClient;
+use Authing\Types\ListUserAuthorizedResourcesParam;
 
 class ManagementClient extends BaseClient
 {
@@ -130,20 +131,10 @@ class ManagementClient extends BaseClient
         return new GroupsManagementClient($this);
     }
 
-    function listAuthorizedResources($userId, $namespace) {
-        $user = $this->getCurrentUser();
-        if (!$user) {
-            throw new Exception("未登录，请登录");
-        }
-        if (!isset($namespace) && !is_string($namespace) && !isset($userId) && !is_string($userId)) {
-            throw new Exception("userId namespace 为必填");
-        }
-        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace);
-        $resUser = $this->request($param->createRequest());
-        if ($resUser) {
-            return $resUser->authorizedResources;
-        } else {
-            throw new Exception("用户不存在");
-        }
+    /**
+     * @return ApplicationsManagementClient
+     */
+    public function applications() {
+        return new ApplicationsManagementClient($this);
     }
 }

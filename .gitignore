@@ -2,5 +2,7 @@
 vendor
 .idea
 .phpunit.result.cache
-test.php
-test*.php
+# test.php
+# test*.php
+tests/config/test.yaml
+tmp

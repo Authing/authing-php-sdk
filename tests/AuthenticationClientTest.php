@@ -221,4 +221,8 @@ class AuthenticationClientTest extends TestCase {
     public function logout() {
         $this->client->logout();
     }
+
+    public function getConfig() {
+        $this->_testConfig = (new Yaml())->parseFile(dirname(__DIR__) . "/config/test.yml");
+    }
 }

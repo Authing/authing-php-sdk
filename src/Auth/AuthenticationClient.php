@@ -824,4 +824,13 @@ class AuthenticationClient extends BaseClient
             'x-authing-app-id' => (isset($this->options->appId) ? $this->options->appId : '')
         ];
     }
+
+    
+    public function listApplications(array $params=[])
+    {
+        $page = $params['page'] ?? 1;
+        $limit = $params['limit'] ?? 10;
+        $data = $this->httpGet("/api/v2/users/me/applications/allowed?page=$page&limit=$limit");
+        return $data;
+    }
 }
