@@ -152,17 +152,34 @@ class UsersManagementClient
         return $this->client->request($param->createRequest());
     }
 
+    // /**
+    //  * 通过用户 ID 批量获取用户信息
+    //  *
+    //  * @param $userIds string[] 用户 ID 列表
+    //  * @return User[]
+    //  * @throws Exception
+    //  */
+    // public function batch($userIds)
+    // {
+    //     $param = new UserBatchParam($userIds);
+    //     return $this->client->request($param->createRequest());
+    // }
+
     /**
-     * 通过用户 ID 批量获取用户信息
-     *
-     * @param $userIds string[] 用户 ID 列表
+     * 通过 id、username、email、phone、email、externalId 批量获取用户详情
+     * 
+     * @param $identifiers string[] 用户 ID 列表
      * @return User[]
      * @throws Exception
      */
-    public function batch($userIds)
+    public function batch(array $identifiers, $options = [])
     {
-        $param = new UserBatchParam($userIds);
-        return $this->client->request($param->createRequest());
+        $queryField = $options['queryField'] ?? 'id';
+        $data = new stdClass();
+        $data->ids = $identifiers;
+        $data->type = $queryField;
+        $users = $this->client->httpPost('/api/v2/users/batch', $data);
+        return $users;
     }
 
     /**
