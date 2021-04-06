@@ -792,6 +792,141 @@ class AuthenticationClient extends BaseClient
         return json_decode($stringBody);
     }
 
+    function buildAuthorizeUrl(array $options)
+    {
+        if (!isset($this->options->appHost)) {
+            throw new Error(
+                '请在初始化 AuthenticationClient 时传入应用域名 appHost 参数，形如：https://app1.authing.cn'
+              );
+        }
+        if ($this->options->protocol === 'oidc') {
+            return $this->_buildOidcAuthorizeUrl($options);
+        }
+        if ($this->options->protocol === 'oauth') {
+            return $this->_buildOauthAuthorizeUrl($options);
+        }
+        if ($this->options->protocol === 'saml') {
+            return $this->_buildSamlAuthorizeUrl();
+        }
+        if ($this->options->protocol === 'cas') {
+            return $this->_buildCasAuthorizeUrl($options);
+        }
+        throw new Error(
+            '不支持的协议类型，请在初始化 AuthenticationClient 时传入 protocol 参数，可选值为 oidc、oauth、saml、cas'
+          );
+    }
+
+    function _buildOidcAuthorizeUrl(array $options) {
+        $map = [
+            'appId' => 'client_id',
+            'scope' => 'scope',
+            'state' => 'state',
+            'nonce' => 'nonce',
+            'responseMode' => 'response_mode',
+            'responseType' => 'response_type',
+            'redirectUri' => 'redirect_uri'
+        ];
+        $res = [
+            'nonce' => substr(rand(0, 1).'', 0, 2),
+            'state' => substr(rand(0, 1).'', 0, 2),
+            'scope' => 'openid profile email phone address',
+            'client_id' => $this->options->appId,
+            'response_mode' => 'query',
+            'redirect_uri' => $this->options->redirectUri,
+            'response_type' => 'code'
+        ];
+        foreach ($map as $key => $value) {
+            if (isset($options) && isset($options[$key]) && $options[$key]) {
+                if ($key === 'scope' && strpos($options['scope'], 'offline_access')) {
+                    $res['prompt'] = 'consent';
+                }
+                $res[$value] = $options[$key];
+            }
+        }
+        $params = http_build_query($res);
+        $authorizeUrl = $this->options->appHost.'/oidc/auth?'.$params;
+        return $authorizeUrl;
+    }
+
+    function _buildOauthAuthorizeUrl(array $options)
+    {
+        $map = [
+            appId => 'client_id',
+            scope => 'scope',
+            state=> 'state',
+            responseType=> 'response_type',
+            redirectUri=> 'redirect_uri'
+        ];
+        $res = [
+            state => substr(rand(0, 1).'', 0, 2),
+            scope => 'user',
+            client_id => $this->options->appId,
+            redirect_uri => $this->options->redirectUri,
+            response_type => 'code'
+        ];
+        foreach ($map as $key => $value) {
+            if (isset($options) && options[$key]) {
+                $res[$value] = $options[$key];
+            }
+        }
+        $params = http_build_query($res);
+        $authorizeUrl = $this->options->appHost.'/oauth/auth?'.$params;
+        return $authorizeUrl;
+    }
+
+    function _buildSamlAuthorizeUrl()
+    {
+        return $this->options->appHost. '/saml-idp/' .$this->options->appId;
+    }
+
+    function _buildCasAuthorizeUrl(array $options)
+    {
+        if (isset($options[service])) {
+            return $this->options->appHost.'/cas-idp/'.$this->options->appId.'?service='.$options->service;
+        }
+        return $this->options->appHost.'/cas-idp'.$this->options->appId;
+    }
+
+    function _buildCasLogoutUrl(array $options)
+    {
+        if (isset($options[redirectUri])) {
+            return $this->options->appHost.'/cas-idp/logout?url='.$options[redirectUri];
+        }
+        return $this->options->appHost.'/cas-idp/logout';
+    }
+
+    function _buildOidcLogoutUrl(array $options)
+    {
+        if (isset($options) && !($options['inToken'] && $options['redirectUri'])) {
+            throw new Error(
+                '必须同时传入 idToken 和 redirectUri 参数，或者同时都不传入'
+              );
+        }
+        if ($options['redirectUri']) {
+            return $this->options->appHost.'/oidc/session/end?id_token_hint='.$options['idToken'].'&post_logout_redirect_uri='.$options['redirectUri'];
+        }
+        return $this->options->appHost.'/oidc/session/end';
+    }
+
+    function _buildEasyLogoutUrl(array $options)
+    {
+        if ($options['redirectUri']) {
+            return $this->options->appHost.'/login/profile/logout?redirect_uri='.$options['redirectUri'];
+        }
+        return $this->options->appHost.'/login/profile/logout';
+    }
+
+    function buildLogoutUrl(array $options)
+    {
+        if ($this->options['protocol'] === 'cas') {
+            return $this->_buildCasLogoutUrl($options);
+        }
+        if ($this->options['protocol'] === 'oidc' && $options['expert']) {
+            return $this->_buildOidcLogoutUrl($options);
+        }
+        return $this->_buildEasyLogoutUrl($options);
+    }
+
     function getUserInfoByAccessToken(string $accessToken)
     {
         $api = '';
@@ -825,7 +960,104 @@ class AuthenticationClient extends BaseClient
         ];
     }
 
+    // function _getNewAccessTokenByRefreshTokenWithClientSecretPost(string $refreshToken)
+    // {
+    //     $map = 
+    // }
     
+    function _introspectTokenWithClientSecretPost(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'client_id' => $this->options->appId,
+            'client_secret' => $this->options->secret,
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/introspection';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token/introspection';
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' => 
+                [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ]
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    function _introspectTokenWithClientSecretBasic(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/introspection';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token/introspection';
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' => 
+                [
+                    'Authorization' => $this->_generateBasicAuthToken()
+                ]
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    function _introspectTokenWithNone(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'client_id' => $this->options->appId,
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/introspection';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token/introspection';
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    function introspectToken(string $token){
+        if (!(in_array('oauth', $this->options->protocol) || in_array('oidc', $this->options->protocol))) {
+            throw new Error(
+                '初始化 AuthenticationClient 时传入的 protocol 参数必须为 oauth 或 oidc，请检查参数'
+              );
+        }
+        if (!$this->options->secret && $this->options->introspectionEndPointAuthMethod !== 'none') {
+            throw new Error(
+                '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数'
+              );
+        }
+        if ($this->options->introspectionEndPointAuthMethod === 'client_secret_post') {
+            $res = $this->_introspectTokenWithClientSecretPost($token);
+            return $res;
+        }
+        if ($this->options->introspectionEndPointAuthMethod === 'none') {
+            $res = $this->_introspectTokenWithNone($token);
+            return $res;
+        }
+        if ($this->options->introspectionEndPointAuthMethod === 'client_secret_basic') {
+            $res = $this->_introspectTokenWithClientSecretBasic($token);
+            return $res;
+        }
+        throw new Error(
+            '初始化 AuthenticationClient 时传入的 introspectionEndPointAuthMethod 参数可选值为 client_secret_base、client_secret_post、none，请检查参数'
+          );
+    }
+
     public function listApplications(array $params=[])
     {
         $page = $params['page'] ?? 1;

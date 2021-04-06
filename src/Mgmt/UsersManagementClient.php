@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Authing\Mgmt;
 
 use Authing\Types\AddPolicyAssignmentsParam;
@@ -35,6 +34,7 @@ use Authing\Types\UdvParam;
 use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
+use Authing\Types\FindUserParam;
 use Authing\Types\UserBatchParam;
 use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
@@ -172,7 +172,7 @@ class UsersManagementClient
      * @return User[]
      * @throws Exception
      */
-    public function batch(array $identifiers, $options = [])
+    public function batch(array $identifiers,array $options = [])
     {
         $queryField = $options['queryField'] ?? 'id';
         $data = new stdClass();
@@ -443,5 +443,14 @@ class UsersManagementClient
         } else {
             throw new Exception("用户不存在");
         }
+    }
+
+    public function find(array $options)
+    {
+        // $username, $email, $phone, $externalId
+        extract($options, EXTR_OVERWRITE);
+        $userParam = (new FindUserParam())->withEmail($email?? "")->withPhone($phone ?? "")->withUsername($username ?? "")->withExternalId($externalId ?? "");
+        $res = $this->client->request($userParam->createRequest());
+        return $res;
     }
 }

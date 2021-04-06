@@ -16,7 +16,9 @@ abstract class BaseClient
     protected $userPoolId;
     protected $appId;
 
-    private $host = 'https://core.authing.cn';
+    // private $host = 'https://core.authing.cn';
+    private $host = 'http://authing-server.natapp1.cc';
+    
 
     private $_type = "SDK";
 
@@ -120,7 +122,11 @@ PUBLICKKEY;
     {
         $result = $this->send($this->host . '/graphql/v2', $this->objectToArray($data));
         $this->checkResult($result);
-        return $this->arrayToObject($this->firstElement($result['data']));
+        if (!$this->firstElement($result['data'])) {
+            return null;
+        } else {
+            return $this->arrayToObject($this->firstElement($result['data']));
+        }
     }
 
     /**

@@ -4,6 +4,30 @@ namespace Authing\Types;
 
 class Query {
   /**
+   * Required
+   * 
+   * @var bool
+   * 
+   */
+  public $isActionAllowed;
+
+  /**
+   * Required
+   * 
+   * @var bool
+   * 
+   */
+  public $isActionDenied;
+
+  /**
+   * Optional
+   * 
+   * @var PaginatedResourcePermissionAssignments
+   * 
+   */
+  public $resourcePermissions;
+
+  /**
    * Optional
    * 
    * @var string
@@ -198,22 +222,6 @@ class Query {
   public $checkPasswordStrength;
 
   /**
-   * Required
-   * 
-   * @var bool
-   * 
-   */
-  public $isActionAllowed;
-
-  /**
-   * Required
-   * 
-   * @var bool
-   * 
-   */
-  public $isActionDenied;
-
-  /**
    * Optional
    * 
    * @var Policy
@@ -399,6 +407,104 @@ class Query {
    * 
    */
   public $whitelist;
+}
+
+class ResourceType {
+  const DATA = 'DATA';
+  const API = 'API';
+  const MENU = 'MENU';
+  const UI = 'UI';
+  const BUTTON = 'BUTTON';
+}
+
+class PolicyAssignmentTargetType {
+  const USER = 'USER';
+  const ROLE = 'ROLE';
+  const GROUP = 'GROUP';
+  const ORG = 'ORG';
+  const AK_SK = 'AK_SK';
+}
+
+/**
+ * ResourcePermissionsActionsInput
+ */
+class ResourcePermissionsActionsInput {
+  /**
+   * Required
+   * 
+   * @var Operator
+   * 
+   */
+  public $op;
+
+  /**
+   * Required
+   * 
+   * @var string[]
+   * 
+   */
+  public $list;
+
+/**
+ * @param $op Operator op
+ * @param $list string[] list
+ */
+
+public function __construct($op, $list) {
+$this->op = $op;
+$this->list = $list;
+}
+
+}
+    
+
+class Operator {
+  const AND = 'AND';
+  const OR = 'OR';
+}
+
+class PaginatedResourcePermissionAssignments {
+  /**
+   * Optional
+   * 
+   * @var ResourcePermissionAssignment[]
+   * 
+   */
+  public $list;
+
+  /**
+   * Optional
+   * 
+   * @var int
+   * 
+   */
+  public $totalCount;
+}
+
+class ResourcePermissionAssignment {
+  /**
+   * Optional
+   * 
+   * @var PolicyAssignmentTargetType
+   * 
+   */
+  public $targetType;
+
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $targetIdentifier;
+
+  /**
+   * Optional
+   * 
+   * @var string[]
+   * 
+   */
+  public $actions;
 }
 
 class SocialConnection {
@@ -1496,14 +1602,6 @@ class AuthorizedResource {
   public $actions;
 }
 
-class ResourceType {
-  const DATA = 'DATA';
-  const API = 'API';
-  const MENU = 'MENU';
-  const UI = 'UI';
-  const BUTTON = 'BUTTON';
-}
-
 class PaginatedGroups {
   /**
    * Required
@@ -2004,14 +2102,6 @@ class PolicyAssignment {
    * 
    */
   public $targetIdentifier;
-}
-
-class PolicyAssignmentTargetType {
-  const USER = 'USER';
-  const ROLE = 'ROLE';
-  const GROUP = 'GROUP';
-  const ORG = 'ORG';
-  const AK_SK = 'AK_SK';
 }
 
 class PaginatedPolicies {
@@ -2853,13 +2943,22 @@ class WhiteList {
 
 class Mutation {
   /**
-   * 创建社会化登录服务商
+   * 允许操作某个资源
    * Required
    * 
-   * @var SocialConnection
+   * @var CommonMessage
    * 
    */
-  public $createSocialConnection;
+  public $allow;
+
+  /**
+   * 将一个（类）资源授权给用户、角色、分组、组织机构，且可以分别指定不同的操作权限。
+   * Required
+   * 
+   * @var CommonMessage
+   * 
+   */
+  public $authorizeResource;
 
   /**
    * 配置社会化登录
@@ -3198,15 +3297,6 @@ class Mutation {
   public $removePolicyAssignments;
 
   /**
-   * 允许操作某个资源
-   * Required
-   * 
-   * @var CommonMessage
-   * 
-   */
-  public $allow;
-
-  /**
    * Optional
    * 
    * @var User
@@ -3506,173 +3596,71 @@ class Mutation {
   public $removeWhitelist;
 }
 
+class CommonMessage {
+  /**
+   * 可读的接口响应说明，请以业务状态码 code 作为判断业务是否成功的标志
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $message;
+
+  /**
+   * 业务状态码（与 HTTP 响应码不同），但且仅当为 200 的时候表示操作成功表示，详细说明请见：
+   * [Authing 错误代码列表](https://docs.authing.co/advanced/error-code.html)
+   * Optional
+   * 
+   * @var int
+   * 
+   */
+  public $code;
+}
+
 /**
- * CreateSocialConnectionInput
+ * AuthorizeResourceOpt
  */
-class CreateSocialConnectionInput {
+class AuthorizeResourceOpt {
+  /**
+   * Required
+   * 
+   * @var PolicyAssignmentTargetType
+   * 
+   */
+  public $targetType;
+
   /**
    * Required
    * 
    * @var string
    * 
    */
-  public $provider;
-
-  /**
-   * Required
-   * 
-   * @var string
-   * 
-   */
-  public $name;
-
-  /**
-   * Required
-   * 
-   * @var string
-   * 
-   */
-  public $logo;
+  public $targetIdentifier;
 
   /**
    * Optional
    * 
-   * @var string
+   * @var string[]
    * 
    */
-  public $description;
-
-  /**
-   * Optional
-   * 
-   * @var SocialConnectionFieldInput[]
-   * 
-   */
-  public $fields;
+  public $actions;
 
 /**
- * @param $provider string provider
- * @param $name string name
- * @param $logo string logo
+ * @param $targetType PolicyAssignmentTargetType targetType
+ * @param $targetIdentifier string targetIdentifier
  */
 
-public function __construct($provider, $name, $logo) {
-$this->provider = $provider;
-$this->name = $name;
-$this->logo = $logo;
+public function __construct($targetType, $targetIdentifier) {
+$this->targetType = $targetType;
+$this->targetIdentifier = $targetIdentifier;
 }
 
 /**
- * @param $description string description
- * @return CreateSocialConnectionInput
+ * @param $actions string[] actions
+ * @return AuthorizeResourceOpt
  */
-public function withDescription($description) {
-  $this->description = $description;
-  return $this;
-}
-
-/**
- * @param $fields SocialConnectionFieldInput[] fields
- * @return CreateSocialConnectionInput
- */
-public function withFields($fields) {
-  $this->fields = $fields;
-  return $this;
-}
-}
-    
-
-/**
- * SocialConnectionFieldInput
- */
-class SocialConnectionFieldInput {
-  /**
-   * Optional
-   * 
-   * @var string
-   * 
-   */
-  public $key;
-
-  /**
-   * Optional
-   * 
-   * @var string
-   * 
-   */
-  public $label;
-
-  /**
-   * Optional
-   * 
-   * @var string
-   * 
-   */
-  public $type;
-
-  /**
-   * Optional
-   * 
-   * @var string
-   * 
-   */
-  public $placeholder;
-
-  /**
-   * Optional
-   * 
-   * @var SocialConnectionFieldInput[]
-   * 
-   */
-  public $children;
-
-
-public function __construct() {
-
-}
-
-/**
- * @param $key string key
- * @return SocialConnectionFieldInput
- */
-public function withKey($key) {
-  $this->key = $key;
-  return $this;
-}
-
-/**
- * @param $label string label
- * @return SocialConnectionFieldInput
- */
-public function withLabel($label) {
-  $this->label = $label;
-  return $this;
-}
-
-/**
- * @param $type string type
- * @return SocialConnectionFieldInput
- */
-public function withType($type) {
-  $this->type = $type;
-  return $this;
-}
-
-/**
- * @param $placeholder string placeholder
- * @return SocialConnectionFieldInput
- */
-public function withPlaceholder($placeholder) {
-  $this->placeholder = $placeholder;
-  return $this;
-}
-
-/**
- * @param $children SocialConnectionFieldInput[] children
- * @return SocialConnectionFieldInput
- */
-public function withChildren($children) {
-  $this->children = $children;
+public function withActions($actions) {
+  $this->actions = $actions;
   return $this;
 }
 }
@@ -3750,27 +3738,6 @@ $this->value = $value;
 
 }
     
-
-class CommonMessage {
-  /**
-   * 可读的接口响应说明，请以业务状态码 code 作为判断业务是否成功的标志
-   * Optional
-   * 
-   * @var string
-   * 
-   */
-  public $message;
-
-  /**
-   * 业务状态码（与 HTTP 响应码不同），但且仅当为 200 的时候表示操作成功表示，详细说明请见：
-   * [Authing 错误代码列表](https://docs.authing.co/advanced/error-code.html)
-   * Optional
-   * 
-   * @var int
-   * 
-   */
-  public $code;
-}
 
 /**
  * ConfigEmailTemplateInput
@@ -4111,12 +4078,22 @@ class LoginByEmailInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $email string email
@@ -4156,11 +4133,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return LoginByEmailInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return LoginByEmailInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -4213,12 +4199,22 @@ class LoginByUsernameInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $username string username
@@ -4258,11 +4254,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return LoginByUsernameInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return LoginByUsernameInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -4306,12 +4311,22 @@ class LoginByPhoneCodeInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $phone string phone
@@ -4342,11 +4357,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return LoginByPhoneCodeInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return LoginByPhoneCodeInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -4399,12 +4423,22 @@ class LoginByPhonePasswordInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $phone string phone
@@ -4444,11 +4478,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return LoginByPhonePasswordInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return LoginByPhonePasswordInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -4616,12 +4659,22 @@ class RegisterByUsernameInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $username string username
@@ -4670,11 +4723,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return RegisterByUsernameInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return RegisterByUsernameInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -5236,12 +5298,22 @@ class RegisterByEmailInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $email string email
@@ -5290,11 +5362,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return RegisterByEmailInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return RegisterByEmailInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -5361,12 +5442,22 @@ class RegisterByPhoneCodeInput {
   public $clientIp;
 
   /**
+   * 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
    * Optional
    * 
    * @var string
    * 
    */
   public $params;
+
+  /**
+   * 请求上下文信息，将会传递到 pipeline 中
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $context;
 
 /**
  * @param $phone string phone
@@ -5424,11 +5515,20 @@ public function withClientIp($clientIp) {
 }
 
 /**
- * @param $params string params
+ * @param $params string 设置用户自定义字段，要求符合 Array<{ key: string; value: string }> 格式
  * @return RegisterByPhoneCodeInput
  */
 public function withParams($params) {
   $this->params = $params;
+  return $this;
+}
+
+/**
+ * @param $context string 请求上下文信息，将会传递到 pipeline 中
+ * @return RegisterByPhoneCodeInput
+ */
+public function withContext($context) {
+  $this->context = $context;
   return $this;
 }
 }
@@ -7827,6 +7927,178 @@ class KeyValuePair {
   public $value;
 }
 
+/**
+ * SocialConnectionFieldInput
+ */
+class SocialConnectionFieldInput {
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $key;
+
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $label;
+
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $type;
+
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $placeholder;
+
+  /**
+   * Optional
+   * 
+   * @var SocialConnectionFieldInput[]
+   * 
+   */
+  public $children;
+
+
+public function __construct() {
+
+}
+
+/**
+ * @param $key string key
+ * @return SocialConnectionFieldInput
+ */
+public function withKey($key) {
+  $this->key = $key;
+  return $this;
+}
+
+/**
+ * @param $label string label
+ * @return SocialConnectionFieldInput
+ */
+public function withLabel($label) {
+  $this->label = $label;
+  return $this;
+}
+
+/**
+ * @param $type string type
+ * @return SocialConnectionFieldInput
+ */
+public function withType($type) {
+  $this->type = $type;
+  return $this;
+}
+
+/**
+ * @param $placeholder string placeholder
+ * @return SocialConnectionFieldInput
+ */
+public function withPlaceholder($placeholder) {
+  $this->placeholder = $placeholder;
+  return $this;
+}
+
+/**
+ * @param $children SocialConnectionFieldInput[] children
+ * @return SocialConnectionFieldInput
+ */
+public function withChildren($children) {
+  $this->children = $children;
+  return $this;
+}
+}
+    
+
+/**
+ * CreateSocialConnectionInput
+ */
+class CreateSocialConnectionInput {
+  /**
+   * Required
+   * 
+   * @var string
+   * 
+   */
+  public $provider;
+
+  /**
+   * Required
+   * 
+   * @var string
+   * 
+   */
+  public $name;
+
+  /**
+   * Required
+   * 
+   * @var string
+   * 
+   */
+  public $logo;
+
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $description;
+
+  /**
+   * Optional
+   * 
+   * @var SocialConnectionFieldInput[]
+   * 
+   */
+  public $fields;
+
+/**
+ * @param $provider string provider
+ * @param $name string name
+ * @param $logo string logo
+ */
+
+public function __construct($provider, $name, $logo) {
+$this->provider = $provider;
+$this->name = $name;
+$this->logo = $logo;
+}
+
+/**
+ * @param $description string description
+ * @return CreateSocialConnectionInput
+ */
+public function withDescription($description) {
+  $this->description = $description;
+  return $this;
+}
+
+/**
+ * @param $fields SocialConnectionFieldInput[] fields
+ * @return CreateSocialConnectionInput
+ */
+public function withFields($fields) {
+  $this->fields = $fields;
+  return $this;
+}
+}
+    
+
     
 class AddMemberResponse {
 
@@ -8879,6 +9151,103 @@ EOF;
     
 
     
+class AuthorizeResourceResponse {
+
+    /**
+     * @var CommonMessage
+     */
+    public $authorizeResource;
+}
+    
+class AuthorizeResourceParam {
+
+    /**
+     * Optional
+     * 
+     * @var string
+     */
+    public $namespace;
+
+    /**
+     * Optional
+     * 
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Optional
+     * 
+     * @var ResourceType
+     */
+    public $resourceType;
+
+    /**
+     * Optional
+     * 
+     * @var AuthorizeResourceOpt[]
+     */
+    public $opts;
+
+public function __construct() {
+
+}
+
+/**
+ * @param $namespace string
+ * @return AuthorizeResourceParam
+ */
+public function withNamespace($namespace) {
+  $this->namespace = $namespace;
+  return $this;
+}
+
+/**
+ * @param $resource string
+ * @return AuthorizeResourceParam
+ */
+public function withResource($resource) {
+  $this->resource = $resource;
+  return $this;
+}
+
+/**
+ * @param $resourceType ResourceType
+ * @return AuthorizeResourceParam
+ */
+public function withResourceType($resourceType) {
+  $this->resourceType = $resourceType;
+  return $this;
+}
+
+/**
+ * @param $opts AuthorizeResourceOpt[]
+ * @return AuthorizeResourceParam
+ */
+public function withOpts($opts) {
+  $this->opts = $opts;
+  return $this;
+}
+    function createRequest() {
+      return [
+        "query" => self::AuthorizeResourceDocument,
+        "operationName" => "authorizeResource",
+        "variables" => $this
+      ];
+    }
+
+    const AuthorizeResourceDocument = <<<EOF
+mutation authorizeResource(\$namespace: String, \$resource: String, \$resourceType: ResourceType, \$opts: [AuthorizeResourceOpt]) {
+  authorizeResource(namespace: \$namespace, resource: \$resource, resourceType: \$resourceType, opts: \$opts) {
+    code
+    message
+  }
+}
+EOF;
+}
+    
+
+    
 class BindEmailResponse {
 
     /**
@@ -9665,58 +10034,6 @@ mutation createRole(\$namespace: String, \$code: String!, \$description: String,
       description
       createdAt
       updatedAt
-    }
-  }
-}
-EOF;
-}
-    
-
-    
-class CreateSocialConnectionResponse {
-
-    /**
-     * @var SocialConnection
-     */
-    public $createSocialConnection;
-}
-    
-class CreateSocialConnectionParam {
-
-    /**
-     * Required
-     * 
-     * @var CreateSocialConnectionInput
-     */
-    public $input;
-
-/**
- * @param $input CreateSocialConnectionInput
- */
-public function __construct($input) {
-$this->input = $input;
-}
-
-    function createRequest() {
-      return [
-        "query" => self::CreateSocialConnectionDocument,
-        "operationName" => "createSocialConnection",
-        "variables" => $this
-      ];
-    }
-
-    const CreateSocialConnectionDocument = <<<EOF
-mutation createSocialConnection(\$input: CreateSocialConnectionInput!) {
-  createSocialConnection(input: \$input) {
-    provider
-    name
-    logo
-    description
-    fields {
-      key
-      label
-      type
-      placeholder
     }
   }
 }
@@ -14754,6 +15071,13 @@ class FindUserParam {
      */
     public $username;
 
+    /**
+     * Optional
+     * 
+     * @var string
+     */
+    public $externalId;
+
 public function __construct() {
 
 }
@@ -14784,6 +15108,15 @@ public function withUsername($username) {
   $this->username = $username;
   return $this;
 }
+
+/**
+ * @param $externalId string
+ * @return FindUserParam
+ */
+public function withExternalId($externalId) {
+  $this->externalId = $externalId;
+  return $this;
+}
     function createRequest() {
       return [
         "query" => self::FindUserDocument,
@@ -14793,8 +15126,8 @@ public function withUsername($username) {
     }
 
     const FindUserDocument = <<<EOF
-query findUser(\$email: String, \$phone: String, \$username: String) {
-  findUser(email: \$email, phone: \$phone, username: \$username) {
+query findUser(\$email: String, \$phone: String, \$username: String, \$externalId: String) {
+  findUser(email: \$email, phone: \$phone, username: \$username, externalId: \$externalId) {
     id
     arn
     userPoolId
@@ -17500,6 +17833,103 @@ query queryMfa(\$id: String, \$userId: String, \$userPoolId: String) {
     userPoolId
     enable
     secret
+  }
+}
+EOF;
+}
+    
+
+    
+class ResourcePermissionsResponse {
+
+    /**
+     * @var PaginatedResourcePermissionAssignments
+     */
+    public $resourcePermissions;
+}
+    
+class ResourcePermissionsParam {
+
+    /**
+     * Required
+     * 
+     * @var string
+     */
+    public $namespace;
+
+    /**
+     * Required
+     * 
+     * @var ResourceType
+     */
+    public $resourceType;
+
+    /**
+     * Required
+     * 
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Optional
+     * 
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
+
+    /**
+     * Optional
+     * 
+     * @var ResourcePermissionsActionsInput
+     */
+    public $actions;
+
+/**
+ * @param $namespace string
+ * @param $resourceType ResourceType
+ * @param $resource string
+ */
+public function __construct($namespace,$resourceType,$resource) {
+$this->namespace = $namespace;
+$this->resourceType = $resourceType;
+$this->resource = $resource;
+}
+
+/**
+ * @param $targetType PolicyAssignmentTargetType
+ * @return ResourcePermissionsParam
+ */
+public function withTargetType($targetType) {
+  $this->targetType = $targetType;
+  return $this;
+}
+
+/**
+ * @param $actions ResourcePermissionsActionsInput
+ * @return ResourcePermissionsParam
+ */
+public function withActions($actions) {
+  $this->actions = $actions;
+  return $this;
+}
+    function createRequest() {
+      return [
+        "query" => self::ResourcePermissionsDocument,
+        "operationName" => "resourcePermissions",
+        "variables" => $this
+      ];
+    }
+
+    const ResourcePermissionsDocument = <<<EOF
+query resourcePermissions(\$namespace: String!, \$resourceType: ResourceType!, \$resource: String!, \$targetType: PolicyAssignmentTargetType, \$actions: ResourcePermissionsActionsInput) {
+  resourcePermissions(namespace: \$namespace, resource: \$resource, resourceType: \$resourceType, targetType: \$targetType, actions: \$actions) {
+    totalCount
+    list {
+      targetType
+      targetIdentifier
+      actions
+    }
   }
 }
 EOF;
