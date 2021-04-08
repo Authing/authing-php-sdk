@@ -11,18 +11,30 @@ use Authing\Types\RegisterByPhoneCodeInput;
 use Authing\Types\RegisterByUsernameInput;
 use Authing\Types\UpdateUserInput;
 use PHPUnit\Framework\TestCase;
+use Test\TestConfig;
 
 class AuthenticationClientTest extends TestCase {
     /**
      * @var AuthenticationClient
      */
     private $client;
+    private $_testConfig;
 
     private function randomString() {
         return rand() . '';
     }
 
+    /**
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since
+     */
     protected function setUp(): void {
+        $moduleName = str_replace('ClientTest', '',  __CLASS__);
+        $this->_testConfig = TestConfig::getConfig($moduleName);
         $this->client = new AuthenticationClient("59f86b4832eb28071bdd9214");
         $this->client->setHost("http://localhost:3000");
     }
@@ -222,7 +234,4 @@ class AuthenticationClientTest extends TestCase {
         $this->client->logout();
     }
 
-    public function getConfig() {
-        $this->_testConfig = (new Yaml())->parseFile(dirname(__DIR__) . "/config/test.yml");
-    }
 }

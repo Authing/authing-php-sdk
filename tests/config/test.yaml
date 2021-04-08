@@ -1,0 +1,10 @@
+Authentication:
+  username: 'shubuzuo'
+  password: '123456'
+  host: '127.0.0.1'
+  db_name: 'panoddb'
+Authentication1:
+  username: 'shubuzuo'
+  password: '123456'
+  host: '127.0.0.1'
+  db_name: 'panoddb'

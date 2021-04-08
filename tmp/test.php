@@ -6,9 +6,15 @@ use Authing\Types\LoginByEmailInput;
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\LoginByUsernameInput;
 use Authing\Mgmt\ApplicationsManagementClient;
+use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Exception\ParseException;
 
-// $arr = [ 'a' => 'ok' ];
-// $_ = $arr['a'];
+
+
+$settings = Yaml::parseFile('../tests/config/test.yaml');
+// $settings->load('../tests/config.yaml');
+
+var_dump($settings);
 
 $client = new AuthenticationClient(function($options) {
     $options->appId = '5f97fb40d352ecf69ffe6d98';

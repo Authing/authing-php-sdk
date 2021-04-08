@@ -4,6 +4,7 @@ namespace Authing\Mgmt;
 
 use Authing\Types\AddPolicyAssignmentsParam;
 use Authing\Types\AddUserToGroupParam;
+use Authing\Types\ArchivedUsersParam;
 use Authing\Types\AssignRoleParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CommonMessage;
@@ -11,10 +12,13 @@ use Authing\Types\CreateUserInput;
 use Authing\Types\CreateUserParam;
 use Authing\Types\DeleteUserParam;
 use Authing\Types\DeleteUsersParam;
+use Authing\Types\FindUserParam;
+use Authing\Types\GetUserDepartmentsParam;
 use Authing\Types\GetUserGroupsParam;
 use Authing\Types\GetUserRolesParam;
 use Authing\Types\IsUserExistsParam;
 use Authing\Types\JWTTokenStatus;
+use Authing\Types\ListUserAuthorizedResourcesParam;
 use Authing\Types\PaginatedGroups;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PaginatedRoles;
@@ -28,42 +32,40 @@ use Authing\Types\RemoveUdvParam;
 use Authing\Types\RemoveUserFromGroupParam;
 use Authing\Types\RevokeRoleParam;
 use Authing\Types\SearchUserParam;
+use Authing\Types\SetUdfValueBatchParam;
 use Authing\Types\SetUdvParam;
 use Authing\Types\UDFTargetType;
+use Authing\Types\UdfValueBatchParam;
 use Authing\Types\UdvParam;
 use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
-use Authing\Types\FindUserParam;
-use Authing\Types\UserBatchParam;
 use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
-use Authing\Types\UdfValueBatchParam;
-use Authing\Types\SetUdfValueBatchParam;
-use Authing\Types\ListUserAuthorizedResourcesParam;
+
 use Error;
 use Exception;
 use stdClass;
 
-function formatAuthorizedResources($obj) {
+function formatAuthorizedResources($obj)
+{
     $authorizedResources = $obj->authorizedResources;
     $list = $authorizedResources->list;
     $total = $authorizedResources->totalCount;
-    array_map(function($_){
-        foreach($_ as $key => $value) {
-            if(!$_->$key) {
+    array_map(function ($_) {
+        foreach ($_ as $key => $value) {
+            if (!$_->$key) {
                 unset($_->$key);
             }
         }
         return $_;
-    }, (array)$list);
+    }, (array) $list);
     $res = new stdClass;
     $res->list = $list;
     $res->totalCount = $total;
     return $res;
 }
-
 
 class UsersManagementClient
 {
@@ -167,12 +169,12 @@ class UsersManagementClient
 
     /**
      * 通过 id、username、email、phone、email、externalId 批量获取用户详情
-     * 
+     *
      * @param $identifiers string[] 用户 ID 列表
      * @return User[]
      * @throws Exception
      */
-    public function batch(array $identifiers,array $options = [])
+    public function batch(array $identifiers, array $options = [])
     {
         $queryField = $options['queryField'] ?? 'id';
         $data = new stdClass();
@@ -213,7 +215,8 @@ class UsersManagementClient
      * @return boolean
      * @throws Exception
      */
-    public function exists($ops) {
+    public function exists($ops)
+    {
         $param = $ops;
         return $this->client->request($param->createRequest());
     }
@@ -236,7 +239,8 @@ class UsersManagementClient
      * @return PaginatedGroups
      * @throws Exception
      */
-    public function listGroups($userId) {
+    public function listGroups($userId)
+    {
         $param = new GetUserGroupsParam($userId);
         return $this->client->request($param->createRequest());
     }
@@ -249,7 +253,8 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function addGroups($userId, $group) {
+    public function addGroups($userId, $group)
+    {
         $param = (new AddUserToGroupParam([$userId]))->withCode($group);
         return $this->client->request($param->createRequest());
     }
@@ -262,7 +267,8 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function removeGroup($userId, $group) {
+    public function removeGroup($userId, $group)
+    {
         $param = (new RemoveUserFromGroupParam([$userId]))->withCode($group);
         return $this->client->request($param->createRequest());
     }
@@ -364,7 +370,8 @@ class UsersManagementClient
      * @return UserDefinedData[]
      * @throws Exception
      */
-    public function listUdv($userId) {
+    public function listUdv($userId)
+    {
         $param = new UdvParam(UDFTargetType::USER, $userId);
         return $this->client->request($param->createRequest());
     }
@@ -378,7 +385,8 @@ class UsersManagementClient
      * @return UserDefinedData
      * @throws Exception
      */
-    public function setUdv($userId, $key, $value) {
+    public function setUdv($userId, $key, $value)
+    {
         $param = new SetUdvParam(UDFTargetType::USER, $userId, $key, $value);
         return $this->client->request($param->createRequest());
     }
@@ -391,13 +399,15 @@ class UsersManagementClient
      * @return UserDefinedData
      * @throws Exception
      */
-    public function removeUdv($userId, $key) {
+    public function removeUdv($userId, $key)
+    {
         $param = new RemoveUdvParam(UDFTargetType::USER, $userId, $key);
         return $this->client->request($param->createRequest());
     }
 
-    function getUdfValueBatch($userIds) {
-        if(!isset($userIds) && !is_array($userIds)) {
+    public function getUdfValueBatch($userIds)
+    {
+        if (!isset($userIds) && !is_array($userIds)) {
             throw new Error("userId 为数组 不能为空");
         }
         $param = new UdfValueBatchParam("User", $userIds);
@@ -405,12 +415,13 @@ class UsersManagementClient
         return $res;
     }
 
-    function setUdfValueBatch($input) {
-        if(!isset($input) && !is_array($input)) {
+    public function setUdfValueBatch($input)
+    {
+        if (!isset($input) && !is_array($input)) {
             throw new Error("userId 为数组 不能为空");
         }
-        foreach($input as $index => $val) {
-            foreach($val as $_key => $_val) {
+        foreach ($input as $index => $val) {
+            foreach ($val as $_key => $_val) {
                 $_ = new stdClass;
                 $_->targetId = $val->targetId;
                 $_->key = $_key;
@@ -425,7 +436,7 @@ class UsersManagementClient
 
     public function listOrgs(string $userId)
     {
-        $res = $this->client->httpGet('/api/v2/users/'.$userId.'/orgs');
+        $res = $this->client->httpGet('/api/v2/users/' . $userId . '/orgs');
         return $res;
     }
 
@@ -449,8 +460,41 @@ class UsersManagementClient
     {
         // $username, $email, $phone, $externalId
         extract($options, EXTR_OVERWRITE);
-        $userParam = (new FindUserParam())->withEmail($email?? "")->withPhone($phone ?? "")->withUsername($username ?? "")->withExternalId($externalId ?? "");
+        $userParam = (new FindUserParam())->withEmail($email ?? "")->withPhone($phone ?? "")->withUsername($username ?? "")->withExternalId($externalId ?? "");
         $res = $this->client->request($userParam->createRequest());
         return $res;
+    }
+
+    public function listArchivedUsers(int $page = 1, int $limit = 10)
+    {
+        $param = (new ArchivedUsersParam())->withLimit($limit)->withPage($page);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    public function listDepartment(string $userId)
+    {
+        $param = (new GetUserDepartmentsParam($userId));
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    public function getUdfValue(string $userId)
+    {
+        $param = new UdvParam('USER', $userId);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    public function kick(array $userIds)
+    {
+        $data = [
+            'userIds' => $userIds
+        ];
+        $this->client->httpPost('/api/v2/users/kick', $data);
+        $_ = new stdClass();
+        $_->code = 200;
+        $_->message = '强制下线成功';
+        return $_;
     }
 }
