@@ -16,13 +16,11 @@ abstract class BaseClient
     protected $userPoolId;
     protected $appId;
 
-    // private $host = 'https://core.authing.cn';
-    private $host = 'http://authing-server.natapp1.cc';
-    
+    private $host = 'https://core.authing.cn';    
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.1";
+    private $_version = "php:4.1.5";
 
     private $publicKey
     = <<<PUBLICKKEY
