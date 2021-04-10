@@ -44,6 +44,7 @@ use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
 
+
 use Error;
 use Exception;
 use stdClass;
@@ -280,9 +281,9 @@ class UsersManagementClient
      * @return PaginatedRoles
      * @throws Exception
      */
-    public function listRoles($userId)
+    public function listRoles(string $userId, string $namespace = null)
     {
-        $param = new GetUserRolesParam($userId);
+        $param = (new GetUserRolesParam($userId))->withNamespace();
         return $this->client->request($param->createRequest())->roles;
     }
 
@@ -497,4 +498,22 @@ class UsersManagementClient
         $_->message = '强制下线成功';
         return $_;
     }
+
+    public function hasRole(string $userId, string $roleCode, string $namespace)
+    {
+        $roleList = $this->listRoles($userId, $namespace);
+        if ($roleList->totalCount < 1) {
+            return false;
+        }
+        $hasRole = false;
+        $list = $roleList->list;
+        foreach($list as $val) {
+            if ($val->code === $roleCode) {
+                $hasRole = true;
+            }
+        }
+        return $hasRole;
+    }
+
+
 }

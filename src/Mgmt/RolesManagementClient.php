@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Authing\Mgmt;
 
 use Authing\Types\AddPolicyAssignmentsParam;
@@ -9,6 +8,7 @@ use Authing\Types\CommonMessage;
 use Authing\Types\CreateRoleParam;
 use Authing\Types\DeleteRoleParam;
 use Authing\Types\DeleteRolesParam;
+use Authing\Types\ListRoleAuthorizedResourcesParam;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PaginatedRoles;
 use Authing\Types\PaginatedUsers;
@@ -20,30 +20,61 @@ use Authing\Types\Role;
 use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
 use Authing\Types\RoleWithUsersParam;
+use Authing\Types\SetUdfValueBatchInput;
+use Authing\Types\SetUdvBatchParam;
+use Authing\Types\UDFDataType;
+use Authing\Types\UDFTargetType;
+use Authing\Types\UdfValueBatchParam;
+use Authing\Types\UdvParam;
 use Authing\Types\UpdateRoleParam;
-use Authing\Types\ListRoleAuthorizedResourcesParam;
-use stdClass;
-
-
+use Authing\Types\SetUdfValueBatchParam;
+use Authing\Types\RemoveUdvParam;
 
 use Exception;
+use stdClass;
 
-function formatAuthorizedResources($obj) {
+function formatAuthorizedResources($obj)
+{
     $authorizedResources = $obj->authorizedResources;
     $list = $authorizedResources->list;
     $total = $authorizedResources->totalCount;
-    array_map(function($_){
-        foreach($_ as $key => $value) {
-            if(!$_->$key) {
+    array_map(function ($_) {
+        foreach ($_ as $key => $value) {
+            if (!$_->$key) {
                 unset($_->$key);
             }
         }
         return $_;
-    }, (array)$list);
+    }, (array) $list);
     $res = new stdClass;
     $res->list = $list;
     $res->totalCount = $total;
     return $res;
+}
+
+function convertUdvToKeyValuePair(array $data)
+{
+    foreach ($data as $item) {
+        $dataType = $item->dataType;
+        $value = $item->value;
+        if ($dataType === UDFDataType::NUMBER) {
+            $item->value = json_encode($value);
+        } else if ($dataType === UDFDataType::BOOLEAN) {
+            $item->value = json_encode($value);
+        } else if ($dataType === UDFDataType::DATETIME) {
+            // set data time
+            // $item->value = intval($value);
+        } else if ($dataType === UDFDataType::OBJECT) {
+            $item->value = json_encode($value);
+        }
+    }
+    ;
+    $ret = new stdClass();
+    foreach ($data as $item) {
+        $key = $item->key;
+        $ret->$key = $item->value;
+    }
+    return $ret;
 }
 
 class RolesManagementClient
@@ -235,7 +266,7 @@ class RolesManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    function listAuthorizedResources($roleCode, $namespace, $opts = [])
+    public function listAuthorizedResources($roleCode, $namespace, $opts = [])
     {
         $resourceType = null;
         if (count($opts) > 0) {
@@ -243,8 +274,85 @@ class RolesManagementClient
         }
         $param = (new ListRoleAuthorizedResourcesParam($roleCode))->withNamespace($namespace)->withResourceType($resourceType);
         $data = $this->client->request($param->createRequest());
-         
+
         return formatAuthorizedResources($data);
     }
 
+    public function getUdfValue(string $roleId)
+    {
+        $param = (new UdvParam('ROLE', $roleId));
+        $data = $this->client->request($param->createRequest());
+        $list = $data->udv;
+        return convertUdvToKeyValuePair($list);
+    }
+
+    public function getSpecificUdfValue(string $roleId, string $udfKey)
+    {
+        $param = new UdvParam(UDFTargetType::ROLE, $roleId);
+        $data = $this->client->request($param->createRequest())->udv;
+
+        $udfMap = convertUdvToKeyValuePair($list);
+        $udfValue = new stdClass();
+
+        foreach ($udfMap as $key => $value) {
+            if ($udfKey === $key) {
+                $udfValue->$key = $value;
+            }
+        }
+
+        return $udfValue;
+    }
+
+    public function getUdfValueBatch(array $roleIds)
+    {
+        if (count($roleIds) === 0) {
+            throw new Error('empty user id list');
+        }
+
+        $parma = new UdfValueBatchParam(UDFTargetType::ROLE, $roleIds);
+        $data = $this->client->request($param->createRequest())->udfValueBatch;
+
+        $ret = new stdClass();
+        foreach ($data as $value) {
+            $targetId = $value->targetId;
+            $_data = $value->data;
+            $ret->$targetId = convertUdvToKeyValuePair(_data);
+        }
+
+        return $ret;
+    }
+
+    public function setUdfValue(string $roleId, array $data)
+    {
+        if (count($data) === 0) {
+            throw new Error('empty udf value list');
+        }
+
+        $param = (new SetUdvBatchParam(UDFTargetType::ROLE, $roleId))->withUdvList(object($data));
+        $this->client->request($param->createRequest());
+    }
+
+    public function setUdfValueBatch(array $input)
+    {
+        if (count($input) === 0) {
+            throw new Error('empty input list');
+        }
+        $params = [];
+        foreach ($input as $item) {
+            $userId = $item->roleId;
+            $data = $item->data;
+            foreach ($data as $key => $value) {
+                $param = new SetUdfValueBatchInput($userId, $key, $value);
+                array_push($param, $param);
+            }
+        }
+        $param = new SetUdfValueBatchParam(UDFTargetType::ROLE, $params);
+        $this->client->request($param->createRequest());
+    }
+
+    public function removeUdfValue(string $roleId, string $key)
+    {
+        $param = new RemoveUdvParam(UDFTargetType::ROLE, $roleId, $key);
+        $this->client->request($param->createRequest());
+    }
 }
