@@ -21,7 +21,7 @@ abstract class BaseClient
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.1";
+    private $_version = "php:4.1.6";
 
     private $publicKey
     = <<<PUBLICKKEY
