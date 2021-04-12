@@ -4,7 +4,7 @@ require_once __DIR__ . '../../../vendor/autoload.php';
 use Authing\Mgmt\ManagementClient;
 
 
-$client = new ManagementClient('5f88506c81cd279930195660', 'f6bbab3309f021639c6b04d6e54133cd');
+$client = new ManagementClient('---', '---');
 
 $client->requestToken();
 $appManageClient = $client->applications();

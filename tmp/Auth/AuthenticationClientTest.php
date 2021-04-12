@@ -6,10 +6,10 @@ use Authing\Types\LoginByEmailInput;
 
 
 $authenticationClient = new AuthenticationClient(function ($ops) {
-    $ops->appId = "606dd67c164539e1c90f4d83";
+    $ops->appId = "---";
 });
 
-$authenticationClient->loginByEmail(new LoginByEmailInput("1409458062@qq.com", "admin"));
+$authenticationClient->loginByEmail(new LoginByEmailInput("--", "-"));
 
 $res = $authenticationClient->getCurrentUser();
 

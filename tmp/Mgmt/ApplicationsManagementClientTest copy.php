@@ -5,13 +5,13 @@ use Authing\Mgmt\ManagementClient;
 use Authing\Types\PolicyAssignmentTargetType;
 
 // $client = new AuthenticationClient(function($options) {
-//     $options->appId = '5f97fb40d352ecf69ffe6d98';
-//     $options->secret = '19938f6ef3c84360a9c0ab73c2cc88d7';
+//     $options->appId = '--';
+//     $options->secret = '-----';
 //     $options->redirectUri = 'http://localhost:3000';
 //     $options->appHost = 'https://localhost';
 //     $options->protocol = 'oidc';
 // });
-$client = new ManagementClient('5f88506c81cd279930195660', 'f6bbab3309f021639c6b04d6e54133cd');
+$client = new ManagementClient('--', '--');
 // $client = new ManagementClient('605ae5ebf3e8478bba488c38', 'aa30679b3e0bb3710bcd60af4e4b684d');
 
 // $client->setHost('http://localhost:3000');

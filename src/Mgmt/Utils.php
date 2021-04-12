@@ -2,6 +2,7 @@
 
 namespace Authing\Mgmt;
 
+use Authing\Types\UDFDataType;
 
 class Utils
 {

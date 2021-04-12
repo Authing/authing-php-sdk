@@ -81,8 +81,10 @@ class UdfManagementClient
     {
         $param = new UdvParam($targetType, $targetId);
         $res = $this->client->request($param->createRequest());
-        $list = $res->udv;
-        return convertUdv($list);
+        if ($res) {
+            return Utils::convertUdv((array)$res);
+        }
+        return [];
     }
 
     public function setUdvBatch(string $targetType, string $targetId, array $udvList)
@@ -94,7 +96,11 @@ class UdfManagementClient
             ];
         }, $udvList);
         $param = (new SetUdvBatchParam($targetType, $targetId))->withUdvList($data);
-        $list = $this->client->request($param->createRequest())->setUdvBatch;
-        return Utils::convertUdv($list);
+        $res = $this->client->request($param->createRequest());
+        if ($res) {
+            // $list = $res->setUdvBatch;
+            return Utils::convertUdv((array)$res);
+        }
+        return [];
     }
 }
