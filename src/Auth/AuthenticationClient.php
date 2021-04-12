@@ -46,6 +46,8 @@ use Authing\Types\ListUserAuthorizedResourcesParam;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Firebase\JWT\JWT;
+
 use Error;
 use Exception;
 use stdClass;
@@ -83,6 +85,28 @@ class AuthenticationClient extends BaseClient
     public function __construct($userPoolIdOrFunc)
     {
         parent::__construct($userPoolIdOrFunc);
+    }
+
+    function checkLoggedIn() {
+        $user = $this->getCurrentUser();
+        if ($user) {
+            return $user->id;
+        }
+
+        if ($this->accessToken) {
+            throw new Error('请先登录！');
+        }
+        // $tokenInfo = JWT::decode($this->accessToken);
+        // $userId = $tokenInfo->sub ?? ($tokenInfo ->data ? $tokenInfo ->data ->id : '');
+        // if ($userId) {
+        //     throw new Error('不合法的 accessToken');
+        // }
+        // return $userId;
+    }
+
+    public function setToken(string $accessToken)
+    {
+        $this->setAccessToken($accessToken);
     }
 
     public function setMfaAuthorizationHeader(string $token)
@@ -446,8 +470,8 @@ class AuthenticationClient extends BaseClient
      */
     function logout()
     {
-        $param = new UpdateUserParam((new UpdateUserInput())->withTokenExpiredAt('0'));
-        $this->request($param->createRequest());
+        $appId = $this->options->appId;
+        $this->httpGet("/api/v2/logout?app_id=$appId");
         $this->accessToken = '';
     }
 

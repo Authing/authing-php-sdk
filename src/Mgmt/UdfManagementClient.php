@@ -4,14 +4,19 @@
 namespace Authing\Mgmt;
 
 
-use Authing\Types\CommonMessage;
-use Authing\Types\RemoveUdfParam;
+use Exception;
+use Authing\Mgmt\Utils;
+use Authing\Types\UdfParam;
+use Authing\Types\UdvParam;
+use Authing\Mgmt\convertUdv;
 use Authing\Types\SetUdfParam;
 use Authing\Types\UDFDataType;
-use Authing\Types\UdfParam;
+use Authing\Types\CommonMessage;
 use Authing\Types\UDFTargetType;
+use Authing\Types\RemoveUdfParam;
+
+use Authing\Types\SetUdvBatchParam;
 use Authing\Types\UserDefinedField;
-use Exception;
 
 class UdfManagementClient
 {
@@ -70,5 +75,26 @@ class UdfManagementClient
     {
         $param = new RemoveUdfParam($targetType, $key);
         return $this->client->request($param->createRequest());
+    }
+
+    public function listUdv(string $targetType, string $targetId)
+    {
+        $param = new UdvParam($targetType, $targetId);
+        $res = $this->client->request($param->createRequest());
+        $list = $res->udv;
+        return convertUdv($list);
+    }
+
+    public function setUdvBatch(string $targetType, string $targetId, array $udvList)
+    {
+        $data = array_map(function($item) {
+            return (object)[
+                'key' => $item->key,
+                'value' => json_encode($item->value)
+            ];
+        }, $udvList);
+        $param = (new SetUdvBatchParam($targetType, $targetId))->withUdvList($data);
+        $list = $this->client->request($param->createRequest())->setUdvBatch;
+        return Utils::convertUdv($list);
     }
 }

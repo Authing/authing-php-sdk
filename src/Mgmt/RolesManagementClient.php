@@ -15,21 +15,20 @@ use Authing\Types\PaginatedUsers;
 use Authing\Types\PolicyAssignmentsParam;
 use Authing\Types\PolicyAssignmentTargetType;
 use Authing\Types\RemovePolicyAssignmentsParam;
+use Authing\Types\RemoveUdvParam;
 use Authing\Types\RevokeRoleParam;
 use Authing\Types\Role;
 use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
 use Authing\Types\RoleWithUsersParam;
 use Authing\Types\SetUdfValueBatchInput;
+use Authing\Types\SetUdfValueBatchParam;
 use Authing\Types\SetUdvBatchParam;
 use Authing\Types\UDFDataType;
 use Authing\Types\UDFTargetType;
 use Authing\Types\UdfValueBatchParam;
 use Authing\Types\UdvParam;
 use Authing\Types\UpdateRoleParam;
-use Authing\Types\SetUdfValueBatchParam;
-use Authing\Types\RemoveUdvParam;
-
 use Exception;
 use stdClass;
 
@@ -52,6 +51,25 @@ function formatAuthorizedResources($obj)
     return $res;
 }
 
+function convertUdv(array $data)
+{
+    foreach ($data as $item) {
+        $dataType = $item->dataType;
+        $value = $item->value;
+        if ($dataType === UDFDataType::NUMBER) {
+            $item->value = json_encode($value);
+        } else if ($dataType === UDFDataType::BOOLEAN) {
+            $item->value = json_encode($value);
+        } else if ($dataType === UDFDataType::DATETIME) {
+            // set data time
+            // $item->value = intval($value);
+        } else if ($dataType === UDFDataType::OBJECT) {
+            $item->value = json_encode($value);
+        }
+    }
+    return $data;
+}
+
 function convertUdvToKeyValuePair(array $data)
 {
     foreach ($data as $item) {
@@ -68,7 +86,7 @@ function convertUdvToKeyValuePair(array $data)
             $item->value = json_encode($value);
         }
     }
-    ;
+
     $ret = new stdClass();
     foreach ($data as $item) {
         $key = $item->key;

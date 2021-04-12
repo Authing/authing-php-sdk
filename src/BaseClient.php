@@ -156,7 +156,7 @@ PUBLICKKEY;
         return $this->arrayToObject($result);
     }
 
-    public function httpPatch($path, $data)
+    public function httpPatch($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PATCH');
         return $this->arrayToObject($result);
