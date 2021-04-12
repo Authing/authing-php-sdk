@@ -1,15 +1,16 @@
 <?php
 
-
 namespace Authing;
 
-use \GuzzleHttp;
 use Exception;
 use GuzzleHttp\Client;
 use stdClass;
 
 abstract class BaseClient
 {
+    /**
+     * @var Client
+     */
     protected $naiveHttpClient;
     protected $options;
 
@@ -17,7 +18,6 @@ abstract class BaseClient
     protected $appId;
 
     private $host = 'https://core.authing.cn';
-    
 
     private $_type = "SDK";
 
@@ -62,10 +62,14 @@ PUBLICKKEY;
             // $empty_object =
             //     new \stdClass;
             // $userPoolIdOrFunc($empty_object);
-            if (isset($this->options->userPoolId))
+            if (isset($this->options->userPoolId)) {
                 $this->userPoolId = $this->options->userPoolId;
-            if (isset($this->options->appId))
+            }
+
+            if (isset($this->options->appId)) {
                 $this->appId = $this->options->appId;
+            }
+
         }
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
@@ -104,7 +108,9 @@ PUBLICKKEY;
      */
     public function encrypt($password)
     {
-        if (!$password) return null;
+        if (!$password) {
+            return null;
+        }
 
         $newPassword = '';
         openssl_public_encrypt($password, $newPassword, $this->publicKey);
@@ -179,8 +185,10 @@ PUBLICKKEY;
      */
     private function checkResult($result)
     {
-        if (isset($result['errors']))
+        if (isset($result['errors'])) {
             $errors = $result['errors'];
+        }
+
         if (!empty($errors) && count($errors) > 0) {
             throw new Exception("Graphql request failed:\n" . json_encode($errors));
         }
@@ -216,7 +224,7 @@ PUBLICKKEY;
             }
         }
 
-        return (object)$arr;
+        return (object) $arr;
     }
 
     /**
@@ -311,7 +319,7 @@ PUBLICKKEY;
         }
     }
 
-    function formatAuthorizedResources($obj)
+    public function formatAuthorizedResources($obj)
     {
         $authorizedResources = $obj->authorizedResources;
         $list = $authorizedResources->list;

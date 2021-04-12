@@ -1,6 +1,7 @@
 <?php
 
 namespace Authing\Mgmt;
+use Firebase\JWT\JWT;
 
 
 class Utils
@@ -22,5 +23,13 @@ class Utils
             }
         }
         return $data;
+    }
+
+    public static function getTokenPlayloadData(string $jwt)
+    {
+        $tks = explode('.', $jwt);
+        list($headb64, $bodyb64, $cryptob64) = $tks;
+        $playLoadData = JWT::jsonDecode(JWT::urlsafeB64Decode($bodyb64));
+        return $playLoadData;
     }
 }
