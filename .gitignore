@@ -4,5 +4,5 @@ vendor
 .phpunit.result.cache
 # test.php
 # test*.php
-# tests/config/test.yaml
-# tmp
+tests/config/test.yaml
+tmp

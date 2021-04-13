@@ -6,7 +6,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class TestConfig {
     static function getConfig(string $moduleName) {
-        $config = Yaml::parseFile('../tests/config/test.yaml');
+        $config = Yaml::parseFile(__DIR__.'/test.yaml');
         return $config[$moduleName];
     }
 }

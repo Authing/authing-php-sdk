@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '../../vendor/autoload.php';
+
 
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\EmailScene;
@@ -35,30 +37,24 @@ class AuthenticationClientTest extends TestCase {
     protected function setUp(): void {
         $moduleName = str_replace('ClientTest', '',  __CLASS__);
         $this->_testConfig = TestConfig::getConfig($moduleName);
-        $this->client = new AuthenticationClient("59f86b4832eb28071bdd9214");
-        $this->client->setHost("http://localhost:3000");
+        $this->client = new AuthenticationClient(function ($options) {
+            $options->appId = $this->_testConfig->appId;
+        });
     }
 
     protected function tearDown(): void {
 
     }
 
-    public function testOnePlusOne()
+    public function testGetCurrentUser()
     {
-        $one = 1;
-        $two = $one + $one;
-        $this->assertEquals($two, 2);
+        $username = "test";
+        $password = "123456";
+        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+
+        $user = $this->client->getCurrentUser();
+        $this->assertNotEquals(null, $user);
     }
-
-    // public function testGetCurrentUser()
-    // {
-    //     $username = "test";
-    //     $password = "123456";
-    //     $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
-
-    //     $user = $this->client->getCurrentUser();
-    //     $this->assertNotEquals(null, $user);
-    // }
 
     // /**
     //  * @throws Exception
