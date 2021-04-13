@@ -43,6 +43,13 @@ use Authing\Types\UserParam;
 use Authing\BaseClient;
 use Authing\Types\CheckPasswordStrengthParam;
 use Authing\Types\ListUserAuthorizedResourcesParam;
+use Authing\Types\BindEmailParam;
+use Authing\Types\UnbindEmailParam;
+use Authing\Types\SetUdvBatchParam;
+
+
+use Authing\Mgmt\Utils;
+
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
@@ -96,12 +103,12 @@ class AuthenticationClient extends BaseClient
         if ($this->accessToken) {
             throw new Error('请先登录！');
         }
-        // $tokenInfo = JWT::decode($this->accessToken);
-        // $userId = $tokenInfo->sub ?? ($tokenInfo ->data ? $tokenInfo ->data ->id : '');
-        // if ($userId) {
-        //     throw new Error('不合法的 accessToken');
-        // }
-        // return $userId;
+        $tokenInfo = Utils::getTokenPlayloadData($this->accessToken);
+        $userId = $tokenInfo->sub ?? ($tokenInfo ->data ? $tokenInfo ->data ->id : '');
+        if ($userId) {
+            throw new Error('不合法的 accessToken');
+        }
+        return $userId;
     }
 
     public function setToken(string $accessToken)
@@ -140,13 +147,10 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    function setCurrentUser()
+    function setCurrentUser(object $user)
     {
-        $param = new UserParam();
-        $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
         $this->user = $user;
-        return $user;
+        $this->accessToken = $user->token;
     }
 
 
@@ -984,11 +988,101 @@ class AuthenticationClient extends BaseClient
         ];
     }
 
-    // function _getNewAccessTokenByRefreshTokenWithClientSecretPost(string $refreshToken)
-    // {
-    //     $map = 
-    // }
+    function _getNewAccessTokenByRefreshTokenWithClientSecretPost(string $refreshToken)
+    {
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
+        $qstr = $this->_generateTokenRequest([
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken
+        ]);
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' =>
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+        ]);
+
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
     
+    function _getNewAccessTokenByRefreshTokenWithClientSecretBasic(string $refreshToken) {
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
+        $qstr = $this->_generateTokenRequest([
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+        ]);
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' =>
+            [
+                'Authorization' => $this->_generateBasicAuthToken(),
+            ],
+        ]);
+
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    function _getNewAccessTokenByRefreshTokenWithNone(string $refreshToken) {
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token';
+        }
+        $qstr = $this->_generateTokenRequest([
+            'client_id' => $this->options->appId,
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+        ]);
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' => [],
+        ]);
+
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+
+    }
+
+    public function getNewAccessTokenByRefreshToken(string $refreshToken)
+    {
+        if (!in_array($this->options->protocol, ['oauth', 'oidc'])) {
+            throw new Error(
+                '初始化 AuthenticationClient 时传入的 protocol 参数必须为 oauth 或 oidc，请检查参数'
+            );
+        }
+        if (!isset($this->options->secret) && $this->options->introspectionEndPointAuthMethod !== 'none') {
+            throw new Error(
+                '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数'
+            );
+        }
+        if ($this->options->tokenEndPointAuthMethod === 'client_secret_post') {
+            $res = $this->_getNewAccessTokenByRefreshTokenWithClientSecretPost($refreshToken);
+            return $res;
+        }
+        if ($this->options->tokenEndPointAuthMethod === 'none') {
+            $res = $this->_getNewAccessTokenByRefreshTokenWithNone($refreshToken);
+            return $res;
+        }
+        if ($this->options->tokenEndPointAuthMethod === 'client_secret_basic') {
+            $res = $this->_getNewAccessTokenByRefreshTokenWithClientSecretBasic($refreshToken);
+            return $res;
+        }
+    }
+
     function _introspectTokenWithClientSecretPost(string $token)
     {
         $qstr = $this->_generateTokenRequest([
@@ -1055,12 +1149,12 @@ class AuthenticationClient extends BaseClient
     }
 
     function introspectToken(string $token){
-        if (!(in_array('oauth', $this->options->protocol) || in_array('oidc', $this->options->protocol))) {
+        if (!in_array($this->options->protocol, ['oauth', 'oidc'])) {
             throw new Error(
                 '初始化 AuthenticationClient 时传入的 protocol 参数必须为 oauth 或 oidc，请检查参数'
               );
         }
-        if (!$this->options->secret && $this->options->introspectionEndPointAuthMethod !== 'none') {
+        if (!isset($this->options->secret) && $this->options->introspectionEndPointAuthMethod !== 'none') {
             throw new Error(
                 '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数'
               );
@@ -1089,4 +1183,88 @@ class AuthenticationClient extends BaseClient
         $data = $this->httpGet("/api/v2/users/me/applications/allowed?page=$page&limit=$limit");
         return $data;
     }
+
+    public function bindEmail(string $email, string $emailCode)
+    {
+        $param = new BindEmailParam($email, $emailCode);
+        return $this->request($param->createRequest());        
+    }
+
+    public function revokeToken(string $token)
+    {
+        if (!in_array($this->options->protocol, ['oauth', 'oidc'])) {
+            throw new Error('初始化 AuthenticationClient 时传入的 protocol 参数必须为 oauth 或 oidc，请检查参数');
+        }
+        if (!isset($this->options->secret) && $this->options->revocationEndPointAuthMethod !== 'none') {
+            throw new Error(
+                '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数'
+            );
+        }
+        if ($this->options->revocationEndPointAuthMethod == 'client_secret_post') {
+            // $this->
+        }
+    }
+
+    public function validateTicketV1(string $ticket, string $service)
+    {
+        $api = '/cas-idp/'.$this.options.appId.'/validate?service='.$service.'&ticket='.$ticket;
+        $req = new Request('GET', $api, [
+            'headers' => array_merge(
+                $this->getOidcHeaders()
+            ),
+        ]);
+
+        $res = $this->naiveHttpClient->send($req);
+        list($valid, $username) = explode('\n', $res);
+        if ($valid === 'yes') {
+            if ($username) {
+                return [
+                    'valid' => true,
+                    'username' => $username,
+                ];
+            } else {
+                return [
+                    'valid' => true,
+                ];
+            }
+        } else {
+            return [
+                'valid' => false,
+                'username' => $username,
+                'message' => 'ticket 不合法'
+            ];
+        }
+    }
+
+    public function unbindEmail(Type $var = null)
+    {
+        $param = new UnbindEmailParam();
+        $user = $this->request($param->createRequest())->unbindEmail;
+        $this->setCurrentUser($user);
+        return $user;
+    }
+
+    public function removeUdfValue(string $key)
+    {
+        $userId = $this->checkLoggedIn();
+        $param = new RemoveUdvParam(UDFTargetType::USER, $userId, $key);
+        $this->request($param->createRequest());
+    }
+
+    public function setUdfValue(array $data)
+    {
+        if (count($data) === 0) {
+            throw new Error('empty udf value list');
+        }
+        array_map(function($value) {
+            return (object)[
+                'key' => $key,
+                'value' => json_encode($value) 
+            ];
+        }, $data);
+        $userId = $this->checkLoggedIn();
+        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
+    }
+
+    
 }
