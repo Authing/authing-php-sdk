@@ -9,10 +9,10 @@
     "ext-json": "*",
     "ext-openssl": "*",
     "guzzlehttp/guzzle": "^7.2",
-    "symfony/yaml": "^5.2",
     "firebase/php-jwt": "^5.2"
   },
   "require-dev": {
+    "symfony/yaml": "^5.2",
     "phpunit/phpunit": "^8"
   },
   "license": "MIT",
@@ -36,6 +36,12 @@
   "autoload-dev": {
     "psr-4": {
       "Test\\": "tests/"
+    }
+  },
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://mirrors.aliyun.com/composer/"
     }
   }
 }
