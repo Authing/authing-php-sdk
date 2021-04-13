@@ -979,7 +979,7 @@ class AuthenticationClient extends BaseClient
 
     function getOidcHeaders()
     {
-        $SDK_VERSION = "4.1.7";
+        $SDK_VERSION = "4.1.8";
         return [
             'x-authing-sdk-version' => 'php:' . $SDK_VERSION,
             'x-authing-userpool-id' => (isset($this->options->userPoolId) ? $this->options->userPoolId : ""),
