@@ -1047,14 +1047,13 @@ class AuthenticationClient extends BaseClient
             'grant_type' => 'refresh_token',
             'refresh_token' => $refreshToken,
         ]);
+        echo $qstr;
         $req = new Request('POST', $api, [
             'body' => $qstr,
-            'headers' => [],
         ]);
 
         $tokenSet = $this->naiveHttpClient->send($req);
         return $tokenSet;
-
     }
 
     public function getNewAccessTokenByRefreshToken(string $refreshToken)
@@ -1074,6 +1073,7 @@ class AuthenticationClient extends BaseClient
             return $res;
         }
         if ($this->options->tokenEndPointAuthMethod === 'none') {
+            echo '+++++'.$refreshToken;
             $res = $this->_getNewAccessTokenByRefreshTokenWithNone($refreshToken);
             return $res;
         }
@@ -1200,9 +1200,85 @@ class AuthenticationClient extends BaseClient
                 '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数'
             );
         }
-        if ($this->options->revocationEndPointAuthMethod == 'client_secret_post') {
-            // $this->
+        if ($this->options->introspectionEndPointAuthMethod === 'client_secret_post') {
+            $this->_revokeTokenWithClientSecretPost($token);
+            return true;
         }
+        if ($this->options->introspectionEndPointAuthMethod === 'none') {
+            $this->_revokeTokenWithClientSecretBasic($token);
+            return true;
+        }
+        if ($this->options->introspectionEndPointAuthMethod === 'client_secret_basic') {
+            $this->_revokeTokenWithNone($token);
+            return true;
+        }
+    }
+
+    public function _revokeTokenWithClientSecretPost(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'client_id' => $this->options->appId,
+            'client_secret' => $this->options->secret,
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/revocation';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token/revocation';
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' =>
+            [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    public function _revokeTokenWithClientSecretBasic(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'client_id' => $this->options->appId,
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/revocation';
+        } else if ($this->options->protocol === 'oauth') {
+            $api = '/oauth/token/revocation';
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
+    }
+
+    public function _revokeTokenWithNone(string $token)
+    {
+        $qstr = $this->_generateTokenRequest([
+            'token' => $token,
+        ]);
+        $api;
+        if ($this->options->protocol === 'oidc') {
+            $api = '/oidc/token/revocation';
+        } else if ($this->options->protocol === 'oauth') {
+            throw new Error(
+                'OAuth 2.0 暂不支持用 client_secret_basic 模式身份验证撤回 Token'
+            );
+        }
+        $req = new Request('POST', $api, [
+            'body' => $qstr,
+            'headers' =>
+            [
+                'Authorization' => $this->_generateBasicAuthToken(),
+            ],
+        ]);
+        $tokenSet = $this->naiveHttpClient->send($req);
+        return $tokenSet;
     }
 
     public function validateTicketV1(string $ticket, string $service)
@@ -1236,7 +1312,7 @@ class AuthenticationClient extends BaseClient
         }
     }
 
-    public function unbindEmail(Type $var = null)
+    public function unbindEmail()
     {
         $param = new UnbindEmailParam();
         $user = $this->request($param->createRequest())->unbindEmail;
@@ -1249,6 +1325,7 @@ class AuthenticationClient extends BaseClient
         $userId = $this->checkLoggedIn();
         $param = new RemoveUdvParam(UDFTargetType::USER, $userId, $key);
         $this->request($param->createRequest());
+        return true;
     }
 
     public function setUdfValue(array $data)
@@ -1256,14 +1333,16 @@ class AuthenticationClient extends BaseClient
         if (count($data) === 0) {
             throw new Error('empty udf value list');
         }
-        array_map(function($value) {
-            return (object)[
+        $att = [];
+        foreach($data as $value => $key) {
+            array_push($att, (object)[
                 'key' => $key,
                 'value' => json_encode($value) 
-            ];
-        }, $data);
+            ]);
+        }
         $userId = $this->checkLoggedIn();
-        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
+        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($att);
+        return $this->request($param->createRequest());
     }
 
     
