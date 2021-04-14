@@ -21,7 +21,7 @@ abstract class BaseClient
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.8";
+    private $_version = "php:4.1.9";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -142,6 +142,7 @@ PUBLICKKEY;
     public function httpGet($path)
     {
         $result = $this->send($this->host . $path, null, 'GET');
+        return json_decode(json_encode($result));
         return $this->arrayToObject($result);
     }
 
@@ -220,7 +221,9 @@ PUBLICKKEY;
     {
         foreach ($arr as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $arr[$k] = $this->arrayToObject($v);
+                if ($k !== 'data') {
+                    $arr[$k] = $this->arrayToObject($v);
+                }
             }
         }
 

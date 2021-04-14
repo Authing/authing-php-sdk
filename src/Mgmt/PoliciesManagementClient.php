@@ -1,14 +1,13 @@
 <?php
 
-
 namespace Authing\Mgmt;
-
 
 use Authing\Types\AddPolicyAssignmentsParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\CreatePolicyParam;
 use Authing\Types\DeletePoliciesParam;
 use Authing\Types\DeletePolicyParam;
+use Authing\Types\DisbalePolicyAssignmentParam;
 use Authing\Types\PaginatedPolicies;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PoliciesParam;
@@ -19,6 +18,9 @@ use Authing\Types\PolicyParam;
 use Authing\Types\PolicyStatementInput;
 use Authing\Types\RemovePolicyAssignmentsParam;
 use Authing\Types\UpdatePolicyParam;
+use Authing\Types\EnablePolicyAssignmentParam;
+
+
 use Exception;
 
 class PoliciesManagementClient
@@ -165,5 +167,19 @@ class PoliciesManagementClient
     {
         $param = (new RemovePolicyAssignmentsParam($policies, $targetType))->withTargetIdentifiers($targetIdentifiers);
         return $this->client->request($param->createRequest());
+    }
+
+    public function disableAssignment(string $policy, string $targetType, string $targetIdentifier, string $namespace = '')
+    {
+        $param = (new DisbalePolicyAssignmentParam($policy, $targetType, $targetIdentifier))->withNamespace($namespace);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
+    public function enableAssignment(string $policy, string $targetType, string $targetIdentifier, string $namespace = '')
+    {
+        $param = (new EnablePolicyAssignmentParam($policy, $targetType, $targetIdentifier))->withNamespace($namespace);
+        $res = $this->client->request($param->createRequest());
+        return $res;
     }
 }

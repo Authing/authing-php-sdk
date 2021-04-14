@@ -7,10 +7,21 @@ use Exception;
 use Authing\BaseClient;
 use Authing\Types\UserParam;
 use Authing\Types\AccessTokenRes;
+use Authing\Types\SendEmailParam;
 use Authing\Types\AccessTokenParam;
 use Authing\InvalidArgumentException;
+use Authing\Mgmt\AclManagementClient;
+use Authing\Mgmt\OrgManagementClient;
+use Authing\Mgmt\UdfManagementClient;
+use Authing\Mgmt\RolesManagementClient;
+use Authing\Mgmt\UsersManagementClient;
+use Authing\Mgmt\GroupsManagementClient;
+use Authing\Mgmt\PoliciesManagementClient;
+use Authing\Mgmt\UserpoolManagementClient;
+use Authing\Mgmt\WhitelistManagementClient;
 use Authing\Mgmt\ApplicationsManagementClient;
 use Authing\Types\ListUserAuthorizedResourcesParam;
+
 
 class ManagementClient extends BaseClient
 {
@@ -136,5 +147,45 @@ class ManagementClient extends BaseClient
      */
     public function applications() {
         return new ApplicationsManagementClient($this);
+    }
+
+    /**
+     * @return OrgManagementClient
+     */
+    public function orgs() {
+        return new OrgManagementClient($this);
+    }
+
+
+    public function sendEmail(string $email, string $scene)
+    {
+        $param = new SendEmailParam($email, $scene);
+        $data = $this->request($param->createRequest())->sendEmail;       
+        return $data;
+    }
+
+    public function checkLoginStatus(string $token, array $options = [])
+    {
+        $fetchUserDetail = $options['fetchUserDetail'] ?? false;
+        if (!$token) return null;
+        $userData;
+        $tokenIllegal = false;
+        try {
+            $userData = Utils::getTokenPlayloadData($token);
+        } catch (\Throwable $th) {
+            $tokenIllegal = true;
+        }
+        if ($tokenIllegal) {
+            return null;
+        }
+        if (!$fetchUserDetail) {
+            return $userData;
+        } else {
+            $userId = $userData->id;
+            if ($id) {
+                $user = $this->users()->detail($id);
+                return $user;
+            }
+        }
     }
 }

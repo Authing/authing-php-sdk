@@ -46,6 +46,7 @@ use Authing\Types\ListUserAuthorizedResourcesParam;
 use Authing\Types\BindEmailParam;
 use Authing\Types\UnbindEmailParam;
 use Authing\Types\SetUdvBatchParam;
+use Authing\Types\GetUserRolesParam;
 
 
 use Authing\Mgmt\Utils;
@@ -946,10 +947,10 @@ class AuthenticationClient extends BaseClient
 
     function buildLogoutUrl(array $options)
     {
-        if ($this->options['protocol'] === 'cas') {
+        if ($this->options->protocol === 'cas') {
             return $this->_buildCasLogoutUrl($options);
         }
-        if ($this->options['protocol'] === 'oidc' && $options['expert']) {
+        if ($this->options->protocol === 'oidc' && isset($options['expert'])) {
             return $this->_buildOidcLogoutUrl($options);
         }
         return $this->_buildEasyLogoutUrl($options);
@@ -979,7 +980,7 @@ class AuthenticationClient extends BaseClient
 
     function getOidcHeaders()
     {
-        $SDK_VERSION = "4.1.8";
+        $SDK_VERSION = "4.1.9";
         return [
             'x-authing-sdk-version' => 'php:' . $SDK_VERSION,
             'x-authing-userpool-id' => (isset($this->options->userPoolId) ? $this->options->userPoolId : ""),
@@ -1345,5 +1346,37 @@ class AuthenticationClient extends BaseClient
         return $this->request($param->createRequest());
     }
 
-    
+    public function getToken()
+    {
+        return $this->accessToken;
+    }
+
+    public function hasRole(string $rolecode, string $namespace = 'default')
+    {
+        $param = (new GetUserRolesParam($this->checkLoggedIn()))->withNamespace($namespace);
+        $user = $this->request($param->createRequest());
+        var_dump($rolecode);
+        var_dump($user);
+        if ($user) {
+            return false;
+        }
+        $roleList = $user->roles;
+        if (count($roleList)) {
+            return false;
+        }
+        $hasRole = false;
+        foreach($roleList as $item) {
+            if($item->code === roleCode) {
+                $hasRole = true;
+            }
+        }
+
+        return hasRole;
+    }
+
+    public function clearCurrentUser()
+    {
+        $this->user = null;
+        $this->accessToken = null;
+    }
 }

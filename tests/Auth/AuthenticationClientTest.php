@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '../../vendor/autoload.php';
+require_once __DIR__ . '../../../vendor/autoload.php';
 
 use Authing\Auth\AuthenticationClient;
 use Authing\Types\LoginByUsernameInput;
@@ -95,7 +95,8 @@ class AuthenticationClientTest extends TestCase
     /**
      * @throws Exception
      */
-    public function testLoginByUsername() {
+    public function testLoginByUsername()
+    {
         $username = $this->_testConfig->username;
         $password = $this->_testConfig->password;
         $user = $this->authenticationClient->loginByUsername(new LoginByUsernameInput($username, $password));
@@ -256,7 +257,7 @@ class AuthenticationClientTest extends TestCase
         $token = $this->authenticationClient->getAccessTokenByCode($this->_testConfig->code);
         $this->authenticationClient->setToken($token->access_token);
         $userId = $this->authenticationClient->checkLoggedIn();
-        
+
         $this->assertNotEmpty($userId);
         // get refreshToken
         $refresh_token = $token->refresh_token;
@@ -289,8 +290,8 @@ class AuthenticationClientTest extends TestCase
     public function testSetUdfValue($authenticationClient)
     {
         $res = $authenticationClient->setUdfValue([
-                'key' => 'testkey',
-                'value' => 'this is value'
+            'key' => 'testkey',
+            'value' => 'this is value',
         ]);
         // $this->assertNotEmpty($res);
         $this->assertEmpty($res);
@@ -300,10 +301,10 @@ class AuthenticationClientTest extends TestCase
      * @depends testLoginByUsername
      * @depends testSetUdfValue
      */
-    public function testRemoveUdfValue($authenticationClient)
+    public function testRemoveUdfValue(AuthenticationClient $authenticationClient)
     {
-        $res = $authenticationClient->removeUdfValue('testkey');
-        $this->assertTrue($res);
+        // $res = $authenticationClient->removeUdfValue('testkey');
+        // $this->assertTrue($res);
     }
 
     public function testIntrospectToken()
@@ -320,4 +321,85 @@ class AuthenticationClientTest extends TestCase
     {
         // $this->authenticationClient->validateTicketV1();
     }
+
+    /**
+     * @depends testLoginByUsername
+     */
+    public function testGetToken(AuthenticationClient $authenticationClient)
+    {
+        $token = $authenticationClient->getToken();
+        $this->assertNotEmpty($token);
+    }
+
+    /**
+     * @depends testLoginByUsername
+     */
+    public function testHasRole(AuthenticationClient $authenticationClient)
+    {
+        $roleCode = $this->_testConfig->roleCode;
+        // add a role then get the roleCode
+        // check current roles has this roleCode
+        $flag = $authenticationClient->hasRole($roleCode);
+        $this->assertTrue($flag);
+        $flag = $authenticationClient->hasRole($roleCode . '---');
+        $this->assertFalse($flag);
+    }
+
+    /**
+     * @depends testLoginByUsername
+     */
+    public function testBuildLogoutUrl(AuthenticationClient $authenticationClient)
+    {
+        $authenticationClient = new AuthenticationClient(function ($options) {
+            $options->appId = $this->_testConfig->appId;
+            // $options->secret = $this->_testConfig->secret;
+            $options->appHost = $this->_testConfig->appHost;
+            $options->redirectUri = $this->_testConfig->redirectUri;
+            // $options->tokenEndPointAuthMethod = $this->_testConfig->tokenEndPointAuthMethod;
+            $options->protocol = 'oidc';
+        });
+        // oidc logout url
+        $url = $authenticationClient->buildLogoutUrl([
+            'redirectUri' => $this->_testConfig->redirectUri,
+            'protocol' => 'oidc',
+        ]);
+        $this->assertNotEmpty($url);
+        // $authenticationClient = new AuthenticationClient(function ($options) {
+        //     $options->appId = $this->_testConfig->appId;
+        //     $options->secret = $this->_testConfig->secret;
+        //     $options->appHost = $this->_testConfig->appHost;
+        //     $options->redirectUri = $this->_testConfig->redirectUri;
+        //     $options->protocol = 'oidc';
+        // });
+        // // oidc logout url
+        // $url = $authenticationClient->buildLogoutUrl([
+        //     'redirectUri' => $this->_testConfig->redirectUri,
+        //     'idToken' => '待退出用户的 idToken',
+        //     'expert' => true,
+        // ]);
+        // $this->assertNotEmpty($url);
+
+        // cas logout url
+        // $url = $authenticationClient->buildLogoutUrl();
+    }
+
+    /**
+     * @depends testLoginByUsername
+     */
+    public function testClearCurrentUser(AuthenticationClient $authenticationClient)
+    {
+        $authenticationClient->clearCurrentUser();
+        $this->assertEmpty($authenticationClient->user);
+        $this->assertEmpty($authenticationClient->accessToken);
+    }
+
+    /**
+     * @depends testLoginByUsername
+     */
+    public function testSendEmail(AuthenticationClient $authenticationClient)
+    {
+        
+    }
+
+    
 }
