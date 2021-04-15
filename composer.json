@@ -2,7 +2,7 @@
   "name": "authing-sdk/php",
   "description": "authing-php-sdk",
   "minimum-stability": "stable",
-  "version": "4.1.9",
+  "version": "4.1.10",
   "require": {
     "php": ">=5.4",
     "ext-curl": "*",
