@@ -36,5 +36,10 @@ class UserActionManagementClient {
         $data = $this->client->httpGet("/api/v2/analysis/user-action?$qstr");
         return $data;
     }
+
+    public function export()
+    {
+        # code...
+    }
 }
 
