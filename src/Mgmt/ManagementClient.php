@@ -156,6 +156,27 @@ class ManagementClient extends BaseClient
         return new OrgManagementClient($this);
     }
 
+    /**
+     * @return NamespaceManagementClient
+     */
+    public function namespaces() {
+        return new NamespaceManagementClient($this);
+    }
+
+    /**
+     * @return UserActionManagementClient
+     */
+    public function userActions() {
+        return new UserActionManagementClient($this);
+    }
+
+    /**
+     * @return StatisticsManagementClient
+     */
+    public function statistics() {
+        return new StatisticsManagementClient($this);
+    }
+
 
     public function sendEmail(string $email, string $scene)
     {

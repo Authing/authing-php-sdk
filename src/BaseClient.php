@@ -169,6 +169,12 @@ PUBLICKKEY;
         return $this->arrayToObject($result);
     }
 
+    public function httpPut($path, $data = [])
+    {
+        $result = $this->send($this->host . $path, $data, 'PUT');
+        return $this->arrayToObject($result);
+    }
+
     /**
      * @param $path string
      * @return object
@@ -284,6 +290,10 @@ PUBLICKKEY;
             case "PATCH":
                 curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+                break;
+            case "PUT":
+                curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
                 break;
             case "DELETE":
                 curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);

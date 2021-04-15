@@ -36,27 +36,27 @@ class StatisticsManagementClient
             $requestParam->operator_arn = $options->userIds;
         }
 
-        $requestParam->page = $options['page'] ?? 1;
-        $requestParam->limit = $options['limit'] ?? 10;
+        $requestParam->page = $options->page ?? 1;
+        $requestParam->limit = $options->limit ?? 10;
         $params = http_build_query($requestParam);
         $data = $this->client->httpGet("/api/v2/analysis/user-action?$params");
-        ['list' => $list, 'totalCount' => $totalCount] = $data;
+        ['list' => $list, 'totalCount' => $totalCount] = (array)$data->data;
         array_map(function ($item) {
             return (object) [
                 'userpoolId' => $item->userpool_id,
-                'userId' => $item->user && $item->user->id,
-                'username' => $item->user && $item->user->displayName,
-                'cityName' => $item->geoip && $item->geoip->city_name,
-                'regionName' => $item->geoip && $item->geoip->region_name,
-                'clientIp' => $item->geoip && $item->geoip->ip,
+                'userId' => ($item->user ?? null) && $item->user->id,
+                'username' => ($item->user ?? null) && $item->user->displayName,
+                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
+                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
+                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
                 'operationDesc' => $item->operation_desc,
                 'operationName' => $item->operation_name,
                 'timestamp' => $item->timestamp,
                 'appId' => $item->app_id,
-                'appName' => $item->appName,
+                'appName' => $item->appName ?? null,
             ];
         }, $list);
-        return [
+        return (object)[
             'list' => $list,
             'totalCount' => $totalCount,
         ];
@@ -76,28 +76,29 @@ class StatisticsManagementClient
             $requestParam->operator_arn = $options->operatorArns;
         }
 
-        $requestParam->page = $options['page'] ?? 1;
-        $requestParam->limit = $options['limit'] ?? 10;
+        $requestParam->page = $options->page ?? 1;
+        $requestParam->limit = $options->limit ?? 10;
         $params = http_build_query($requestParam);
         $data = $this->client->httpGet("/api/v2/analysis/user-action?$params");
-        ['list' => $list, 'totalCount' => $totalCount] = $data;
+
+        ['list' => $list, 'totalCount' => $totalCount] = (array)$data->data;
         array_map(function ($item) {
             return (object) [
                 'userpoolId' => $item->userpool_id,
-                'operatorType' => $item->operator_type,
-                'userId' => $item->user && $item->user->id,
-                'username' => $item->user && $item->user->displayName,
-                'cityName' => $item->geoip && $item->geoip->city_name,
-                'regionName' => $item->geoip && $item->geoip->region_name,
-                'clientIp' => $item->geoip && $item->geoip->ip,
+                'operatorType' => $item->operator_type ?? null,
+                'userId' => ($item->user ?? null) && $item->user->id,
+                'username' => ($item->user ?? null) && $item->user->displayName,
+                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
+                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
+                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
                 'operationDesc' => $item->operation_desc,
                 'operationName' => $item->operation_name,
                 'timestamp' => $item->timestamp,
                 'appId' => $item->app_id,
-                'appName' => $item->appName,
+                'appName' => $item->appName ?? null,
             ];
         }, $list);
-        return [
+        return (object)[
             'list' => $list,
             'totalCount' => $totalCount,
         ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Authing\Mgmt;
+namespace Authing\Mgmt\Acl;
 
 use Authing\Types\AllowParam;
 use Authing\Types\AuthorizedResourcesParam;

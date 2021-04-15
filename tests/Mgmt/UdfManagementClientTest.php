@@ -1,6 +1,5 @@
 <?php
 
-
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\UdfManagementClient;
 use Authing\Types\UDFDataType;
@@ -12,14 +11,17 @@ class UdfManagementClientTest extends TestCase
     /**
      * @var UdfManagementClient
      */
-    private $client;
+    private $udfManagement;
+    private $_testConfig;
 
     public function setUp(): void
     {
-        $management = new ManagementClient("59f86b4832eb28071bdd9214", "4b880fff06b080f154ee48c9e689a541");
-        $management->setHost("http://localhost:3000");
+        $moduleName = str_replace('ClientTest', '', __CLASS__);
+        $manageConfig = (object) TestConfig::getConfig('Management');
+        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
+        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
         $management->requestToken();
-        $this->client = $management->udf();
+        $this->udfManagement = $management->udf();
     }
 
     public function testPaginate()
@@ -40,4 +42,14 @@ class UdfManagementClientTest extends TestCase
         $message = $this->client->remove(UDFTargetType::USER, "key");
         $this->assertEquals(200, $message->code);
     }
+
+    public function testListUdv()
+    {
+        $udfTargetType = UDFTargetType::NODE;
+        $targetId = $this->_testConfig->nodeId;
+        $data = $this->udfManagement->listUdv($udfTargetType, $targetId);
+        parent::assertNotNull($data);
+    }
+
+    
 }

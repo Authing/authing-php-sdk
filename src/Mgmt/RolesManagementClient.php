@@ -1,6 +1,6 @@
 <?php
 
-namespace Authing\Mgmt;
+namespace Authing\Mgmt\Roles;
 
 use Authing\Types\AddPolicyAssignmentsParam;
 use Authing\Types\AssignRoleParam;

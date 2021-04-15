@@ -284,6 +284,4 @@ class OrgManagementClient
         $_->totalCount = $totalCount;
         return $_;
     }
-
-    
 }

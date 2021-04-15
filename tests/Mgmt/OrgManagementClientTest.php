@@ -39,4 +39,40 @@ class OrgManagementClientTest extends TestCase
         parent::assertNotEmpty($node);
         parent::assertEquals($nodeId, $node->id);
     }
+
+    public function testExportByOrgId()
+    {
+        $orgId = $this->_testConfig->orgId;
+        $data = $this->orgManagement->exportByOrgId($orgId);
+        parent::assertNotEmpty($data);
+    }
+
+    public function testExportAll()
+    {
+        $orgData = $this->orgManagement->exportAll();
+        parent::assertNotEmpty($orgData);
+    }
+
+    public function testListAuthorizedResourcesByNodeId()
+    {
+        $nodeId = $this->_testConfig->nodeId;
+        $data = $this->orgManagement->listAuthorizedResourcesByNodeId($nodeId, 'default');
+        parent::assertNotEmpty($data);
+    }
+
+    public function testListAuthorizedResourcesByNodeCode()
+    {
+        $orgId = $this->_testConfig->orgId;
+        $nodeCode = $this->_testConfig->nodeId;
+        $data = $this->orgManagement->listAuthorizedResourcesByNodeCode($orgId, $nodeCode, 'default');
+        parent::assertNotEmpty($data);
+    }
+
+    public function testSetMainDepartment()
+    {
+        $userId = $this->_testConfig->userId;
+        $departmentId = $this->_testConfig->nodeId;
+        $data = $this->orgManagement->setMainDepartment($userId, $departmentId);
+        parent::assertNotEmpty($data);
+    }
 }

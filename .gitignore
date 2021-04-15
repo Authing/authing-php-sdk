@@ -6,3 +6,4 @@ vendor
 # test*.php
 tests/config/test.yaml
 tmp
+tests/reports
