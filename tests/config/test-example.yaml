@@ -1,0 +1,27 @@
+Authentication:
+  appId: '-----'
+  secret: '----'
+  appHost: '-----'
+  redirectUri: '---'
+  username: '----'
+  password: '---'
+  code: '----'
+  tokenEndPointAuthMethod: 'none'
+  refreshScope:  
+    scope: 'openid profile offline_access'
+  roleCode: '---'
+Management:
+  userPoolId: '----'
+  userPoolSercet: '---'
+OrgManagement:
+  nodeId: '---'
+  orgId: '---'
+  nodeCode: '---'
+  userId: '---'
+AclManagement:
+  appId: '---'
+StatisticsManagement:
+  clientIp: '---'
+UdfManagement:
+  nodeId: '---'
+PoliciesManagement:

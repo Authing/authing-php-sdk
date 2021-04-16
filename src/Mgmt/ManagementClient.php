@@ -95,7 +95,7 @@ class ManagementClient extends BaseClient
      *
      * @return AclManagementClient
      */
-    public function acl() {
+    public function acls() {
         return new AclManagementClient($this);
     }
 
@@ -104,7 +104,7 @@ class ManagementClient extends BaseClient
      *
      * @return UdfManagementClient
      */
-    public function udf() {
+    public function udfs() {
         return new UdfManagementClient($this);
     }
 
@@ -122,7 +122,7 @@ class ManagementClient extends BaseClient
      *
      * @return UserpoolManagementClient
      */
-    public function userpool() {
+    public function userpools() {
         return new UserpoolManagementClient($this);
     }
 
@@ -131,7 +131,7 @@ class ManagementClient extends BaseClient
      *
      * @return WhitelistManagementClient
      */
-    public function whitelist() {
+    public function whitelists() {
         return new WhitelistManagementClient($this);
     }
 
