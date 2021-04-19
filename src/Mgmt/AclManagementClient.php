@@ -258,7 +258,7 @@ class AclManagementClient
         return $data;
     }
 
-    public function getApplicationAccessPolicies(array $options)
+    public function getAccessPolicies(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -271,7 +271,7 @@ class AclManagementClient
         return $res;
     }
 
-    public function enableApplicationAccessPolicy(array $options)
+    public function enableAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -298,7 +298,7 @@ class AclManagementClient
         ];
     }
 
-    public function disableApplicationAccessPolicy(array $options)
+    public function disableAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -326,7 +326,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function deleteApplicationAccessPolicy(array $options)
+    public function deleteAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -354,7 +354,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function allowAccessApplication(array $options)
+    public function allowAccess(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -382,7 +382,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function denyAccessApplication(array $options)
+    public function denyAccess(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -410,7 +410,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function updateDefaultApplicationAccessPolicy(array $options)
+    public function updateDefaultAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');

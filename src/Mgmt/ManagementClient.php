@@ -209,4 +209,11 @@ class ManagementClient extends BaseClient
             }
         }
     }
+
+    public function isPasswordValid(string $password)
+    {
+        return $this->httpPost('/api/v2/password/check', [
+            'password' => $password
+        ]);
+    }
 }

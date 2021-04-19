@@ -2,35 +2,37 @@
 
 namespace Authing\Mgmt\Roles;
 
-use Authing\Types\AddPolicyAssignmentsParam;
-use Authing\Types\AssignRoleParam;
-use Authing\Types\CommonMessage;
-use Authing\Types\CreateRoleParam;
-use Authing\Types\DeleteRoleParam;
-use Authing\Types\DeleteRolesParam;
-use Authing\Types\ListRoleAuthorizedResourcesParam;
-use Authing\Types\PaginatedPolicyAssignments;
-use Authing\Types\PaginatedRoles;
-use Authing\Types\PaginatedUsers;
-use Authing\Types\PolicyAssignmentsParam;
-use Authing\Types\PolicyAssignmentTargetType;
-use Authing\Types\RemovePolicyAssignmentsParam;
-use Authing\Types\RemoveUdvParam;
-use Authing\Types\RevokeRoleParam;
+use stdClass;
+use Exception;
 use Authing\Types\Role;
+use Authing\Types\UdvParam;
 use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
+use Authing\Types\UDFDataType;
+use Authing\Types\CommonMessage;
+use Authing\Types\UDFTargetType;
+use Authing\Types\PaginatedRoles;
+use Authing\Types\PaginatedUsers;
+use Authing\Types\RemoveUdvParam;
+use Authing\Types\AssignRoleParam;
+use Authing\Types\CreateRoleParam;
+use Authing\Types\DeleteRoleParam;
+use Authing\Types\RevokeRoleParam;
+use Authing\Types\UpdateRoleParam;
+use Authing\Types\DeleteRolesParam;
+use Authing\Types\SetUdvBatchParam;
 use Authing\Types\RoleWithUsersParam;
+use Authing\Types\UdfValueBatchParam;
 use Authing\Types\SetUdfValueBatchInput;
 use Authing\Types\SetUdfValueBatchParam;
-use Authing\Types\SetUdvBatchParam;
-use Authing\Types\UDFDataType;
-use Authing\Types\UDFTargetType;
-use Authing\Types\UdfValueBatchParam;
-use Authing\Types\UdvParam;
-use Authing\Types\UpdateRoleParam;
-use Exception;
-use stdClass;
+use Authing\Mgmt\Acl\AclManagementClient;
+use Authing\Types\PolicyAssignmentsParam;
+use Authing\Mgmt\AgreementManagementClient;
+use Authing\Types\AddPolicyAssignmentsParam;
+use Authing\Types\PaginatedPolicyAssignments;
+use Authing\Types\PolicyAssignmentTargetType;
+use Authing\Types\RemovePolicyAssignmentsParam;
+use Authing\Types\ListRoleAuthorizedResourcesParam;
 
 function formatAuthorizedResources($obj)
 {
@@ -150,6 +152,12 @@ class RolesManagementClient
     public function detail($code)
     {
         $param = new RoleParam($code);
+        return $this->client->request($param->createRequest());
+    }
+
+    public function findByCode(string $code, string $namespace = '')
+    {
+        $param = (new RoleParam($code))->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 
