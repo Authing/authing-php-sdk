@@ -298,6 +298,12 @@ class AuthenticationClient extends BaseClient
         return $user;
     }
 
+    public function loginBySubAccount(string $account, string $password, array $options = [])
+    {
+        ['captchaCode'  => $captchaCode, 'clientIp' =>  $clientIp]  = $options;
+        $password = $this->options->encryptFunction($password, getPublicKey());
+    }
+
     /**
      * 检查登录状态
      *

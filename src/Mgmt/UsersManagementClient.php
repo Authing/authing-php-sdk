@@ -254,7 +254,7 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function addGroups($userId, $group)
+    public function addGroup($userId, $group)
     {
         $param = (new AddUserToGroupParam([$userId]))->withCode($group);
         return $this->client->request($param->createRequest());
