@@ -29,8 +29,8 @@ class StatisticsManagementClient
             $requestParam->operation_name = $options->operationNames;
         }
         if (isset($options->userIds) && count($options->userIds) > 0) {
-            $userPoolId = $this->client->options->userPoolId;
             array_map(function ($item) {
+                $userPoolId = $this->client->options->userPoolId;
                 return "arn:cn:authing:$userPoolId:user:$item";
             }, $options->userIds);
             $requestParam->operator_arn = $options->userIds;

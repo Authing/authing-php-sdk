@@ -10,16 +10,16 @@ use Authing\Types\AccessTokenRes;
 use Authing\Types\SendEmailParam;
 use Authing\Types\AccessTokenParam;
 use Authing\InvalidArgumentException;
-use Authing\Mgmt\AclManagementClient;
 use Authing\Mgmt\OrgManagementClient;
 use Authing\Mgmt\UdfManagementClient;
-use Authing\Mgmt\RolesManagementClient;
 use Authing\Mgmt\UsersManagementClient;
-use Authing\Mgmt\GroupsManagementClient;
+use Authing\Mgmt\Acl\AclManagementClient;
 use Authing\Mgmt\PoliciesManagementClient;
 use Authing\Mgmt\UserpoolManagementClient;
 use Authing\Mgmt\WhitelistManagementClient;
+use Authing\Mgmt\Roles\RolesManagementClient;
 use Authing\Mgmt\ApplicationsManagementClient;
+use Authing\Mgmt\Groups\GroupsManagementClient;
 use Authing\Types\ListUserAuthorizedResourcesParam;
 
 
@@ -189,7 +189,7 @@ class ManagementClient extends BaseClient
     {
         $fetchUserDetail = $options['fetchUserDetail'] ?? false;
         if (!$token) return null;
-        $userData;
+        $userData = null;
         $tokenIllegal = false;
         try {
             $userData = Utils::getTokenPlayloadData($token);
@@ -203,8 +203,8 @@ class ManagementClient extends BaseClient
             return $userData;
         } else {
             $userId = $userData->id;
-            if ($id) {
-                $user = $this->users()->detail($id);
+            if ($userId) {
+                $user = $this->users()->detail($userId);
                 return $user;
             }
         }

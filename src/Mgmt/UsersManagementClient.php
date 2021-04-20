@@ -425,7 +425,7 @@ class UsersManagementClient
         foreach ($data as $key => $value) {
             $value = json_encode($value);
         }
-        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userIds))->withUdvList($data);
+        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
         $res = $this->client->request($param->createRequest());
         return $res;
     }
@@ -451,7 +451,7 @@ class UsersManagementClient
 
     public function removeUdfValue(string $userId, string $key)
     {
-        $param = new RemoveUdvParam("User", $userIds, $key);
+        $param = new RemoveUdvParam("User", $userId, $key);
         $res = $this->client->request($param->createRequest());
         return true;
     }

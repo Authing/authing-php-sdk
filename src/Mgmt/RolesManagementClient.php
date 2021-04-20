@@ -135,9 +135,9 @@ class RolesManagementClient
      * @return Role
      * @throws Exception
      */
-    public function create($code, $description = null, $parentCode = null)
+    public function create($code, $description = null, $namespace = null)
     {
-        $param = (new CreateRoleParam($code))->withDescription($description)->withParent($parentCode);
+        $param = (new CreateRoleParam($code))->withDescription($description)->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 

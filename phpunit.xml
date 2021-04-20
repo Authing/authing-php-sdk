@@ -1,4 +1,8 @@
 <phpunit bootstrap="tests/config/TestConfig.php">
+    <colors>true</colors>
+    <beStrictAboutTodoAnnotatedTests>
+    true
+    </beStrictAboutTodoAnnotatedTests>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <!--可以定义多个 对./app下的业务代码做覆盖率统计-->
