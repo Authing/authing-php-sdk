@@ -879,21 +879,21 @@ class AuthenticationClient extends BaseClient
     function _buildOauthAuthorizeUrl(array $options)
     {
         $map = [
-            appId => 'client_id',
-            scope => 'scope',
-            state=> 'state',
-            responseType=> 'response_type',
-            redirectUri=> 'redirect_uri'
+            'appId' => 'client_id',
+            'scope' => 'scope',
+            'state' => 'state',
+            'responseType' => 'response_type',
+            'redirectUri' => 'redirect_uri'
         ];
         $res = [
-            state => substr(rand(0, 1).'', 0, 2),
-            scope => 'user',
-            client_id => $this->options->appId,
-            redirect_uri => $this->options->redirectUri,
-            response_type => 'code'
+            'state' => substr(rand(0, 1).'', 0, 2),
+            'scope' => 'user',
+            'client_id' => $this->options->appId,
+            'redirect_uri' => $this->options->redirectUri,
+            'response_type' => 'code'
         ];
         foreach ($map as $key => $value) {
-            if (isset($options) && options[$key]) {
+            if (isset($options) && $options[$key]) {
                 $res[$value] = $options[$key];
             }
         }
@@ -909,16 +909,16 @@ class AuthenticationClient extends BaseClient
 
     function _buildCasAuthorizeUrl(array $options)
     {
-        if (isset($options[service])) {
-            return $this->options->appHost.'/cas-idp/'.$this->options->appId.'?service='.$options->service;
+        if (isset($options['service'])) {
+            return $this->options->appHost.'/cas-idp/'.$this->options->appId.'?service='.$options['service'];
         }
         return $this->options->appHost.'/cas-idp'.$this->options->appId;
     }
 
     function _buildCasLogoutUrl(array $options)
     {
-        if (isset($options[redirectUri])) {
-            return $this->options->appHost.'/cas-idp/logout?url='.$options[redirectUri];
+        if (isset($options['redirectUri'])) {
+            return $this->options->appHost.'/cas-idp/logout?url='.$options['redirectUri'];
         }
         return $this->options->appHost.'/cas-idp/logout';
     }
@@ -990,7 +990,7 @@ class AuthenticationClient extends BaseClient
 
     function _getNewAccessTokenByRefreshTokenWithClientSecretPost(string $refreshToken)
     {
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
         } else if ($this->options->protocol === 'oauth') {
@@ -1013,7 +1013,7 @@ class AuthenticationClient extends BaseClient
     }
     
     function _getNewAccessTokenByRefreshTokenWithClientSecretBasic(string $refreshToken) {
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
         } else if ($this->options->protocol === 'oauth') {
@@ -1036,7 +1036,7 @@ class AuthenticationClient extends BaseClient
     }
 
     function _getNewAccessTokenByRefreshTokenWithNone(string $refreshToken) {
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
         } else if ($this->options->protocol === 'oauth') {
@@ -1090,7 +1090,7 @@ class AuthenticationClient extends BaseClient
             'client_secret' => $this->options->secret,
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/introspection';
         } else if ($this->options->protocol === 'oauth') {
@@ -1112,7 +1112,7 @@ class AuthenticationClient extends BaseClient
         $qstr = $this->_generateTokenRequest([
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/introspection';
         } else if ($this->options->protocol === 'oauth') {
@@ -1135,7 +1135,7 @@ class AuthenticationClient extends BaseClient
             'client_id' => $this->options->appId,
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/introspection';
         } else if ($this->options->protocol === 'oauth') {
@@ -1221,7 +1221,7 @@ class AuthenticationClient extends BaseClient
             'client_secret' => $this->options->secret,
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/revocation';
         } else if ($this->options->protocol === 'oauth') {
@@ -1244,7 +1244,7 @@ class AuthenticationClient extends BaseClient
             'client_id' => $this->options->appId,
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/revocation';
         } else if ($this->options->protocol === 'oauth') {
@@ -1262,7 +1262,7 @@ class AuthenticationClient extends BaseClient
         $qstr = $this->_generateTokenRequest([
             'token' => $token,
         ]);
-        $api;
+        $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token/revocation';
         } else if ($this->options->protocol === 'oauth') {
@@ -1283,7 +1283,7 @@ class AuthenticationClient extends BaseClient
 
     public function validateTicketV1(string $ticket, string $service)
     {
-        $api = '/cas-idp/'.$this.options.appId.'/validate?service='.$service.'&ticket='.$ticket;
+        $api = '/cas-idp/'.$this->options->appId.'/validate?service='.$service.'&ticket='.$ticket;
         $req = new Request('GET', $api, [
             'headers' => array_merge(
                 $this->getOidcHeaders()

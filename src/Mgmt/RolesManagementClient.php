@@ -2,35 +2,36 @@
 
 namespace Authing\Mgmt;
 
-use Authing\Types\AddPolicyAssignmentsParam;
-use Authing\Types\AssignRoleParam;
-use Authing\Types\CommonMessage;
-use Authing\Types\CreateRoleParam;
-use Authing\Types\DeleteRoleParam;
-use Authing\Types\DeleteRolesParam;
-use Authing\Types\ListRoleAuthorizedResourcesParam;
-use Authing\Types\PaginatedPolicyAssignments;
-use Authing\Types\PaginatedRoles;
-use Authing\Types\PaginatedUsers;
-use Authing\Types\PolicyAssignmentsParam;
-use Authing\Types\PolicyAssignmentTargetType;
-use Authing\Types\RemovePolicyAssignmentsParam;
-use Authing\Types\RemoveUdvParam;
-use Authing\Types\RevokeRoleParam;
+use Error;
+use stdClass;
+use Exception;
 use Authing\Types\Role;
+use Authing\Types\UdvParam;
 use Authing\Types\RoleParam;
 use Authing\Types\RolesParam;
+use Authing\Types\UDFDataType;
+use Authing\Types\CommonMessage;
+use Authing\Types\UDFTargetType;
+use Authing\Types\PaginatedRoles;
+use Authing\Types\PaginatedUsers;
+use Authing\Types\RemoveUdvParam;
+use Authing\Types\AssignRoleParam;
+use Authing\Types\CreateRoleParam;
+use Authing\Types\DeleteRoleParam;
+use Authing\Types\RevokeRoleParam;
+use Authing\Types\UpdateRoleParam;
+use Authing\Types\DeleteRolesParam;
+use Authing\Types\SetUdvBatchParam;
 use Authing\Types\RoleWithUsersParam;
+use Authing\Types\UdfValueBatchParam;
 use Authing\Types\SetUdfValueBatchInput;
 use Authing\Types\SetUdfValueBatchParam;
-use Authing\Types\SetUdvBatchParam;
-use Authing\Types\UDFDataType;
-use Authing\Types\UDFTargetType;
-use Authing\Types\UdfValueBatchParam;
-use Authing\Types\UdvParam;
-use Authing\Types\UpdateRoleParam;
-use Exception;
-use stdClass;
+use Authing\Types\PolicyAssignmentsParam;
+use Authing\Types\AddPolicyAssignmentsParam;
+use Authing\Types\PaginatedPolicyAssignments;
+use Authing\Types\PolicyAssignmentTargetType;
+use Authing\Types\RemovePolicyAssignmentsParam;
+use Authing\Types\ListRoleAuthorizedResourcesParam;
 
 function formatAuthorizedResources($obj)
 {
@@ -309,7 +310,7 @@ class RolesManagementClient
         $param = new UdvParam(UDFTargetType::ROLE, $roleId);
         $data = $this->client->request($param->createRequest())->udv;
 
-        $udfMap = convertUdvToKeyValuePair($list);
+        $udfMap = convertUdvToKeyValuePair($data);
         $udfValue = new stdClass();
 
         foreach ($udfMap as $key => $value) {
@@ -327,14 +328,14 @@ class RolesManagementClient
             throw new Error('empty user id list');
         }
 
-        $parma = new UdfValueBatchParam(UDFTargetType::ROLE, $roleIds);
+        $param = new UdfValueBatchParam(UDFTargetType::ROLE, $roleIds);
         $data = $this->client->request($param->createRequest())->udfValueBatch;
 
         $ret = new stdClass();
         foreach ($data as $value) {
             $targetId = $value->targetId;
             $_data = $value->data;
-            $ret->$targetId = convertUdvToKeyValuePair(_data);
+            $ret->$targetId = convertUdvToKeyValuePair($data);
         }
 
         return $ret;
@@ -346,7 +347,7 @@ class RolesManagementClient
             throw new Error('empty udf value list');
         }
 
-        $param = (new SetUdvBatchParam(UDFTargetType::ROLE, $roleId))->withUdvList(object($data));
+        $param = (new SetUdvBatchParam(UDFTargetType::ROLE, $roleId))->withUdvList((object)$data);
         $this->client->request($param->createRequest());
     }
 
@@ -361,7 +362,7 @@ class RolesManagementClient
             $data = $item->data;
             foreach ($data as $key => $value) {
                 $param = new SetUdfValueBatchInput($userId, $key, $value);
-                array_push($param, $param);
+                array_push($params, $param);
             }
         }
         $param = new SetUdfValueBatchParam(UDFTargetType::ROLE, $params);

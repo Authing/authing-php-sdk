@@ -2,29 +2,30 @@
 
 namespace Authing\Mgmt;
 
-use Authing\Types\ChildrenNodesParam;
-use Authing\Types\CommonMessage;
-use Authing\Types\CreateOrgParam;
-use Authing\Types\DeleteNodeParam;
-use Authing\Types\DeleteOrgParam;
-use Authing\Types\IsRootNodeParam;
-use Authing\Types\ListNodeByIdAuthorizedResourcesParam;
-use Authing\Types\MoveNodeParam;
-use Authing\Types\Node;
-use Authing\Types\NodeByIdParam;
-use Authing\Types\NodeByIdWithMembersParam;
+use Error;
+use stdClass;
+use Exception;
 use Authing\Types\Org;
+use Authing\Types\Node;
 use Authing\Types\OrgParam;
 use Authing\Types\OrgsParam;
+use Authing\Types\CommonMessage;
+use Authing\Types\MoveNodeParam;
+use Authing\Types\NodeByIdParam;
 use Authing\Types\PaginatedOrgs;
-use Authing\Types\PaginatedUsers;
 use Authing\Types\RootNodeParam;
+use Authing\Types\CreateOrgParam;
+use Authing\Types\DeleteOrgParam;
+use Authing\Types\PaginatedUsers;
+use Authing\Types\DeleteNodeParam;
+use Authing\Types\IsRootNodeParam;
+use Authing\Types\ChildrenNodesParam;
 use Authing\Types\SetMainDepartmentParam;
+
+
+use Authing\Types\NodeByIdWithMembersParam;
+use Authing\Types\ListNodeByIdAuthorizedResourcesParam;
 use Authing\Types\ListNodeByCodeAuthorizedResourcesParam;
-
-
-use Exception;
-use stdClass;
 
 class OrgManagementClient
 {
@@ -284,6 +285,4 @@ class OrgManagementClient
         $_->totalCount = $totalCount;
         return $_;
     }
-
-    
 }

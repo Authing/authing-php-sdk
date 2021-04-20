@@ -281,9 +281,9 @@ class UsersManagementClient
      * @return PaginatedRoles
      * @throws Exception
      */
-    public function listRoles(string $userId, string $namespace = null)
+    public function listRoles(string $userId, string $namespace = '')
     {
-        $param = (new GetUserRolesParam($userId))->withNamespace();
+        $param = (new GetUserRolesParam($userId))->withNamespace($namespace);
         return $this->client->request($param->createRequest())->roles;
     }
 

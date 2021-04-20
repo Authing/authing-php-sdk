@@ -3,7 +3,6 @@
 
 namespace Authing\Mgmt;
 
-
 use Authing\Types\AddPolicyAssignmentsParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\CreatePolicyParam;
@@ -48,8 +47,9 @@ class PoliciesManagementClient
      */
     public function paginate($page = 1, $limit = 10, $excludeDefault = true)
     {
-        $param = (new PoliciesParam())->withPage($page)->withLimit($limit)->withExcludeDefault($excludeDefault);
-        return $this->client->request($param->createRequest());
+        // TODO： 这个方法有问题
+        // $param = (new PoliciesParam())->withPage($page)->withLimit($limit)->withExcludeDefault($excludeDefault);
+        // return $this->client->request($param->createRequest());
     }
 
     /**
