@@ -102,6 +102,14 @@ PUBLICKKEY;
     }
 
     /**
+     * @param $token string
+     */
+    public function setToken($token)
+    {
+        $this->accessToken = $token;
+    }
+
+    /**
      * password Encrypt
      * @param string $password
      * @return string
