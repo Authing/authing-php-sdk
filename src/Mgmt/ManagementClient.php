@@ -7,10 +7,21 @@ use Exception;
 use Authing\BaseClient;
 use Authing\Types\UserParam;
 use Authing\Types\AccessTokenRes;
+use Authing\Types\SendEmailParam;
 use Authing\Types\AccessTokenParam;
 use Authing\InvalidArgumentException;
+use Authing\Mgmt\AclManagementClient;
+use Authing\Mgmt\OrgManagementClient;
+use Authing\Mgmt\UdfManagementClient;
+use Authing\Mgmt\RolesManagementClient;
+use Authing\Mgmt\UsersManagementClient;
+use Authing\Mgmt\GroupsManagementClient;
+use Authing\Mgmt\PoliciesManagementClient;
+use Authing\Mgmt\UserpoolManagementClient;
+use Authing\Mgmt\WhitelistManagementClient;
 use Authing\Mgmt\ApplicationsManagementClient;
 use Authing\Types\ListUserAuthorizedResourcesParam;
+
 
 class ManagementClient extends BaseClient
 {
@@ -84,7 +95,7 @@ class ManagementClient extends BaseClient
      *
      * @return AclManagementClient
      */
-    public function acl() {
+    public function acls() {
         return new AclManagementClient($this);
     }
 
@@ -93,7 +104,7 @@ class ManagementClient extends BaseClient
      *
      * @return UdfManagementClient
      */
-    public function udf() {
+    public function udfs() {
         return new UdfManagementClient($this);
     }
 
@@ -111,7 +122,7 @@ class ManagementClient extends BaseClient
      *
      * @return UserpoolManagementClient
      */
-    public function userpool() {
+    public function userpools() {
         return new UserpoolManagementClient($this);
     }
 
@@ -120,7 +131,7 @@ class ManagementClient extends BaseClient
      *
      * @return WhitelistManagementClient
      */
-    public function whitelist() {
+    public function whitelists() {
         return new WhitelistManagementClient($this);
     }
 
@@ -136,5 +147,73 @@ class ManagementClient extends BaseClient
      */
     public function applications() {
         return new ApplicationsManagementClient($this);
+    }
+
+    /**
+     * @return OrgManagementClient
+     */
+    public function orgs() {
+        return new OrgManagementClient($this);
+    }
+
+    /**
+     * @return NamespaceManagementClient
+     */
+    public function namespaces() {
+        return new NamespaceManagementClient($this);
+    }
+
+    /**
+     * @return UserActionManagementClient
+     */
+    public function userActions() {
+        return new UserActionManagementClient($this);
+    }
+
+    /**
+     * @return StatisticsManagementClient
+     */
+    public function statistics() {
+        return new StatisticsManagementClient($this);
+    }
+
+
+    public function sendEmail(string $email, string $scene)
+    {
+        $param = new SendEmailParam($email, $scene);
+        $data = $this->request($param->createRequest())->sendEmail;       
+        return $data;
+    }
+
+    public function checkLoginStatus(string $token, array $options = [])
+    {
+        $fetchUserDetail = $options['fetchUserDetail'] ?? false;
+        if (!$token) return null;
+        $userData;
+        $tokenIllegal = false;
+        try {
+            $userData = Utils::getTokenPlayloadData($token);
+        } catch (\Throwable $th) {
+            $tokenIllegal = true;
+        }
+        if ($tokenIllegal) {
+            return null;
+        }
+        if (!$fetchUserDetail) {
+            return $userData;
+        } else {
+            $userId = $userData->id;
+            if ($id) {
+                $user = $this->users()->detail($id);
+                return $user;
+            }
+        }
+    }
+
+    public function isPasswordValid(string $password)
+    {
+        return $this->httpPost('/api/v2/password/check', [
+            'password' => $password
+        ]);
     }
 }

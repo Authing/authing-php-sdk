@@ -1,6 +1,5 @@
 <?php
 
-
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\PoliciesManagementClient;
 use Authing\Types\PolicyStatementInput;
@@ -11,37 +10,42 @@ class PoliciesManagementClientTest extends TestCase
     /**
      * @var PoliciesManagementClient
      */
-    private $client;
+    private $policiesManagement;
 
-    private function randomString() {
+    private function randomString()
+    {
         return rand() . '';
     }
 
     public function setUp(): void
     {
-        $management = new ManagementClient("59f86b4832eb28071bdd9214", "4b880fff06b080f154ee48c9e689a541");
-        $management->setHost("http://localhost:3000");
+        $moduleName = str_replace('ClientTest', '', __CLASS__);
+        $manageConfig = (object) TestConfig::getConfig('Management');
+        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
+        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
         $management->requestToken();
-        $this->client = $management->policies();
+        $this->policiesManagement = $management->policies();
     }
 
-    public function testPaginate() {
+    public function testPaginate()
+    {
         $policies = $this->client->paginate();
         $this->assertEquals(true, $policies->totalCount > 0);
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $code = $this->randomString();
         $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
         $policy = $this->client->create($code, $statements);
         $this->assertEquals($code, $policy->code);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $code = $this->randomString();
         $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
         $policy = $this->client->create($code, $statements);
-
 
         $statements = [new PolicyStatementInput("book:234", ["book:edit"])];
 
@@ -49,7 +53,8 @@ class PoliciesManagementClientTest extends TestCase
         $this->assertEquals($code, $policy->code);
     }
 
-    public function testDetail() {
+    public function testDetail()
+    {
         $code = $this->randomString();
         $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
         $policy = $this->client->create($code, $statements);
@@ -58,7 +63,8 @@ class PoliciesManagementClientTest extends TestCase
         $this->assertEquals($code, $policy->code);
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $code = $this->randomString();
         $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
         $policy = $this->client->create($code, $statements);
@@ -67,12 +73,23 @@ class PoliciesManagementClientTest extends TestCase
         $this->assertEquals(200, $message->code);
     }
 
-    public function testDeleteMany() {
+    public function testDeleteMany()
+    {
         $code = $this->randomString();
         $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
         $policy = $this->client->create($code, $statements);
 
         $message = $this->client->deleteMany([$policy->code]);
         $this->assertEquals(200, $message->code);
+    }
+
+    public function testDisableAssignment()
+    {
+        // $this->policiesManagement->disableAssignment();
+    }
+
+    public function testEnableAssignment()
+    {
+        // $this->policiesManagement->enableAssignment();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Authing\Mgmt;
+namespace Authing\Mgmt\Roles;
 
 use Error;
 use stdClass;
@@ -151,6 +151,12 @@ class RolesManagementClient
     public function detail($code)
     {
         $param = new RoleParam($code);
+        return $this->client->request($param->createRequest());
+    }
+
+    public function findByCode(string $code, string $namespace = '')
+    {
+        $param = (new RoleParam($code))->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 

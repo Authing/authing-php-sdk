@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Authing\Mgmt;
 
 use Authing\Types\AddPolicyAssignmentsParam;
@@ -8,6 +7,7 @@ use Authing\Types\CommonMessage;
 use Authing\Types\CreatePolicyParam;
 use Authing\Types\DeletePoliciesParam;
 use Authing\Types\DeletePolicyParam;
+use Authing\Types\DisbalePolicyAssignmentParam;
 use Authing\Types\PaginatedPolicies;
 use Authing\Types\PaginatedPolicyAssignments;
 use Authing\Types\PoliciesParam;
@@ -18,6 +18,9 @@ use Authing\Types\PolicyParam;
 use Authing\Types\PolicyStatementInput;
 use Authing\Types\RemovePolicyAssignmentsParam;
 use Authing\Types\UpdatePolicyParam;
+use Authing\Types\EnablePolicyAssignmentParam;
+
+
 use Exception;
 
 class PoliciesManagementClient

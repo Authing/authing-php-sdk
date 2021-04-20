@@ -52,6 +52,10 @@ class MFAAuthenticationClient
 {
 
     protected $user;
+
+    /**
+     * @var AuthenticationClient
+     */
     protected AuthenticationClient $client;
 
     /**
@@ -245,5 +249,50 @@ class MFAAuthenticationClient
         } else {
             throw new Error('recoveryCode mfaToken 需要被设置');
         }
+    }
+
+    public function verifyFaceMfa(string $photo, string $mfaToken)
+    {
+        $api = '/api/v2/mfa/face/verify';
+        $req = new Request('POST', $api, [
+            'body' => (object)[
+                'photo' => $photo
+            ],
+            'headers' =>
+            [
+                'Authorization' => "Bearer $mfaToken"
+            ],
+        ]);
+        $data = $this->client->naiveHttpClient->send($req);
+        return $data;
+    }
+
+    public function associateFaceByBlob(array $options)
+    {
+        
+    }
+
+    public function associateFaceByLocalFile(string $mfaToken)
+    {
+        
+    }
+
+    public function associateFaceByUrl(array $options)
+    {
+        extract((object)$options);
+        $api = '/api/v2/mfa/face/associate';
+        $req = new Request('POST', $api, [
+            'body' => (object) [
+                'photoA' => $photoA,
+                'photoB' => $photoB ?? $photoA,
+                'isExternal' => true,
+            ],
+            'headers' =>
+            [
+                'Authorization' => "Bearer $mfaToken",
+            ],
+        ]);
+        $data = $this->client->naiveHttpClient->send($req);
+        return $data;
     }
 }

@@ -21,7 +21,7 @@ abstract class BaseClient
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.8";
+    private $_version = "php:4.1.10";
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -142,6 +142,7 @@ PUBLICKKEY;
     public function httpGet($path)
     {
         $result = $this->send($this->host . $path, null, 'GET');
+        return json_decode(json_encode($result));
         return $this->arrayToObject($result);
     }
 
@@ -165,6 +166,12 @@ PUBLICKKEY;
     public function httpPatch($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PATCH');
+        return $this->arrayToObject($result);
+    }
+
+    public function httpPut($path, $data = [])
+    {
+        $result = $this->send($this->host . $path, $data, 'PUT');
         return $this->arrayToObject($result);
     }
 
@@ -220,7 +227,9 @@ PUBLICKKEY;
     {
         foreach ($arr as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
-                $arr[$k] = $this->arrayToObject($v);
+                if ($k !== 'data') {
+                    $arr[$k] = $this->arrayToObject($v);
+                }
             }
         }
 
@@ -281,6 +290,10 @@ PUBLICKKEY;
             case "PATCH":
                 curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+                break;
+            case "PUT":
+                curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
                 break;
             case "DELETE":
                 curl_setopt($ch, CURLOPT_POSTFIELDS, is_array($data) ? json_encode($data) : $data);

@@ -43,6 +43,7 @@ use Authing\Types\User;
 use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
+use Authing\Types\SetUdvBatchParam;
 
 
 use Error;
@@ -254,7 +255,7 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function addGroups($userId, $group)
+    public function addGroup($userId, $group)
     {
         $param = (new AddUserToGroupParam([$userId]))->withCode($group);
         return $this->client->request($param->createRequest());
@@ -416,6 +417,19 @@ class UsersManagementClient
         return $res;
     }
 
+    public function setUdfValue(string $userId, array $data)
+    {
+        if (count($data)) {
+            throw new Error('empty udf value list');
+        }
+        foreach ($data as $key => $value) {
+            $value = json_encode($value);
+        }
+        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userIds))->withUdvList($data);
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
     public function setUdfValueBatch($input)
     {
         if (!isset($input) && !is_array($input)) {
@@ -433,6 +447,13 @@ class UsersManagementClient
         $param = new SetUdfValueBatchParam("User", $input);
         $res = $this->client->request($param->createRequest());
         return $res;
+    }
+
+    public function removeUdfValue(string $userId, string $key)
+    {
+        $param = new RemoveUdvParam("User", $userIds, $key);
+        $res = $this->client->request($param->createRequest());
+        return true;
     }
 
     public function listOrgs(string $userId)
@@ -499,6 +520,20 @@ class UsersManagementClient
         return $_;
     }
 
+    public function listUserActions(array $options)
+    {
+        $api = '/api/v2/analysis/user-action';
+        $param = http_build_query([
+            'page' => $options['page'] ?? 1,
+            'limit' => $options['limit'] ?? 10,
+            'clientip' => $options['clientip'],
+            'operation_name' => $options['operationName'],
+            'operator_arn' => $options['operatoArn'],
+        ]);
+        $data = $this->client->httpGet($api.$param);
+        return $data;
+    }
+
     public function hasRole(string $userId, string $roleCode, string $namespace)
     {
         $roleList = $this->listRoles($userId, $namespace);
@@ -507,13 +542,11 @@ class UsersManagementClient
         }
         $hasRole = false;
         $list = $roleList->list;
-        foreach($list as $val) {
+        foreach ($list as $val) {
             if ($val->code === $roleCode) {
                 $hasRole = true;
             }
         }
         return $hasRole;
     }
-
-
 }

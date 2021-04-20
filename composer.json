@@ -2,7 +2,7 @@
   "name": "authing-sdk/php",
   "description": "authing-php-sdk",
   "minimum-stability": "stable",
-  "version": "4.1.8",
+  "version": "4.1.10",
   "require": {
     "php": ">=5.4",
     "ext-curl": "*",
@@ -12,8 +12,7 @@
     "firebase/php-jwt": "^5.2"
   },
   "require-dev": {
-    "symfony/yaml": "^5.2",
-    "phpunit/phpunit": "^8"
+    "phpunit/phpunit": "^9.5.4"
   },
   "license": "MIT",
   "authors": [

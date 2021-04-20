@@ -1,12 +1,13 @@
 <?php
 
-namespace Authing\Mgmt;
+namespace Authing\Mgmt\Acl;
 
 use Authing\Types\AllowParam;
 use Authing\Types\AuthorizedResourcesParam;
 use Authing\Types\AuthorizeResourceParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\IsActionAllowedParam;
+use Authing\Mgmt\ManagementClient;
 use Error;
 use Exception;
 use stdClass;
@@ -167,6 +168,41 @@ class AclManagementClient
         return $res;
     }
 
+    public function listNamespaces(int $page = 1, int $limit = 10)
+    {
+        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}";
+        $param = http_build_query([
+            "page" => $page,
+            "limit" => $limit,
+        ]);
+        $data = $this->client->httpGet($api.$param);
+        return $data;
+    }
+
+    public function deleteNamespace(string $code)
+    {
+        $api = "/api/v2/resource-namespace/${this.options.userPoolId}/code/$code";
+        $this->client->httpDelete($api);
+        return true;
+    }
+
+    public function createNamespace(string $code, string $name, string $description = '')
+    {
+        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}";
+        $data = $this->client->httpPost($api, [
+            'name' => $name,
+            'code' => $code,
+            'description' => $description
+        ]);
+        return $data;
+    }
+
+    public function updateNamespace(string $code, array $updates)
+    {
+        $api = "/api/v2/resource-namespace/${this.options.userPoolId}/code/$code";
+        $this->client->httpPut($api, $updates);
+    }
+
     public function deleteProgrammaticAccessAccount(string $programmaticAccessAccountId)
     {
         $this->client->httpDelete("/api/v2/applications/programmatic-access-accounts?id=$programmaticAccessAccountId");
@@ -209,7 +245,20 @@ class AclManagementClient
         # code...
     }
 
-    public function getApplicationAccessPolicies(array $options)
+    public function listResources(array $options)
+    {
+        $api = "/api/v2/resources";
+        $param = http_build_query([
+            'namespaceCode' => $options['namespace'] ?? $options['namespaceCode'],
+            'type' => $options['type'],
+            'limit' => $options['limit'] ?? 10,
+            'page' => $options['page'] ?? 1,
+        ]);
+        $data = $this->client->httpGet($api.$param);
+        return $data;
+    }
+
+    public function getAccessPolicies(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -222,7 +271,7 @@ class AclManagementClient
         return $res;
     }
 
-    public function enableApplicationAccessPolicy(array $options)
+    public function enableAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -249,7 +298,7 @@ class AclManagementClient
         ];
     }
 
-    public function disableApplicationAccessPolicy(array $options)
+    public function disableAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -277,7 +326,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function deleteApplicationAccessPolicy(array $options)
+    public function deleteAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -305,7 +354,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function allowAccessApplication(array $options)
+    public function allowAccess(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -333,7 +382,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function denyAccessApplication(array $options)
+    public function denyAccess(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -361,7 +410,7 @@ class AclManagementClient
         return $_;
     }
 
-    public function updateDefaultApplicationAccessPolicy(array $options)
+    public function updateDefaultAccessPolicy(array $options)
     {
         if (!$options['appId']) {
             throw new Error('请传入 appId');
@@ -378,5 +427,4 @@ class AclManagementClient
         $res = $this->client->httpPost("/api/v2/applications/$appId", $data);
         return $res;
     }
-
 }

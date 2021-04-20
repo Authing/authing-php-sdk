@@ -227,7 +227,7 @@ class OrgManagementClient
     public function getNodeById(string $nodeId)
     {
         $param = new NodeByIdParam($nodeId);
-        $node = $this->client->request($param->createRequest())->nodeById;
+        $node = $this->client->request($param->createRequest());
         return $node;
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Authing\Mgmt;
+namespace Authing\Mgmt\Groups;
 
 
 use Authing\Types\AddUserToGroupParam;
