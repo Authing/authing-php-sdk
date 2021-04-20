@@ -93,7 +93,7 @@ class WhitelistManagementClient
             default:
                 throw new Exception("不支持的白名单类型", 500);
         }
-        $this->client->userpool()->update((new UpdateUserpoolInput())->withWhitelist($updates));
+        $this->client->userpools()->update((new UpdateUserpoolInput())->withWhitelist($updates));
     }
 
     /**
@@ -118,6 +118,6 @@ class WhitelistManagementClient
             default:
                 throw new Exception("不支持的白名单类型", 500);
         }
-        $this->client->userpool()->update((new UpdateUserpoolInput())->withWhitelist($updates));
-    }
+        $this->client->userpools()->update((new UpdateUserpoolInput())->withWhitelist($updates));
+    }// zheshiyigezhesgi 
 }

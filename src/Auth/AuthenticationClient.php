@@ -118,6 +118,11 @@ class AuthenticationClient extends BaseClient
         $this->mfaToken = $token;
     }
 
+    public function getMfaAuthorizationHeader()
+    {
+        return $this->mfaToken;
+    }
+
     public function clearMfaAuthorizationHeader()
     {
         $this->mfaToken = "";
@@ -300,7 +305,7 @@ class AuthenticationClient extends BaseClient
         // $password = $this->options->encryptFunction($password, getPublicKey());
         $params = (new LoginBySubAccountParam($account, $password))->withCaptchaCode($captchaCode)->withClientIp($clientIp);
         $user = $this->request($params->createRequest());
-        $this->setCurrentUser();
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -1405,12 +1410,12 @@ class AuthenticationClient extends BaseClient
         }
         $hasRole = false;
         foreach ($roleList as $item) {
-            if ($item->code === roleCode) {
+            if ($item->code === $rolecode) {
                 $hasRole = true;
             }
         }
 
-        return hasRole;
+        return $hasRole;
     }
 
     public function clearCurrentUser()

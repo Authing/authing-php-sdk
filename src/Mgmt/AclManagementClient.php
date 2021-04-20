@@ -181,7 +181,7 @@ class AclManagementClient
 
     public function deleteNamespace(string $code)
     {
-        $api = "/api/v2/resource-namespace/${this.options.userPoolId}/code/$code";
+        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code";
         $this->client->httpDelete($api);
         return true;
     }
@@ -199,7 +199,7 @@ class AclManagementClient
 
     public function updateNamespace(string $code, array $updates)
     {
-        $api = "/api/v2/resource-namespace/${this.options.userPoolId}/code/$code";
+        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code";
         $this->client->httpPut($api, $updates);
     }
 

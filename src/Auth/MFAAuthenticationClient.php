@@ -2,50 +2,51 @@
 
 
 namespace Authing\Auth;
-use InvalidArgumentException;
-use Authing\Types\BindPhoneParam;
-use Authing\Types\CheckLoginStatusParam;
-use Authing\Types\CommonMessage;
-use Authing\Types\EmailScene;
-use Authing\Types\JWTTokenStatus;
-use Authing\Types\LoginByEmailInput;
-use Authing\Types\LoginByEmailParam;
-use Authing\Types\LoginByPhoneCodeInput;
-use Authing\Types\LoginByPhoneCodeParam;
-use Authing\Types\LoginByPhonePasswordInput;
-use Authing\Types\LoginByPhonePasswordParam;
-use Authing\Types\LoginByUsernameInput;
-use Authing\Types\LoginByUsernameParam;
-use Authing\Types\RefreshToken;
-use Authing\Types\RefreshTokenParam;
-use Authing\Types\RegisterByEmailInput;
-use Authing\Types\RegisterByEmailParam;
-use Authing\Types\RegisterByPhoneCodeInput;
-use Authing\Types\RegisterByPhoneCodeParam;
-use Authing\Types\RegisterByUsernameInput;
-use Authing\Types\RegisterByUsernameParam;
-use Authing\Types\RemoveUdvParam;
-use Authing\Types\ResetPasswordParam;
-use Authing\Types\SendEmailParam;
-use Authing\Types\SetUdvParam;
-use Authing\Types\UDFTargetType;
+use Error;
+use stdClass;
+use Exception;
+use Authing\BaseClient;
+use Authing\Types\User;
 use Authing\Types\UdvParam;
-use Authing\Types\UnbindPhoneParam;
-use Authing\Types\UpdateEmailParam;
-use Authing\Types\UpdatePasswordParam;
-use Authing\Types\UpdatePhoneParam;
+use Authing\Types\UserParam;
+use GuzzleHttp\Psr7\Request;
+use Authing\Types\EmailScene;
+use InvalidArgumentException;
+use Authing\Types\SetUdvParam;
+use Authing\Types\RefreshToken;
+use Authing\Types\CommonMessage;
+use Authing\Types\UDFTargetType;
+use Authing\Types\BindPhoneParam;
+use Authing\Types\JWTTokenStatus;
+use Authing\Types\RemoveUdvParam;
+use Authing\Types\SendEmailParam;
 use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
-use Authing\Types\User;
 use Authing\Types\UserDefinedData;
-use Authing\Types\UserParam;
-use Authing\BaseClient;
+use Authing\Types\UnbindPhoneParam;
+use Authing\Types\UpdateEmailParam;
+use Authing\Types\UpdatePhoneParam;
+use Authing\Types\LoginByEmailInput;
+use Authing\Types\LoginByEmailParam;
+use Authing\Types\RefreshTokenParam;
+use Authing\Types\ResetPasswordParam;
+use Authing\Types\UpdatePasswordParam;
+use Authing\Types\LoginByUsernameInput;
+use Authing\Types\LoginByUsernameParam;
+use Authing\Types\RegisterByEmailInput;
+use Authing\Types\RegisterByEmailParam;
+use Authing\Types\CheckLoginStatusParam;
+use Authing\Types\LoginByPhoneCodeInput;
+use Authing\Types\LoginByPhoneCodeParam;
+use Authing\Types\RegisterByUsernameInput;
+use Authing\Types\RegisterByUsernameParam;
+use PHPUnit\Framework\Constraint\Callback;
+use Authing\Types\RegisterByPhoneCodeInput;
+use Authing\Types\RegisterByPhoneCodeParam;
+use Authing\Types\LoginByPhonePasswordInput;
+use Authing\Types\LoginByPhonePasswordParam;
 use Authing\Types\CheckPasswordStrengthParam;
 use Authing\Types\ListUserAuthorizedResourcesParam;
-use Error;
-use Exception;
-use PHPUnit\Framework\Constraint\Callback;
-use stdClass;
 
 
 class MFAAuthenticationClient
@@ -279,7 +280,7 @@ class MFAAuthenticationClient
 
     public function associateFaceByUrl(array $options)
     {
-        extract((object)$options);
+        extract($options);
         $api = '/api/v2/mfa/face/associate';
         $req = new Request('POST', $api, [
             'body' => (object) [

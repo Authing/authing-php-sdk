@@ -19,7 +19,7 @@ class NamespaceManagementClient {
 
     public function list(array $params = [])
     {
-        $userPoolId = $this->options->userPoolId;
+        $userPoolId = $this->client->options->userPoolId;
         $page = $params['page'] ?? 1;
         $limit = $params['limit'] ?? 10;
         $data = $this->client->httpGet("/api/v2/resource-namespace/$userPoolId/?page=$page&limit=$limit");
@@ -29,7 +29,7 @@ class NamespaceManagementClient {
 
     public function create(string $code, string $name, string $description = "")
     {
-        $res = $this->client->httpPost("/api/v2/resource-namespace/{$this->options->userPoolId}", (object)[
+        $res = $this->client->httpPost("/api/v2/resource-namespace/{$this->client->options->userPoolId}", (object)[
             'name' => $name,
             'code' => $code,
             'description' => $description
@@ -39,13 +39,13 @@ class NamespaceManagementClient {
 
     public function delete(string $code)
     {
-        $this->client->httpDelete("/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code");
+        $this->client->httpDelete("/api/v2/resource-namespace/{$this->client->options->userPoolId}/code/$code");
         return true;
     }
 
     public function update(string $code, array $updates)
     {
-        $data = $this->client->httpPut("/api/v2/resource-namespace/{$this->options->userPoolId}/code/{$code}", (object)$updates);
+        $data = $this->client->httpPut("/api/v2/resource-namespace/{$this->client->options->userPoolId}/code/{$code}", (object)$updates);
         return $data;
     }
 }

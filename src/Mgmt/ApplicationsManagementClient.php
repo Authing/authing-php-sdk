@@ -104,19 +104,19 @@ class ApplicationsManagementClient
     public function getAccessPolicies(array $options)
     {
         $args = func_get_args();
-        return $this->acl->getApplicationAccessPolicies(...$args);
+        return $this->acl->getAccessPolicies(...$args);
     }
 
     public function enableAccessPolicy(array $options)
     {
         $args = func_get_args();
-        return $this->acl->enableApplicationAccessPolicy(...$args);
+        return $this->acl->enableAccessPolicy(...$args);
     }
 
     public function disableAccessPolicy(array $options)
     {
         $args = func_get_args();
-        return $this->acl->disableApplicationAccessPolicy(...$args);
+        return $this->acl->disableAccessPolicy(...$args);
     }
 
     public function deleteAccessPolicy(array $options)
