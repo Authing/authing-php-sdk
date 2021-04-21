@@ -110,7 +110,7 @@ class AuthenticationClient extends BaseClient
 
     public function setToken(string $accessToken)
     {
-        $this->setAccessToken($accessToken);
+        parent::setAccessToken($accessToken);
     }
 
     public function setMfaAuthorizationHeader(string $token)
@@ -596,7 +596,7 @@ class AuthenticationClient extends BaseClient
         return $this->httpGet('/api/v2/users/me/orgs');
     }
 
-    public function loginByLdap($username, $password, $options = "")
+    public function loginByLdap($username, $password)
     {
         if (!isset($username, $password)) {
             throw new Exception("请输入必要的参数");

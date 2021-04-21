@@ -23,7 +23,7 @@ class AclManagementClientTest extends TestCase
         $this->_testConfig = (object) TestConfig::getConfig($moduleName);
         $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
         $management->requestToken();
-        $this->aclManagement = $management->acl();
+        $this->aclManagement = $management->acls();
     }
 
     public function testAllow()
@@ -45,5 +45,6 @@ class AclManagementClientTest extends TestCase
         parent::assertEquals(gettype($res->data->list), 'array');
         // parent::assertIsArray($res->data->list, 'array');
         // parent::assertIsNotArray($res->data->list);
+        // parent::assertArraySubset();
     }
 }

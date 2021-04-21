@@ -101,13 +101,13 @@ PUBLICKKEY;
         $this->accessToken = $accessToken;
     }
 
-    /**
-     * @param $token string
-     */
-    public function setToken($token)
-    {
-        $this->accessToken = $token;
-    }
+    // /**
+    //  * @param $token string
+    //  */
+    // public function setToken($token)
+    // {
+    //     $this->accessToken = $token;
+    // }
 
     /**
      * password Encrypt
