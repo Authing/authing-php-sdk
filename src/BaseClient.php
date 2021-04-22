@@ -120,6 +120,7 @@ PUBLICKKEY;
         $tokenInfo = Utils::getTokenPlayloadData($this->accessToken);
         $exp = $tokenInfo->exp;
         $this->_accessTokenExpriredAt = $exp;
+        echo $this->_accessTokenExpriredAt;
         return $res;
     }
 
@@ -287,13 +288,16 @@ PUBLICKKEY;
         if (!empty($this->options->accessToken)) {
             return $this->options->accessToken;
         }
-        
+        var_dump($this->_accessTokenExpriredAt);
+        var_dump(time() + 3600);
+        var_dump($this->_accessTokenExpriredAt > (time() + 3600));
+        var_dump($this->_accessTokenExpriredAt < (time() + 3600));
         // 缓存到 accessToken 过期前 3600 s
         if (
-            $this->accessToken && $this->_accessTokenExpriredAt > time() + 3600
+            $this->accessToken && ($this->_accessTokenExpriredAt > (time() + 3600))
         ) {
             return $this->accessToken;
-        } else if ($this->_accessTokenExpriredAt && $this->_accessTokenExpriredAt < time() + 3600) {
+        } else if (isset($this->_accessTokenExpriredAt) && ($this->_accessTokenExpriredAt < (time() + 3600))) {
             echo $this->_accessTokenExpriredAt;
             return $this->requestToken();
         }

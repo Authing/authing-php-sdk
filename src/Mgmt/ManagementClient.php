@@ -65,9 +65,9 @@ class ManagementClient extends BaseClient
      * @throws Exception
      */
     public function requestToken() {
-        $param = new AccessTokenParam($this->userPoolId, $this->secret);
-        $res = $this->request($param->createRequest());
-        $this->accessToken = $res->accessToken;
+        // $param = new AccessTokenParam($this->userPoolId, $this->options->secret);
+        $res = parent::requestToken();
+        // $this->accessToken = $res->accessToken;
         return $res;
     }
 
