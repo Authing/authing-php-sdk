@@ -284,17 +284,19 @@ PUBLICKKEY;
 
     private function getToken()
     {
-        if ($this->options->accessToken) {
+        if (!empty($this->options->accessToken)) {
             return $this->options->accessToken;
         }
-
+        
         // 缓存到 accessToken 过期前 3600 s
         if (
             $this->accessToken && $this->_accessTokenExpriredAt > time() + 3600
         ) {
             return $this->accessToken;
+        } else if ($this->_accessTokenExpriredAt && $this->_accessTokenExpriredAt < time() + 3600) {
+            echo $this->_accessTokenExpriredAt;
+            return $this->requestToken();
         }
-        return $this->requestToken();
     }
 
     /**
@@ -308,7 +310,7 @@ PUBLICKKEY;
     private function send($url, $data = '', $method = 'POST', $time = 30000)
     {
         // 如果是通过密钥刷新
-        $this->accessToken = $this->getToken();
+        $this->accessToken = $this->getToken() ?? $this->accessToken;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -322,7 +324,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "Content-type: application/json",
-            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken ?? $this->options->accessToken),
+            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken ?? $this->options->accessToken ?? null),
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",

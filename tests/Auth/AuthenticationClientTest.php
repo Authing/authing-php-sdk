@@ -34,7 +34,8 @@ class AuthenticationClientTest extends TestCase
         });
         $username = $this->_testConfig->username;
         $password = $this->_testConfig->password;
-        $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+        // new LoginByUsernameInput($username, $password)
+        $this->client->loginByUsername($username, $password);
     }
 
     protected function tearDown(): void
@@ -42,7 +43,7 @@ class AuthenticationClientTest extends TestCase
     }
 
     /**
-     * @group notest
+     * @group test
      *
      * @return void
      * @Description
@@ -121,8 +122,8 @@ class AuthenticationClientTest extends TestCase
     {
         $email = 'test@qq.com';
         $password = 'password';
-        $input = new RegisterByEmailInput($email, $password);
-        $user = $this->client->registerByEmail($input);
+        // $input = new RegisterByEmailInput($email, $password);
+        $user = $this->client->registerByEmail($email, $password);
         parent::assertNotEmpty($user);
     }
 
@@ -130,8 +131,8 @@ class AuthenticationClientTest extends TestCase
     {
         $username = 'new username';
         $password = 'password';
-        $input = new RegisterByUsernameInput($username, $password);
-        $user = $this->client->registerByUsername($input);
+        // $input = new RegisterByUsernameInput($username, $password);
+        $user = $this->client->registerByUsername($username, $password);
         parent::assertNotEmpty($user);
     }
 
@@ -154,8 +155,8 @@ class AuthenticationClientTest extends TestCase
     {
         $email = $this->_testConfig->email;
         $password = 'password';
-        $input = new LoginByEmailInput($email, $password);
-        $user = $this->client->loginByEmail($input);
+        // $input = new LoginByEmailInput($email, $password);
+        $user = $this->client->loginByEmail($email, $password);
         parent::assertNotEmpty($user);
     }
 
@@ -171,8 +172,8 @@ class AuthenticationClientTest extends TestCase
     {
         $phone = $this->_testConfig->phone;
         $password = 'password';
-        $input = new LoginByPhonePasswordInput($phone, $password);
-        $user = $this->client->loginByPhonePassword($input);
+        // $input = new LoginByPhonePasswordInput($phone, $password);
+        $user = $this->client->loginByPhonePassword($phone, $password);
         parent::assertNotEmpty($user);
     }
 
@@ -485,7 +486,7 @@ class AuthenticationClientTest extends TestCase
     {
         $username = $this->_testConfig->username;
         $password = $this->_testConfig->password;
-        $user = $this->client->loginByUsername(new LoginByUsernameInput($username, $password));
+        $user = $this->client->loginByUsername($username, $password);
         $this->assertEquals($user->username, $username);
         return $this->client;
     }

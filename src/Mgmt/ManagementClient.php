@@ -36,12 +36,10 @@ class ManagementClient extends BaseClient
      * @param $secret string
      * @throws InvalidArgumentException
      */
-    public function __construct($userPoolId, $secret)
+    public function __construct($config)
     {
-        parent::__construct(function ($ops) use ($userPoolId, $secret) {
-            $ops->userPoolId = $userPoolId;
-            $ops->secret = $secret;
-        });
+        $params = func_get_args();
+        parent::__construct(...$params);
         // parent::__construct($userPoolId);
         // $this->secret = $secret;
     }
