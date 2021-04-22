@@ -9,6 +9,7 @@ use Authing\Types\BindPhoneParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CheckPasswordStrengthParam;
 use Authing\Types\CommonMessage;
+use Authing\Types\RegisterProfile;
 use Authing\Types\EmailScene;
 use Authing\Types\GetUserRolesParam;
 use Authing\Types\JWTTokenStatus;
@@ -90,6 +91,15 @@ class AuthenticationClient extends BaseClient
         parent::__construct($userPoolIdOrFunc);
     }
 
+    /**
+     * 检测当前是否登录
+     *
+     * @return string userId
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since 4.2
+     */
     public function checkLoggedIn()
     {
         $user = $this->getCurrentUser();
@@ -108,21 +118,60 @@ class AuthenticationClient extends BaseClient
         return $userId;
     }
 
+    /**
+     * 设置 Token
+     *
+     * @param string $accessToken JWT Token
+     * @return void
+     * @Description
+     * 使用自己的 token 作为请求的 token，该 token 的相关管理由用户自己处理
+     * @example
+     * @author Xintao Li
+     * @since 4.2
+     */
     public function setToken(string $accessToken)
     {
         parent::setAccessToken($accessToken);
     }
 
+    /**
+     * 设置 Mfa token
+     *
+     * @param string $token MfaToken
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since 4.2
+     */
     public function setMfaAuthorizationHeader(string $token)
     {
         $this->mfaToken = $token;
     }
 
+    /**
+     * 获取当前设置的 mfaToken
+     *
+     * @return string mfaToken MfaToken
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since 4.2
+     */
     public function getMfaAuthorizationHeader()
     {
         return $this->mfaToken;
     }
 
+    /**
+     * 清空当前 mfaToken
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since 4.2
+     */
     public function clearMfaAuthorizationHeader()
     {
         $this->mfaToken = "";
@@ -131,8 +180,11 @@ class AuthenticationClient extends BaseClient
     /**
      * 获取当前用户
      *
-     * @return User
-     * @throws Exception
+     * @return User user 当前用户
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since 4.2
      */
     public function getCurrentUser()
     {
@@ -162,15 +214,20 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function registerByEmail($input)
+    public function registerByEmail(string $email, string $password, RegisterProfile $profile = null, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
-
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new RegisterByEmailInput($email, $password))
+            ->withProfile($profile ?? null)
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withGenerateToken($context ?? null)
+            ->withParams($params ?? null)
+            ->withForceLogin($forceLogin ?? null);
         $param = new RegisterByEmailParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -181,15 +238,20 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function registerByUsername($input)
+    public function registerByUsername(string $username,string $password, RegisterProfile $profile = null, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
-
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new RegisterByUsernameInput($username, $password))
+            ->withProfile($profile ?? null)
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withGenerateToken($context ?? null)
+            ->withParams($params ?? null)
+            ->withForceLogin($forceLogin ?? null);
         $param = new RegisterByUsernameParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -200,15 +262,23 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function registerByPhoneCode($input)
+    public function registerByPhoneCode(string $username,
+    string $code, string $password = '', RegisterProfile $profile = null, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new RegisterByPhoneCodeInput($username, $code))
+            ->withPassword($password ?? null)
+            ->withProfile($profile ?? null)
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withGenerateToken($context ?? null)
+            ->withParams($params ?? null)
+            ->withForceLogin($forceLogin ?? null);
 
         $param = new RegisterByPhoneCodeParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -233,15 +303,19 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByEmail($input)
+    public function loginByEmail(string $email, string $password, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
-
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new LoginByEmailInput($email, $password))
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withParams($params ?? null)
+            ->withAutoRegister($autoRegister ?? null)
+            ->withCaptchaCode($captchaCode ?? null);
         $param = new LoginByEmailParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -252,15 +326,20 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByUsername($input)
+    public function loginByUsername(string $username, string $password, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new LoginByUsernameInput($username, $password))
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withParams($params ?? null)
+            ->withAutoRegister($autoRegister ?? null)
+            ->withCaptchaCode($captchaCode ?? null);
 
         $param = new LoginByUsernameParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -271,11 +350,17 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByPhoneCode($input)
+    public function loginByPhoneCode(string $phone, string $code, array $options = [])
     {
+        extract($options);
+        $input = (new LoginByPhoneCodeInput($phone, $code))
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withParams($params ?? null)
+            ->withAutoRegister($autoRegister ?? null);
         $param = new LoginByPhoneCodeParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -286,15 +371,20 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByPhonePassword($input)
+    public function loginByPhonePassword(string $phone, string $code, array $options = [])
     {
-        if ($input->password) {
-            $input->password = $this->encrypt($input->password);
-        }
+        extract($options);
+        $password = $this->encrypt($password);
+        $input = (new LoginByPhonePasswordInput($username, $password))
+            ->withClientIp($clientIp ?? null)
+            ->withContext($context ?? null)
+            ->withParams($params ?? null)
+            ->withAutoRegister($autoRegister ?? false)
+            ->withCaptchaCode($captchaCode ?? null);
 
         $param = new LoginByPhonePasswordParam($input);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -361,7 +451,7 @@ class AuthenticationClient extends BaseClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function resetPasswordByEmailCode($email, $code, $newPassword)
+    public function resetPasswordByEmailCode(string $email, string $code, string $newPassword)
     {
         $newPassword = $this->encrypt($newPassword);
         $param = (new ResetPasswordParam($code, $newPassword))->withEmail($email);
@@ -375,11 +465,15 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function updateProfile($input)
+    public function updateProfile(UpdateUserInput $input)
     {
-        $param = new UpdateUserParam($input);
+        $userId = $this->getCurrentUser();
+        if ($input->password) {
+            unset($input->password);
+        }
+        $param = (new UpdateUserParam($input))->withId($userId);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -397,7 +491,7 @@ class AuthenticationClient extends BaseClient
         $oldPassword = $this->encrypt($oldPassword);
         $param = (new UpdatePasswordParam($newPassword))->withOldPassword($oldPassword);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -415,7 +509,7 @@ class AuthenticationClient extends BaseClient
     {
         $param = (new UpdatePhoneParam($phone, $phoneCode))->withOldPhone($oldPhone)->withOldPhoneCode($oldPhoneCode);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -433,7 +527,7 @@ class AuthenticationClient extends BaseClient
     {
         $param = (new UpdateEmailParam($email, $emailCode))->withOldEmail($oldEmail)->withOldEmailCode($oldEmailCode);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -461,7 +555,7 @@ class AuthenticationClient extends BaseClient
     {
         $param = new BindPhoneParam($phone, $phoneCode);
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -475,7 +569,7 @@ class AuthenticationClient extends BaseClient
     {
         $param = new UnbindPhoneParam();
         $user = $this->request($param->createRequest());
-        $this->accessToken = $user->token ?: $this->accessToken;
+        $this->setCurrentUser($user);
         return $user;
     }
 
@@ -622,7 +716,7 @@ class AuthenticationClient extends BaseClient
             $hostName = $hostName['host'];
         }
         $firstLevelDomain = array_slice(explode(".", $hostName), 1);
-        $websocketHost = $this->options["websocketHost"] || `https://ws.${firstLevelDomain}`;
+        $websocketHost = $this->options["websocketHost"] || `https://ws.$firstLevelDomain`;
         $api = $websocketHost . "/api/v2/ad/verify-user";
         $_ = new stdClass;
         $_->username = $username;
@@ -762,7 +856,7 @@ class AuthenticationClient extends BaseClient
             "body" => $qstr,
         ]);
         $body =
-        $response->getBody();
+            $response->getBody();
         $stringBody = (string) $body;
         return json_decode($stringBody);
     }
@@ -793,7 +887,7 @@ class AuthenticationClient extends BaseClient
             ]),
         ]);
         $body =
-        $response->getBody();
+            $response->getBody();
         $stringBody = (string) $body;
         return json_decode($stringBody);
     }
@@ -833,9 +927,9 @@ class AuthenticationClient extends BaseClient
             );
         }
         $this->options->accessKey
-        ? $accessKey = $this->options->accessKey : $accessKey = $this->options->appId;
+            ? $accessKey = $this->options->accessKey : $accessKey = $this->options->appId;
         $this->options->accessSecret
-        ? $accessSecret = $this->options->accessSecret : $accessSecret = $this->options->secret;
+            ? $accessSecret = $this->options->accessSecret : $accessSecret = $this->options->secret;
         $qstr = $this->_generateTokenRequest([
             "client_id" => $accessKey,
             "client_secret" => $accessSecret,
@@ -858,7 +952,7 @@ class AuthenticationClient extends BaseClient
             ),
         ]);
         $body =
-        $response->getBody();
+            $response->getBody();
         $stringBody = (string) $body;
         return json_decode($stringBody);
     }
@@ -930,7 +1024,7 @@ class AuthenticationClient extends BaseClient
             'redirectUri' => 'redirect_uri'
         ];
         $res = [
-            'state' => substr(rand(0, 1).'', 0, 2),
+            'state' => substr(rand(0, 1) . '', 0, 2),
             'scope' => 'user',
             'client_id' => $this->options->appId,
             'redirect_uri' => $this->options->redirectUri,
@@ -954,7 +1048,7 @@ class AuthenticationClient extends BaseClient
     public function _buildCasAuthorizeUrl(array $options)
     {
         if (isset($options['service'])) {
-            return $this->options->appHost.'/cas-idp/'.$this->options->appId.'?service='.$options['service'];
+            return $this->options->appHost . '/cas-idp/' . $this->options->appId . '?service=' . $options['service'];
         }
         return $this->options->appHost . '/cas-idp' . $this->options->appId;
     }
@@ -962,7 +1056,7 @@ class AuthenticationClient extends BaseClient
     public function _buildCasLogoutUrl(array $options)
     {
         if (isset($options['redirectUri'])) {
-            return $this->options->appHost.'/cas-idp/logout?url='.$options['redirectUri'];
+            return $this->options->appHost . '/cas-idp/logout?url=' . $options['redirectUri'];
         }
         return $this->options->appHost . '/cas-idp/logout';
     }
@@ -1016,7 +1110,7 @@ class AuthenticationClient extends BaseClient
             ),
         ]);
         $body =
-        $response->getBody();
+            $response->getBody();
         $stringBody = (string) $body;
         return json_decode($stringBody);
     }
@@ -1055,8 +1149,9 @@ class AuthenticationClient extends BaseClient
         $tokenSet = $this->naiveHttpClient->send($req);
         return $tokenSet;
     }
-    
-    function _getNewAccessTokenByRefreshTokenWithClientSecretBasic(string $refreshToken) {
+
+    function _getNewAccessTokenByRefreshTokenWithClientSecretBasic(string $refreshToken)
+    {
         $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
@@ -1079,7 +1174,8 @@ class AuthenticationClient extends BaseClient
         return $tokenSet;
     }
 
-    function _getNewAccessTokenByRefreshTokenWithNone(string $refreshToken) {
+    function _getNewAccessTokenByRefreshTokenWithNone(string $refreshToken)
+    {
         $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
@@ -1328,7 +1424,7 @@ class AuthenticationClient extends BaseClient
 
     public function validateTicketV1(string $ticket, string $service)
     {
-        $api = '/cas-idp/'.$this->options->appId.'/validate?service='.$service.'&ticket='.$ticket;
+        $api = '/cas-idp/' . $this->options->appId . '/validate?service=' . $service . '&ticket=' . $ticket;
         $req = new Request('GET', $api, [
             'headers' => array_merge(
                 $this->getOidcHeaders()
@@ -1432,7 +1528,7 @@ class AuthenticationClient extends BaseClient
             isset($options->idToken) &&
             $options->accessToken &&
             $options->idToken
-            ) {
+        ) {
             throw new Error('accessToken 和 idToken 只能传入一个，不能同时传入');
         }
         if (!empty($options->idToken) && !empty($options->accessToken)) {

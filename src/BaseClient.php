@@ -2,7 +2,10 @@
 
 namespace Authing;
 
+use Authing\Mgmt\Utils;
 use Exception;
+use Authing\Types\AccessTokenParam;
+use DateTime;
 use GuzzleHttp\Client;
 use stdClass;
 
@@ -22,6 +25,8 @@ abstract class BaseClient
     private $_type = "SDK";
 
     private $_version = "php:4.1.10";
+
+    private $_accessTokenExpriredAt;
 
     private $publicKey
     = <<<PUBLICKKEY
@@ -101,6 +106,23 @@ PUBLICKKEY;
         $this->accessToken = $accessToken;
     }
 
+    /**
+     * 获取 access token
+     *
+     * @return AccessTokenRes
+     * @throws Exception
+     */
+    public function requestToken()
+    {
+        $param = new AccessTokenParam($this->userPoolId, $this->options->secret);
+        $res = $this->request($param->createRequest());
+        $this->accessToken = $res->accessToken;
+        $tokenInfo = Utils::getTokenPlayloadData($this->accessToken);
+        $exp = $tokenInfo->exp;
+        $this->_accessTokenExpriredAt = $exp;
+        return $res;
+    }
+
     // /**
     //  * @param $token string
     //  */
@@ -151,7 +173,7 @@ PUBLICKKEY;
     {
         $result = $this->send($this->host . $path, null, 'GET');
         return json_decode(json_encode($result));
-        return $this->arrayToObject($result);
+        // return $this->arrayToObject($result);
     }
 
     /**
@@ -168,19 +190,22 @@ PUBLICKKEY;
             $path = $this->host . $path;
         }
         $result = $this->send($path, $this->objectToArray($data));
-        return $this->arrayToObject($result);
+        return json_decode(json_encode($result));
+        // return $this->arrayToObject($result);
     }
 
     public function httpPatch($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PATCH');
-        return $this->arrayToObject($result);
+        return json_decode(json_encode($result));
+        // return $this->arrayToObject($result);
     }
 
     public function httpPut($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PUT');
-        return $this->arrayToObject($result);
+        return json_decode(json_encode($result));
+        // return $this->arrayToObject($result);
     }
 
     /**
@@ -191,7 +216,8 @@ PUBLICKKEY;
     public function httpDelete($path)
     {
         $result = $this->send($this->host . $path, null, 'DELETE');
-        return $this->arrayToObject($result);
+        return json_decode(json_encode($result));
+        // return $this->arrayToObject($result);
     }
 
     /**
@@ -256,6 +282,21 @@ PUBLICKKEY;
         return null;
     }
 
+    private function getToken()
+    {
+        if ($this->options->accessToken) {
+            return $this->options->accessToken;
+        }
+
+        // 缓存到 accessToken 过期前 3600 s
+        if (
+            $this->accessToken && $this->_accessTokenExpriredAt > time() + 3600
+        ) {
+            return $this->accessToken;
+        }
+        return $this->requestToken();
+    }
+
     /**
      * @param string $url request url
      * @param string|array $data post body
@@ -266,6 +307,9 @@ PUBLICKKEY;
      */
     private function send($url, $data = '', $method = 'POST', $time = 30000)
     {
+        // 如果是通过密钥刷新
+        $this->accessToken = $this->getToken();
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -278,7 +322,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "Content-type: application/json",
-            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken),
+            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken ?? $this->options->accessToken),
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",

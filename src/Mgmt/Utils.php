@@ -2,8 +2,9 @@
 
 namespace Authing\Mgmt;
 
-use Firebase\JWT\JWT;
+use stdClass;
 
+use Firebase\JWT\JWT;
 use Authing\Types\UDFDataType;
 
 class Utils
@@ -58,5 +59,18 @@ class Utils
             $ret->$key = $item->value;
         }
         return $ret;
+    }
+
+    public static function randomString(int $randomLenth = 32)
+    {
+        $randomLenth = $randomLenth ?? 32;
+        $t = 'abcdefhijkmnprstwxyz2345678';
+        $a = strlen($t);
+        $n = '';
+
+        for ($i = 0; $i < $randomLenth; $i++) {
+            $n .= $t[rand(0, $a - 1)];
+        }
+        return $n;
     }
 }

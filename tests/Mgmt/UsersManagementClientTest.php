@@ -5,6 +5,8 @@ use PHPUnit\Framework\TestCase;
 use Authing\Mgmt\ManagementClient;
 use Authing\Types\CreateUserInput;
 use Authing\Types\UpdateUserInput;
+use Authing\Types\IsUserExistsParam;
+use Authing\Mgmt\Utils;
 use Authing\Mgmt\UsersManagementClient;
 
 class UsersManagementClientTest extends TestCase
@@ -25,7 +27,10 @@ class UsersManagementClientTest extends TestCase
         $moduleName = str_replace('ClientTest', '', __CLASS__);
         $manageConfig = (object) TestConfig::getConfig('Management');
         $this->_testConfig = (object) TestConfig::getConfig($moduleName);
-        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
+        $management = new ManagementClient(
+            $manageConfig->userPoolId,
+            $manageConfig->userPoolSercet
+        );
         $management->requestToken();
         $this->client = $management->users();
     }
@@ -70,7 +75,7 @@ class UsersManagementClientTest extends TestCase
     public function test_detail()
     {
         $email = $this->randomString() . '@gmail.com';
-        $password = '123456';
+        $password = 'password';
         $user = $this->client->create(
             (new CreateUserInput())
                 ->withEmail($email)
@@ -90,7 +95,7 @@ class UsersManagementClientTest extends TestCase
     {
         $users = $this->client->paginate()->data;
         $length = count($users);
-        $userIds = array_map(function($item) {
+        $userIds = array_map(function ($item) {
             return $item->id;
         }, $users);
         $resUsers = $this->client->batch($userIds);
@@ -119,6 +124,16 @@ class UsersManagementClientTest extends TestCase
 
         $message = $this->client->deleteMany([$user->id]);
         $this->assertEquals(200, $message->code);
+    }
+
+    public function test_exists()
+    {
+        $params = (new IsUserExistsParam())->withUsername($this->_testConfig->username);
+        $flag = $this->client->exists($params);
+        $this->assertTrue($flag);
+        $params = (new IsUserExistsParam())->withUsername(Utils::randomString(5));
+        $flag = $this->client->exists($params);
+        $this->assertFalse($flag);
     }
 
     public function test_checkLoginStatus()
@@ -166,7 +181,6 @@ class UsersManagementClientTest extends TestCase
                 ->withPassword($password)
         );
         $groupId = $this->_testConfig->groupId;
-
 
         $message = $this->client->removeGroup($user->id, $groupId);
         $this->assertEquals(200, $message->code);
@@ -219,7 +233,7 @@ class UsersManagementClientTest extends TestCase
     public function test_refreshToken()
     {
         $email = $this->randomString() . '@gmail.com';
-        $password = '123456';
+        $password = 'password';
         $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
 
         $message = $this->client->refreshToken($user->id);
@@ -229,7 +243,7 @@ class UsersManagementClientTest extends TestCase
     public function test_listPolicies()
     {
         $email = $this->randomString() . '@gmail.com';
-        $password = '123456';
+        $password = 'password';
         $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
 
         $policies = $this->client->listPolicies($user->id);
@@ -238,62 +252,169 @@ class UsersManagementClientTest extends TestCase
 
     public function test_addPolicies()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = $this->_testConfig->password;
+        $user = $this->client->create(
+            (new CreateUserInput())
+            ->withEmail($email)
+            ->withPassword($password)
+        );
+        $policies = $this->_testConfig->policies;
+        $message = $this->client->addPolicies($user->id, $policies);
+        $this->assertEquals(200, $message->code);
     }
 
     public function test_removePolicies()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = $this->_testConfig->password;
+        $user = $this->client->create(
+            (new CreateUserInput())
+            ->withEmail($email)
+            ->withPassword($password)
+        );
+        $policies = $this->_testConfig->policies;
+        $this->client->addPolicies($user->id, $policies);
+
+        $lastPolicie = $policies[count($policies) - 1];
+        $message = $this->client->removePolicies(
+            $user->id,
+            [$lastPolicie]
+        );
+        $this->assertEquals(200, $message->code);
     }
 
     public function test_listUdv()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $udvs = $this->client->listUdv($user->id);
+        $this->assertEquals(true, count($udvs) == 0);
     }
 
     public function test_setUdv()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $key = 'key';
+        $value = 'value';
+        $udvs = $this->client->setUdv($user->id, $key, $value);
+        parent::assertNotNull($udvs);
     }
 
     public function test_removeUdv()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $key = 'key';
+        $value = 'value';
+        $udv = $this->client->setUdv($user->id, $key, $value);
+        parent::assertNotNull($udv);
+
+        $flag = $this->client->removeUdv($user->id, $key);
+        parent::assertNotNull($flag);
     }
 
     public function test_getUdfValueBatch()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $udf = $this->client->getUdfValueBatch([
+            $user->id
+        ]);
+        parent::assertNotNull($udf);
     }
 
     public function test_setUdfValue()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $udfValue = [
+            'school' => '华中科技大学',
+            'age' => 20,
+        ];
+        $res = $this->client->setUdfValue($user->id, $udfValue);
+        parent::assertNotNull($res);
     }
 
     public function test_setUdfValueBatch()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $udfValue = [
+            [
+                'userId' => 'USER_ID1',
+                'data' => (object)[
+                'school' => '华中科技大学',
+                ],
+            ],
+            [
+                'userId' => 'USER_ID2',
+                'data' => (object)[
+                'school' => '清华大学',
+                'age' => 100,
+                ],
+            ],
+        ];
+        $res = $this->client->setUdfValueBatch($user->id, $udfValue);
+        parent::assertNotNull($res);
     }
 
     public function test_removeUdfValue()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $udfValue = [
+            'school' => '华中科技大学',
+            'age' => 20,
+        ];
+        $res = $this->client->setUdfValue($user->id, $udfValue);
+        
+        $res = $this->client->removeUdfValue($user->id, 'school');
+        parent::assertNotNull($res);
     }
 
     public function test_listOrgs()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $res = $this->client->listOrgs($user->id);
+        $this->assertEquals(true, count($res) == 0);
     }
 
     public function test_listAuthorizedResources()
     {
-        # code...
+        $email = $this->randomString() . '@gmail.com';
+        $password = 'password';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $namespace = "";
+        $res = $this->client->listAuthorizedResources($user->id, $namespace);
+        $this->assertEquals(true, count($res) == 0);
     }
 
     public function test_find()
     {
-        # code...
+        $res = $this->client->find([
+            'username' => $this->_testConfig->username
+        ]);
+        parent::assertNotNull($res);
     }
 
     public function test_listArchivedUsers()
@@ -304,36 +425,35 @@ class UsersManagementClientTest extends TestCase
 
     public function test_listDepartment()
     {
-        $userId = $this->_testConfig->userId;
+        $userId = $this->_testConfig->testUserId;
         $data = $this->client->listDepartment($userId);
         parent::assertNotEmpty($data);
     }
 
     public function test_getUdfValue()
     {
-        $userId = $this->_testConfig->userId;
+        $userId = $this->_testConfig->testUserId;
         $data = $this->client->getUdfValue($userId);
         parent::assertNotEmpty($data);
     }
 
     public function test_kick()
     {
-        # code...
+        // 用户 token 功能消失
+
     }
 
     public function test_listUserActions()
     {
-        # code...
+        $res = $this->client->listUserActions();
+        parent::assertNotNull($res);
     }
 
     public function test_hasRole()
     {
-        # code...
+        $userId = $this->_testConfig->testUserId;
+        $userRole = $this->_testConfig->testUserRole;
+        $this->client->hasRole($userId, $userRole, '');
     }
 
-    public function test_setUdvBatch()
-    {
-        // $data = $this->client->setUdfValueBatch();
-        // parent::assertNotEmpty($data);
-    }
 }

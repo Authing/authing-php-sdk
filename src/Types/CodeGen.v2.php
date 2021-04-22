@@ -22,10 +22,10 @@ class Query {
   /**
    * Optional
    * 
-   * @var PaginatedResourcePermissionAssignments
+   * @var PaginatedAuthorizedTargets
    * 
    */
-  public $resourcePermissions;
+  public $authorizedTargets;
 
   /**
    * Optional
@@ -426,9 +426,9 @@ class PolicyAssignmentTargetType {
 }
 
 /**
- * ResourcePermissionsActionsInput
+ * AuthorizedTargetsActionsInput
  */
-class ResourcePermissionsActionsInput {
+class AuthorizedTargetsActionsInput {
   /**
    * Required
    * 
@@ -463,7 +463,7 @@ class Operator {
   const OR = 'OR';
 }
 
-class PaginatedResourcePermissionAssignments {
+class PaginatedAuthorizedTargets {
   /**
    * Optional
    * 
@@ -2292,6 +2292,73 @@ public function withDepartmentId($departmentId) {
  */
 public function withIncludeChildrenDepartments($includeChildrenDepartments) {
   $this->includeChildrenDepartments = $includeChildrenDepartments;
+  return $this;
+}
+}
+    
+
+/**
+ * SearchUserGroupOpt
+ */
+class SearchUserGroupOpt {
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $code;
+
+
+public function __construct() {
+
+}
+
+/**
+ * @param $code string code
+ * @return SearchUserGroupOpt
+ */
+public function withCode($code) {
+  $this->code = $code;
+  return $this;
+}
+}
+    
+
+/**
+ * SearchUserRoleOpt
+ */
+class SearchUserRoleOpt {
+  /**
+   * Optional
+   * 
+   * @var string
+   * 
+   */
+  public $namespace;
+
+  /**
+   * Required
+   * 
+   * @var string
+   * 
+   */
+  public $code;
+
+/**
+ * @param $code string code
+ */
+
+public function __construct($code) {
+$this->code = $code;
+}
+
+/**
+ * @param $namespace string namespace
+ * @return SearchUserRoleOpt
+ */
+public function withNamespace($namespace) {
+  $this->namespace = $namespace;
   return $this;
 }
 }
@@ -14834,6 +14901,103 @@ EOF;
     
 
     
+class AuthorizedTargetsResponse {
+
+    /**
+     * @var PaginatedAuthorizedTargets
+     */
+    public $authorizedTargets;
+}
+    
+class AuthorizedTargetsParam {
+
+    /**
+     * Required
+     * 
+     * @var string
+     */
+    public $namespace;
+
+    /**
+     * Required
+     * 
+     * @var ResourceType
+     */
+    public $resourceType;
+
+    /**
+     * Required
+     * 
+     * @var string
+     */
+    public $resource;
+
+    /**
+     * Optional
+     * 
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
+
+    /**
+     * Optional
+     * 
+     * @var AuthorizedTargetsActionsInput
+     */
+    public $actions;
+
+/**
+ * @param $namespace string
+ * @param $resourceType ResourceType
+ * @param $resource string
+ */
+public function __construct($namespace,$resourceType,$resource) {
+$this->namespace = $namespace;
+$this->resourceType = $resourceType;
+$this->resource = $resource;
+}
+
+/**
+ * @param $targetType PolicyAssignmentTargetType
+ * @return AuthorizedTargetsParam
+ */
+public function withTargetType($targetType) {
+  $this->targetType = $targetType;
+  return $this;
+}
+
+/**
+ * @param $actions AuthorizedTargetsActionsInput
+ * @return AuthorizedTargetsParam
+ */
+public function withActions($actions) {
+  $this->actions = $actions;
+  return $this;
+}
+    function createRequest() {
+      return [
+        "query" => self::AuthorizedTargetsDocument,
+        "operationName" => "authorizedTargets",
+        "variables" => $this
+      ];
+    }
+
+    const AuthorizedTargetsDocument = <<<EOF
+query authorizedTargets(\$namespace: String!, \$resourceType: ResourceType!, \$resource: String!, \$targetType: PolicyAssignmentTargetType, \$actions: AuthorizedTargetsActionsInput) {
+  authorizedTargets(namespace: \$namespace, resource: \$resource, resourceType: \$resourceType, targetType: \$targetType, actions: \$actions) {
+    totalCount
+    list {
+      targetType
+      targetIdentifier
+      actions
+    }
+  }
+}
+EOF;
+}
+    
+
+    
 class CheckLoginStatusResponse {
 
     /**
@@ -16051,6 +16215,13 @@ class IsUserExistsParam {
      */
     public $username;
 
+    /**
+     * Optional
+     * 
+     * @var string
+     */
+    public $externalId;
+
 public function __construct() {
 
 }
@@ -16081,6 +16252,15 @@ public function withUsername($username) {
   $this->username = $username;
   return $this;
 }
+
+/**
+ * @param $externalId string
+ * @return IsUserExistsParam
+ */
+public function withExternalId($externalId) {
+  $this->externalId = $externalId;
+  return $this;
+}
     function createRequest() {
       return [
         "query" => self::IsUserExistsDocument,
@@ -16090,8 +16270,8 @@ public function withUsername($username) {
     }
 
     const IsUserExistsDocument = <<<EOF
-query isUserExists(\$email: String, \$phone: String, \$username: String) {
-  isUserExists(email: \$email, phone: \$phone, username: \$username)
+query isUserExists(\$email: String, \$phone: String, \$username: String, \$externalId: String) {
+  isUserExists(email: \$email, phone: \$phone, username: \$username, externalId: \$externalId)
 }
 EOF;
 }
@@ -17840,103 +18020,6 @@ EOF;
     
 
     
-class ResourcePermissionsResponse {
-
-    /**
-     * @var PaginatedResourcePermissionAssignments
-     */
-    public $resourcePermissions;
-}
-    
-class ResourcePermissionsParam {
-
-    /**
-     * Required
-     * 
-     * @var string
-     */
-    public $namespace;
-
-    /**
-     * Required
-     * 
-     * @var ResourceType
-     */
-    public $resourceType;
-
-    /**
-     * Required
-     * 
-     * @var string
-     */
-    public $resource;
-
-    /**
-     * Optional
-     * 
-     * @var PolicyAssignmentTargetType
-     */
-    public $targetType;
-
-    /**
-     * Optional
-     * 
-     * @var ResourcePermissionsActionsInput
-     */
-    public $actions;
-
-/**
- * @param $namespace string
- * @param $resourceType ResourceType
- * @param $resource string
- */
-public function __construct($namespace,$resourceType,$resource) {
-$this->namespace = $namespace;
-$this->resourceType = $resourceType;
-$this->resource = $resource;
-}
-
-/**
- * @param $targetType PolicyAssignmentTargetType
- * @return ResourcePermissionsParam
- */
-public function withTargetType($targetType) {
-  $this->targetType = $targetType;
-  return $this;
-}
-
-/**
- * @param $actions ResourcePermissionsActionsInput
- * @return ResourcePermissionsParam
- */
-public function withActions($actions) {
-  $this->actions = $actions;
-  return $this;
-}
-    function createRequest() {
-      return [
-        "query" => self::ResourcePermissionsDocument,
-        "operationName" => "resourcePermissions",
-        "variables" => $this
-      ];
-    }
-
-    const ResourcePermissionsDocument = <<<EOF
-query resourcePermissions(\$namespace: String!, \$resourceType: ResourceType!, \$resource: String!, \$targetType: PolicyAssignmentTargetType, \$actions: ResourcePermissionsActionsInput) {
-  resourcePermissions(namespace: \$namespace, resource: \$resource, resourceType: \$resourceType, targetType: \$targetType, actions: \$actions) {
-    totalCount
-    list {
-      targetType
-      targetIdentifier
-      actions
-    }
-  }
-}
-EOF;
-}
-    
-
-    
 class RoleResponse {
 
     /**
@@ -18385,6 +18468,20 @@ class SearchUserParam {
      */
     public $departmentOpts;
 
+    /**
+     * Optional
+     * 
+     * @var SearchUserGroupOpt[]
+     */
+    public $groupOpts;
+
+    /**
+     * Optional
+     * 
+     * @var SearchUserRoleOpt[]
+     */
+    public $roleOpts;
+
 /**
  * @param $query string
  */
@@ -18427,6 +18524,24 @@ public function withDepartmentOpts($departmentOpts) {
   $this->departmentOpts = $departmentOpts;
   return $this;
 }
+
+/**
+ * @param $groupOpts SearchUserGroupOpt[]
+ * @return SearchUserParam
+ */
+public function withGroupOpts($groupOpts) {
+  $this->groupOpts = $groupOpts;
+  return $this;
+}
+
+/**
+ * @param $roleOpts SearchUserRoleOpt[]
+ * @return SearchUserParam
+ */
+public function withRoleOpts($roleOpts) {
+  $this->roleOpts = $roleOpts;
+  return $this;
+}
     function createRequest() {
       return [
         "query" => self::SearchUserDocument,
@@ -18436,8 +18551,8 @@ public function withDepartmentOpts($departmentOpts) {
     }
 
     const SearchUserDocument = <<<EOF
-query searchUser(\$query: String!, \$fields: [String], \$page: Int, \$limit: Int, \$departmentOpts: [SearchUserDepartmentOpt]) {
-  searchUser(query: \$query, fields: \$fields, page: \$page, limit: \$limit, departmentOpts: \$departmentOpts) {
+query searchUser(\$query: String!, \$fields: [String], \$page: Int, \$limit: Int, \$departmentOpts: [SearchUserDepartmentOpt], \$groupOpts: [SearchUserGroupOpt], \$roleOpts: [SearchUserRoleOpt]) {
+  searchUser(query: \$query, fields: \$fields, page: \$page, limit: \$limit, departmentOpts: \$departmentOpts, groupOpts: \$groupOpts, roleOpts: \$roleOpts) {
     totalCount
     list {
       id

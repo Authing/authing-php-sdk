@@ -8,11 +8,9 @@ use Authing\Types\RegisterByUsernameInput;
 use Authing\Types\LoginByEmailInput;
 use Authing\Types\LoginByPhonePasswordInput;
 use Authing\Types\UpdateUserInput;
-
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use PHPUnit\Framework\TestCase;
 use Test\TestConfig;
-
-use function PHPUnit\Framework\assertEquals;
 
 class AuthenticationClientTest extends TestCase
 {
@@ -41,9 +39,17 @@ class AuthenticationClientTest extends TestCase
 
     protected function tearDown(): void
     {
-
     }
 
+    /**
+     * @group notest
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since
+     */
     public function test_setToken()
     {
         $newToken = 'test-token';
@@ -51,6 +57,15 @@ class AuthenticationClientTest extends TestCase
         parent::assertEquals($newToken, $this->client->getToken());
     }
 
+    /**
+     * @group notest
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since
+     */
     public function test_setMfaAuthorizationHeader()
     {
         $mfaToken = 'test-mfaToken';
@@ -58,12 +73,30 @@ class AuthenticationClientTest extends TestCase
         parent::assertEquals($mfaToken, $this->client->getMfaAuthorizationHeader());
     }
 
+    /**
+     * @group notest
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since
+     */
     public function test_clearMfaAuthorizationHeader()
     {
         $this->client->clearMfaAuthorizationHeader();
         parent::assertEquals($this->client->getMfaAuthorizationHeader(), '');
     }
 
+    /**
+     * @group notest
+     *
+     * @return void
+     * @Description
+     * @example
+     * @author Xintao Li
+     * @since
+     */
     public function test_getCurrentUser()
     {
         $user = $this->client->getCurrentUser();
@@ -81,7 +114,7 @@ class AuthenticationClientTest extends TestCase
         ];
         $this->client->setCurrentUser($newUser);
         parent::assertEquals($this->client->getToken(), 'new token');
-        parent::assertObjectEquals($this->client->getCurrentUser, $newUser);
+        parent::assertObjectEquals($this->client->getCurrentUser(), $newUser);
     }
 
     public function test_registerByEmail()
@@ -115,7 +148,6 @@ class AuthenticationClientTest extends TestCase
      */
     public function test_sendSmsCode()
     {
-        
     }
 
     public function test_loginByEmail()
@@ -361,6 +393,7 @@ class AuthenticationClientTest extends TestCase
             'test key' => 'test value'
         ];
         $data = $this->client->setUdfValue($udfValue);
+        var_dump($data);
         parent::assertNotNull($data);
     }
 

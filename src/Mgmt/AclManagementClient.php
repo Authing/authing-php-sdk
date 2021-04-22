@@ -7,10 +7,15 @@ use Authing\Types\AuthorizedResourcesParam;
 use Authing\Types\AuthorizeResourceParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\IsActionAllowedParam;
+use Authing\Types\AuthorizedTargetsParam;
+
+
 use Authing\Mgmt\ManagementClient;
 use Error;
 use Exception;
 use stdClass;
+
+use function PHPUnit\Framework\isEmpty;
 
 function formatAuthorizedResources($obj)
 {
@@ -70,9 +75,9 @@ class AclManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function allow($resource, $action, $userId = null, $role = null)
+    public function allow($userId, $resource, $action)
     {
-        $param = (new AllowParam($resource, $action))->withUserId($userId)->withRoleCode($role);
+        $param = (new AllowParam($resource, $action))->withUserId($userId);
         return $this->client->request($param->createRequest());
     }
 
@@ -91,10 +96,7 @@ class AclManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    // targetType: PolicyAssignmentTargetType,
-    // targetIdentifier: string,
-    // namespace: string,
-    public function listAuthorizedResources($targetType, string $targetIdentifier, string $namespace, $ops = [])
+    public function listAuthorizedResources(string $targetType, string $targetIdentifier, string $namespace, $ops = [])
     {
         $resourceType = null;
         if (count($ops) > 0) {
@@ -200,7 +202,8 @@ class AclManagementClient
     public function updateNamespace(string $code, array $updates)
     {
         $api = "/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code";
-        $this->client->httpPut($api, $updates);
+        $res = $this->client->httpPut($api, $updates);
+        return $res;
     }
 
     public function deleteProgrammaticAccessAccount(string $programmaticAccessAccountId)
@@ -240,9 +243,33 @@ class AclManagementClient
         return $res;
     }
 
-    public function listResourcePermissions()
+    public function getAuthorizedTargets(array $options)
     {
-        # code...
+        if (isEmpty($options['namespace'])) {
+            throw new Error('请传入 options.namespace，含义为权限分组标识');
+        }
+        if (isEmpty($options['resource'])) {
+            throw new Error('请传入 options.resource，含义为资源标识');
+        }
+        if (isEmpty($options['resourceType'])) {
+            throw new Error('请传入 options.resourceType，含义为资源类型');
+        }
+        ['namespace' => $namespace, 'resourceType' => $resourceType, 'resource' => $resource ] = $options;
+        $params = (new AuthorizedTargetsParam($namespace, $resourceType, $resource))->withActions($options['actions'] ?? null)->withTargetType($options['targetType'] ?? null);
+        $data = $this->client->request($params->createRequest());
+        return $data;
+    }
+
+    public function listResourcePermissions(array $options = [])
+    {
+        $api = '/api/v2/resources';
+        $param = http_build_query([
+            'namespaceCode' => $options['namespace'] ?? $options['namespaceCode'] ?? null,
+            'type' => $options['type'],
+            'limit' => $options['limit'] ?? 10,
+            'page' => $options['page'] ?? 1,
+        ]);
+        $this->client->httpGet($api.$param);
     }
 
     public function listResources(array $options)

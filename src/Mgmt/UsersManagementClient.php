@@ -520,7 +520,10 @@ class UsersManagementClient
         return $_;
     }
 
-    public function listUserActions(array $options)
+    public function listUserActions(array $options = [
+        'page' =>  1,
+        'limit' =>  10,
+    ])
     {
         $api = '/api/v2/analysis/user-action';
         $param = http_build_query([
@@ -530,7 +533,7 @@ class UsersManagementClient
             'operation_name' => $options['operationName'],
             'operator_arn' => $options['operatoArn'],
         ]);
-        $data = $this->client->httpGet($api.$param);
+        $data = $this->client->httpGet($api . $param);
         return $data;
     }
 
