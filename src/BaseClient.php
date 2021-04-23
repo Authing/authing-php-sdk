@@ -288,10 +288,6 @@ PUBLICKKEY;
         if (!empty($this->options->accessToken)) {
             return $this->options->accessToken;
         }
-        var_dump($this->_accessTokenExpriredAt);
-        var_dump(time() + 3600);
-        var_dump($this->_accessTokenExpriredAt > (time() + 3600));
-        var_dump($this->_accessTokenExpriredAt < (time() + 3600));
         // 缓存到 accessToken 过期前 3600 s
         if (
             $this->accessToken && ($this->_accessTokenExpriredAt > (time() + 3600))

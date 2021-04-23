@@ -222,7 +222,7 @@ class AuthenticationClient extends BaseClient
             ->withProfile($profile ?? null)
             ->withClientIp($clientIp ?? null)
             ->withContext($context ?? null)
-            ->withGenerateToken($context ?? null)
+            ->withGenerateToken($generateToken ?? null)
             ->withParams($params ?? null)
             ->withForceLogin($forceLogin ?? null);
         $param = new RegisterByEmailParam($input);
@@ -246,7 +246,7 @@ class AuthenticationClient extends BaseClient
             ->withProfile($profile ?? null)
             ->withClientIp($clientIp ?? null)
             ->withContext($context ?? null)
-            ->withGenerateToken($context ?? null)
+            ->withGenerateToken($generateToken ?? null)
             ->withParams($params ?? null)
             ->withForceLogin($forceLogin ?? null);
         $param = new RegisterByUsernameParam($input);
@@ -276,7 +276,7 @@ class AuthenticationClient extends BaseClient
             ->withProfile($profile ?? null)
             ->withClientIp($clientIp ?? null)
             ->withContext($context ?? null)
-            ->withGenerateToken($context ?? null)
+            ->withGenerateToken($generateToken ?? null)
             ->withParams($params ?? null)
             ->withForceLogin($forceLogin ?? null);
 
