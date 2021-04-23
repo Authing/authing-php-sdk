@@ -158,10 +158,11 @@ PUBLICKKEY;
     {
         $result = $this->send($this->host . '/graphql/v2', $this->objectToArray($data));
         $this->checkResult($result);
+        // return json_decode(json_encode($result));
         if (!$this->firstElement($result['data'])) {
             return null;
         } else {
-            return $this->arrayToObject($this->firstElement($result['data']));
+            return $this->arrayToObject($this->firstElement((object)$result['data']));
         }
     }
 
@@ -267,8 +268,10 @@ PUBLICKKEY;
                 }
             }
         }
-
-        return (object) $arr;
+        if (gettype($arr) == 'array' && (count(array_filter(array_keys($arr), 'is_string')) > 0)) {
+            return (object) $arr;
+        }
+        return $arr;
     }
 
     /**
@@ -323,8 +326,9 @@ PUBLICKKEY;
 
         // set header
         $h = [
+            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken :
+            $this->options->accessToken ?? $this->accessToken ??  null),
             "Content-type: application/json",
-            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken : $this->accessToken ?? $this->options->accessToken ?? null),
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
             "x-authing-request-from: $this->_type",

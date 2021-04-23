@@ -9,8 +9,9 @@ use Authing\Types\UDFDataType;
 
 class Utils
 {
-    public static function convertUdv(array $data)
+    public static function convertUdv($data)
     {
+        $data = (array)$data;
         foreach ($data as $item) {
             $dataType = $item->dataType;
             $value = $item->value;

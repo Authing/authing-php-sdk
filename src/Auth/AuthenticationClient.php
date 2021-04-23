@@ -55,6 +55,7 @@ use Exception;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Psr7\Request;
 use InvalidArgumentException;
+use PhpParser\Node\Stmt\TryCatch;
 use stdClass;
 
 function formatAuthorizedResources($obj)
@@ -188,8 +189,16 @@ class AuthenticationClient extends BaseClient
      */
     public function getCurrentUser()
     {
+        $hasError = false;
         $param = new UserParam();
-        $user = $this->request($param->createRequest());
+        try {
+            $user = $this->request($param->createRequest());
+        } catch (\Throwable $th) {
+            $hasError = true;
+        }
+        if ($hasError) {
+            return null;
+        }
         $this->accessToken = $user->token ?: $this->accessToken;
         $this->user = $user;
         return $user;
@@ -375,11 +384,11 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByPhonePassword(string $phone, string $code, array $options = [])
+    public function loginByPhonePassword(string $phone, string $password, array $options = [])
     {
         extract($options);
         $password = $this->encrypt($password);
-        $input = (new LoginByPhonePasswordInput($username, $password))
+        $input = (new LoginByPhonePasswordInput($phone, $password))
             ->withClientIp($clientIp ?? null)
             ->withContext($context ?? null)
             ->withParams($params ?? null)
@@ -471,11 +480,11 @@ class AuthenticationClient extends BaseClient
      */
     public function updateProfile(UpdateUserInput $input)
     {
-        $userId = $this->getCurrentUser();
+        $user = $this->getCurrentUser();
         if ($input->password) {
             unset($input->password);
         }
-        $param = (new UpdateUserParam($input))->withId($userId);
+        $param = (new UpdateUserParam($input))->withId($user->id);
         $user = $this->request($param->createRequest());
         $this->setCurrentUser($user);
         return $user;
@@ -599,7 +608,8 @@ class AuthenticationClient extends BaseClient
     {
         $user = $this->getCurrentUser();
         $param = new UdvParam(UdfTargetType::USER, $user->id);
-        return $this->request($param->createRequest());
+        $res = $this->request($param->createRequest());
+        return Utils::convertUdv((array)$res);
     }
 
     /**
@@ -742,8 +752,8 @@ class AuthenticationClient extends BaseClient
     {
         $userId = $this->checkLoggedIn();
         $params = new UdvParam(UDFTargetType::USER, $userId);
-        $res = $this->request($params->createRequest);
-        return Utils::convertUdvToKeyValuePair($res);
+        $res = $this->request($params->createRequest());
+        return Utils::convertUdvToKeyValuePair((array)$res);
     }
 
     public function computedPasswordSecurityLevel($password)
@@ -1520,7 +1530,7 @@ class AuthenticationClient extends BaseClient
             throw new Error('empty udf value list');
         }
         $att = [];
-        foreach ($data as $value => $key) {
+        foreach ($data as $key => $value) {
             array_push($att, (object) [
                 'key' => $key,
                 'value' => json_encode($value),
@@ -1528,7 +1538,8 @@ class AuthenticationClient extends BaseClient
         }
         $userId = $this->checkLoggedIn();
         $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($att);
-        return $this->request($param->createRequest());
+        $res = $this->request($param->createRequest());
+        return Utils::convertUdv($res);
     }
 
     public function getToken()
@@ -1540,13 +1551,11 @@ class AuthenticationClient extends BaseClient
     {
         $param = (new GetUserRolesParam($this->checkLoggedIn()))->withNamespace($namespace);
         $user = $this->request($param->createRequest());
-        var_dump($rolecode);
-        var_dump($user);
-        if ($user) {
+        if (!$user) {
             return false;
         }
-        $roleList = $user->roles;
-        if (count($roleList)) {
+        $roleList = $user->roles->list;
+        if (count($roleList) == 0) {
             return false;
         }
         $hasRole = false;
