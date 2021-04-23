@@ -44,8 +44,7 @@ use Authing\Types\UserDefinedData;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
 use Authing\Types\SetUdvBatchParam;
-
-
+use Authing\Types\UDFDataType;
 use Error;
 use Exception;
 use stdClass;
@@ -412,19 +411,22 @@ class UsersManagementClient
         if (!isset($userIds) && !is_array($userIds)) {
             throw new Error("userId 为数组 不能为空");
         }
-        $param = new UdfValueBatchParam("User", $userIds);
+        $param = new UdfValueBatchParam(UDFTargetType::USER, $userIds);
         $res = $this->client->request($param->createRequest());
         return $res;
     }
 
     public function setUdfValue(string $userId, array $data)
     {
-        if (count($data)) {
+        if (count($data) === 0) {
             throw new Error('empty udf value list');
         }
         foreach ($data as $key => $value) {
             $value = json_encode($value);
         }
+        array_map(function($item) {
+            return json_encode((object)$item);
+        },$data);
         $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
         $res = $this->client->request($param->createRequest());
         return $res;

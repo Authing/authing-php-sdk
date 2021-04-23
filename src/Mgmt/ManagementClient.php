@@ -40,6 +40,7 @@ class ManagementClient extends BaseClient
     {
         $params = func_get_args();
         parent::__construct(...$params);
+        $this->requestToken();
         // parent::__construct($userPoolId);
         // $this->secret = $secret;
     }

@@ -267,9 +267,13 @@ PUBLICKKEY;
                     $arr[$k] = $this->arrayToObject($v);
                 }
             }
+            // 如果是关联数组
+            if (gettype($v) == 'array' && (count(array_filter(array_keys($v), 'is_string')) > 0)) {
+                $arr[$k] = (object) $v;
+            }
         }
         if (gettype($arr) == 'array' && (count(array_filter(array_keys($arr), 'is_string')) > 0)) {
-            return (object) $arr;
+            $arr = (object) $arr;
         }
         return $arr;
     }

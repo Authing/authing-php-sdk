@@ -953,7 +953,7 @@ class AuthenticationClient extends BaseClient
             // + -> -
             // / -> _
             // = -> ''
-            $str = hash("sha256", $options['codeChallenge']);
+            $str = base64_encode(hash("sha256", $options['codeChallenge']));
             str_replace('+', '-', $str);
             str_replace('/', '_', $str);
             str_replace('=', '', $str);
