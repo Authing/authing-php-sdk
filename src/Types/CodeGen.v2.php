@@ -16006,6 +16006,13 @@ class IsActionAllowedParam {
      */
     public $userId;
 
+    /**
+     * Optional
+     * 
+     * @var string
+     */
+    public $namespace;
+
 /**
  * @param $resource string
  * @param $action string
@@ -16017,6 +16024,14 @@ $this->action = $action;
 $this->userId = $userId;
 }
 
+/**
+ * @param $namespace string
+ * @return IsActionAllowedParam
+ */
+public function withNamespace($namespace) {
+  $this->namespace = $namespace;
+  return $this;
+}
     function createRequest() {
       return [
         "query" => self::IsActionAllowedDocument,
@@ -16026,8 +16041,8 @@ $this->userId = $userId;
     }
 
     const IsActionAllowedDocument = <<<EOF
-query isActionAllowed(\$resource: String!, \$action: String!, \$userId: String!) {
-  isActionAllowed(resource: \$resource, action: \$action, userId: \$userId)
+query isActionAllowed(\$resource: String!, \$action: String!, \$userId: String!, \$namespace: String) {
+  isActionAllowed(resource: \$resource, action: \$action, userId: \$userId, namespace: \$namespace)
 }
 EOF;
 }
