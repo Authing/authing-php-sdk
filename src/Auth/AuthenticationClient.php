@@ -238,7 +238,7 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function registerByUsername(string $username,string $password, RegisterProfile $profile = null, array $options = [])
+    public function registerByUsername(string $username, string $password, RegisterProfile $profile = null, array $options = [])
     {
         extract($options);
         $password = $this->encrypt($password);
@@ -262,9 +262,13 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function registerByPhoneCode(string $username,
-    string $code, string $password = '', RegisterProfile $profile = null, array $options = [])
-    {
+    public function registerByPhoneCode(
+        string $username,
+        string $code,
+        string $password = '',
+        RegisterProfile $profile = null,
+        array $options = []
+    ) {
         extract($options);
         $password = $this->encrypt($password);
         $input = (new RegisterByPhoneCodeInput($username, $code))
@@ -787,7 +791,7 @@ class AuthenticationClient extends BaseClient
         return $p;
     }
 
-    public function _getAccessTokenByCodeWithClientSecretPost(string $code)
+    public function _getAccessTokenByCodeWithClientSecretPost(string $code, string $codeVerifier = '')
     {
         $data = array(
             'client_id' => $this->options->appId,
@@ -795,6 +799,7 @@ class AuthenticationClient extends BaseClient
             'grant_type' => 'authorization_code',
             'code' => $code,
             'redirect_uri' => $this->options->redirectUri,
+            'code_verifier' => $codeVerifier
         );
         $api = '';
         if ($this->options->protocol === 'oidc') {
@@ -831,7 +836,7 @@ class AuthenticationClient extends BaseClient
         return $token;
     }
 
-    public function _getAccessTokenByCodeWithClientSecretBasic(string $code)
+    public function _getAccessTokenByCodeWithClientSecretBasic(string $code, string $codeVerifier = '')
     {
         $api = '';
         if ($this->options->protocol === 'oidc') {
@@ -845,6 +850,7 @@ class AuthenticationClient extends BaseClient
                 'grant_type' => 'authorization_code',
                 'code' => $code,
                 'redirect_uri' => $this->options->redirectUri,
+                'code_verifier' => $codeVerifier
             ]
         );
         $response = $this->naiveHttpClient->request('POST', $api, [
@@ -861,7 +867,7 @@ class AuthenticationClient extends BaseClient
         return json_decode($stringBody);
     }
 
-    public function _getAccessTokenByCodeWithNone(string $code)
+    public function _getAccessTokenByCodeWithNone(string $code, string $codeVerifier = '')
     {
         $api = '';
         if ($this->options->protocol === 'oidc') {
@@ -877,6 +883,7 @@ class AuthenticationClient extends BaseClient
                 "code" => $code,
                 "client_secret" => $this->options->secret,
                 "redirect_uri" => $this->options->redirectUri,
+                'code_verifier' => $codeVerifier
             ]
         );
         $response = $this->naiveHttpClient->request("POST", $api, [
@@ -892,7 +899,7 @@ class AuthenticationClient extends BaseClient
         return json_decode($stringBody);
     }
 
-    public function getAccessTokenByCode(string $code)
+    public function getAccessTokenByCode(string $code, array $options = [])
     {
         if (
             (!isset($this->options->secret) ||
@@ -903,14 +910,50 @@ class AuthenticationClient extends BaseClient
             throw new Error('请在初始化 AuthenticationClient 时传入 appId 和 secret 参数');
         }
         if (isset($this->options->tokenEndPointAuthMethod) && $this->options->tokenEndPointAuthMethod === 'client_secret_post') {
-            return $this->_getAccessTokenByCodeWithClientSecretPost($code);
+            return $this->_getAccessTokenByCodeWithClientSecretPost($code, $options['codeVerifier'] ?? '');
         }
         if (isset($this->options->tokenEndPointAuthMethod) && $this->options->tokenEndPointAuthMethod === 'client_secret_basic') {
-            return $this->_getAccessTokenByCodeWithClientSecretBasic($code);
+            return $this->_getAccessTokenByCodeWithClientSecretBasic($code, $options['codeVerifier'] ?? '');
         }
         if (isset($this->options->tokenEndPointAuthMethod) && $this->options->tokenEndPointAuthMethod === 'none') {
-            return $this->_getAccessTokenByCodeWithNone($code);
+            return $this->_getAccessTokenByCodeWithNone($code, $options['codeVerifier'] ?? '');
         }
+    }
+
+    public function generateCodeChallenge()
+    {
+        return Utils::randomString(43);
+    }
+
+    public function getCodeChallengeDigest(array $options)
+    {
+        if (empty($options)) {
+            throw new Error(
+                '请提供 options 参数，options.codeChallenge 为一个长度大于等于 43 的字符串，options.method 可选值为 S256、plain'
+            );
+        }
+        if (empty($options['codeChallenge'])) {
+            throw new Error(
+                '请提供 options.codeChallenge，值为一个长度大于等于 43 的字符串'
+            );
+        }
+        $method = $options['method'] ?? 'S256';
+        if ($method === 'S256') {
+            // url safe base64
+            // + -> -
+            // / -> _
+            // = -> ''
+            $str = hash("sha256", $options['codeChallenge']);
+            str_replace('+', '-', $str);
+            str_replace('/', '_', $str);
+            str_replace('=', '', $str);
+            return $str;
+            // return sha256(options.codeChallenge).toString(CryptoJS.enc.Base64).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+        }
+        if ($method === 'plain') {
+            return $options['codeChallenge'];
+        }
+        throw new Error('不支持的 options.method，可选值为 S256、plain');
     }
 
     public function getAccessTokenByClientCredentials(string $scope, array $options)
@@ -991,6 +1034,8 @@ class AuthenticationClient extends BaseClient
             'responseMode' => 'response_mode',
             'responseType' => 'response_type',
             'redirectUri' => 'redirect_uri',
+            'codeChallenge' => 'code_challenge',
+            'codeChallengeMethod' => 'code_challenge_method'
         ];
         $res = [
             'nonce' => substr(rand(0, 1) . '', 0, 2),
