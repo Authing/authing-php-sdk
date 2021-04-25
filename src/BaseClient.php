@@ -79,7 +79,7 @@ PUBLICKKEY;
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
-        $this->naiveHttpClient = new Client(['base_uri' => $this->host]);
+        $this->naiveHttpClient = new Client(['base_uri' => $this->options->host ?? $this->host]);
     }
 
     /**
@@ -88,6 +88,7 @@ PUBLICKKEY;
     public function setHost($host)
     {
         $this->host = $host;
+        $this->naiveHttpClient = new Client(['base_uri' => $host]);
     }
 
     /**

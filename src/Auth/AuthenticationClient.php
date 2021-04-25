@@ -803,21 +803,21 @@ class AuthenticationClient extends BaseClient
 
     public function _getAccessTokenByCodeWithClientSecretPost(string $code, string $codeVerifier = '')
     {
-        $data = array(
+        $data = $this->_generateTokenRequest([
             'client_id' => $this->options->appId,
             'client_secret' => $this->options->secret,
             'grant_type' => 'authorization_code',
             'code' => $code,
             'redirect_uri' => $this->options->redirectUri,
             'code_verifier' => $codeVerifier
-        );
+        ]);
         $api = '';
         if ($this->options->protocol === 'oidc') {
             $api = '/oidc/token';
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/token';
         }
-        $req = new Request('POST', $api, [
+        $res = $this->naiveHttpClient->request('POST', $api, [
             'body' => $data,
             'headers' => array_merge(
                 $this->getOidcHeaders(),
@@ -826,8 +826,10 @@ class AuthenticationClient extends BaseClient
                 ]
             ),
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
-        return $tokenSet;
+        $body =
+            $res->getBody();
+        $stringBody = (string) $body;
+        return json_decode($stringBody);
     }
 
     public function _generateBasicAuthToken(string $appId = "", string $secret = "")
@@ -846,7 +848,7 @@ class AuthenticationClient extends BaseClient
         return $token;
     }
 
-    public function _getAccessTokenByCodeWithClientSecretBasic(string $code, string $codeVerifier = '')
+    public function _getAccessTokenByCodeWithClientSecretBasic(string $code, string $codeVerifier = null)
     {
         $api = '';
         if ($this->options->protocol === 'oidc') {
@@ -863,6 +865,14 @@ class AuthenticationClient extends BaseClient
                 'code_verifier' => $codeVerifier
             ]
         );
+        // $qstr =
+        //     [
+        //         // 'client_id' => $this->options->appId,
+        //         'grant_type' => 'authorization_code',
+        //         'code' => $code,
+        //         'redirect_uri' => $this->options->redirectUri,
+        //         'code_verifier' => $codeVerifier
+        //     ];
         $response = $this->naiveHttpClient->request('POST', $api, [
             "headers" =>
             array_merge($this->getOidcHeaders(), [
