@@ -826,9 +826,9 @@ class AuthenticationClient extends BaseClient
                 ]
             ),
         ]);
-        $body =
-            $res->getBody();
-        $stringBody = (string) $body;
+        // $body =
+        //     $res->getBody();
+        $stringBody = (string) $res;
         return json_decode($stringBody);
     }
 
@@ -881,9 +881,9 @@ class AuthenticationClient extends BaseClient
             ]),
             "body" => $qstr,
         ]);
-        $body =
-            $response->getBody();
-        $stringBody = (string) $body;
+        // $body =
+        //     $response->getBody();
+        $stringBody = (string) $response;
         return json_decode($stringBody);
     }
 
@@ -913,9 +913,9 @@ class AuthenticationClient extends BaseClient
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ]),
         ]);
-        $body =
-            $response->getBody();
-        $stringBody = (string) $body;
+        // $body =
+        //     $response->getBody();
+        $stringBody = (string) $response;
         return json_decode($stringBody);
     }
 
@@ -1014,9 +1014,9 @@ class AuthenticationClient extends BaseClient
                 ]
             ),
         ]);
-        $body =
-            $response->getBody();
-        $stringBody = (string) $body;
+        // $body =
+        //     $response->getBody();
+        $stringBody = (string) $response;
         return json_decode($stringBody);
     }
 
@@ -1174,9 +1174,9 @@ class AuthenticationClient extends BaseClient
                 ]
             ),
         ]);
-        $body =
-            $response->getBody();
-        $stringBody = (string) $body;
+        // $body =
+        //     $response->getBody();
+        $stringBody = (string) $response;
         return json_decode($stringBody);
     }
 

@@ -208,7 +208,7 @@ PUBLICKKEY;
     {
         $result = $this->send($this->host . $path, null, 'GET');
         $res = json_decode(json_encode($result));
-        return $res->data;
+        return $res->data ?? $res;
         // return $this->arrayToObject($result);
     }
 
@@ -227,7 +227,7 @@ PUBLICKKEY;
         }
         $result = $this->send($path, $this->objectToArray($data));
         $res = json_decode(json_encode($result));
-        return $res->data;
+        return $res->data ?? $res;
         // return json_decode(json_encode($result));
         // return $this->arrayToObject($result);
     }
@@ -235,14 +235,16 @@ PUBLICKKEY;
     public function httpPatch($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PATCH');
-        return json_decode(json_encode($result));
+        $res = json_decode(json_encode($result));
+        return $res->data ?? $res;
         // return $this->arrayToObject($result);
     }
 
     public function httpPut($path, $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PUT');
-        return json_decode(json_encode($result));
+        $res = json_decode(json_encode($result));
+        return $res->data ?? $res;
         // return $this->arrayToObject($result);
     }
 
@@ -254,7 +256,8 @@ PUBLICKKEY;
     public function httpDelete($path)
     {
         $result = $this->send($this->host . $path, null, 'DELETE');
-        return json_decode(json_encode($result));
+        $res = json_decode(json_encode($result));
+        return $res->data ?? $res;
         // return $this->arrayToObject($result);
     }
 
