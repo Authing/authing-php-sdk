@@ -264,7 +264,7 @@ class MFAAuthenticationClient
                 'Authorization' => "Bearer $mfaToken"
             ],
         ]);
-        $data = $this->client->naiveHttpClient->send($req);
+        $data = $this->client->httpSend($req);
         return $data;
     }
 
@@ -293,7 +293,7 @@ class MFAAuthenticationClient
                 'Authorization' => "Bearer $mfaToken",
             ],
         ]);
-        $data = $this->client->naiveHttpClient->send($req);
+        $data = $this->client->httpSend($req);
         return $data;
     }
 }

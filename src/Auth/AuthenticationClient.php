@@ -692,7 +692,7 @@ class AuthenticationClient extends BaseClient
                 'provider' => $options['provider'],
             ],
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return (object) [
             'code' => 200,
             'message' => '解绑成功',
@@ -817,7 +817,7 @@ class AuthenticationClient extends BaseClient
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/token';
         }
-        $res = $this->naiveHttpClient->request('POST', $api, [
+        $res = $this->httpRequest('POST', $api, [
             'body' => $data,
             'headers' => array_merge(
                 $this->getOidcHeaders(),
@@ -873,7 +873,7 @@ class AuthenticationClient extends BaseClient
         //         'redirect_uri' => $this->options->redirectUri,
         //         'code_verifier' => $codeVerifier
         //     ];
-        $response = $this->naiveHttpClient->request('POST', $api, [
+        $response = $this->httpRequest('POST', $api, [
             "headers" =>
             array_merge($this->getOidcHeaders(), [
                 "Authorization" => $this->_generateBasicAuthToken(),
@@ -906,7 +906,7 @@ class AuthenticationClient extends BaseClient
                 'code_verifier' => $codeVerifier
             ]
         );
-        $response = $this->naiveHttpClient->request("POST", $api, [
+        $response = $this->httpRequest("POST", $api, [
             "body" => $qstr,
             "headers" =>
             array_merge($this->getOidcHeaders(), [
@@ -1005,7 +1005,7 @@ class AuthenticationClient extends BaseClient
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/token';
         }
-        $response = $this->naiveHttpClient->request('POST', $api, [
+        $response = $this->httpRequest('POST', $api, [
             "body" => $qstr,
             "headers" => array_merge(
                 $this->getOidcHeaders(),
@@ -1166,7 +1166,7 @@ class AuthenticationClient extends BaseClient
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/me';
         }
-        $response = $this->naiveHttpClient->request("POST", $api, [
+        $response = $this->httpRequest("POST", $api, [
             'headers' => array_merge(
                 $this->getOidcHeaders(),
                 [
@@ -1211,7 +1211,7 @@ class AuthenticationClient extends BaseClient
             ],
         ]);
 
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1235,7 +1235,7 @@ class AuthenticationClient extends BaseClient
             ],
         ]);
 
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1257,7 +1257,7 @@ class AuthenticationClient extends BaseClient
             'body' => $qstr,
         ]);
 
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1308,7 +1308,7 @@ class AuthenticationClient extends BaseClient
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1330,7 +1330,7 @@ class AuthenticationClient extends BaseClient
                 'Authorization' => $this->_generateBasicAuthToken(),
             ],
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1349,7 +1349,7 @@ class AuthenticationClient extends BaseClient
         $req = new Request('POST', $api, [
             'body' => $qstr,
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1440,7 +1440,7 @@ class AuthenticationClient extends BaseClient
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1459,7 +1459,7 @@ class AuthenticationClient extends BaseClient
         $req = new Request('POST', $api, [
             'body' => $qstr,
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1483,7 +1483,7 @@ class AuthenticationClient extends BaseClient
                 'Authorization' => $this->_generateBasicAuthToken(),
             ],
         ]);
-        $tokenSet = $this->naiveHttpClient->send($req);
+        $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
 
@@ -1496,7 +1496,7 @@ class AuthenticationClient extends BaseClient
             ),
         ]);
 
-        $res = $this->naiveHttpClient->send($req);
+        $res = $this->httpSend($req);
         list($valid, $username) = explode('\n', $res);
         if ($valid === 'yes') {
             if ($username) {
@@ -1601,12 +1601,12 @@ class AuthenticationClient extends BaseClient
         if (!empty($options->idToken)) {
             $api = "/api/v2/oidc/validate_token?id_token=$$options->idToken";
             $req = new Request('GET', $api);
-            $data = $this->naiveHttpClient->send($req);
+            $data = $this->httpSend($req);
             return $data;
         } elseif (!empty($options->accessToken)) {
             $api = "/api/v2/oidc/validate_token?access_token=$$options->accessToken";
             $req = new Request('GET', $api);
-            $data = $this->naiveHttpClient->send($req);
+            $data = $this->httpSend($req);
             return $data;
         }
     }

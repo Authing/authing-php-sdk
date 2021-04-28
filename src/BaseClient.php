@@ -2,12 +2,16 @@
 
 namespace Authing;
 
-use Authing\Mgmt\Utils;
-use Exception;
-use Authing\Types\AccessTokenParam;
 use DateTime;
-use GuzzleHttp\Client;
 use stdClass;
+use Exception;
+use GuzzleHttp\Client;
+use Authing\Mgmt\Utils;
+use GuzzleHttp\Psr7\Message;
+use Authing\Types\AccessTokenParam;
+use Error;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 
 abstract class BaseClient
 {
@@ -74,7 +78,6 @@ PUBLICKKEY;
             if (isset($this->options->appId)) {
                 $this->appId = $this->options->appId;
             }
-
         }
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
@@ -143,11 +146,40 @@ PUBLICKKEY;
         if (!$password) {
             return null;
         }
-
         $newPassword = '';
         openssl_public_encrypt($password, $newPassword, $this->publicKey);
         return base64_encode($newPassword);
     }
+
+    public function httpSend($req)
+    {
+
+        $res = $this->naiveHttpClient->send($req, ['http_errors' => false]);
+
+        if ($res->getStatusCode() != 200)
+        $code = $res->getStatusCode();
+        $body = $res->getBody();
+        if ($code != 200) {
+            throw new Exception($body, $code);
+        }
+        return $body;
+    }
+
+    public function httpRequest()
+    {
+        $params = func_get_args();
+        if ($params[2]) {
+            $params[2]['http_errors'] = false;
+        }
+        $res = $this->naiveHttpClient->request(...$params);
+        $code = $res->getStatusCode();
+        $body = $res->getBody();
+        if ($code != 200) {
+            throw new Exception($body, $code);
+        }
+        return $body;
+    }
+
 
     /**
      * Make a http request and return response data.
@@ -175,7 +207,8 @@ PUBLICKKEY;
     public function httpGet($path)
     {
         $result = $this->send($this->host . $path, null, 'GET');
-        return json_decode(json_encode($result));
+        $res = json_decode(json_encode($result));
+        return $res->data;
         // return $this->arrayToObject($result);
     }
 
@@ -193,7 +226,9 @@ PUBLICKKEY;
             $path = $this->host . $path;
         }
         $result = $this->send($path, $this->objectToArray($data));
-        return json_decode(json_encode($result));
+        $res = json_decode(json_encode($result));
+        return $res->data;
+        // return json_decode(json_encode($result));
         // return $this->arrayToObject($result);
     }
 
@@ -234,7 +269,11 @@ PUBLICKKEY;
         }
 
         if (!empty($errors) && count($errors) > 0) {
-            throw new Exception("Graphql request failed:\n" . json_encode($errors));
+            foreach($errors as $error) {
+                $error = (object)$error;
+                $data = (object)($error->message);
+                throw new Exception($data->message, $data->code);    
+            }
         }
     }
 
@@ -332,7 +371,7 @@ PUBLICKKEY;
         // set header
         $h = [
             "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken :
-            $this->options->accessToken ?? $this->accessToken ??  null),
+                $this->options->accessToken ?? $this->accessToken ??  null),
             "Content-type: application/json",
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
