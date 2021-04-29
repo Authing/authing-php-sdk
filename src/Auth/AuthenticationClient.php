@@ -2,6 +2,7 @@
 
 namespace Authing\Auth;
 
+use Authing\Auth\Types;
 use Authing\BaseClient;
 use Authing\Mgmt\Utils;
 use Authing\Types\BindEmailParam;
@@ -302,11 +303,27 @@ class AuthenticationClient extends BaseClient
      * @return object
      * @throws Exception
      */
-    public function sendSmsCode($phone)
+    /**
+     * 发送手机验证码
+     *
+     * @param [type] $phone
+     * @return void
+     * @Description
+     * @example
+     * @throws
+     * @version ${4.2.0}
+     * @author Xintao Li -- lixintao2@authing.cn
+     * @since 4.2.0
+     */
+    public function sendSmsCode(string $phone) : SimpleMessage
     {
-        return $this->httpPost("/api/v2/sms/send", [
+        $res = $this->httpPost("/api/v2/sms/send", [
             "phone" => $phone,
         ]);
+        $simpleMessage = new SimpleMessage();
+        $simpleMessage->code = $res->code;
+        $simpleMessage->message = $res->message;
+        return $simpleMessage;
     }
 
     /**
