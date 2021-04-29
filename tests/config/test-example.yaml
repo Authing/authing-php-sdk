@@ -1,0 +1,39 @@
+Authentication:
+  appId: '5f82b9b9c239b79d4f0d93be'
+  secret: '8a4ecaa3da153f0551036a8981e378ef'
+  appHost: 'https://shubuzuo-oauth.authing.cn'
+  redirectUri: 'https://localhost:5001/oidc/handle'
+  username: 'shubuzuo'
+  email: '1409458062@qq.com'
+  phone: '17630802710'
+  ldapUserName: 'admin-test'
+  adUserName: 'admin-test'
+  password: '123456'
+  code: 'sXxnAeOMD7kVpi82PvQOcyINpLAuwxxnt67sI2Sx9dN'
+  tokenEndPointAuthMethod: 'none'
+  refreshScope:  
+    scope: 'openid profile offline_access'
+  roleCode: 'test_role_code'
+Management:
+  userPoolId: '5f819ffdaaf252c4df2c9266'
+  userPoolSercet: '06eca4ed85c807db9fc6a9d5483a4dc7'
+OrgManagement:
+  nodeId: '604ef025b441024739f5ce58'
+  orgId: '604ef025b441024739f5ce58'
+  nodeCode: 'OU=蒸汽记忆,DC=test,DC=authing,DC=com'
+  userId: '60754ba9ab2e824c8e47f08c'
+AclManagement:
+  appId: '5f82b9b9c239b79d4f0d93be'
+StatisticsManagement:
+  clientIp: '111'
+UdfManagement:
+  nodeId: '604ef025b441024739f5ce58'
+PoliciesManagement:
+UsersManagement:
+  password: 'password'
+  username: 'shubuzuo'
+  groupId: 'test-groupId'
+  roleCodes: 
+    - 'roleCode1'
+    - 'roleCode2'
+    - 'roleCode3'

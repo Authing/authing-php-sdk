@@ -1,0 +1,4 @@
+###
+POST https://core.authing.cn/oidc/token
+
+client_id=5f82b9b9c239b79d4f0d93be&grant_type=refresh_token&refresh_token=LnyNsAHkcWse148rFkVBbP0gE5xo8TOz1F4nXngU7w

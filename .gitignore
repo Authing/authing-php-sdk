@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+vendor
+.idea
+.phpunit.result.cache
+# test.php
+# test*.php
+tests/config/test.yaml
+tmp
+tests/reports
