@@ -1,7 +1,7 @@
 <?php 
 namespace Test;
 
-require_once  'D:\authing-php-sdk\tests\config/../../vendor/autoload.php';
+require_once  '../../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
