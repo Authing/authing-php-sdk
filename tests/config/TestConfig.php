@@ -1,14 +1,14 @@
 <?php 
 namespace Test;
 
-require_once __DIR__ . '../../../vendor/autoload.php';
+require_once  'D:\authing-php-sdk\tests\config/../../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 class TestConfig {
     static function getConfig(string $moduleName) {
-        $config = Yaml::parseFile(__DIR__.'/test.yaml');
+        $config = Yaml::parseFile(__DIR__.'/test-example.yaml');
         return $config[$moduleName];
     }
 }
