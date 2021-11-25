@@ -119,5 +119,5 @@ class WhitelistManagementClient
                 throw new Exception("不支持的白名单类型", 500);
         }
         $this->client->userpools()->update((new UpdateUserpoolInput())->withWhitelist($updates));
-    }// zheshiyigezhesgi 
+    }
 }

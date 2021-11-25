@@ -2,14 +2,15 @@
 
 namespace Authing;
 
+use Error;
 use DateTime;
 use stdClass;
 use Exception;
 use GuzzleHttp\Client;
 use Authing\Mgmt\Utils;
 use GuzzleHttp\Psr7\Message;
+use GuzzleHttp\Psr7\Request;
 use Authing\Types\AccessTokenParam;
-use Error;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 
@@ -19,16 +20,21 @@ abstract class BaseClient
      * @var Client
      */
     protected $naiveHttpClient;
-    protected $options;
+    private static $defaultOptions = [
+        "protocol" => "oidc",
+        "tokenEndPointAuthMethod" => "client_secret_post",
+        "introspectionEndPointAuthMethod" => "client_secret_post",
+        "revocationEndPointAuthMethod" => "client_secret_post"
+    ];
 
-    protected $userPoolId;
-    protected $appId;
+    public $userPoolId;
+    public $appId;
 
     private $host = 'https://core.authing.cn';
 
     private $_type = "SDK";
 
-    private $_version = "php:4.1.12";
+    private $_version = "php:4.1.29";
 
     private $_accessTokenExpriredAt;
 
@@ -42,7 +48,7 @@ GKl64GDcIq3au+aqJQIDAQAB
 -----END PUBLIC KEY-----
 PUBLICKKEY;
 
-    protected $accessToken = '';
+    public $accessToken = '';
     protected $mfaToken = '';
 
     /**
@@ -52,7 +58,6 @@ PUBLICKKEY;
      */
     public function __construct($userPoolIdOrFunc)
     {
-
         if (!isset($userPoolIdOrFunc)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
@@ -63,6 +68,11 @@ PUBLICKKEY;
             //     $userPoolIdOrFunc;
             $this->userPoolId =
                 $userPoolIdOrFunc;
+            $params = func_get_args();
+            if (count($params) > 1) {
+                $this->options = new stdClass;
+                $this->options->secret = $params[1];
+            }
         }
         if (is_callable($userPoolIdOrFunc)) {
             $this->options = new stdClass;
@@ -78,11 +88,27 @@ PUBLICKKEY;
             if (isset($this->options->appId)) {
                 $this->appId = $this->options->appId;
             }
+
+            if (isset($this->options->host)) {
+                $this->host = $this->options->host;
+            }
         }
         if (is_null($this->userPoolId) && is_null($this->appId)) {
             throw new InvalidArgumentException("Invalid userPoolIdOrFunc");
         }
+
+        // 设置默认值
+        self::initDefaultOptions($this->options);
+
         $this->naiveHttpClient = new Client(['base_uri' => $this->options->host ?? $this->host]);
+    }
+
+    private static function initDefaultOptions($options) {
+        foreach (self::$defaultOptions as $key => $value) {
+            if (!isset($options->$key)) {
+                $options->$key = $value;
+            }
+        }
     }
 
     /**
@@ -124,24 +150,14 @@ PUBLICKKEY;
         $tokenInfo = Utils::getTokenPlayloadData($this->accessToken);
         $exp = $tokenInfo->exp;
         $this->_accessTokenExpriredAt = $exp;
-        echo $this->_accessTokenExpriredAt;
         return $res;
     }
 
-    // /**
-    //  * @param $token string
-    //  */
-    // public function setToken($token)
-    // {
-    //     $this->accessToken = $token;
-    // }
-
     /**
      * password Encrypt
-     * @param string $password
      * @return string
      */
-    public function encrypt($password)
+    public function encrypt(string $password)
     {
         if (!$password) {
             return null;
@@ -151,18 +167,19 @@ PUBLICKKEY;
         return base64_encode($newPassword);
     }
 
-    public function httpSend($req)
+    public function httpSend(Request $req)
     {
-
+        $code = null;
         $res = $this->naiveHttpClient->send($req, ['http_errors' => false]);
 
-        if ($res->getStatusCode() != 200)
-        $code = $res->getStatusCode();
+        if ($res->getStatusCode() == 200) {
+            $code = $res->getStatusCode();
+        }
         $body = $res->getBody();
         if ($code != 200) {
             throw new Exception($body, $code);
         }
-        return $body;
+        return json_decode($body->__toString());
     }
 
     public function httpRequest()
@@ -191,11 +208,14 @@ PUBLICKKEY;
     {
         $result = $this->send($this->host . '/graphql/v2', $this->objectToArray($data));
         $this->checkResult($result);
-        // return json_decode(json_encode($result));
-        if (!$this->firstElement($result['data'])) {
-            return null;
-        } else {
-            return $this->arrayToObject($this->firstElement((object)$result['data']));
+        $resData = $result->data;
+        return $this->getOnlyValue($resData);
+    }
+
+    public function getOnlyValue($data)
+    {
+        foreach ($data as $key => $value) {
+            return $value;
         }
     }
 
@@ -204,9 +224,9 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpGet($path)
+    public function httpGet(string $path)
     {
-        $result = $this->send($this->host . $path, null, 'GET');
+        $result = $this->send($this->host . $path, [], 'GET');
         $res = json_decode(json_encode($result));
         return $res->data ?? $res;
         // return $this->arrayToObject($result);
@@ -218,7 +238,7 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpPost($path, $data, $flag = '')
+    public function httpPost(string $path, $data, bool $flag = false)
     {
         if (isset($flag) && $flag) {
             $path = $path;
@@ -232,7 +252,7 @@ PUBLICKKEY;
         // return $this->arrayToObject($result);
     }
 
-    public function httpPatch($path, $data = [])
+    public function httpPatch(string $path, array $data = [])
     {
         $result = $this->send($this->host . $path, $data, 'PATCH');
         $res = json_decode(json_encode($result));
@@ -240,7 +260,7 @@ PUBLICKKEY;
         // return $this->arrayToObject($result);
     }
 
-    public function httpPut($path, $data = [])
+    public function httpPut(string $path, array $data)
     {
         $result = $this->send($this->host . $path, $data, 'PUT');
         $res = json_decode(json_encode($result));
@@ -253,9 +273,9 @@ PUBLICKKEY;
      * @return object
      * @throws Exception
      */
-    public function httpDelete($path)
+    public function httpDelete(string $path)
     {
-        $result = $this->send($this->host . $path, null, 'DELETE');
+        $result = $this->send($this->host . $path, [], 'DELETE');
         $res = json_decode(json_encode($result));
         return $res->data ?? $res;
         // return $this->arrayToObject($result);
@@ -267,15 +287,17 @@ PUBLICKKEY;
      */
     private function checkResult($result)
     {
+        $errors = null;
+        $result = (array)$result;
         if (isset($result['errors'])) {
             $errors = $result['errors'];
         }
 
-        if (!empty($errors) && count($errors) > 0) {
-            foreach($errors as $error) {
+        if (!empty($errors) && (is_array($errors) | is_object($errors) ? count($errors) : 0) > 0) {
+            foreach ($errors as $error) {
                 $error = (object)$error;
                 $data = (object)($error->message);
-                throw new Exception($data->message, $data->code);    
+                throw new Exception($data->message, $data->code);
             }
         }
     }
@@ -308,6 +330,7 @@ PUBLICKKEY;
             if (gettype($v) == 'array' || getType($v) == 'object') {
                 if ($k !== 'data') {
                     $arr[$k] = $this->arrayToObject($v);
+                    echo "ok";
                 }
             }
             // 如果是关联数组
@@ -343,8 +366,7 @@ PUBLICKKEY;
             $this->accessToken && ($this->_accessTokenExpriredAt > (time() + 3600))
         ) {
             return $this->accessToken;
-        } else if (isset($this->_accessTokenExpriredAt) && ($this->_accessTokenExpriredAt < (time() + 3600))) {
-            echo $this->_accessTokenExpriredAt;
+        } elseif (isset($this->_accessTokenExpriredAt) && ($this->_accessTokenExpriredAt < (time() + 3600))) {
             return $this->requestToken();
         }
     }
@@ -357,10 +379,11 @@ PUBLICKKEY;
      * @return mixed
      * @throws Exception
      */
-    private function send($url, $data = '', $method = 'POST', $time = 30000)
+    private function send(string $url, array $data = [], string $method = 'POST', int $time = 30000)
     {
+        $token = $this->getToken();
         // 如果是通过密钥刷新
-        $this->accessToken = $this->getToken() ?? $this->accessToken;
+        $this->accessToken = $token ?? $this->accessToken;
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -373,8 +396,7 @@ PUBLICKKEY;
 
         // set header
         $h = [
-            "Authorization: Bearer " . ($this->mfaToken ? $this->mfaToken :
-                $this->options->accessToken ?? $this->accessToken ??  null),
+            "Authorization: Bearer " . ($this->mfaToken ?: $this->options->accessToken ?? $this->accessToken ?? null),
             "Content-type: application/json",
             "x-authing-userpool-id: $this->userPoolId",
             "x-authing-app-id: $this->appId",
@@ -408,13 +430,15 @@ PUBLICKKEY;
 
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, 3000);
         curl_setopt($ch, CURLOPT_TIMEOUT_MS, $time);
-
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        
         $response = curl_exec($ch);
 
         if (curl_errno($ch) === 0) {
             $info = curl_getinfo($ch);
             if (!empty($info['http_code']) && ($info['http_code'] == 200 || $info['http_code'] == 201)) {
-                $res = json_decode($response, true);
+                $res = json_decode($response);
                 if (json_last_error() == JSON_ERROR_NONE) {
                     $return = $res;
                 } else {

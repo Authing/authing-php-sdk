@@ -2,8 +2,11 @@
 
 
 namespace Authing\Mgmt\Groups;
+include_once '..\..\src\Mgmt\GroupsManagementClient.php';
 
+include_once '..\..\src\Mgmt\ManagementClient.php';
 
+use Authing\Mgmt\Utils;
 use Authing\Types\AddUserToGroupParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\CreateGroupParam;
@@ -17,6 +20,8 @@ use Authing\Types\PaginatedUsers;
 use Authing\Types\RemoveUserFromGroupParam;
 use Authing\Types\UpdateGroupParam;
 use Authing\Types\ListGroupAuthorizedResourcesParam;
+use Authing\Mgmt\ManagementClient;
+use Authing\Mgmt\Groups\GroupsManagementClient;
 
 use stdClass;
 use Exception;
@@ -159,7 +164,7 @@ class GroupsManagementClient
      */
     public function addUsers($code, $userIds) {
         $param = (new AddUserToGroupParam($userIds))->withCode($code);
-        return $this->client->request($param->createRequest());
+        return $this->client->request($param->creteRequest());
     }
 
     /**
@@ -175,15 +180,22 @@ class GroupsManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    function listAuthorizedResources($groupCode, $namespace, $opts = [])
+//    function listAuthorizedResources($groupCode, $namespace, $opts = [])
+//    {
+//        $resourceType = null;
+//        if (count($opts) > 0) {
+//            $resourceType = $opts['resourceType'];
+//        }
+//        $param = (new ListGroupAuthorizedResourcesParam($groupCode))->withNamespace($namespace)->withResourceType($resourceType);
+//        $data = $this->client->request($param->createRequest());
+//
+//        return formatAuthorizedResources($data);
+//    }
+    function listAuthorizedResources($groupCode, $namespace, string $resourceType = '')
     {
-        $resourceType = null;
-        if (count($opts) > 0) {
-            $resourceType = $opts['resourceType'];
-        }
         $param = (new ListGroupAuthorizedResourcesParam($groupCode))->withNamespace($namespace)->withResourceType($resourceType);
         $data = $this->client->request($param->createRequest());
-         
-        return formatAuthorizedResources($data);
+
+        return formatAuthorizedResources($data->authorizedResources);
     }
 }

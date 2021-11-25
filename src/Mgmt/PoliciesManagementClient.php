@@ -50,9 +50,8 @@ class PoliciesManagementClient
      */
     public function paginate($page = 1, $limit = 10, $excludeDefault = true)
     {
-        // TODO： 这个方法有问题
-        // $param = (new PoliciesParam())->withPage($page)->withLimit($limit)->withExcludeDefault($excludeDefault);
-        // return $this->client->request($param->createRequest());
+         $param = (new PoliciesParam())->withPage($page)->withLimit($limit);
+         return $this->client->request($param->createRequest());
     }
 
     /**

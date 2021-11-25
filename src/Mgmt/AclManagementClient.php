@@ -2,6 +2,7 @@
 
 namespace Authing\Mgmt\Acl;
 
+use Authing\Mgmt\Utils;
 use Authing\Types\AllowParam;
 use Authing\Types\AuthorizedResourcesParam;
 use Authing\Types\AuthorizeResourceParam;
@@ -11,6 +12,7 @@ use Authing\Types\AuthorizedTargetsParam;
 
 
 use Authing\Mgmt\ManagementClient;
+use Authing\Types\ListUserAuthorizedResourcesParam;
 use Error;
 use Exception;
 use stdClass;
@@ -92,27 +94,42 @@ class AclManagementClient
      */
     public function isAllowed(string $userId, string $resource, string $action, array $options = [])
     {
-        $namespace = $options['namespace'];
+        $namespace = $options['namespace']??'';
         $param = (new IsActionAllowedParam($resource, $action, $userId))->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 
-    public function listAuthorizedResources(string $targetType, string $targetIdentifier, string $namespace, $ops = [])
+//    public function listAuthorizedResources(string $targetType, string $targetIdentifier, string $namespace, $ops = []): stdClass
+//    {
+//        $resourceType = null;
+//        if (count($ops) > 0) {
+//            $resourceType = $ops['resourceType'];
+//        }
+//        $param = (new AuthorizedResourcesParam())->withTargetType($targetType)->withTargetIdentifier($targetIdentifier)->withNamespace($namespace)->withResourceType($resourceType);
+//        $data = formatAuthorizedResources($this->client->request($param->createRequest()));
+//        return $data;
+//    }
+    public function listAuthorizedResources(string $userId, string $namespace, string $resourceType = '')
     {
-        $resourceType = null;
-        if (count($ops) > 0) {
-            $resourceType = $ops['resourceType'];
+        $param = (new ListUserAuthorizedResourcesParam($userId))->withNamespace($namespace);
+        $resourceType && $param->withResourceType($resourceType);
+        $resUser = $this->client->request($param->createRequest());
+        if ($resUser) {
+            $res = formatAuthorizedResources($resUser->authorizedResources);
+            return $res;
+        } else {
+            throw new Exception("用户不存在");
         }
-        $param = (new AuthorizedResourcesParam())->withTargetType($targetType)->withTargetIdentifier($targetIdentifier)->withNamespace($namespace)->withResourceType($resourceType);
-        $data = formatAuthorizedResources($this->client->request($param->createRequest()));
-        return $data;
     }
 
-    public function getResources(array $options)
+
+    public function getResources(array $options = [])
     {
+        $limit = null;
+        $page = null;
         extract($options, EXTR_OVERWRITE);
         $array = [
-            'namespaceCode' => $namespaceCode,
+            'namespace' => $namespace,
             'type' => $type,
             'limit' => $limit ?? 10,
             'page' => $page ?? 1,
@@ -173,7 +190,7 @@ class AclManagementClient
 
     public function listNamespaces(int $page = 1, int $limit = 10)
     {
-        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}";
+        $api = "/api/v2/resource-namespace/{$this->client->userPoolId}?";
         $param = http_build_query([
             "page" => $page,
             "limit" => $limit,
@@ -184,14 +201,14 @@ class AclManagementClient
 
     public function deleteNamespace(string $code)
     {
-        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code";
+        $api = "/api/v2/resource-namespace/{$this->client->userPoolId}/code/$code";
         $this->client->httpDelete($api);
         return true;
     }
 
     public function createNamespace(string $code, string $name, string $description = '')
     {
-        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}";
+        $api = "/api/v2/resource-namespace/{$this->client->userPoolId}";
         $data = $this->client->httpPost($api, [
             'name' => $name,
             'code' => $code,
@@ -202,7 +219,7 @@ class AclManagementClient
 
     public function updateNamespace(string $code, array $updates)
     {
-        $api = "/api/v2/resource-namespace/{$this->options->userPoolId}/code/$code";
+        $api = "/api/v2/resource-namespace/{$this->client->userPoolId}/code/$code";
         $res = $this->client->httpPut($api, $updates);
         return $res;
     }
@@ -275,7 +292,7 @@ class AclManagementClient
 
     public function listResources(array $options)
     {
-        $api = "/api/v2/resources";
+        $api = "/api/v2/resources?";
         $param = http_build_query([
             'namespaceCode' => $options['namespace'] ?? $options['namespaceCode'],
             'type' => $options['type'],

@@ -1467,6 +1467,7 @@ class PaginatedRoles {
 }
 
 class Role {
+    public $id;
   /**
    * 权限组 code
    * Required
@@ -4603,11 +4604,13 @@ class PolicyStatementInput {
 /**
  * @param $resource string resource
  * @param $actions string[] actions
+ * @param $effect PolicyEffect effect
  */
 
-public function __construct($resource, $actions) {
+public function __construct($resource, $actions, $effect) {
 $this->resource = $resource;
 $this->actions = $actions;
+$this->effect = $effect;
 }
 
 /**
@@ -8241,9 +8244,11 @@ class AddMemberParam {
     public $isLeader;
 
 /**
+ * @param $nodeId string
  * @param $userIds string[]
  */
-public function __construct($userIds) {
+public function __construct($nodeId,$userIds) {
+$this->nodeId = $nodeId;
 $this->userIds = $userIds;
 }
 
@@ -10088,6 +10093,7 @@ public function withParent($parent) {
     const CreateRoleDocument = <<<EOF
 mutation createRole(\$namespace: String, \$code: String!, \$description: String, \$parent: String) {
   createRole(namespace: \$namespace, code: \$code, description: \$description, parent: \$parent) {
+    id
     namespace
     code
     arn

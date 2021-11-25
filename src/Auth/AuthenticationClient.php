@@ -316,16 +316,21 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByEmail(string $email, string $password, array $options = [])
+    public function loginByEmail($email, $password, array $options = [])
     {
+        $clientIp = null;
+        $context = null;
+        $params = null;
+        $autoRegister = null;
+        $captchaCode = null;
         extract($options);
         $password = $this->encrypt($password);
         $input = (new LoginByEmailInput($email, $password))
-            ->withClientIp($clientIp ?? null)
-            ->withContext($context ?? null)
-            ->withParams($params ?? null)
-            ->withAutoRegister($autoRegister ?? null)
-            ->withCaptchaCode($captchaCode ?? null);
+            ->withClientIp($clientIp ?? '')
+            ->withContext($context ?? '')
+            ->withParams($params ?? '')
+            ->withAutoRegister($autoRegister ?? '')
+            ->withCaptchaCode($captchaCode ?? '');
         $param = new LoginByEmailParam($input);
         $user = $this->request($param->createRequest());
         $this->setCurrentUser($user);
@@ -384,16 +389,21 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByPhonePassword(string $phone, string $password, array $options = [])
+    public function loginByPhonePassword($phone, $password, array $options = [])
     {
+        $clientIp = null;
+        $context = null;
+        $params = null;
+        $autoRegister = null;
+        $captchaCode = null;
         extract($options);
         $password = $this->encrypt($password);
         $input = (new LoginByPhonePasswordInput($phone, $password))
-            ->withClientIp($clientIp ?? null)
-            ->withContext($context ?? null)
-            ->withParams($params ?? null)
+            ->withClientIp($clientIp ?? '')
+            ->withContext($context ?? '')
+            ->withParams($params ?? '')
             ->withAutoRegister($autoRegister ?? false)
-            ->withCaptchaCode($captchaCode ?? null);
+            ->withCaptchaCode($captchaCode ?? '');
 
         $param = new LoginByPhonePasswordParam($input);
         $user = $this->request($param->createRequest());
@@ -706,6 +716,7 @@ class AuthenticationClient extends BaseClient
 
     public function loginByLdap($username, $password)
     {
+        $options = null;
         if (!isset($username, $password)) {
             throw new Exception("请输入必要的参数");
         } else {
@@ -1521,7 +1532,7 @@ class AuthenticationClient extends BaseClient
     public function unbindEmail()
     {
         $param = new UnbindEmailParam();
-        $user = $this->request($param->createRequest())->unbindEmail;
+        $user = $this->request($param->createRequest());
         $this->setCurrentUser($user);
         return $user;
     }

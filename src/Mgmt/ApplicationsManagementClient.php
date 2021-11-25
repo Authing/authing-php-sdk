@@ -2,6 +2,10 @@
 
 namespace Authing\Mgmt;
 
+include_once '..\..\src\Mgmt\AclManagementClient.php';
+include_once '..\..\src\Mgmt\AgreementManagementClient.php';
+include_once '..\..\src\Mgmt\RolesManagementClient.php';
+
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\Acl\AclManagementClient;
 use Authing\Mgmt\AgreementManagementClient;
@@ -89,10 +93,15 @@ class ApplicationsManagementClient
         return $this->acl->createResource(...$args);
     }
 
-    public function updateResource(string $code, array $options)
+//    public function updateResource(string $code, array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->updateResource(...$args);
+//    }
+    public function updateResource(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->updateResource(...$args);
+        $options['namespace'] = $appId;
+        return $this->acl->updateResource($options['code'], $options);
     }
 
     public function deleteResource(string $code, string $namespaceCode)
@@ -143,40 +152,63 @@ class ApplicationsManagementClient
         return $this->acl->updateDefaultAccessPolicy(...$args);
     }
 
-    public function createRole($code, $description = null, $parentCode = null)
+    public function createRole(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->roles->create(...$args);
+        return $this->roles->create($options['code'], $options['description'], $appId);
     }
 
-    public function findRole($code)
+//    public function findRole($code)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->detail(...$args);
+//    }
+    public function findRole(string $appId, string $code)
     {
-        $args = func_get_args();
-        return $this->roles->detail(...$args);
+        return $this->roles->detail($code, $appId);
     }
 
-    public function updateRole($code, $description = null, $newCode = null)
+//    public function updateRole($code, $description = null, $newCode = null)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->update(...$args);
+//    }
+    public function updateRole(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->roles->update(...$args);
+        $options['namespace'] = $appId;
+        return $this->roles->update($options['code'], $options);
     }
 
-    public function deleteRole($code)
+//    public function deleteRole($code)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->delete(...$args);
+//    }
+    public function deleteRole(string $appId, string $code)
     {
-        $args = func_get_args();
-        return $this->roles->delete(...$args);
+        return $this->roles->delete($code, $appId);
     }
 
-    public function getRoles($page = 1, $limit = 10)
+//    public function getRoles($page = 1, $limit = 10)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->paginate(...$args);
+//    }
+    public function getRoles(string $appId, array $options = [])
     {
-        $args = func_get_args();
-        return $this->roles->paginate(...$args);
+        $options['namespace'] = $appId;
+        return $this->roles->paginate($options);
     }
 
-    public function getUsersByRoleCode($code)
+//    public function getUsersByRoleCode($code)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->listUsers(...$args);
+//    }
+    public function getUsersByRoleCode(string $appId, string $code)
     {
-        $args = func_get_args();
-        return $this->roles->listUsers(...$args);
+        return $this->roles->listUsers($code, [
+            'namespace' => $appId
+        ]);
     }
 
     public function addUsersToRole($code, $userIds)
@@ -185,16 +217,25 @@ class ApplicationsManagementClient
         return $this->roles->addUsers(...$args);
     }
 
-    public function removeUsersFromRole($code, $userIds)
+//    public function removeUsersFromRole($code, $userIds)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->removeUsers(...$args);
+//    }
+
+    public function removeUsersFromRole(string $appId, string $code, array $userIds)
     {
-        $args = func_get_args();
-        return $this->roles->removeUsers(...$args);
+        return $this->roles->removeUsers($code, $userIds, $appId);
     }
 
-    public function listAuthorizedResourcesByRole($roleCode, $namespace, $opts = [])
+//    public function listAuthorizedResourcesByRole($roleCode, $namespace, $opts = [])
+//    {
+//        $args = func_get_args();
+//        return $this->roles->listAuthorizedResources(...$args);
+//    }
+    public function listAuthorizedResourcesByRole(string $appId, string $code, string $resourceType = '')
     {
-        $args = func_get_args();
-        return $this->roles->listAuthorizedResources(...$args);
+        return $this->roles->listAuthorizedResources($code, $appId, $resourceType);
     }
 
     public function listAgreement(string $appId)

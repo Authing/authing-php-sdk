@@ -60,11 +60,8 @@ class UserpoolManagementClient
     public function listEnv() {
         $res = $this->client->httpGet('/api/v2/env');
 
-        if ($res->code != 200) {
-            throw new Exception($res->message, $res->code);
-        }
 
-        return (array)$res->data;
+        return $res;
     }
 
     /**
@@ -80,12 +77,7 @@ class UserpoolManagementClient
             "key" => $key,
             "value" => $value,
         ]);
-
-        if ($res->code != 200) {
-            throw new Exception($res->message, $res->code);
-        }
-
-        return $res->data;
+        return $res;
     }
 
     /**

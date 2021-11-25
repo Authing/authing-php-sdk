@@ -3,6 +3,7 @@
 
 namespace Authing\Mgmt;
 
+
 use Exception;
 use Authing\BaseClient;
 use Authing\Types\UserParam;
@@ -21,7 +22,9 @@ use Authing\Mgmt\Roles\RolesManagementClient;
 use Authing\Mgmt\ApplicationsManagementClient;
 use Authing\Mgmt\Groups\GroupsManagementClient;
 use Authing\Types\ListUserAuthorizedResourcesParam;
-
+use Authing\Mgmt\AgreementManagementClient;
+use Authing\Mgmt\Mfa\MFAManagementClient;
+use Authing\Auth\AuthenticationClient;
 
 class ManagementClient extends BaseClient
 {
@@ -44,6 +47,7 @@ class ManagementClient extends BaseClient
         // parent::__construct($userPoolId);
         // $this->secret = $secret;
     }
+
 
     /**
      * 获取当前用户
@@ -175,6 +179,27 @@ class ManagementClient extends BaseClient
      */
     public function statistics() {
         return new StatisticsManagementClient($this);
+    }
+
+    /**
+     * @return AgreementManagementClient
+     */
+    public function agreementManagementClient() {
+        return new AgreementManagementClient($this);
+    }
+
+    /**
+     * @return MFAManagementClient
+     */
+    public function mfa() {
+        return new MFAManagementClient($this);
+    }
+
+    /**
+     * @return AuthenticationClient
+     */
+    public function auth() {
+        return new AuthenticationClient($this);
     }
 
 
