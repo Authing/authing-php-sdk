@@ -1,5 +1,5 @@
 <?php
-include_once 'D:\authing-php-sdk\tests\config\TestConfig.php';
+include_once '..\config\TestConfig.php';
 include_once '..\..\src\Mgmt\UsersManagementClient.php';
 use Test\TestConfig;
 use PHPUnit\Framework\TestCase;
