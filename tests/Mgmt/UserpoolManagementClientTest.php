@@ -1,5 +1,6 @@
 <?php
-
+include_once 'D:\authing-php-sdk\tests\config\TestConfig.php';
+include_once '..\..\src\Mgmt\UserpoolManagementClient.php';
 
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\UserpoolManagementClient;
@@ -19,20 +20,19 @@ class UserpoolManagementClientTest extends TestCase
 
     public function setUp(): void
     {
-        $management = new ManagementClient("59f86b4832eb28071bdd9214", "4b880fff06b080f154ee48c9e689a541");
-        $management->setHost("http://localhost:3000");
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
-        $this->client = $management->userpool();
+        $this->client = $management->userpools();
     }
 
     public function testDetail() {
         $userpool = $this->client->detail();
-        $this->assertEquals("root 用户池", $userpool->name);
+        $this->assertNotNull($userpool);
     }
 
     public function testUpdate() {
-        $userpool = $this->client->update((new UpdateUserpoolInput())->withDescription("official"));
-        $this->assertEquals("official", $userpool->description);
+        $userpool = $this->client->update((new UpdateUserpoolInput())->withDescription("official111"));
+        $this->assertEquals("official111", $userpool->description);
     }
 
     public function testListEnv() {
@@ -41,8 +41,8 @@ class UserpoolManagementClientTest extends TestCase
     }
 
     public function testAddEnv() {
-        $env = $this->client->addEnv("key", "value");
-        $this->assertEquals("key", $env->key);
+        $env = $this->client->addEnv("key1", "value1");
+        $this->assertEquals("key1", $env->key);
     }
 
     public function testRemoveEnv() {

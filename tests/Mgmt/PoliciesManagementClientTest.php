@@ -1,4 +1,6 @@
 <?php
+include_once 'D:\authing-php-sdk\tests\config\TestConfig.php';
+include_once '..\..\src\Mgmt\PoliciesManagementClient.php';
 
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\PoliciesManagementClient;
@@ -19,77 +21,88 @@ class PoliciesManagementClientTest extends TestCase
 
     public function setUp(): void
     {
-        $moduleName = str_replace('ClientTest', '', __CLASS__);
-        $manageConfig = (object) TestConfig::getConfig('Management');
-        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
-        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
         $this->policiesManagement = $management->policies();
     }
 
     public function testPaginate()
     {
-        $policies = $this->client->paginate();
+        $policies = $this->policiesManagement->paginate();
         $this->assertEquals(true, $policies->totalCount > 0);
     }
 
     public function testCreate()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
-        $policy = $this->client->create($code, $statements);
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
         $this->assertEquals($code, $policy->code);
     }
+
+    public function test_listAssignments()
+    {
+        $policy = $this->policiesManagement->listAssignments('675292908');
+        $this->assertNotNull($policy);
+    }
+
 
     public function testUpdate()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
-        $policy = $this->client->create($code, $statements);
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
 
-        $statements = [new PolicyStatementInput("book:234", ["book:edit"])];
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:delete"],'ALLOW')];
 
-        $policy = $this->client->update($policy->code, $statements);
+        $policy = $this->policiesManagement->update($policy->code, $statements);
+
+        $policy = $this->policiesManagement->detail($policy->code);
         $this->assertEquals($code, $policy->code);
     }
 
     public function testDetail()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
-        $policy = $this->client->create($code, $statements);
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
 
-        $policy = $this->client->detail($policy->code);
+        $policy = $this->policiesManagement->detail($policy->code);
         $this->assertEquals($code, $policy->code);
     }
 
     public function testDelete()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
-        $policy = $this->client->create($code, $statements);
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
 
-        $message = $this->client->delete($policy->code);
+        $message = $this->policiesManagement->delete($policy->code);
         $this->assertEquals(200, $message->code);
     }
 
     public function testDeleteMany()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("book:123", ["book:edit"])];
-        $policy = $this->client->create($code, $statements);
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
 
-        $message = $this->client->deleteMany([$policy->code]);
+        $message = $this->policiesManagement->deleteMany([$policy->code]);
         $this->assertEquals(200, $message->code);
     }
 
-    public function testDisableAssignment()
+    public function test_addAssignments()
     {
-        // $this->policiesManagement->disableAssignment();
+        $result = $this->policiesManagement->addAssignments(['675292908'],'USER',['614fd9ae42b192fc32823b10']);
+        $this->assertEquals(200, $result->code);
     }
 
-    public function testEnableAssignment()
+
+    public function test_removeAssignments()
     {
-        // $this->policiesManagement->enableAssignment();
+        $result = $this->policiesManagement->removeAssignments(['675292908'],'USER',['614fd9ae42b192fc32823b10']);
+        $this->assertEquals(200, $result->code);
+
     }
+
 }
