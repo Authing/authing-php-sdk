@@ -109,14 +109,14 @@ class MFAAuthenticationClient
         }
     }
 
-    public function verifyTotpMfa(Callback $cb)
+    public function verifyTotpMfa(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->totp) && 
-            is_string($_->totp) && 
-            isset($_->mfaToken) && 
+            isset($_->totp) &&
+            is_string($_->totp) &&
+            isset($_->mfaToken) &&
             is_string($_->mfaToken)
         ) {
             $this->client->setMfaAuthorizationHeader($_->mfaToken);
@@ -128,17 +128,18 @@ class MFAAuthenticationClient
         }
     }
 
-    public function getMfaAuthenticators(Callback $cb)
+    public function getMfaAuthenticators(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (isset($_->type) && is_string($_->type)) {
-            $data = $this->client->httpGet('/api/v2/mfa/authenticator', $_);
+            $data = $this->client->httpGet('/api/v2/mfa/authenticator');
             return $data;
         } else {
             throw new Error('type 需要被设置为字符串');
         }
     }
+
 
     public function deleteMfaAuthenticator()
     {
@@ -149,12 +150,12 @@ class MFAAuthenticationClient
         return $resData;
     }
 
-    public function confirmAssosicateMfaAuthenticator(Callback $cb)
+    public function confirmAssosicateMfaAuthenticator(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->totp) && 
+            isset($_->totp) &&
             is_string($_->totp) &&
             isset($_->authenticatorType) &&
             is_string($_->authenticatorType)
@@ -170,18 +171,18 @@ class MFAAuthenticationClient
         }
     }
 
-    public function verifyAppSmsMfa(Callback $cb)
+    public function verifyAppSmsMfa(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->phone) && 
-            is_string($_->phone) && 
-            isset($_->code) && 
-            is_string($_->code) && 
-            isset($_->mfaToken) && 
+            isset($_->phone) &&
+            is_string($_->phone) &&
+            isset($_->code) &&
+            is_string($_->code) &&
+            isset($_->mfaToken) &&
             is_string($_->mfaToken)
-            ) {
+        ) {
             $this->client->setMfaAuthorizationHeader($_->mfaToken);
             $data = $this->client->httpPost('/api/v2/applications/mfa/sms/verify', $_);
             $this->client->clearMfaAuthorizationHeader();
@@ -191,18 +192,18 @@ class MFAAuthenticationClient
         }
     }
 
-    public function verifyAppEmailMfa(Callback $cb)
+    public function verifyAppEmailMfa(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->phone) && 
-            is_string($_->phone) && 
-            isset($_->code) && 
-            is_string($_->code) && 
-            isset($_->mfaToken) && 
+            isset($_->phone) &&
+            is_string($_->phone) &&
+            isset($_->code) &&
+            is_string($_->code) &&
+            isset($_->mfaToken) &&
             is_string($_->mfaToken)
-            ) {
+        ) {
             $this->client->setMfaAuthorizationHeader($_->mfaToken);
             $data = $this->client->httpPost('/api/v2/applications/mfa/sms/verify', $_);
             $this->client->clearMfaAuthorizationHeader();
@@ -212,18 +213,18 @@ class MFAAuthenticationClient
         }
     }
 
-    public function phoneOrEmailBindable(Callback $cb)
+    public function phoneOrEmailBindable(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->phone) && 
-            is_string($_->phone) && 
-            isset($_->email) && 
-            is_string($_->email) && 
-            isset($_->mfaToken) && 
+            isset($_->phone) &&
+            is_string($_->phone) &&
+            isset($_->email) &&
+            is_string($_->email) &&
+            isset($_->mfaToken) &&
             is_string($_->mfaToken)
-            ) {
+        ) {
             $this->client->setMfaAuthorizationHeader($_->mfaToken);
             $data = $this->client->httpPost('/api/v2/applications/mfa/check', $_);
             $this->client->clearMfaAuthorizationHeader();
@@ -233,16 +234,16 @@ class MFAAuthenticationClient
         }
     }
 
-    public function verifyTotpRecoveryCode(Callback $cb)
+    public function verifyTotpRecoveryCode(\PHPUnit\Framework\Constraint\Callback $cb)
     {
         $_ = new stdClass;
         $cb($_);
         if (
-            isset($_->recoveryCode) && 
-            is_string($_->recoveryCode) && 
-            isset($_->mfaToken) && 
+            isset($_->recoveryCode) &&
+            is_string($_->recoveryCode) &&
+            isset($_->mfaToken) &&
             is_string($_->mfaToken)
-            ) {
+        ) {
             $this->client->setMfaAuthorizationHeader($_->mfaToken);
             $data = $this->client->httpPost('/api/v2/mfa/totp/recovery', $_);
             $this->client->clearMfaAuthorizationHeader();
@@ -260,9 +261,9 @@ class MFAAuthenticationClient
                 'photo' => $photo
             ],
             'headers' =>
-            [
-                'Authorization' => "Bearer $mfaToken"
-            ],
+                [
+                    'Authorization' => "Bearer $mfaToken"
+                ],
         ]);
         $data = $this->client->httpSend($req);
         return $data;
@@ -280,6 +281,9 @@ class MFAAuthenticationClient
 
     public function associateFaceByUrl(array $options)
     {
+        $photoB = null;
+        $photoA = null;
+        $mfaToken = null;
         extract($options);
         $api = '/api/v2/mfa/face/associate';
         $req = new Request('POST', $api, [
@@ -289,9 +293,9 @@ class MFAAuthenticationClient
                 'isExternal' => true,
             ],
             'headers' =>
-            [
-                'Authorization' => "Bearer $mfaToken",
-            ],
+                [
+                    'Authorization' => "Bearer $mfaToken",
+                ],
         ]);
         $data = $this->client->httpSend($req);
         return $data;

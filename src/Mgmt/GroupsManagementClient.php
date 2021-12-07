@@ -124,7 +124,7 @@ class GroupsManagementClient
      * @throws Exception
      */
     public function delete($code) {
-        $param = new DeleteGroupsParam([$code]);;
+        $param = new DeleteGroupsParam([$code]);
         return $this->client->request($param->createRequest());
     }
 
@@ -164,7 +164,7 @@ class GroupsManagementClient
      */
     public function addUsers($code, $userIds) {
         $param = (new AddUserToGroupParam($userIds))->withCode($code);
-        return $this->client->request($param->creteRequest());
+        return $this->client->request($param->createRequest());
     }
 
     /**

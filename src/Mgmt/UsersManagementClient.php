@@ -9,6 +9,7 @@ use Authing\Types\AssignRoleParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\CreateUserInput;
+use Authing\Types\SendFirstLoginVerifyEmailParam;
 use Authing\Types\CreateUserParam;
 use Authing\Types\DeleteUserParam;
 use Authing\Types\DeleteUsersParam;
@@ -560,6 +561,14 @@ class UsersManagementClient
         return $res;
     }
 
+
+    public function sendFirstLoginVerifyEmail(string $userId, string $appId)
+    {
+        $param = (new SendFirstLoginVerifyEmailParam($userId,$appId));
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
     public function getUdfValue(string $userId)
     {
         $param = new UdvParam('USER', $userId);
@@ -574,6 +583,24 @@ class UsersManagementClient
         ];
         return $this->client->httpPost('/api/v2/users/kick', $data);
     }
+
+    public function logout(array $options)
+    {
+        $api = '/logout?';
+        if(!empty($options['appId'])){
+            $param = http_build_query([
+                'userId' => $options['userId'],
+                'appId' => $options['appId'],
+            ]);
+        }else{
+            $param = http_build_query([
+                'userId' => $options['userId'],
+            ]);
+        }
+        return $this->client->httpGet($api . $param);
+    }
+
+
 
     public function listUserActions(array $options = [
         'page' =>  1,

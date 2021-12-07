@@ -122,6 +122,32 @@ class AclManagementClient
         }
     }
 
+    public function createResourceBatch(array $resources)
+    {
+        foreach ($resources as $resource) {
+            if (!isset($resource['code'])) {
+                throw new Error('请为资源设定一个资源标识符');
+            }
+
+            if (!isset($resource['actions']) || (is_array($resource['actions']) ? count($resource['actions']) : 0) === 0) {
+                throw new Error('请至少定义一个资源操作');
+            }
+
+            if (!isset($resource['namespace'])) {
+                throw new Error('请传入权限分组标识符');
+            }
+        }
+
+
+        $data = $this->client->httpPost(
+            '/api/v2/resources/bulk',
+            [
+                'bulk' => $resources
+            ]
+        );
+
+        return $data;
+    }
 
     public function getResources(array $options = [])
     {
@@ -138,6 +164,29 @@ class AclManagementClient
         $data = $this->client->httpGet("/api/v2/resources?$params");
         return $data;
     }
+
+    public function getResourceById(array $options)
+    {
+        $array = [
+            'id' => $options['id']
+
+        ];
+        $params = http_build_query($array);
+        $data = $this->client->httpGet("/api/v2/resources/detail?$params");
+        return $data;
+    }
+
+    public function getResourceByCode(array $options)
+    {
+        $array = [
+            'code' => $options['code'],
+            'namespace' => $options['namespace'],
+        ];
+        $params = http_build_query($array);
+        $data = $this->client->httpGet("/api/v2/resources/detail?$params");
+        return $data;
+    }
+
 
     public function createResource(array $options)
     {
@@ -420,7 +469,7 @@ class AclManagementClient
             'inheritByChildren' => $inheritByChildren ?? null,
         ];
 
-        $this->client->httpPost("/api/v2/applications/$appId/authorization/allow", $data);
+        $res = $this->client->httpPost("/api/v2/applications/$appId/authorization/allow", $data);
         $_ = new stdClass();
         $_->code = 200;
         $_->message = '允许主体访问应用的策略配置已生效';

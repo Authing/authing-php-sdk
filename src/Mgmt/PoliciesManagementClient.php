@@ -168,4 +168,34 @@ class PoliciesManagementClient
         $param = (new RemovePolicyAssignmentsParam($policies, $targetType))->withTargetIdentifiers($targetIdentifiers);
         return $this->client->request($param->createRequest());
     }
+
+    /**
+     * 启用策略授权
+     *
+     * @param $policie string 策略 code
+     * @param $targetType PolicyAssignmentTargetType 可选值为 USER (用户) 和 ROLE (角色)
+     * @param $targetIdentifier string 用户 id 列表和角色 code 列表
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function enableAssignment($policie, $targetType, $targetIdentifier)
+    {
+        $param = (new EnablePolicyAssignmentParam($policie, $targetType,$targetIdentifier));
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 禁用策略授权
+     *
+     * @param $policie string 策略 code
+     * @param $targetType PolicyAssignmentTargetType 可选值为 USER (用户) 和 ROLE (角色)
+     * @param $targetIdentifier string 用户 id 列表和角色 code 列表
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function disableAssignment($policie, $targetType, $targetIdentifier)
+    {
+        $param = (new DisbalePolicyAssignmentParam($policie, $targetType,$targetIdentifier));
+        return $this->client->request($param->createRequest());
+    }
 }

@@ -190,7 +190,7 @@ class OrgManagementClientTest extends TestCase
     {
 
         $data = $this->orgManagement->paginate();
-        parent::assertNotEmpty($data->code);
+        parent::assertNotEmpty($data);
     }
 
     public function test_importByJson()
@@ -201,4 +201,27 @@ class OrgManagementClientTest extends TestCase
             'description' => '测试描述']);
         parent::assertNotNull($data);
     }
+
+    public function test_moveMembers()
+    {
+//        sourceNodeId: "61a07de7d77edb43569e521d"
+//targetNodeId: "619de2a42c99c252dd24270b"
+        $data = $this->orgManagement->moveMembers(['userIds' => ['619f5d38b5f150cd289a0438'],
+            'sourceNodeId' => '61a07de7d77edb43569e521d',
+            'targetNodeId' => '619de2a42c99c252dd24270b']);
+        parent::assertNotNull($data);
+    }
+
+    public function test_searchNodes()
+    {
+        $data = $this->orgManagement->searchNodes('2217');
+        parent::assertNotNull($data);
+    }
+
+    public function test_startSync()
+    {
+        $data = $this->orgManagement->startSync(['$providerType'=>'wechatwork']);
+        parent::assertNotNull($data);
+    }
+
 }

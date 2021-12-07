@@ -35,9 +35,31 @@ class PoliciesManagementClientTest extends TestCase
     public function testCreate()
     {
         $code = $this->randomString();
-        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $statements = [new PolicyStatementInput("DATA:test", ["test:edit"],'ALLOW')];
         $policy = $this->policiesManagement->create($code, $statements);
         $this->assertEquals($code, $policy->code);
+    }
+
+    public function test_enableAssignment()
+    {
+        $code = $this->randomString();
+        $statements = [new PolicyStatementInput("DATA:test_createresource", ["test_createresource:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
+        //"policies":["dleflDCmQ"],"targetType":"USER","targetIdentifiers":["614fd9ae42b192fc32823b10"],"namespace":"default"}
+        $result = $this->policiesManagement->enableAssignment($code,'USER','614fd9ae42b192fc32823b10','default');
+        $this->assertEquals(200, $result->code);
+
+    }
+
+    public function test_disableAssignment()
+    {
+        $code = $this->randomString();
+        $statements = [new PolicyStatementInput("DATA:test_createresource1", ["test_createresource1:edit"],'ALLOW')];
+        $policy = $this->policiesManagement->create($code, $statements);
+        //"policies":["dleflDCmQ"],"targetType":"USER","targetIdentifiers":["614fd9ae42b192fc32823b10"],"namespace":"default"}
+        $result = $this->policiesManagement->disableAssignment($code,'USER','614fd9ae42b192fc32823b10','default');
+        $this->assertEquals(200, $result->code);
+
     }
 
     public function test_listAssignments()
@@ -104,5 +126,7 @@ class PoliciesManagementClientTest extends TestCase
         $this->assertEquals(200, $result->code);
 
     }
+
+
 
 }

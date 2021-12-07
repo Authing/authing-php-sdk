@@ -93,6 +93,8 @@ class RolesManagementClientTest extends TestCase
         $code = $this->randomString();
         $role = $this->client->create($code);
         $roleByCode = $this->client->findByCode($role->code);
+        $json_string = json_encode($roleByCode);
+        echo $json_string;
         $this->assertEquals($role->code, $roleByCode->code);
     }
 
@@ -100,7 +102,7 @@ class RolesManagementClientTest extends TestCase
 //        $code = $this->randomString();
 //        $role = $this->client->create($code);
 //        print_r($role);
-        $result = $this->client->addPolicies('785845934',['policy1','policy2']);
+        $result = $this->client->addPolicies('1127983743',['1168282826']);
         print_r($result);
     }
 

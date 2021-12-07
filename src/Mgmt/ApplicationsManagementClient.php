@@ -93,6 +93,15 @@ class ApplicationsManagementClient
         return $this->acl->createResource(...$args);
     }
 
+    public function createResourceBatch(string $appId, array $resources)
+    {
+        foreach ($resources as &$resource) {
+            $resource['namespace'] = $appId;
+        }
+        unset($resource);
+        return $this->acl->createResourceBatch($resources);
+    }
+
 //    public function updateResource(string $code, array $options)
 //    {
 //        $args = func_get_args();
@@ -110,46 +119,89 @@ class ApplicationsManagementClient
         return $this->acl->deleteResource(...$args);
     }
 
-    public function getAccessPolicies(array $options)
+    public function getAccessPolicies(string $appId, array $options = [])
     {
-        $args = func_get_args();
-        return $this->acl->getAccessPolicies(...$args);
+        $options['appId'] = $appId;
+        return $this->acl->getAccessPolicies($options);
     }
 
-    public function enableAccessPolicy(array $options)
+    public function enableAccessPolicy(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->enableAccessPolicy(...$args);
+        $options['appId'] = $appId;
+        $options['namespace'] = $appId;
+        return $this->acl->enableAccessPolicy($options);
     }
 
-    public function disableAccessPolicy(array $options)
+    public function disableAccessPolicy(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->disableAccessPolicy(...$args);
+        $options['appId'] = $appId;
+        $options['namespace'] = $appId;
+        return $this->acl->disableAccessPolicy($options);
     }
 
-    public function deleteAccessPolicy(array $options)
+    public function deleteAccessPolicy(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->deleteAccessPolicy(...$args);
+        $options['appId'] = $appId;
+        $options['namespace'] = $appId;
+        return $this->acl->deleteAccessPolicy($options);
     }
 
-    public function allowAccess(array $options)
+//    public function enableAccessPolicy(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->enableAccessPolicy(...$args);
+//    }
+//
+//    public function disableAccessPolicy(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->disableAccessPolicy(...$args);
+//    }
+//
+//    public function deleteAccessPolicy(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->deleteAccessPolicy(...$args);
+//    }
+
+    public function allowAccess(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->allowAccess(...$args);
+        $options['appId'] = $appId;
+        $options['namespace'] = $appId;
+        return $this->acl->allowAccess($options);
     }
 
-    public function denyAccess(array $options)
+    public function denyAccess(string $appId, array $options)
     {
-        $args = func_get_args();
-        return $this->acl->denyAccess(...$args);
+        $options['appId'] = $appId;
+        $options['namespace'] = $appId;
+        return $this->acl->denyAccess($options);
     }
 
-    public function updateDefaultAccessPolicy(array $options)
+//    public function allowAccess(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->allowAccess(...$args);
+//    }
+//
+//    public function denyAccess(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->denyAccess(...$args);
+//    }
+
+//    public function updateDefaultAccessPolicy(array $options)
+//    {
+//        $args = func_get_args();
+//        return $this->acl->updateDefaultAccessPolicy(...$args);
+//    }
+    public function updateDefaultAccessPolicy(string $appId, string $defaultStrategy)
     {
-        $args = func_get_args();
-        return $this->acl->updateDefaultAccessPolicy(...$args);
+        $options = [
+            'appId' => $appId,
+            'defaultStrategy' => $defaultStrategy
+        ];
+        return $this->acl->updateDefaultAccessPolicy($options);
     }
 
     public function createRole(string $appId, array $options)
@@ -188,6 +240,13 @@ class ApplicationsManagementClient
         return $this->roles->delete($code, $appId);
     }
 
+    public function deleteRoles(string $appId, array $codes)
+    {
+        return $this->roles->deleteMany($codes, $appId);
+    }
+
+
+
 //    public function getRoles($page = 1, $limit = 10)
 //    {
 //        $args = func_get_args();
@@ -211,10 +270,14 @@ class ApplicationsManagementClient
         ]);
     }
 
-    public function addUsersToRole($code, $userIds)
+//    public function addUsersToRole($code, $userIds)
+//    {
+//        $args = func_get_args();
+//        return $this->roles->addUsers(...$args);
+//    }
+    public function addUsersToRole(string $appId, string $code, array $userIds)
     {
-        $args = func_get_args();
-        return $this->roles->addUsers(...$args);
+        return $this->roles->addUsers($code, $userIds, $appId);
     }
 
 //    public function removeUsersFromRole($code, $userIds)

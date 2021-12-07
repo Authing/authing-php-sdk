@@ -4,7 +4,9 @@ namespace Authing\Mgmt;
 
 use Authing\Types\AddMemberParam;
 use Authing\Types\AddNodeV2Param;
+use Authing\Types\MoveMembersParam;
 use Authing\Types\RemoveMemberParam;
+use Authing\Types\SearchNodesParam;
 use Authing\Types\UpdateNodeParam;
 use Error;
 use FluentTraversable\FluentTraversable;
@@ -295,6 +297,51 @@ class OrgManagementClient
             ->withPage($options->page ?? 1);
         $res = $this->client->request($param->createRequest())->users;
         return $res;
+    }
+
+    public function searchNodes(string $keyword)
+    {
+        $param = new SearchNodesParam($keyword);
+        return $this->client->request($param->createRequest());
+    }
+
+    public function startSync(array $options)
+    {
+        $options = (object)$options;
+        $providerType = $options->providerType ?? null;
+        $adConnectorId = $options->adConnectorId ?? null;
+        $url = '';
+        $body = [];
+        if ($providerType === 'wechatwork') {
+            $url = 'connections/enterprise/wechatwork/start-sync';
+        }
+        switch ($providerType) {
+            case 'wechatwork':
+                $url = 'connections/enterprise/wechatwork/start-sync';
+                break;
+            case 'dingtalk':
+                $url = 'connections/enterprise/dingtalk/start-sync';
+                break;
+            case 'ad':
+                if ($adConnectorId) {
+                    throw new Exception('must provider adConnectorId');
+                }
+                $url = 'api/v2/ad/sync';
+                $body = [
+                    'connectionId' => $adConnectorId
+                ];
+                break;
+        }
+        $res = $this->client->httpPost($url, $body);
+        return true;
+    }
+
+    public function moveMembers(array $options)
+    {
+        $options = (object)$options;
+        $param = new MoveMembersParam($options->userIds, $options->sourceNodeId, $options->targetNodeId);
+        $this->client->request($param->createRequest());
+        return true;
     }
 
     public function removeMembers(string $nodeId, array $userIds)

@@ -252,9 +252,15 @@ class RolesManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function deleteMany($codeList)
+//    public function deleteMany($codeList)
+//    {
+//        $param = new DeleteRolesParam($codeList);
+//        return $this->client->request($param->createRequest());
+//    }
+    public function deleteMany(array $codeList, string $namespace = null)
     {
-        $param = new DeleteRolesParam($codeList);
+        $param = (new DeleteRolesParam($codeList));
+        $namespace && $param->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 
@@ -287,9 +293,14 @@ class RolesManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function addUsers($code, $userIds)
+//    public function addUsers($code, $userIds)
+//    {
+//        $param = (new AssignRoleParam())->withUserIds($userIds)->withRoleCodes([$code]);
+//        return $this->client->request($param->createRequest());
+//    }
+    public function addUsers(string $code, array $userIds, string $namespace = '')
     {
-        $param = (new AssignRoleParam())->withUserIds($userIds)->withRoleCodes([$code]);
+        $param = (new AssignRoleParam())->withUserIds($userIds)->withRoleCodes([$code])->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 

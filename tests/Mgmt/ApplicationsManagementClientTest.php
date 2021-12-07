@@ -26,6 +26,18 @@ class ApplicationsManagementClientTest extends TestCase
     public function test_create()
     {
         $result = $this->client->create([
+            'name' => 'testname',
+            'identifier' =>  ' only one 1111 ',
+            'redirectUris' => 'http://www.1111.cn',
+            'logo' => 'https: //files.authing.co/authing-console/authing-logo-new.svg'
+        ]);
+        $this->assertNotNull($result);
+
+    }
+
+    public function test_createResourceBatch()
+    {
+        $result = $this->client->createResourceBatch([
             'name' => 'testnameww',
             'identifier' => 'onlyo111wwne',
             'redirectUris' => 'http://authing1234ww.cn',
@@ -34,6 +46,7 @@ class ApplicationsManagementClientTest extends TestCase
         $this->assertNotNull($result);
 
     }
+
 
     public function test_delete()
     {
@@ -170,6 +183,23 @@ class ApplicationsManagementClientTest extends TestCase
             'code' => $code,
             'description' => 'DESCRIPTION']);
         $result = $this->client->deleteRole('61319680ea8b30c9ca9ca071', $result->code);
+        $this->assertEquals(200, $result->code);
+    }
+
+    public function test_deleteRoles()
+    {
+        $code = Utils::randomString(5);
+        $result = $this->client->createRole('61319680ea8b30c9ca9ca071', [
+            'code' => $code,
+            'description' => 'DESCRIPTION']);
+
+
+        $code1 = Utils::randomString(5);
+        $result1 = $this->client->createRole('61319680ea8b30c9ca9ca071', [
+            'code' => $code1,
+            'description' => 'DESCRIPTION1']);
+
+        $result = $this->client->deleteRoles('61319680ea8b30c9ca9ca071', [$result->code,$result1->code]);
         $this->assertEquals(200, $result->code);
     }
 

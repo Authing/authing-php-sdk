@@ -7546,6 +7546,116 @@ public function withEnabled($enabled) {
   return $this;
 }
 }
+
+class SendFirstLoginVerifyEmailResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $sendFirstLoginVerifyEmail;
+}
+
+class SendFirstLoginVerifyEmailParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $userId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $appId;
+
+    /**
+     * @param $userId string
+     * @param $appId string
+     */
+    public function __construct($userId, $appId)
+    {
+        $this->userId = $userId;
+        $this->appId = $appId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::SendFirstLoginVerifyEmailDocument,
+            "operationName" => "sendFirstLoginVerifyEmail",
+            "variables" => $this
+        ];
+    }
+
+    const SendFirstLoginVerifyEmailDocument = <<<EOF
+mutation sendFirstLoginVerifyEmail(\$userId: String!, \$appId: String!) {
+  sendFirstLoginVerifyEmail(userId: \$userId, appId: \$appId) {
+    message
+    code
+  }
+}
+EOF;
+}
+
+class ResetPasswordByFirstLoginTokenResponse
+{
+
+    /**
+     * @var CommonMessage
+     */
+    public $resetPasswordByFirstLoginToken;
+}
+
+class ResetPasswordByFirstLoginTokenParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $token;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $password;
+
+    /**
+     * @param $token string
+     * @param $password string
+     */
+    public function __construct($token, $password)
+    {
+        $this->token = $token;
+        $this->password = $password;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::ResetPasswordByFirstLoginTokenDocument,
+            "operationName" => "resetPasswordByFirstLoginToken",
+            "variables" => $this
+        ];
+    }
+
+    const ResetPasswordByFirstLoginTokenDocument = <<<EOF
+mutation resetPasswordByFirstLoginToken(\$token: String!, \$password: String!) {
+  resetPasswordByFirstLoginToken(token: \$token, password: \$password) {
+    message
+    code
+  }
+}
+EOF;
+}
     
 
 /**
@@ -12621,6 +12731,70 @@ mutation removePolicyAssignments(\$policies: [String!]!, \$targetType: PolicyAss
 }
 EOF;
 }
+
+class EnableAssignmentParam
+{
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $policie;
+
+    /**
+     * Required
+     *
+     * @var PolicyAssignmentTargetType
+     */
+    public $targetType;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $targetIdentifier;
+
+    /**
+     * Optional
+     *
+     * @var string
+     */
+    public $namespace;
+
+    /**
+     * @param $policie string
+     * @param $targetType PolicyAssignmentTargetType
+     * @param $targetIdentifier string
+     * @param $namespace string
+     */
+    public function __construct($policie, $targetType, $targetIdentifier, $namespace)
+    {
+        $this->policie = $policie;
+        $this->targetType = $targetType;
+        $this->targetIdentifier = $targetType;
+        $this->namespace = $namespace;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::EnableAssignmentDocument,
+            "operationName" => "enableAssignment",
+            "variables" => $this
+        ];
+    }
+
+    const EnableAssignmentDocument = <<<EOF
+mutation removePolicyAssignments(\$policie: String, \$targetType: PolicyAssignmentTargetType!, \$targetIdentifiers: String, \$namespace: String) {
+  enableAssignment(policie: \$policie, targetType: \$targetType, targetIdentifier: \$targetIdentifier, namespace: \$namespace) {
+    message
+    code
+  }
+}
+EOF;
+}
     
 
     
@@ -13126,6 +13300,61 @@ class SetMainDepartmentResponse {
      * @var CommonMessage
      */
     public $setMainDepartment;
+}
+
+class MoveMembersParam
+{
+
+    /**
+     * Required
+     *
+     * @var string[]
+     */
+    public $userIds;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $sourceNodeId;
+
+    /**
+     * Required
+     *
+     * @var string
+     */
+    public $targetNodeId;
+
+    /**
+     * @param $userIds string[]
+     * @param $sourceNodeId string
+     * @param $targetNodeId string
+     */
+    public function __construct($userIds, $sourceNodeId, $targetNodeId)
+    {
+        $this->userIds = $userIds;
+        $this->sourceNodeId = $sourceNodeId;
+        $this->targetNodeId = $targetNodeId;
+    }
+
+    function createRequest()
+    {
+        return [
+            "query" => self::MoveMembersDocument,
+            "operationName" => "moveMembers",
+            "variables" => $this
+        ];
+    }
+
+    const MoveMembersDocument = <<<EOF
+mutation moveMembers(\$userIds: [String!]!, \$sourceNodeId: String!, \$targetNodeId: String!) {
+  moveMembers(userIds: \$userIds, sourceNodeId: \$sourceNodeId, targetNodeId: \$targetNodeId) {
+    code
+    message
+  }
+}
+EOF;
 }
     
 class SetMainDepartmentParam {

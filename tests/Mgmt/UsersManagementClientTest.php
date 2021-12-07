@@ -1,6 +1,7 @@
 <?php
 include_once '..\config\TestConfig.php';
 include_once '..\..\src\Mgmt\UsersManagementClient.php';
+include_once '..\..\src\Auth\AuthenticationClient.php';
 use Test\TestConfig;
 use PHPUnit\Framework\TestCase;
 use Authing\Mgmt\ManagementClient;
@@ -9,6 +10,7 @@ use Authing\Types\UpdateUserInput;
 use Authing\Types\IsUserExistsParam;
 use Authing\Mgmt\Utils;
 use Authing\Mgmt\UsersManagementClient;
+use Authing\Auth\AuthenticationClient;
 
 class UsersManagementClientTest extends TestCase
 {
@@ -16,6 +18,11 @@ class UsersManagementClientTest extends TestCase
      * @var UsersManagementClient
      */
     private $client;
+
+    /**
+     * @var AuthenticationClient
+     */
+    private $authclient;
 
     private function randomString()
     {
@@ -30,6 +37,10 @@ class UsersManagementClientTest extends TestCase
         $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
         $this->client = $management->users();
+
+        $this->authclient = new AuthenticationClient(function ($opts) {
+            $opts->appId = "61319680ea8b30c9ca9ca071";
+        });
     }
 
     public function test_paginate()
@@ -135,6 +146,30 @@ class UsersManagementClientTest extends TestCase
         $this->assertFalse($flag);
     }
 
+    public function test_logout(){
+        $email = $this->randomString() . '@gmail.com';
+        $password = '123456';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+        $res = $this->authclient->loginByEmail($email,$password);
+        $message = $this->client->checkLoginStatus($res->token);
+        $res1 = $this->client->logout(['userId'=>$user->id,'appId'=>'61319680ea8b30c9ca9ca071']);
+        $message = $this->client->checkLoginStatus($user->token);
+        parent::assertNotNull($res);
+
+    }
+
+    public function test_sendFirstLoginVerifyEmail(){
+        $email = '11348@qq.com';
+        $password = '123456';
+        $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
+
+        $message = $this->client->sendFirstLoginVerifyEmail($user->id,'61319680ea8b30c9ca9ca071');
+        $json_string = json_encode($message);
+        echo $json_string;
+        parent::assertNotNull($message);
+
+    }
+
     public function test_checkLoginStatus()
     {
         $email = $this->randomString() . '@gmail.com';
@@ -236,6 +271,8 @@ class UsersManagementClientTest extends TestCase
         $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
 
         $message = $this->client->refreshToken($user->id);
+        $json_string = json_encode($message);
+        echo $json_string;
         $this->assertNotEquals(null, $message->token);
     }
 
@@ -388,7 +425,10 @@ class UsersManagementClientTest extends TestCase
         $password = '123456';
         $user = $this->client->create((new CreateUserInput())->withEmail($email)->withPassword($password));
 
-        $res = $this->client->listOrgs($user->id);
+        $res = $this->client->listOrgs('614fd9ae42b192fc32823b10');
+
+        $json_string = json_encode($res);
+        echo $json_string;
         $this->assertEquals(true, count($res) == 0);
     }
 
@@ -420,7 +460,9 @@ class UsersManagementClientTest extends TestCase
     public function test_listDepartment()
     {
 
-        $data = $this->client->listDepartment('619dff691e2bdae581c80fbd');
+        $data = $this->client->listDepartment('614fd9ae42b192fc32823b10');
+        $json_string = json_encode($data);
+        echo $json_string;
         parent::assertNotEmpty($data);
     }
 

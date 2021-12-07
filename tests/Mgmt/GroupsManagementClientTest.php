@@ -93,6 +93,16 @@ class GroupsManagementClientTest extends TestCase
         $this->assertNotNull($group);
     }
 
+    public function testlistUsers()
+    {
+        $code = $this->randomString();
+        $group = $this->groupsManagement->create($code, "group name");
+        $group = $this->groupsManagement->addUsers($group->code, ['614fd9ae42b192fc32823b10']);
+        $res = $this->groupsManagement->listUsers($code);
+
+        $this->assertNotNull($res);
+    }
+
     public function testListAuthorizedResources()
     {
         $result = $this->groupsManagement->listAuthorizedResources('aaa','default','API');

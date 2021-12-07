@@ -60,6 +60,7 @@ class AuthenticationClientTest extends TestCase
         $username = $this->randomString();
         $user = $this->userclient->create((new CreateUserInput())->withEmail($email)->withPassword($password)->withUsername($username));
         $res = $this->authclient->loginByUsername($username,$password);
+        $result = $this->authclient->checkLoginStatus($res->token);
         parent::assertNotNull($res);
     }
 
@@ -185,6 +186,14 @@ class AuthenticationClientTest extends TestCase
         parent::assertNotNull($res);
     }
 
+
+    public function test_checkPasswordStrength()
+    {
+
+        $res = $this->authclient->checkPasswordStrength('houyworking@163.com');
+        parent::assertNotNull($res);
+    }
+
     public function test_unbindEmail()
     {
         $email = $this->randomString() . '@gmail.com';
@@ -236,8 +245,8 @@ class AuthenticationClientTest extends TestCase
         //$res = $this->authclient->loginByUsername($username,$password);
         $res = $this->authclient->updatePhone('','','18856980539','');
 
-        parent::assertNotNull($res);
     }
+
 
     public function test_listApplications()
     {
