@@ -8,7 +8,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "ext-openssl": "*",
-    "guzzlehttp/guzzle": "^7.2",
+    "guzzlehttp/guzzle": "^6.5.5",
     "firebase/php-jwt": "^5.2"
   },
   "require-dev": {
@@ -23,10 +23,12 @@
   ],
   "autoload": {
     "files": [
-      "src/Types/CodeGen.v2.php"
+      "src/Types/CodeGen.v2.php",
+      "src/Auth/Types/Type.php"
     ],
     "classmap": [
-      "src/Types/CodeGen.v2.php"
+      "src/Types/CodeGen.v2.php",
+      "src/Auth/Types/Type.php"
     ],
     "psr-4": {
       "Authing\\": "src/"
