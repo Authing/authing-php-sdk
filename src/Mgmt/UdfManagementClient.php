@@ -44,6 +44,7 @@ class UdfManagementClient
     public function paginate($targetType)
     {
         $param = new UdfParam($targetType);
+        $result = $this->client->request($param->createRequest());
         return (array)$this->client->request($param->createRequest());
     }
 

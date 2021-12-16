@@ -37,7 +37,7 @@ class AgreementManagementClient {
 
     public function delete(string $appId, int $agreementId)
     {
-        $this->client->httpDelete("api/v2/applications/$appId/agreements/$agreementId");
+        $this->client->httpDelete("/api/v2/applications/$appId/agreements/$agreementId");
         return true;
     }
 

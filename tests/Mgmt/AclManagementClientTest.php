@@ -1,4 +1,6 @@
 <?php
+include_once '..\config\TestConfig.php';
+include_once '..\..\src\Mgmt\AclManagementClient.php';
 use Test\TestConfig;
 use PHPUnit\Framework\TestCase;
 use Authing\Mgmt\ManagementClient;
@@ -18,57 +20,84 @@ class AclManagementClientTest extends TestCase
 
     public function setUp(): void
     {
-        $moduleName = str_replace('ClientTest', '', __CLASS__);
-        $manageConfig = (object) TestConfig::getConfig('Management');
-        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
-        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
-        $this->aclManagement = $management->acls();
+        $this->client = $management->acls();
+    }
+
+    private function randomString()
+    {
+        return rand() . '';
     }
 
     public function test_Allow()
     {
-        $userId = $this->_testConfig->userId;
-        $resource = $this->_testConfig->resource;
-        $action = $this->_testConfig->action[0];
-        
-        $res = $this->client->allow($userId, $resource, $action);
-        parent::assertNotNull($res);
-    }
+//        $userId = $this->_testConfig->userId;
+//        $resource = $this->_testConfig->resource;
+//        $action = $this->_testConfig->action[0];
+
+        $result = $this->client->allow("614fd9ae42b192fc32823b10", "DATA:60a80d980ad35323242fcd8b", "5584:read");
+        parent::assertEquals(200,$result->code);    }
 
     public function test_IsAllowed()
     {
-        $userId = $this->_testConfig->userId;
-        $resource = $this->_testConfig->resource;
-        $action = $this->_testConfig->action[0];
+//        $userId = $this->_testConfig->userId;
+//        $resource = $this->_testConfig->resource;
+//        $action = $this->_testConfig->action[0];
 
-        $flag = $this->client->isAllowed($userId, $resource, $action);
-        parent::assertTrue($flag);
+        $result = $this->client->isAllowed("614fd9ae42b192fc32823b10", "DATA:60a80d980ad35323242fcd8b", "5584:read",[
+        'namespace' => 'pf3nn'
+        ]);
+        parent::assertEquals(false,$result);
     }
 
     public function test_listAuthorizedResources()
     {
-        $targetType = PolicyAssignmentTargetType::USER;
-        $userId = $this->_testConfig->testUserId;
-        $namespace = 'default';
-        $res = $this->client->listAuthorizedResources($targetType, $userId, $namespace);
+
+        $res = $this->client->listAuthorizedResources('614fd9ae42b192fc32823b10', 'default', 'DATA');
         parent::assertNotNull($res);
     }
 
     public function test_getResources()
     {
-        // $namespace = $this->_testConfig->namespace;
+        $res = $this->client->getResources([
+            'namespace' => 'pf3nn',
+            'type' => 'DATA',
+        ]);
+        parent::assertNotNull($res);
 
     }
 
-    public function test_createResource()
+
+    public function test_createResourceBatch()
     {
-        $code = 'test_code';
+        $code = $this->randomString();
         $type = 'DATA';
         $description = 'description';
         $actions = [
             (object) [
-                'name' => 'test_create_resource',
+                'name' => $code,
+                'description' => 'test_create_resource description'
+            ]
+        ];
+        $res = $this->client->createResourceBatch([[
+            'code' => $code,
+            'type' => $type,
+            'description' => $description,
+            'actions' => $actions,
+            'namespace' => 'default',
+        ]]);
+        parent::assertNotNull($res);
+    }
+
+    public function test_createResource()
+    {
+        $code = $this->randomString();
+        $type = 'DATA';
+        $description = 'description';
+        $actions = [
+            (object) [
+                'name' => $code,
                 'description' => 'test_create_resource description'
             ]
         ];
@@ -82,9 +111,61 @@ class AclManagementClientTest extends TestCase
         parent::assertNotNull($res);
     }
 
+    public function test_getResourceById(){
+        $code = $this->randomString();
+        $type = 'DATA';
+        $description = 'description';
+        $actions = [
+            (object) [
+                'name' => $code,
+                'description' => 'test_create_resource description'
+            ]
+        ];
+        $res = $this->client->createResource([
+            'code' => $code,
+            'type' => $type,
+            'description' => $description,
+            'actions' => $actions,
+            'namespace' => 'default',
+        ]);
+
+        $ress = $this->client->getResourceById(['id'=>$res->id]);
+        $json_string = json_encode($ress);
+        echo $json_string;
+        parent::assertNotNull($res);
+
+    }
+
+    public function test_getResourceByCode(){
+        $code = $this->randomString();
+        $type = 'DATA';
+        $description = 'description';
+        $actions = [
+            (object) [
+                'name' => $code,
+                'description' => 'test_create_resource description'
+            ]
+        ];
+        $res = $this->client->createResource([
+            'code' => $code,
+            'type' => $type,
+            'description' => $description,
+            'actions' => $actions,
+            'namespace' => 'default',
+        ]);
+
+        $ress = $this->client->getResourceByCode(['code'=>$res->code,'namespace'=>'default']);
+        $json_string = json_encode($ress);
+        echo $json_string;
+        parent::assertNotNull($res);
+
+    }
+
+
+
     public function test_updateResource()
     {
-        $code = 'test_code';
+        $code = 'test_createresource';
         $type = 'DATA';
         $description = 'new description';
         $actions = [
@@ -104,38 +185,41 @@ class AclManagementClientTest extends TestCase
 
     public function test_deleteResource()
     {
-        $targetType = PolicyAssignmentTargetType::USER;
-        $userId = $this->_testConfig->testUserId;
-        $namespace = 'default';
-        $oldResource = $this->client->listAuthorizedResources($targetType, $userId, $namespace);
-        $flag = $this->client->deleteResource('test_code', 'default');
+//        $targetType = PolicyAssignmentTargetType::USER;
+//        $userId = $this->_testConfig->testUserId;
+//        $namespace = 'default';
+//        $oldResource = $this->client->listAuthorizedResources($targetType, $userId, $namespace);
+        $flag = $this->client->deleteResource('test_createresource1', 'default');
+        print_r($flag);
         parent::assertTrue($flag);
-        $newResource =
-        $this->client->listAuthorizedResources($targetType, $userId, $namespace);
-        parent::assertNotSame($oldResource->data, $newResource->data);
+//        $newResource =
+//        $this->client->listAuthorizedResources($targetType, $userId, $namespace);
+//        parent::assertNotSame($oldResource->data, $newResource->data);
     }
 
     public function test_programmaticAccessAccountList()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->aclManagement->programmaticAccessAccountList($appId);
-        parent::assertNotEmpty($res);
-        parent::assertNotEmpty($res->data);
-        parent::assertEquals(gettype($res->data->list), 'array');
+        $res = $this->client->programmaticAccessAccountList('61319680ea8b30c9ca9ca071');
+
+        $json_string = json_encode($res);
+        echo $json_string;
+        parent::assertNotNull($res);
     }
 
+    /**
+     * 添加编程访问账号
+     */
     public function test_createProgrammaticAccessAccount()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->client->createProgrammaticAccessAccount($appId);
+        $res = $this->client->createProgrammaticAccessAccount('61319680ea8b30c9ca9ca071');
+        $json_string = json_encode($res);
+        echo $json_string;
         parent::assertNotNull($res);
     }
 
     public function test_disableProgrammaticAccessAccount()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->client->createProgrammaticAccessAccount($appId);
-        parent::assertNotNull($res);
+        $res = $this->client->createProgrammaticAccessAccount('61319680ea8b30c9ca9ca071');
         $data = $this->client->disableProgrammaticAccessAccount($res->id);
         parent::assertNotNull($data);
     }
@@ -148,10 +232,7 @@ class AclManagementClientTest extends TestCase
 
     public function test_deleteNamespace()
     {
-        $oldNamespaces = $this->client->listNamespaces();
-        parent::assertNotNull($oldNamespaces);
 
-        $namespace = $oldNamespaces->data[0];
         $flag = $this->client->deleteNamespace($namespace);
         parent::assertTrue($flag);
     }
@@ -167,17 +248,16 @@ class AclManagementClientTest extends TestCase
 
     public function test_updateNamespace()
     {
-        $code = Utils::randomString(5);
-        $name = Utils::randomString(5);
-        $description = Utils::randomString(5);
-        $res = $this->client->createNamespace($code, $name, $description);
-        parent::assertNotNull($res);
+//        $code = Utils::randomString(5);
+//        $name = Utils::randomString(5);
+//        $description = Utils::randomString(5);
+//        $res = $this->client->createNamespace($code, $name, $description);
+//        parent::assertNotNull($res);
 
-        $newName =
-        Utils::randomString(5);
-        $res = $this->client->updateNamespace($code, [
-            'name' => $newName,
-            // 'description' => $description
+        $newName = 'updatenamespace';
+        $res = $this->client->updateNamespace('pf3nn', [
+            'name' => 'newname',
+            'description' => 'description'
         ]);
         parent::assertNotNull($res);
         parent::assertEquals($res->name, $newName);
@@ -185,100 +265,124 @@ class AclManagementClientTest extends TestCase
 
     public function test_deleteProgrammaticAccessAccount()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->client->createProgrammaticAccessAccount($appId);
-        parent::assertNotNull($res);
-        $res = $this->client->deleteProgrammaticAccessAccount($res->id);
+        $res = $this->client->deleteProgrammaticAccessAccount('61319680ea8b30c9ca9ca071');
         parent::assertTrue($res);
     }
 
     public function test_enableProgrammaticAccessAccount()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->client->createProgrammaticAccessAccount($appId);
-        parent::assertNotNull($res);
-        $res = $this->client->enableProgrammaticAccessAccount($res->id);
-        parent::assertNotNull($res);
+        $this->client->createProgrammaticAccessAccount('61319680ea8b30c9ca9ca071');
+        $res = $this->client->enableProgrammaticAccessAccount('61319680ea8b30c9ca9ca071');
+        parent::assertEquals(200,$res->code);
     }
 
     public function test_refreshProgrammaticAccessAccountSecret()
     {
-        $appId = $this->_testConfig->appId;
-        $res = $this->client->createProgrammaticAccessAccount($appId);
-        parent::assertNotNull($res);
-        $data = $this->client->refreshProgrammaticAccessAccountSecret($res->id);
-        parent::assertEquals($res->id, $data->id);
-        // parent::assertNotEquals($res->id, $data->id);
+        $data = $this->client->refreshProgrammaticAccessAccountSecret('61319680ea8b30c9ca9ca071');
+        parent::assertEquals(200, $data->code);
     }
 
     public function test_authorizeResource()
     {
-        // $this->client->authorizeResource();
+        $AuthorizeResourceOpt = ['targetType'=>'USER','targetIdentifier'=>'614fd9ae42b192fc32823b10','actions'=>['aa','bb']];
+         $result = $this->client->authorizeResource(['namespace'=>'default',
+             'resource'=>'test_createresource',
+             'opts'=>$AuthorizeResourceOpt
+             ]);
+         $jsonstring = json_encode($result);
+         echo $jsonstring;
+        parent::assertEquals(200, $result->code);
     }
 
     public function test_getAuthorizedTargets()
     {
+//        $data = [
+//            'namespace' => '6063f88dabb536e9a23a6c80',
+//            'resource' => 'book',
+//            'resourceType' => 'DATA',
+//            'actions' => (object)[
+//                'op' => 'OR',
+//                'list' => ['write', 'read']
+//            ],
+//            'targetType' => 'USER'
+//        ];
         $data = [
-            'namespace' => '6063f88dabb536e9a23a6c80',
-            'resource' => 'book',
+         'namespace' => 'mycode',
+         'resource' => '5584',
+         'resourceType' => 'DATA',
+            'actions' => (object)[
+                'op' => 'OR',
+                'list' => ['write', 'read']
+            ],
+         'targetType' => PolicyAssignmentTargetType::USER
+     ];
+        $res = $this->client->getAuthorizedTargets([
+            'namespace' => 'mycode',
+            'resource' => '5584',
             'resourceType' => 'DATA',
             'actions' => (object)[
                 'op' => 'OR',
                 'list' => ['write', 'read']
             ],
-            'targetType' => 'USER'
-        ];
-        $res = $this->client->getAuthorizedTargets($data);
+            'targetType' => PolicyAssignmentTargetType::USER
+        ]);
         parent::assertNotNull($res);
     }
 
     public function test_listResourcePermissions()
     {
-        $data = $this->client->listResourcePermissions();
+        $AuthorizeResourceOpt = ['targetType'=>'USER','targetIdentifier'=>'614fd9ae42b192fc32823b10','actions'=>['aa','bb']];
+        $data = $this->client->listResourcePermissions($AuthorizeResourceOpt);
         parent::assertNotNull($data);
     }
 
     public function test_listResources()
     {
         $res = $this->client->listResources([
-            'namespace' => 'default'
+            'namespace' => 'default',
+            'type' => 'DATA'
         ]);
         parent::assertNotNull($res);
     }
 
-    public function test_getAccessPolicies()
+    public function test_denyAccess()
     {
-        # code...
-    }
+        $AuthorizeResourceOpt = ['appId'=>'61319680ea8b30c9ca9ca071', 'targetType'=>'USER','targetIdentifiers'=>'614fd9ae42b192fc32823b10',
+        'namespace'=>'defalut'];
 
-    public function test_enableAccessPolicy()
-    {
-        # code...
-    }
-
-    public function test_disableAccessPolicy()
-    {
-        # code...
+        $data = $this->client->denyAccess($AuthorizeResourceOpt);
+        parent::assertEquals(200,$data->code);
     }
 
     public function test_deleteAccessPolicy()
     {
-        # code...
+        $AuthorizeResourceOpt = ['appId'=>'61319680ea8b30c9ca9ca071', 'targetType'=>'USER','targetIdentifiers'=>'614fd9ae42b192fc32823b10',
+            'namespace'=>'defalut'];
+        $data = $this->client->deleteAccessPolicy($AuthorizeResourceOpt);
+        parent::assertEquals(200,$data->code);
     }
+
+    public function test_enableAccessPolicy()
+    {
+        $AuthorizeResourceOpt = ['appId'=>'61319680ea8b30c9ca9ca071', 'targetType'=>'USER','targetIdentifiers'=>'614fd9ae42b192fc32823b10',
+            'namespace'=>'defalut'];
+        $data = $this->client->enableAccessPolicy($AuthorizeResourceOpt);
+        parent::assertEquals(200,$data->code);
+    }
+
+    public function test_getAccessPolicies()
+    {
+        $AuthorizeResourceOpt = ['appId'=>'61319680ea8b30c9ca9ca071'];
+        $data = $this->client->getAccessPolicies($AuthorizeResourceOpt);
+        parent::assertNotNull($data);
+    }
+
 
     public function test_allowAccess()
     {
-        # code...
+        $AuthorizeResourceOpt = ['appId'=>'61319680ea8b30c9ca9ca071', 'targetType'=>'USER','targetIdentifiers'=>'614fd9ae42b192fc32823b10',
+            'namespace'=>'defalut'];
+        $data = $this->client->allowAccess($AuthorizeResourceOpt);
+        parent::assertNotNull($data);
     }
-
-    public function test_denyAccess()
-    {
-        # code...
-    }
-
-    public function test_updateDefaultAccessPolicy()
-    {
-        # code...
-    }
-
 }

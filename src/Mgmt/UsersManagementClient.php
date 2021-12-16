@@ -9,6 +9,7 @@ use Authing\Types\AssignRoleParam;
 use Authing\Types\CheckLoginStatusParam;
 use Authing\Types\CommonMessage;
 use Authing\Types\CreateUserInput;
+use Authing\Types\SendFirstLoginVerifyEmailParam;
 use Authing\Types\CreateUserParam;
 use Authing\Types\DeleteUserParam;
 use Authing\Types\DeleteUsersParam;
@@ -32,6 +33,7 @@ use Authing\Types\RemoveUdvParam;
 use Authing\Types\RemoveUserFromGroupParam;
 use Authing\Types\RevokeRoleParam;
 use Authing\Types\SearchUserParam;
+use Authing\Types\SetUdfValueBatchInput;
 use Authing\Types\SetUdfValueBatchParam;
 use Authing\Types\SetUdvParam;
 use Authing\Types\UDFTargetType;
@@ -41,6 +43,7 @@ use Authing\Types\UpdateUserInput;
 use Authing\Types\UpdateUserParam;
 use Authing\Types\User;
 use Authing\Types\UserDefinedData;
+use Authing\Types\UserDefinedDataInput;
 use Authing\Types\UserParam;
 use Authing\Types\UsersParam;
 use Authing\Types\SetUdvBatchParam;
@@ -120,10 +123,18 @@ class UsersManagementClient
      * @return User
      * @throws Exception
      */
-    public function update($userId, $input)
+//    public function update($userId, $input)
+//    {
+//        $input->password = $this->client->encrypt($input->password);
+//        $param = (new UpdateUserParam($input))->withId($userId);
+//        return $this->client->request($param->createRequest());
+//    }
+    public function update(string $userId, UpdateUserInput $updates)
     {
-        $input->password = $this->client->encrypt($input->password);
-        $param = (new UpdateUserParam($input))->withId($userId);
+        if(isset($updates->password)) {
+            $updates->password = $this->client->encrypt($updates->password);
+        }
+        $param = (new UpdateUserParam($updates))->withId($userId);
         return $this->client->request($param->createRequest());
     }
 
@@ -293,9 +304,14 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function addRoles($userId, $roles)
+//    public function addRoles($userId, $roles)
+//    {
+//        $param = (new AssignRoleParam())->withUserIds([$userId])->withRoleCodes($roles);
+//        return $this->client->request($param->createRequest());
+//    }
+    public function addRoles(string $userId, array $roles,string $namespace = 'default')
     {
-        $param = (new AssignRoleParam())->withUserIds([$userId])->withRoleCodes($roles);
+        $param = (new AssignRoleParam())->withUserIds([$userId])->withRoleCodes($roles)->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 
@@ -305,9 +321,14 @@ class UsersManagementClient
      * @return CommonMessage
      * @throws Exception
      */
-    public function removeRoles($userId, $roles)
+//    public function removeRoles($userId, $roles)
+//    {
+//        $param = (new RevokeRoleParam())->withUserIds([$userId])->withRoleCodes($roles);
+//        return $this->client->request($param->createRequest());
+//    }
+    public function removeRoles(string $userId, array $roles, string $namespace = 'default')
     {
-        $param = (new RevokeRoleParam())->withUserIds([$userId])->withRoleCodes($roles);
+        $param = (new RevokeRoleParam())->withUserIds([$userId])->withRoleCodes($roles)->withNamespace($namespace);
         return $this->client->request($param->createRequest());
     }
 
@@ -421,39 +442,76 @@ class UsersManagementClient
         if (count($data) === 0) {
             throw new Error('empty udf value list');
         }
+        $input = [];
         foreach ($data as $key => $value) {
-            $value = json_encode($value);
+            $input [] = (object)[
+                'key' => $key,
+                'value' => json_encode($value)
+            ];
         }
-        array_map(function($item) {
-            return json_encode((object)$item);
-        },$data);
-        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
+        array_map(function ($item) {
+            return (new UserDefinedDataInput($item->key))->withValue($item->value);
+        }, $input);
+        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($input);
         $res = $this->client->request($param->createRequest());
         return $res;
     }
 
-    public function setUdfValueBatch($input)
+//    public function setUdfValue(string $userId, array $data)
+//    {
+//        if (count($data) === 0) {
+//            throw new Error('empty udf value list');
+//        }
+//        foreach ($data as $key => $value) {
+//            $value = json_encode($value);
+//        }
+//        array_map(function($item) {
+//            return json_encode((object)$item);
+//        },$data);
+//        $param = (new SetUdvBatchParam(UDFTargetType::USER, $userId))->withUdvList($data);
+//        $res = $this->client->request($param->createRequest());
+//        return $res;
+//    }
+
+//    public function setUdfValueBatch($input)
+//    {
+//        if (!isset($input) && !is_array($input)) {
+//            throw new Error("userId 为数组 不能为空");
+//        }
+//        foreach ($input as $index => $val) {
+//            foreach ($val as $_key => $_val) {
+//                $_ = new stdClass;
+//                $_->targetId = $val->targetId;
+//                $_->key = $_key;
+//                $_->value = $_val;
+//                array_push($input, $_);
+//            }
+//        }
+//        $param = new SetUdfValueBatchParam("User", $input);
+//        $res = $this->client->request($param->createRequest());
+//        return $res;
+//    }
+
+    public function setUdfValueBatch(array $input)
     {
         if (!isset($input) && !is_array($input)) {
             throw new Error("userId 为数组 不能为空");
         }
+        $att = [];
         foreach ($input as $index => $val) {
-            foreach ($val as $_key => $_val) {
-                $_ = new stdClass;
-                $_->targetId = $val->targetId;
-                $_->key = $_key;
-                $_->value = $_val;
-                array_push($input, $_);
+            foreach ($val['data'] as $_key => $_val) {
+                $_ = new SetUdfValueBatchInput($val['userId'], $_key, json_encode($_val));
+                $att [] = $_;
             }
         }
-        $param = new SetUdfValueBatchParam("User", $input);
+        $param = new SetUdfValueBatchParam(UdfTargetType::USER, $att);
         $res = $this->client->request($param->createRequest());
         return $res;
     }
 
     public function removeUdfValue(string $userId, string $key)
     {
-        $param = new RemoveUdvParam("User", $userId, $key);
+        $param = new RemoveUdvParam("USER", $userId, $key);
         $res = $this->client->request($param->createRequest());
         return true;
     }
@@ -503,6 +561,14 @@ class UsersManagementClient
         return $res;
     }
 
+
+    public function sendFirstLoginVerifyEmail(string $userId, string $appId)
+    {
+        $param = (new SendFirstLoginVerifyEmailParam($userId,$appId));
+        $res = $this->client->request($param->createRequest());
+        return $res;
+    }
+
     public function getUdfValue(string $userId)
     {
         $param = new UdvParam('USER', $userId);
@@ -515,31 +581,45 @@ class UsersManagementClient
         $data = [
             'userIds' => $userIds
         ];
-        $this->client->httpPost('/api/v2/users/kick', $data);
-        $_ = new stdClass();
-        $_->code = 200;
-        $_->message = '强制下线成功';
-        return $_;
+        return $this->client->httpPost('/api/v2/users/kick', $data);
     }
+
+    public function logout(array $options)
+    {
+        $api = '/logout?';
+        if(!empty($options['appId'])){
+            $param = http_build_query([
+                'userId' => $options['userId'],
+                'appId' => $options['appId'],
+            ]);
+        }else{
+            $param = http_build_query([
+                'userId' => $options['userId'],
+            ]);
+        }
+        return $this->client->httpGet($api . $param);
+    }
+
+
 
     public function listUserActions(array $options = [
         'page' =>  1,
         'limit' =>  10,
     ])
     {
-        $api = '/api/v2/analysis/user-action';
+        $api = '/api/v2/analysis/user-action?';
         $param = http_build_query([
             'page' => $options['page'] ?? 1,
             'limit' => $options['limit'] ?? 10,
-            'clientip' => $options['clientip'],
-            'operation_name' => $options['operationName'],
-            'operator_arn' => $options['operatoArn'],
+            'clientip' => $options['clientip'] ?? null,
+            'operation_name' => $options['operationName'] ?? null,
+            'operator_arn' => $options['operatoArn'] ?? null,
         ]);
         $data = $this->client->httpGet($api . $param);
         return $data;
     }
 
-    public function hasRole(string $userId, string $roleCode, string $namespace)
+    public function hasRole(string $userId, string $roleCode, string $namespace = 'default')
     {
         $roleList = $this->listRoles($userId, $namespace);
         if ($roleList->totalCount < 1) {

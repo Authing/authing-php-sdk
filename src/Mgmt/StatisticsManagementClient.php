@@ -40,22 +40,22 @@ class StatisticsManagementClient
         $requestParam->limit = $options->limit ?? 10;
         $params = http_build_query($requestParam);
         $data = $this->client->httpGet("/api/v2/analysis/user-action?$params");
-        ['list' => $list, 'totalCount' => $totalCount] = (array)$data->data;
-        array_map(function ($item) {
-            return (object) [
-                'userpoolId' => $item->userpool_id,
-                'userId' => ($item->user ?? null) && $item->user->id,
-                'username' => ($item->user ?? null) && $item->user->displayName,
-                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
-                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
-                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
-                'operationDesc' => $item->operation_desc,
-                'operationName' => $item->operation_name,
-                'timestamp' => $item->timestamp,
-                'appId' => $item->app_id,
-                'appName' => $item->appName ?? null,
-            ];
-        }, $list);
+        ['list' => $list, 'totalCount' => $totalCount] = (array)$data;
+//        array_map(function ($item) {
+//            return (object) [
+//                'userpoolId' => $item->userpool_id,
+//                'userId' => ($item->user ?? null) && $item->user->id,
+//                'username' => ($item->user ?? null) && $item->user->displayName,
+//                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
+//                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
+//                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
+//                'operationDesc' => $item->operation_desc,
+//                'operationName' => $item->operation_name,
+//                'timestamp' => $item->timestamp,
+//                'appId' => $item->app_id,
+//                'appName' => $item->appName ?? null,
+//            ];
+//        }, $list);
         return (object)[
             'list' => $list,
             'totalCount' => $totalCount,
@@ -80,24 +80,23 @@ class StatisticsManagementClient
         $requestParam->limit = $options->limit ?? 10;
         $params = http_build_query($requestParam);
         $data = $this->client->httpGet("/api/v2/analysis/user-action?$params");
-
-        ['list' => $list, 'totalCount' => $totalCount] = (array)$data->data;
-        array_map(function ($item) {
-            return (object) [
-                'userpoolId' => $item->userpool_id,
-                'operatorType' => $item->operator_type ?? null,
-                'userId' => ($item->user ?? null) && $item->user->id,
-                'username' => ($item->user ?? null) && $item->user->displayName,
-                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
-                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
-                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
-                'operationDesc' => $item->operation_desc,
-                'operationName' => $item->operation_name,
-                'timestamp' => $item->timestamp,
-                'appId' => $item->app_id,
-                'appName' => $item->appName ?? null,
-            ];
-        }, $list);
+        ['list' => $list, 'totalCount' => $totalCount] = (array)$data;
+//        array_map(function ($item) {
+//            return (object) [
+//                'userpoolId' => $item->userpool_id??null,
+//                'operatorType' => $item->operator_type ?? null,
+//                'userId' => ($item->user ?? null) && $item->user->id,
+//                'username' => ($item->user ?? null) && $item->user->displayName,
+//                'cityName' => ($item->geoip ?? null) && $item->geoip->city_name,
+//                'regionName' => ($item->geoip ?? null) && $item->geoip->region_name,
+//                'clientIp' => ($item->geoip ?? null) && $item->geoip->ip,
+//                'operationDesc' => $item->operation_desc,
+//                'operationName' => $item->operation_name,
+//                'timestamp' => $item->timestamp,
+//                'appId' => $item->app_id,
+//                'appName' => $item->appName ?? null,
+//            ];
+//        }, $list);
         return (object)[
             'list' => $list,
             'totalCount' => $totalCount,

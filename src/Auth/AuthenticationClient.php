@@ -13,6 +13,7 @@ use Authing\Types\CommonMessage;
 use Authing\Types\RegisterProfile;
 use Authing\Types\EmailScene;
 use Authing\Types\GetUserRolesParam;
+use Authing\Types\ResetPasswordByFirstLoginTokenParam;
 use Authing\Types\JWTTokenStatus;
 use Authing\Types\ListUserAuthorizedResourcesParam;
 use Authing\Types\LoginByEmailInput;
@@ -333,16 +334,21 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByEmail(string $email, string $password, array $options = [])
+    public function loginByEmail($email, $password, array $options = [])
     {
+        $clientIp = null;
+        $context = null;
+        $params = null;
+        $autoRegister = null;
+        $captchaCode = null;
         extract($options);
         $password = $this->encrypt($password);
         $input = (new LoginByEmailInput($email, $password))
-            ->withClientIp($clientIp ?? null)
-            ->withContext($context ?? null)
-            ->withParams($params ?? null)
-            ->withAutoRegister($autoRegister ?? null)
-            ->withCaptchaCode($captchaCode ?? null);
+            ->withClientIp($clientIp ?? '')
+            ->withContext($context ?? '')
+            ->withParams($params ?? '')
+            ->withAutoRegister($autoRegister ?? '')
+            ->withCaptchaCode($captchaCode ?? '');
         $param = new LoginByEmailParam($input);
         $user = $this->request($param->createRequest());
         $this->setCurrentUser($user);
@@ -401,16 +407,21 @@ class AuthenticationClient extends BaseClient
      * @return User
      * @throws Exception
      */
-    public function loginByPhonePassword(string $phone, string $password, array $options = [])
+    public function loginByPhonePassword($phone, $password, array $options = [])
     {
+        $clientIp = null;
+        $context = null;
+        $params = null;
+        $autoRegister = null;
+        $captchaCode = null;
         extract($options);
         $password = $this->encrypt($password);
         $input = (new LoginByPhonePasswordInput($phone, $password))
-            ->withClientIp($clientIp ?? null)
-            ->withContext($context ?? null)
-            ->withParams($params ?? null)
+            ->withClientIp($clientIp ?? '')
+            ->withContext($context ?? '')
+            ->withParams($params ?? '')
             ->withAutoRegister($autoRegister ?? false)
-            ->withCaptchaCode($captchaCode ?? null);
+            ->withCaptchaCode($captchaCode ?? '');
 
         $param = new LoginByPhonePasswordParam($input);
         $user = $this->request($param->createRequest());
@@ -471,6 +482,15 @@ class AuthenticationClient extends BaseClient
         $param = (new ResetPasswordParam($code, $newPassword))->withPhone($phone);
         return $this->request($param->createRequest());
     }
+
+    public function ResetPasswordByFirstLoginToken(string $token,string $password)
+    {
+        $newPassword = $this->encrypt($password);
+        $param = (new ResetPasswordByFirstLoginTokenParam($token, $newPassword));
+        return $this->request($param->createRequest());
+    }
+
+
 
     /**
      * 通过邮箱验证码重置密码
@@ -723,6 +743,7 @@ class AuthenticationClient extends BaseClient
 
     public function loginByLdap($username, $password)
     {
+        $options = null;
         if (!isset($username, $password)) {
             throw new Exception("请输入必要的参数");
         } else {
@@ -798,7 +819,7 @@ class AuthenticationClient extends BaseClient
     public function listAuthorizedResources($namespace, $opts = [])
     {
         $resourceType = null;
-        if (count($opts) > 0) {
+        if ((is_array($opts) ? count($opts) : 0) > 0) {
             $resourceType = $opts['resourceType'];
         }
         $user = $this->getCurrentUser();
@@ -1003,7 +1024,7 @@ class AuthenticationClient extends BaseClient
         if (count($options) === 0) {
             throw new Error(
                 '请在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
-                // '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数或者在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
+            // '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数或者在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
             );
         }
         $this->options->accessKey
@@ -1295,7 +1316,6 @@ class AuthenticationClient extends BaseClient
             return $res;
         }
         if ($this->options->tokenEndPointAuthMethod === 'none') {
-            echo '+++++' . $refreshToken;
             $res = $this->_getNewAccessTokenByRefreshTokenWithNone($refreshToken);
             return $res;
         }
@@ -1514,7 +1534,7 @@ class AuthenticationClient extends BaseClient
         ]);
 
         $res = $this->httpSend($req);
-        list($valid, $username) = explode('\n', $res);
+        [$valid, $username] = explode('\n', (string)$res);
         if ($valid === 'yes') {
             if ($username) {
                 return [
@@ -1538,7 +1558,7 @@ class AuthenticationClient extends BaseClient
     public function unbindEmail()
     {
         $param = new UnbindEmailParam();
-        $user = $this->request($param->createRequest())->unbindEmail;
+        $user = $this->request($param->createRequest());
         $this->setCurrentUser($user);
         return $user;
     }
@@ -1616,12 +1636,12 @@ class AuthenticationClient extends BaseClient
             throw new Error('accessToken 和 idToken 只能传入一个，不能同时传入');
         }
         if (!empty($options->idToken)) {
-            $api = "/api/v2/oidc/validate_token?id_token=$$options->idToken";
+            $api = "/api/v2/oidc/validate_token?id_token={$options->idToken}";
             $req = new Request('GET', $api);
             $data = $this->httpSend($req);
             return $data;
         } elseif (!empty($options->accessToken)) {
-            $api = "/api/v2/oidc/validate_token?access_token=$$options->accessToken";
+            $api = "/api/v2/oidc/validate_token?access_token={$options->accessToken}";
             $req = new Request('GET', $api);
             $data = $this->httpSend($req);
             return $data;

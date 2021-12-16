@@ -1,5 +1,6 @@
 <?php
-
+include_once '..\config\TestConfig.php';
+include_once '..\..\src\Mgmt\UdfManagementClient.php';
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\UdfManagementClient;
 use Authing\Types\UDFDataType;
@@ -11,17 +12,14 @@ class UdfManagementClientTest extends TestCase
     /**
      * @var UdfManagementClient
      */
-    private $udfManagement;
-    private $_testConfig;
+    private $client;
+
 
     public function setUp(): void
     {
-        $moduleName = str_replace('ClientTest', '', __CLASS__);
-        $manageConfig = (object) TestConfig::getConfig('Management');
-        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
-        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
-        $this->udfManagement = $management->udf();
+        $this->client = $management->udfs();
     }
 
     public function testPaginate()
@@ -43,11 +41,21 @@ class UdfManagementClientTest extends TestCase
         $this->assertEquals(200, $message->code);
     }
 
+    public function test_setUdvBatch()
+    {
+        $data = $this->client->setUdvBatch(UDFTargetType::USER, '614fd9ae42b192fc32823b10', [
+            (object) [
+                'key' => 'test',
+                'value' => 'this is value',
+            ],
+        ]);
+        parent::assertNotNull($data);
+    }
+
+
     public function testListUdv()
     {
-        $udfTargetType = UDFTargetType::NODE;
-        $targetId = $this->_testConfig->nodeId;
-        $data = $this->udfManagement->listUdv($udfTargetType, $targetId);
+        $data = $this->client->listUdv(UDFTargetType::USER, '614fd9ae42b192fc32823b10');
         parent::assertNotNull($data);
     }
 

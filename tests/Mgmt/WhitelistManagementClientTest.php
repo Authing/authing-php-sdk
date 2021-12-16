@@ -1,6 +1,6 @@
 <?php
-
-
+include_once '..\config\TestConfig.php';
+include_once '..\..\src\Mgmt\WhitelistManagementClient.php';
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\WhitelistManagementClient;
 use Authing\Types\WhitelistType;
@@ -19,10 +19,9 @@ class WhitelistManagementClientTest extends TestCase
 
     public function setUp(): void
     {
-        $management = new ManagementClient("59f86b4832eb28071bdd9214", "4b880fff06b080f154ee48c9e689a541");
-        $management->setHost("http://localhost:3000");
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
-        $this->client = $management->whitelist();
+        $this->client = $management->whitelists();
     }
 
     public function testPaginate() {
@@ -31,15 +30,14 @@ class WhitelistManagementClientTest extends TestCase
     }
 
     public function testAdd() {
-        $this->client->add(WhitelistType::EMAIL, ["test@test.com"]);
-        $list = $this->client->paginate(WhitelistType::EMAIL);
-        $this->assertEquals(true, sizeof($list) == 1);
+        $result = $this->client->add(WhitelistType::EMAIL, ["testa@test.com"]);
+        $this->assertNotNull($result);
     }
 
     public function testRemove() {
         $this->client->remove(WhitelistType::EMAIL, ["test@test.com"]);
         $list = $this->client->paginate(WhitelistType::EMAIL);
-        $this->assertEquals(true, sizeof($list) == 0);
+        $this->assertNotNull($list);
     }
 
     public function testEnable() {

@@ -1,4 +1,6 @@
 <?php
+include_once '..\config\TestConfig.php';
+include_once '..\..\src\Mgmt\StatisticsManagementClient.php';
 use Authing\Mgmt\ManagementClient;
 use Authing\Mgmt\StatisticsManagementClient;
 use PHPUnit\Framework\TestCase;
@@ -12,14 +14,10 @@ class StatisticsManagementClientTest extends TestCase
      */
     private $statisticsManagement;
 
-    private $_testConfig;
 
     public function setUp(): void
     {
-        $moduleName = str_replace('ClientTest', '', __CLASS__);
-        $manageConfig = (object) TestConfig::getConfig('Management');
-        $this->_testConfig = (object) TestConfig::getConfig($moduleName);
-        $management = new ManagementClient($manageConfig->userPoolId, $manageConfig->userPoolSercet);
+        $management = new ManagementClient('6131967faf2eb55a2b7cebcc', '4c829dbf3a29bcfcb2019017045c714f');
         $management->requestToken();
         $this->statisticsManagement = $management->statistics();
     }

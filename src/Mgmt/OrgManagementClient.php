@@ -2,7 +2,15 @@
 
 namespace Authing\Mgmt;
 
+use Authing\Types\AddMemberParam;
+use Authing\Types\AddNodeV2Param;
+use Authing\Types\MoveMembersParam;
+use Authing\Types\RemoveMemberParam;
+use Authing\Types\SearchNodesParam;
+use Authing\Types\UpdateNodeParam;
 use Error;
+use FluentTraversable\FluentTraversable;
+use FluentTraversable\Semantics\is;
 use stdClass;
 use Exception;
 use Authing\Types\Org;
@@ -71,6 +79,49 @@ class OrgManagementClient
         return $this->client->request($param->createRequest());
     }
 
+    public static function buildTree1($data)
+    {
+        $rootNodes = array_filter($data, function ($item) {
+            if (!isset($item->root)) {
+                return false;
+            }
+            return $item->root == true;
+        });
+        $mapChildren = function ($childId) use ($data, &$mapChildren) {
+            /* $node = array_filter($data, function ($item) use ($childId) {
+                return $item->id == $childId;
+            }); */
+            $node =
+                FluentTraversable::from($data)
+                    ->filter(function ($item) use ($childId) {
+                        return $item->id == $childId;
+                    })
+                    ->toArray();
+            if (count($node) > 0) {
+                $node = (object)$node[0];
+            } else {
+                $node = (object)[];
+            }
+            if (is_array($node->children) && count($node->children) > 0) {
+                $childs = array_map($mapChildren, $node->children);
+                $childs = array_filter($childs, function ($item) {
+                    return $item;
+                });
+            }
+            return $node;
+        };
+        $tree = FluentTraversable::from($rootNodes)
+            ->map(function ($node) use (&$mapChildren) {
+                $node->children = FluentTraversable::from($node->children)
+                    ->map($mapChildren)
+                    ->filter(is::notNull())
+                    ->toArray();
+                return $node;
+            })
+            ->toArray();
+        return $tree[0];
+    }
+
     private function buildTree($org)
     {
         $org->tree = $this->buildTree(json_encode($org->nodes));
@@ -90,26 +141,39 @@ class OrgManagementClient
         $param = (new OrgsParam())->withPage($page)->withLimit($limit);
         // TODO: buildTree
         $data = $this->client->request($param->createRequest());
-        $orgs = $data->orgs;
-        $list = $orgs->list;
-        array_map(function ($org) {
-            $this->buildTree($org);
-        }, $list);
-        $totalCount = $orgs->totalCount;
-        $_ = new stdClass;
-        $_->totalCount = $totalCount;
-        $_->list = $list;
-        return $_;
+//        $orgs = $data->orgs;
+//        $list = $orgs->list;
+//        array_map(function ($org) {
+//            $this->buildTree($org);
+//        }, $list);
+//        $totalCount = $orgs->totalCount;
+//        $_ = new stdClass;
+//        $_->totalCount = $totalCount;
+//        $_->list = $list;
+//        return $_;
+        return $data;
     }
 
-    public function addNode($orgId, $parentNodeId, $data)
+    public function addNode(string $orgId, string $parentNodeId, array $data)
     {
-
+        $data = (object)$data;
+        $param = (new AddNodeV2Param($orgId, $data->name))
+            ->withParentNodeId($parentNodeId)
+            ->withCode($data->code ?? null)
+            ->withDescription($data->description ?? null)
+            ->withNameI18n($data->nameI18n ?? null)
+            ->withOrder($data->order ?? null);
+        return $this->client->request($param->createRequest());
     }
 
-    public function updateNode($id, $updates)
+    public function updateNode(string $id, array $updates)
     {
-
+        $updates = (object)$updates;
+        $param = (new UpdateNodeParam($id))
+            ->withCode($updates->code ?? null)
+            ->withDescription($updates->description ?? null)
+            ->withName($updates->name ?? null);
+        return $this->client->request($param->createRequest());
     }
 
     /**
@@ -149,11 +213,17 @@ class OrgManagementClient
      * @return Org
      * @throws Exception
      */
-    public function moveNode($orgId, $nodeId, $targetParentId)
+//    public function moveNode($orgId, $nodeId, $targetParentId)
+//    {
+//        $param = new MoveNodeParam($orgId, $nodeId, $targetParentId);
+//        // TODO: buildTree
+//        return $this->client->request($param->createRequest());
+//    }
+    public function moveNode(string $orgId, string $nodeId, string $targetParentId)
     {
         $param = new MoveNodeParam($orgId, $nodeId, $targetParentId);
-        // TODO: buildTree
-        return $this->client->request($param->createRequest());
+        $data = $this->client->request($param->createRequest());
+        return $this->buildTree($data);
     }
 
     /**
@@ -197,31 +267,88 @@ class OrgManagementClient
         return $this->client->request($param->createRequest());
     }
 
-    public function importByJson($json)
+    public function importByJson(array $json)
     {
-
+        $res = $this->client->httpPost('/api/v2/orgs/import', [
+            'filetype' => 'json',
+            'file' => $json,
+        ]);
+        return $res;
     }
 
-    public function addMembers($nodeId, $userIds)
+    public function addMembers(string $nodeId, array $userIds)
     {
-
+        $param = new AddMemberParam($nodeId, $userIds);
+        $res = $this->client->request($param->createRequest());
+        return $res->users;
     }
 
-    /**
-     * 获取节点成员
-     *
-     * @param $param NodeByIdWithMembersParam
-     * @return PaginatedUsers
-     * @throws Exception
-     */
-    public function listMembers($param)
+
+//    public function listMembers($param)
+//    {
+//        return $this->client->request($param->createRequest())->users;
+//    }
+    public function listMembers(string $nodeId, array $options)
     {
-        return $this->client->request($param->createRequest())->users;
+        $options = (object)$options;
+        $param = (new NodeByIdWithMembersParam($nodeId))
+            ->withIncludeChildrenNodes($options->includeChildrenNodes ?? false)
+            ->withLimit($options->limit ?? 10)
+            ->withPage($options->page ?? 1);
+        $res = $this->client->request($param->createRequest())->users;
+        return $res;
     }
 
-    public function removeMembers($nodeId, $userIds)
+    public function searchNodes(string $keyword)
     {
+        $param = new SearchNodesParam($keyword);
+        return $this->client->request($param->createRequest());
+    }
 
+    public function startSync(array $options)
+    {
+        $options = (object)$options;
+        $providerType = $options->providerType ?? null;
+        $adConnectorId = $options->adConnectorId ?? null;
+        $url = '';
+        $body = [];
+        if ($providerType === 'wechatwork') {
+            $url = 'connections/enterprise/wechatwork/start-sync';
+        }
+        switch ($providerType) {
+            case 'wechatwork':
+                $url = 'connections/enterprise/wechatwork/start-sync';
+                break;
+            case 'dingtalk':
+                $url = 'connections/enterprise/dingtalk/start-sync';
+                break;
+            case 'ad':
+                if ($adConnectorId) {
+                    throw new Exception('must provider adConnectorId');
+                }
+                $url = 'api/v2/ad/sync';
+                $body = [
+                    'connectionId' => $adConnectorId
+                ];
+                break;
+        }
+        $res = $this->client->httpPost($url, $body);
+        return true;
+    }
+
+    public function moveMembers(array $options)
+    {
+        $options = (object)$options;
+        $param = new MoveMembersParam($options->userIds, $options->sourceNodeId, $options->targetNodeId);
+        $this->client->request($param->createRequest());
+        return true;
+    }
+
+    public function removeMembers(string $nodeId, array $userIds)
+    {
+        $param = (new RemoveMemberParam($userIds))->withNodeId($nodeId);
+        $res = $this->client->request($param->createRequest());
+        return $res;
     }
 
     public function getNodeById(string $nodeId)
@@ -240,7 +367,7 @@ class OrgManagementClient
     public function setMainDepartment(string $userId, string $departmentId)
     {
         $param = (new SetMainDepartmentParam($userId))->withDepartmentId($departmentId);
-        $data = $this->client->request($param->createRequest())->setMainDepartment;
+        $data = $this->client->request($param->createRequest());
         return $data;
     }
 
@@ -250,29 +377,42 @@ class OrgManagementClient
         return $data;
     }
 
-    public function listAuthorizedResourcesByNodeId(string $nodeId, string $namespace, array $options = [])
+    public function listAuthorizedResourcesByNodeId(string $nodeId, string $namespace, string $resourceType = '')
     {
-        $resourceType = $options['resourceType'] ?? new stdClass;
         $param = (new ListNodeByIdAuthorizedResourcesParam($nodeId))->withNamespace($namespace)->withResourceType($resourceType);
-        $node = $this->client->request($param->createRequest())->nodeById;
+        $node = $this->client->request($param->createRequest());
         if (!$node) {
             throw new Error('组织机构节点不存在');
         }
-        $list = $node->authorizedResources->list;
-        $totalCount = $node->authorizedResources->totalCount;
-
-        $list = formatAuthorizedResources($list);
-        $_ = new stdClass;
-        $_->list = $list;
-        $_->totalCount = $totalCount;
-        return $_;
+//        $totalCount = $node->authorizedResources->totalCount;
+//
+//        $list = ($node->authorizedResources);
+        return $node;
     }
+
+//    public function listAuthorizedResourcesByNodeId(string $nodeId, string $namespace, array $options = [])
+//    {
+//        $resourceType = $options['resourceType'] ?? new stdClass;
+//        $param = (new ListNodeByIdAuthorizedResourcesParam($nodeId))->withNamespace($namespace)->withResourceType($resourceType);
+//        $node = $this->client->request($param->createRequest())->nodeById;
+//        if (!$node) {
+//            throw new Error('组织机构节点不存在');
+//        }
+//        $list = $node->authorizedResources->list;
+//        $totalCount = $node->authorizedResources->totalCount;
+//
+//        $list = formatAuthorizedResources($list);
+//        $_ = new stdClass;
+//        $_->list = $list;
+//        $_->totalCount = $totalCount;
+//        return $_;
+//    }
 
     public function listAuthorizedResourcesByNodeCode(string $orgId, string $code, string $namespace, array $options = [])
     {
         $resourceType = $options['resourceType'] ?? new stdClass;
         $param = (new ListNodeByCodeAuthorizedResourcesParam($orgId, $code))->withNamespace($namespace)->withResourceType($resourceType);
-        $node = $this->client->request($param->createRequest())->nodeById;
+        $node = $this->client->request($param->createRequest());
         if (!$node) {
             throw new Error('组织机构节点不存在');
         }

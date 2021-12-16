@@ -50,9 +50,8 @@ class PoliciesManagementClient
      */
     public function paginate($page = 1, $limit = 10, $excludeDefault = true)
     {
-        // TODO： 这个方法有问题
-        // $param = (new PoliciesParam())->withPage($page)->withLimit($limit)->withExcludeDefault($excludeDefault);
-        // return $this->client->request($param->createRequest());
+         $param = (new PoliciesParam())->withPage($page)->withLimit($limit);
+         return $this->client->request($param->createRequest());
     }
 
     /**
@@ -167,6 +166,36 @@ class PoliciesManagementClient
     public function removeAssignments($policies, $targetType, $targetIdentifiers)
     {
         $param = (new RemovePolicyAssignmentsParam($policies, $targetType))->withTargetIdentifiers($targetIdentifiers);
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 启用策略授权
+     *
+     * @param $policie string 策略 code
+     * @param $targetType PolicyAssignmentTargetType 可选值为 USER (用户) 和 ROLE (角色)
+     * @param $targetIdentifier string 用户 id 列表和角色 code 列表
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function enableAssignment($policie, $targetType, $targetIdentifier)
+    {
+        $param = (new EnablePolicyAssignmentParam($policie, $targetType,$targetIdentifier));
+        return $this->client->request($param->createRequest());
+    }
+
+    /**
+     * 禁用策略授权
+     *
+     * @param $policie string 策略 code
+     * @param $targetType PolicyAssignmentTargetType 可选值为 USER (用户) 和 ROLE (角色)
+     * @param $targetIdentifier string 用户 id 列表和角色 code 列表
+     * @return CommonMessage
+     * @throws Exception
+     */
+    public function disableAssignment($policie, $targetType, $targetIdentifier)
+    {
+        $param = (new DisbalePolicyAssignmentParam($policie, $targetType,$targetIdentifier));
         return $this->client->request($param->createRequest());
     }
 }
