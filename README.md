@@ -169,4 +169,4 @@ try {
 
 ## 获取帮助
 
-Join us on Gitter: [#authing-chat](https://gitter.im/authing-chat/community)
+Join us on Gitter: [#authing-chat](https://forum.authing.cn/)
