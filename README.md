@@ -22,6 +22,8 @@ $ composer require authing-sdk/php
 初始化 `ManagementClient` 需要使用 `accessKeyId` 和 `accessKeySecret` 参数:
 
 ```php
+require 'vendor/autoload.php';
+
 use Authing\ManagementClient;
 
 $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
