@@ -68,6 +68,8 @@ $user = $management->getUser(array(
 一般情况下，如果你只需要判断操作是否成功，只需要对比一下 `code` 是否为 200。如果非 200，可以在代码中通抛出异常或者任何你项目中使用的异常处理方式。
 
 ```php
+require 'vendor/autoload.php';
+
 use Authing\ManagementClient;
 
 $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
