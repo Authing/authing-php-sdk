@@ -33,7 +33,7 @@ $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECR
 
 - `accessKeyId`: Authing 用户池 ID；
 - `accessKeySecret`: Authing 用户池密钥；
-- `host`: Authing 服务器地址，默认为 `https://api.authing.cn`。如果你使用的是 Authing 公有云版本，请忽略此参数。如果你使用的是私有化部署的版本，此参数必填，格式如下: https://authing-api.my-authing-service.com（最后不带斜杠 / ）。
+- `host`: Authing 服务器地址，默认为 `https://api.authing.cn`。如果你使用的是 Authing 公有云版本，请忽略此参数。如果你使用的是私有化部署的版本，此参数必填，格式如下: https://authing-api.my-authing-service.com （最后不带斜杠 / ）。
 
 ## 快速开始
 
