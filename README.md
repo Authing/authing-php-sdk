@@ -87,7 +87,7 @@ try {
 ```
 
 ## 私有化部署
-如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 host，如：
+如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 `host`，如：
 
 ```php
 require "vendor/autoload.php";
