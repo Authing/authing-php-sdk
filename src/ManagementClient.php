@@ -13,17 +13,20 @@ namespace Authing;
 class ManagementClient
 {
     public $_url;
+    public $_accessKey;
     public $_accessToken;
+    public $_accessTokenTime;
     public $_userPoolID;
 
     /**
      * 构造函数
      */
-    public function __construct($accessKeyId,  $accessKeySecret, $host = "https://api.authing.cn")
+    public function __construct($accessKeyId, $accessKeySecret, $host = "https://api.authing.cn")
     {
         $this->_url = $host;
+        $this->_accessKey = array("id" => $accessKeyId, "secret" => $accessKeySecret);
         $this->_userPoolID = $accessKeyId;
-        $this->_accessToken = $this->getManagementToken(array("accessKeyId" => $accessKeyId, "accessKeySecret" => $accessKeySecret))["data"]["access_token"];
+        $this->_getAccessToken($this->_accessKey["id"],  $this->_accessKey["secret"]);
     }
 
     /**
@@ -122,6 +125,13 @@ class ManagementClient
      */
     private function _requests($parMethod, $parGet = [], $parPost = [])
     {
+        //过期
+        if (!empty($this->_accessTokenTime) and time() >= $this->_accessTokenTime) {
+            $this->_accessToken = null;
+            $this->_accessTokenTime = null;
+            $this->_getAccessToken($this->_accessKey["id"],  $this->_accessKey["secret"]);
+        }
+        //请求
         $varHearder = array(
             "Authorization" => "Bearer " . $this->_accessToken,
             "Content-type: application/json",
@@ -131,6 +141,16 @@ class ManagementClient
         );
         $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHearder);
         return $varReq;
+    }
+
+    /**
+     * 获取 Access Token
+     */
+    private function _getAccessToken($accessKeyId,  $accessKeySecret)
+    {
+        $tempAccessToken = $this->getManagementToken(array("accessKeyId" => $accessKeyId, "accessKeySecret" => $accessKeySecret))["data"];
+        $this->_accessToken = $tempAccessToken["access_token"];
+        $this->_accessTokenTime = time() + $tempAccessToken["expires_in"];
     }
 
     /**
