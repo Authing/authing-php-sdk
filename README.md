@@ -90,6 +90,8 @@ try {
 如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 host，如：
 
 ```php
+require 'vendor/autoload.php';
+
 use Authing\ManagementClient;
 
 $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET", "https://authing-api.my-authing-service.com");
