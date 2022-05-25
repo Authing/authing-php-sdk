@@ -19,7 +19,7 @@ $ composer require authing-sdk/php
 
 ## 初始化
 
-初始化 `ManagementClient` 需要使用 `accessKeyId` 和 `accessKeySecret` 参数，应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次）:
+初始化 `ManagementClient` 需要使用 `accessKeyId` 和 `accessKeySecret` 参数，并且应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次）:
 
 ```php
 require "vendor/autoload.php";
