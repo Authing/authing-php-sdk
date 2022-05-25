@@ -15,7 +15,7 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Han Fengkun",
+            "name": "HanFengkun",
             "email": "hanfengkun@authing.cn"
         }
     ],
@@ -27,12 +27,6 @@
     "autoload-dev": {
         "psr-4": {
             "Test\\": "test/"
-        }
-    },
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://mirrors.aliyun.com/composer/"
         }
     }
 }
