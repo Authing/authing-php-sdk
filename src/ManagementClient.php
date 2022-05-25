@@ -126,7 +126,6 @@ class ManagementClient
             "Authorization" => "Bearer " . $this->_accessToken,
             "Content-type: application/json",
             "x-authing-userpool-id" => $this->_userPoolID,
-            "x-authing-app-id" => "",
             "x-authing-request-from" => "SDK",
             "x-authing-sdk-version" => "php:" . phpversion(),
         );
@@ -466,7 +465,7 @@ class ManagementClient
      * @description 强制下线用户
      * @param Array<string> appIds 必须，APP ID 集合
      * @param string userId 必须，用户 ID
-     * @return IsUserExistsRespDto
+     * @return IsSuccessRespDto
      */
     public function kickUsers($option = array()) {
         // 组装请求
