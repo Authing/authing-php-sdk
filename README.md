@@ -22,7 +22,7 @@ $ composer require authing-sdk/php
 初始化 `ManagementClient` 需要使用 `accessKeyId` 和 `accessKeySecret` 参数:
 
 ```php
-require 'vendor/autoload.php';
+require "vendor/autoload.php";
 
 use Authing\ManagementClient;
 
@@ -68,7 +68,7 @@ $user = $management->getUser(array(
 一般情况下，如果你只需要判断操作是否成功，只需要对比一下 `code` 是否为 200。如果非 200，可以在代码中通抛出异常或者任何你项目中使用的异常处理方式。
 
 ```php
-require 'vendor/autoload.php';
+require "vendor/autoload.php";
 
 use Authing\ManagementClient;
 
@@ -90,7 +90,7 @@ try {
 如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 host，如：
 
 ```php
-require 'vendor/autoload.php';
+require "vendor/autoload.php";
 
 use Authing\ManagementClient;
 
