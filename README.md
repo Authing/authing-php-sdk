@@ -1,13 +1,10 @@
-# Authing - PHP
+# authing-php-sdk
 
-<div align="center">
-  <a href="https://authing.cn"><img width="300" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg?a=1" alt="Authing" /></a>
-</div>
-<br/>
-
-[Authing](https://authing.cn/) 身份云 `PHP` 语言客户端，包含 [Authing Open API](https://core.authing.cn/openapi/) 所有 Management API 的请求方法。
+[Authing](https://authing.cn/) 身份云 `PHP` 语言客户端，包含 [Authing Open API](https://api.authing.cn/openapi/) 所有 Management API 的请求方法。
 
 此模块一般用于后端服务器环境，以管理员（Administrator）的身份进行请求，用于管理 Authing 用户、角色、分组、组织机构等资源；一般来说，你在 Authing 控制台中能做的所有操作，都能用此模块完成。
+
+如果你需要以终端用户（End User）的身份进行登录、注册、登出等操作，请使用 [Guard](https://www.authing.cn/learn/guard) .
 
 ## 安装
 
@@ -54,7 +51,7 @@ $user = $management->getUser(array(
 ));
 ```
 
-完整的接口列表，你可以在 [Authing Open API](https://api.authing.cn/openapi/) 中获取。
+完整的接口列表，你可以在 [Authing Open API](https://api.authing.cn/openapi/) 和 [SDK 文档](https://authing-open-api.readme.io/reference/php) 中获取。
 
 ## 错误处理
 
@@ -87,6 +84,7 @@ try {
 ```
 
 ## 私有化部署
+
 如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 `host`，如：
 
 ```php
@@ -99,6 +97,14 @@ $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECR
 
 如果你不清楚如何获取，可以联系 Authing IDaaS 服务管理员。
 
+## 资源
+
+- [官网](https://authing.cn)
+- [开发者文档](https://docs.authing.cn/)
+- [Authing Open API](https://api.authing.cn/openapi/)
+- [SDK 文档](https://authing-open-api.readme.io/reference/php)
+- [论坛社区](https://forum.authing.cn/)
+
 ## 获取帮助
 
-有任何疑问，可以在 Authing 论坛提出: [#authing-chat](https://forum.authing.cn/)
+有任何疑问，可以在 Authing 论坛提出: [#authing-forum](https://forum.authing.cn/)
