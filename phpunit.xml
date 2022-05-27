@@ -5,7 +5,4 @@
             <directory>test</directory>
         </testsuite>
     </testsuites>
-    <logging>
-        <log type="testdox-html" target="test/report.html"/>
-    </logging>
 </phpunit>
