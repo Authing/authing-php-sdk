@@ -1173,9 +1173,9 @@ class ManagementClient
     }
 
     /**
-     * 移除分配的角色
-     * @summary 移除分配的角色
-     * @description 移除分配的角色，被分配者可以是用户，可以是部门
+     * 批量移除分配的角色
+     * @summary 批量移除分配的角色
+     * @description 批量移除分配的角色，被分配者可以是用户，可以是部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param Array<TargetDto> targets 必须，移除角色的目标列表
      * @param Array<RoleCodeDto> roles 必须，角色信息列表
@@ -2329,7 +2329,7 @@ class ManagementClient
      * @param string code 必须，权限分组唯一标志符
      * @param string name 可选，权限分组名称，默认 null
      * @param string description 可选，权限分组描述信息，默认 null
-     * @return ResourceDto
+     * @return NamespaceRespDto
      */
     public function createNamespace($option = array()) {
         // 组装请求
