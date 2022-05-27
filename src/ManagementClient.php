@@ -32,7 +32,7 @@ class ManagementClient
     /**
      * 是否为JSON数据
      */
-    static function _isJson($parString)
+    private static function _isJson($parString)
     {
         json_decode($parString);
         return (json_last_error() == JSON_ERROR_NONE);
@@ -41,7 +41,7 @@ class ManagementClient
     /**
      * 规范请求
      */
-    static function _formatRequest($varRequest)
+    private static function _formatRequest($varRequest)
     {
         foreach ($varRequest as $forKey => $forValue) {
             if ($forValue === null) {
@@ -54,7 +54,7 @@ class ManagementClient
     /**
      * 请求HTTP
      */
-    static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
+    private static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
     {
         //配置-其他
         $varCurlObject = curl_init();
