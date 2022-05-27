@@ -81,6 +81,11 @@ class ManagementClient
         //配置-POST
         curl_setopt($varCurlObject, CURLOPT_POST, $parPost != [] ? true : false);
         if ($parPost != []) {
+            foreach ($parPost as $forKey => $forValue) {
+                if (is_bool($forValue)) {
+                    $parPost[$forKey] = ($forValue) ? "true" : "false";
+                }
+            }
             curl_setopt($varCurlObject, CURLOPT_POSTFIELDS, http_build_query($parPost));
         }
         //配置-Header
