@@ -216,7 +216,7 @@ class ManagementClient
      * @summary 批量获取用户信息
      * @description 根据用户 id 批量获取用户信息
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string userIds 必须，用户 ID 数组
+     * @param Array<string> userIds 必须，用户 ID 数组
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
@@ -319,7 +319,7 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return PrincipalAuthenticationInfoPaginatedRespDto
      */
-    public function getPrincipalAuthenticationInfo($option = array()) {
+    public function getUserPrincipalAuthenticationInfo($option = array()) {
         // 组装请求
         $varGet = array(
             "user_id" => $option["userId"],
@@ -340,7 +340,7 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function resetPrincipalAuthenticationInfo($option = array()) {
+    public function resetUserPrincipalAuthenticationInfo($option = array()) {
         // 组装请求
         $varPost = array(
             "userId" => $option["userId"],
@@ -426,7 +426,7 @@ class ManagementClient
      * @param Array<string> userIds 必须，用户 ID 列表
      * @return IsSuccessRespDto
      */
-    public function deleteUserBatch($option = array()) {
+    public function deleteUsersBatch($option = array()) {
         // 组装请求
         $varPost = array(
             "userIds" => $option["userIds"],
@@ -866,7 +866,7 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return GroupPaginatedRespDto
      */
-    public function getGroupList($option = array()) {
+    public function listGroups($option = array()) {
         // 组装请求
         $varGet = array(
             "page" => $option["page"],
@@ -913,7 +913,7 @@ class ManagementClient
      * @param Array<CreateGroupReqDto> list 必须，批量分组
      * @return GroupListRespDto
      */
-    public function createGroupBatch($option = array()) {
+    public function createGroupsBatch($option = array()) {
         // 组装请求
         $varPost = array(
             "list" => $option["list"],
@@ -961,7 +961,7 @@ class ManagementClient
      * @param Array<string> codeList 必须，分组 code 列表
      * @return IsSuccessRespDto
      */
-    public function deleteGroups($option = array()) {
+    public function deleteGroupsBatch($option = array()) {
         // 组装请求
         $varPost = array(
             "codeList" => $option["codeList"],
@@ -1561,24 +1561,24 @@ class ManagementClient
      * @description 修改部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string parentDepartmentId 必须，父部门 id
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
      * @param string code 可选，部门识别码，默认 null
      * @param string leaderUserId 可选，部门负责人 ID，默认 null
      * @param string name 可选，部门名称，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
+     * @param string parentDepartmentId 可选，父部门 id，默认 null
      * @return DepartmentSingleRespDto
      */
     public function updateDepartment($option = array()) {
         // 组装请求
         $varPost = array(
             "organizationCode" => $option["organizationCode"],
-            "parentDepartmentId" => $option["parentDepartmentId"],
             "departmentId" => $option["departmentId"],
             "code" => $option["code"],
             "leaderUserId" => $option["leaderUserId"],
             "name" => $option["name"],
             "departmentIdType" => $option["departmentIdType"],
+            "parentDepartmentId" => $option["parentDepartmentId"],
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
