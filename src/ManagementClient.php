@@ -1432,6 +1432,7 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationName 必须，组织名称
      * @param string organizationCode 必须，组织 code
+     * @param string description 可选，组织描述信息，默认 null
      * @param string openDepartmentId 可选，根节点自定义 ID，默认 null
      * @return OrganizationSingleRespDto
      */
@@ -1441,6 +1442,7 @@ class ManagementClient
         $varPost = array(
             "organizationName" => $option["organizationName"],
             "organizationCode" => $option["organizationCode"],
+            "description" => $option["description"],
             "openDepartmentId" => $option["openDepartmentId"],
         );
         // 规范请求
@@ -1457,6 +1459,7 @@ class ManagementClient
      * @description 修改顶层组织机构
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
+     * @param string description 可选，组织描述信息，默认 null
      * @param string openDepartmentId 可选，根节点自定义 ID，默认 null
      * @param string organizationNewCode 可选，新组织 code，默认 null
      * @param string organizationName 可选，组织名称，默认 null
@@ -1467,6 +1470,7 @@ class ManagementClient
         // 组装请求
         $varPost = array(
             "organizationCode" => $option["organizationCode"],
+            "description" => $option["description"],
             "openDepartmentId" => $option["openDepartmentId"],
             "organizationNewCode" => $option["organizationNewCode"],
             "organizationName" => $option["organizationName"],
@@ -1533,9 +1537,10 @@ class ManagementClient
      * @description 创建部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string name 必须，部门名称
      * @param string parentDepartmentId 必须，父部门 id
+     * @param string name 必须，部门名称
      * @param string openDepartmentId 可选，自定义部门 ID，用于存储自定义的 ID，默认 null
+     * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
      * @param string leaderUserId 可选，部门负责人 ID，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
@@ -1546,9 +1551,10 @@ class ManagementClient
         // 组装请求
         $varPost = array(
             "organizationCode" => $option["organizationCode"],
-            "name" => $option["name"],
             "parentDepartmentId" => $option["parentDepartmentId"],
+            "name" => $option["name"],
             "openDepartmentId" => $option["openDepartmentId"],
+            "description" => $option["description"],
             "code" => $option["code"],
             "leaderUserId" => $option["leaderUserId"],
             "departmentIdType" => $option["departmentIdType"],
@@ -1568,6 +1574,7 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
+     * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
      * @param string leaderUserId 可选，部门负责人 ID，默认 null
      * @param string name 可选，部门名称，默认 null
@@ -1581,6 +1588,7 @@ class ManagementClient
         $varPost = array(
             "organizationCode" => $option["organizationCode"],
             "departmentId" => $option["departmentId"],
+            "description" => $option["description"],
             "code" => $option["code"],
             "leaderUserId" => $option["leaderUserId"],
             "name" => $option["name"],
@@ -1626,7 +1634,7 @@ class ManagementClient
      * @summary 搜索部门
      * @description 搜索部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string search 必须，搜索关键词
+     * @param string keywords 必须，搜索关键词
      * @param string organizationCode 必须，组织 code
      * @return DepartmentListRespDto
      */
@@ -1634,7 +1642,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "search" => $option["search"],
+            "keywords" => $option["keywords"],
             "organizationCode" => $option["organizationCode"],
         );
         // 规范请求
@@ -1672,13 +1680,14 @@ class ManagementClient
     }
 
     /**
-     * 获取部门直属成员列表
-     * @summary 获取部门直属成员列表
-     * @description 获取部门直属成员列表
+     * 获取部门成员列表
+     * @summary 获取部门成员列表
+     * @description 获取部门成员列表
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门 id，根部门传 `root`
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean includeChildrenDepartments 可选，是否包含子部门的成员，默认 false
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
@@ -1693,6 +1702,7 @@ class ManagementClient
             "organizationCode" => $option["organizationCode"],
             "departmentId" => $option["departmentId"],
             "departmentIdType" => $option["departmentIdType"],
+            "includeChildrenDepartments" => $option["includeChildrenDepartments"],
             "page" => $option["page"],
             "limit" => $option["limit"],
             "withCustomData" => $option["withCustomData"],
@@ -2432,7 +2442,7 @@ class ManagementClient
      * @summary 批量获取权限分组详情
      * @description 批量获取权限分组详情
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string codeList 必须，资源 code 列表,批量可以使用逗号分隔
+     * @param Array<string> codeList 必须，资源 code 列表,批量可以使用逗号分隔
      * @return NamespaceListRespDto
      */
     public function getNamespacesBatch($option = array())
