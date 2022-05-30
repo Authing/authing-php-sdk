@@ -74,7 +74,13 @@ class ManagementClient
         //配置-Get
         if ($parGet != []) {
             foreach ($parGet as $forKey => $forValue) {
-                $varGet[] = "$forKey=$forValue";
+                if (is_array($forValue)) {
+                    foreach ($forValue as $forValues) {
+                        $varGet[] = "$forKey=$forValues";
+                    }
+                } else {
+                    $varGet[] = "$forKey=$forValue";
+                }
             }
             curl_setopt($varCurlObject, CURLOPT_URL, $parUrl . "?" . implode("&", $varGet));
         }
