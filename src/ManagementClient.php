@@ -162,12 +162,11 @@ class ManagementClient
      * @param string accessKeyId 必须，AccessKey ID: 如果是以用户池全局 AK/SK 初始化，为用户池 ID；如果是以协作管理员的 AK/SK 初始化，为协作管理员的 AccessKey ID。
      * @return GetManagementTokenRespDto
      */
-    public function getManagementToken($option = array())
-    {
+    public function getManagementToken($option = array()) {
         // 组装请求
         $varPost = array(
-            "accessKeySecret" => $option["accessKeySecret"],
-            "accessKeyId" => $option["accessKeyId"],
+            "accessKeySecret" => isset($option["accessKeySecret"]) ? $option["accessKeySecret"] : null,
+            "accessKeyId" => isset($option["accessKeyId"]) ? $option["accessKeyId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -192,18 +191,17 @@ class ManagementClient
      * @param string externalId 可选，原系统 ID
      * @return UserSingleRespDto
      */
-    public function getUser($option = array())
-    {
+    public function getUser($option = array()) {
         // 组装请求
         $varGet = array(
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
-            "userId" => $option["userId"],
-            "phone" => $option["phone"],
-            "email" => $option["email"],
-            "username" => $option["username"],
-            "externalId" => $option["externalId"],
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "phone" => isset($option["phone"]) ? $option["phone"] : null,
+            "email" => isset($option["email"]) ? $option["email"] : null,
+            "username" => isset($option["username"]) ? $option["username"] : null,
+            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -224,14 +222,13 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserListRespDto
      */
-    public function getUserBatch($option = array())
-    {
+    public function getUserBatch($option = array()) {
         // 组装请求
         $varGet = array(
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
-            "userIds" => $option["userIds"],
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -253,15 +250,14 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
-    public function listUsers($option = array())
-    {
+    public function listUsers($option = array()) {
         // 组装请求
         $varGet = array(
-            "page" => $option["page"],
-            "limit" => $option["limit"],
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -279,11 +275,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IdentityListRespDto
      */
-    public function getUserIdentities($option = array())
-    {
+    public function getUserIdentities($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -302,12 +297,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return RolePaginatedRespDto
      */
-    public function getUserRoles($option = array())
-    {
+    public function getUserRoles($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
-            "namespace" => $option["namespace"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -325,11 +319,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return PrincipalAuthenticationInfoPaginatedRespDto
      */
-    public function getUserPrincipalAuthenticationInfo($option = array())
-    {
+    public function getUserPrincipalAuthenticationInfo($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -347,11 +340,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function resetUserPrincipalAuthenticationInfo($option = array())
-    {
+    public function resetUserPrincipalAuthenticationInfo($option = array()) {
         // 组装请求
         $varPost = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -369,11 +361,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserDepartmentPaginatedRespDto
      */
-    public function getUserDepartments($option = array())
-    {
+    public function getUserDepartments($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -392,12 +383,11 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function setUserDepartment($option = array())
-    {
+    public function setUserDepartment($option = array()) {
         // 组装请求
         $varPost = array(
-            "departments" => $option["departments"],
-            "userId" => $option["userId"],
+            "departments" => isset($option["departments"]) ? $option["departments"] : null,
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -415,11 +405,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return GroupPaginatedRespDto
      */
-    public function getUserGroups($option = array())
-    {
+    public function getUserGroups($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -437,11 +426,10 @@ class ManagementClient
      * @param Array<string> userIds 必须，用户 ID 列表
      * @return IsSuccessRespDto
      */
-    public function deleteUsersBatch($option = array())
-    {
+    public function deleteUsersBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "userIds" => $option["userIds"],
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -459,11 +447,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserMfaSingleRespDto
      */
-    public function getUserMfaInfo($option = array())
-    {
+    public function getUserMfaInfo($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -482,12 +469,11 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return ListArchivedUsersSingleRespDto
      */
-    public function listArchivedUsers($option = array())
-    {
+    public function listArchivedUsers($option = array()) {
         // 组装请求
         $varGet = array(
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -506,12 +492,11 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function kickUsers($option = array())
-    {
+    public function kickUsers($option = array()) {
         // 组装请求
         $varPost = array(
-            "appIds" => $option["appIds"],
-            "userId" => $option["userId"],
+            "appIds" => isset($option["appIds"]) ? $option["appIds"] : null,
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -532,14 +517,13 @@ class ManagementClient
      * @param string externalId 可选，第三方外部 ID，默认 null
      * @return IsUserExistsRespDto
      */
-    public function isUserExists($option = array())
-    {
+    public function isUserExists($option = array()) {
         // 组装请求
         $varPost = array(
-            "username" => $option["username"],
-            "email" => $option["email"],
-            "phone" => $option["phone"],
-            "externalId" => $option["externalId"],
+            "username" => isset($option["username"]) ? $option["username"] : null,
+            "email" => isset($option["email"]) ? $option["email"] : null,
+            "phone" => isset($option["phone"]) ? $option["phone"] : null,
+            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -582,36 +566,35 @@ class ManagementClient
      * @param CreateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserSingleRespDto
      */
-    public function createUser($option = array())
-    {
+    public function createUser($option = array()) {
         // 组装请求
         $varPost = array(
-            "status" => $option["status"],
-            "email" => $option["email"],
-            "passwordEncryptType" => $option["passwordEncryptType"],
-            "phone" => $option["phone"],
-            "phoneCountryCode" => $option["phoneCountryCode"],
-            "username" => $option["username"],
-            "name" => $option["name"],
-            "nickname" => $option["nickname"],
-            "photo" => $option["photo"],
-            "gender" => $option["gender"],
-            "emailVerified" => $option["emailVerified"],
-            "phoneVerified" => $option["phoneVerified"],
-            "birthdate" => $option["birthdate"],
-            "country" => $option["country"],
-            "province" => $option["province"],
-            "city" => $option["city"],
-            "address" => $option["address"],
-            "streetAddress" => $option["streetAddress"],
-            "postalCode" => $option["postalCode"],
-            "externalId" => $option["externalId"],
-            "departmentIds" => $option["departmentIds"],
-            "customData" => $option["customData"],
-            "password" => $option["password"],
-            "tenantIds" => $option["tenantIds"],
-            "identities" => $option["identities"],
-            "options" => $option["options"],
+            "status" => isset($option["status"]) ? $option["status"] : null,
+            "email" => isset($option["email"]) ? $option["email"] : null,
+            "passwordEncryptType" => isset($option["passwordEncryptType"]) ? $option["passwordEncryptType"] : null,
+            "phone" => isset($option["phone"]) ? $option["phone"] : null,
+            "phoneCountryCode" => isset($option["phoneCountryCode"]) ? $option["phoneCountryCode"] : null,
+            "username" => isset($option["username"]) ? $option["username"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "nickname" => isset($option["nickname"]) ? $option["nickname"] : null,
+            "photo" => isset($option["photo"]) ? $option["photo"] : null,
+            "gender" => isset($option["gender"]) ? $option["gender"] : null,
+            "emailVerified" => isset($option["emailVerified"]) ? $option["emailVerified"] : null,
+            "phoneVerified" => isset($option["phoneVerified"]) ? $option["phoneVerified"] : null,
+            "birthdate" => isset($option["birthdate"]) ? $option["birthdate"] : null,
+            "country" => isset($option["country"]) ? $option["country"] : null,
+            "province" => isset($option["province"]) ? $option["province"] : null,
+            "city" => isset($option["city"]) ? $option["city"] : null,
+            "address" => isset($option["address"]) ? $option["address"] : null,
+            "streetAddress" => isset($option["streetAddress"]) ? $option["streetAddress"] : null,
+            "postalCode" => isset($option["postalCode"]) ? $option["postalCode"] : null,
+            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
+            "departmentIds" => isset($option["departmentIds"]) ? $option["departmentIds"] : null,
+            "customData" => isset($option["customData"]) ? $option["customData"] : null,
+            "password" => isset($option["password"]) ? $option["password"] : null,
+            "tenantIds" => isset($option["tenantIds"]) ? $option["tenantIds"] : null,
+            "identities" => isset($option["identities"]) ? $option["identities"] : null,
+            "options" => isset($option["options"]) ? $option["options"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -630,12 +613,11 @@ class ManagementClient
      * @param CreateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserListRespDto
      */
-    public function createUserBatch($option = array())
-    {
+    public function createUserBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
-            "options" => $option["options"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
+            "options" => isset($option["options"]) ? $option["options"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -675,33 +657,32 @@ class ManagementClient
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @return UserSingleRespDto
      */
-    public function updateUser($option = array())
-    {
+    public function updateUser($option = array()) {
         // 组装请求
         $varPost = array(
-            "userId" => $option["userId"],
-            "phoneCountryCode" => $option["phoneCountryCode"],
-            "name" => $option["name"],
-            "nickname" => $option["nickname"],
-            "photo" => $option["photo"],
-            "externalId" => $option["externalId"],
-            "status" => $option["status"],
-            "emailVerified" => $option["emailVerified"],
-            "phoneVerified" => $option["phoneVerified"],
-            "birthdate" => $option["birthdate"],
-            "country" => $option["country"],
-            "province" => $option["province"],
-            "city" => $option["city"],
-            "address" => $option["address"],
-            "streetAddress" => $option["streetAddress"],
-            "postalCode" => $option["postalCode"],
-            "gender" => $option["gender"],
-            "username" => $option["username"],
-            "passwordEncryptType" => $option["passwordEncryptType"],
-            "email" => $option["email"],
-            "phone" => $option["phone"],
-            "password" => $option["password"],
-            "customData" => $option["customData"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "phoneCountryCode" => isset($option["phoneCountryCode"]) ? $option["phoneCountryCode"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "nickname" => isset($option["nickname"]) ? $option["nickname"] : null,
+            "photo" => isset($option["photo"]) ? $option["photo"] : null,
+            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
+            "status" => isset($option["status"]) ? $option["status"] : null,
+            "emailVerified" => isset($option["emailVerified"]) ? $option["emailVerified"] : null,
+            "phoneVerified" => isset($option["phoneVerified"]) ? $option["phoneVerified"] : null,
+            "birthdate" => isset($option["birthdate"]) ? $option["birthdate"] : null,
+            "country" => isset($option["country"]) ? $option["country"] : null,
+            "province" => isset($option["province"]) ? $option["province"] : null,
+            "city" => isset($option["city"]) ? $option["city"] : null,
+            "address" => isset($option["address"]) ? $option["address"] : null,
+            "streetAddress" => isset($option["streetAddress"]) ? $option["streetAddress"] : null,
+            "postalCode" => isset($option["postalCode"]) ? $option["postalCode"] : null,
+            "gender" => isset($option["gender"]) ? $option["gender"] : null,
+            "username" => isset($option["username"]) ? $option["username"] : null,
+            "passwordEncryptType" => isset($option["passwordEncryptType"]) ? $option["passwordEncryptType"] : null,
+            "email" => isset($option["email"]) ? $option["email"] : null,
+            "phone" => isset($option["phone"]) ? $option["phone"] : null,
+            "password" => isset($option["password"]) ? $option["password"] : null,
+            "customData" => isset($option["customData"]) ? $option["customData"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -719,11 +700,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return AppListRespDto
      */
-    public function getUserAccessibleApps($option = array())
-    {
+    public function getUserAccessibleApps($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -741,11 +721,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return AppListRespDto
      */
-    public function getUserAuthorizedApps($option = array())
-    {
+    public function getUserAuthorizedApps($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -764,12 +743,11 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return HasAnyRoleRespDto
      */
-    public function hasAnyRole($option = array())
-    {
+    public function hasAnyRole($option = array()) {
         // 组装请求
         $varPost = array(
-            "roles" => $option["roles"],
-            "userId" => $option["userId"],
+            "roles" => isset($option["roles"]) ? $option["roles"] : null,
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -793,17 +771,16 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return UserLoginHistoryPaginatedRespDto
      */
-    public function getUserLoginHistory($option = array())
-    {
+    public function getUserLoginHistory($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
-            "appId" => $option["appId"],
-            "clientIp" => $option["clientIp"],
-            "start" => $option["start"],
-            "end" => $option["end"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "appId" => isset($option["appId"]) ? $option["appId"] : null,
+            "clientIp" => isset($option["clientIp"]) ? $option["clientIp"] : null,
+            "start" => isset($option["start"]) ? $option["start"] : null,
+            "end" => isset($option["end"]) ? $option["end"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -821,11 +798,10 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserLoggedInAppsListRespDto
      */
-    public function getUserLoggedInApps($option = array())
-    {
+    public function getUserLoggedInApps($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -845,13 +821,12 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return AuthorizedResourcePaginatedRespDto
      */
-    public function getUserAuthorizedResources($option = array())
-    {
+    public function getUserAuthorizedResources($option = array()) {
         // 组装请求
         $varGet = array(
-            "userId" => $option["userId"],
-            "namespace" => $option["namespace"],
-            "resourceType" => $option["resourceType"],
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -869,11 +844,10 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return GroupSingleRespDto
      */
-    public function getGroup($option = array())
-    {
+    public function getGroup($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -892,12 +866,11 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return GroupPaginatedRespDto
      */
-    public function listGroups($option = array())
-    {
+    public function listGroups($option = array()) {
         // 组装请求
         $varGet = array(
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -917,13 +890,12 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return GroupSingleRespDto
      */
-    public function createGroup($option = array())
-    {
+    public function createGroup($option = array()) {
         // 组装请求
         $varPost = array(
-            "description" => $option["description"],
-            "name" => $option["name"],
-            "code" => $option["code"],
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -941,11 +913,10 @@ class ManagementClient
      * @param Array<CreateGroupReqDto> list 必须，批量分组
      * @return GroupListRespDto
      */
-    public function createGroupsBatch($option = array())
-    {
+    public function createGroupsBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -966,14 +937,13 @@ class ManagementClient
      * @param string newCode 可选，分组新的 code，默认 null
      * @return GroupSingleRespDto
      */
-    public function updateGroup($option = array())
-    {
+    public function updateGroup($option = array()) {
         // 组装请求
         $varPost = array(
-            "description" => $option["description"],
-            "name" => $option["name"],
-            "code" => $option["code"],
-            "newCode" => $option["newCode"],
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -991,11 +961,10 @@ class ManagementClient
      * @param Array<string> codeList 必须，分组 code 列表
      * @return IsSuccessRespDto
      */
-    public function deleteGroupsBatch($option = array())
-    {
+    public function deleteGroupsBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "codeList" => $option["codeList"],
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1014,12 +983,11 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return IsSuccessRespDto
      */
-    public function addGroupMembers($option = array())
-    {
+    public function addGroupMembers($option = array()) {
         // 组装请求
         $varPost = array(
-            "userIds" => $option["userIds"],
-            "code" => $option["code"],
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1038,12 +1006,11 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return IsSuccessRespDto
      */
-    public function removeGroupMembers($option = array())
-    {
+    public function removeGroupMembers($option = array()) {
         // 组装请求
         $varPost = array(
-            "userIds" => $option["userIds"],
-            "code" => $option["code"],
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1066,16 +1033,15 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
-    public function listGroupMembers($option = array())
-    {
+    public function listGroupMembers($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1095,13 +1061,12 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return AuthorizedResourceListRespDto
      */
-    public function getGroupAuthorizedResources($option = array())
-    {
+    public function getGroupAuthorizedResources($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
-            "resourceType" => $option["resourceType"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1120,12 +1085,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return RoleSingleRespDto
      */
-    public function getRole($option = array())
-    {
+    public function getRole($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1145,13 +1109,12 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function assignRole($option = array())
-    {
+    public function assignRole($option = array()) {
         // 组装请求
         $varPost = array(
-            "targets" => $option["targets"],
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "targets" => isset($option["targets"]) ? $option["targets"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1171,13 +1134,12 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function revokeRole($option = array())
-    {
+    public function revokeRole($option = array()) {
         // 组装请求
         $varPost = array(
-            "targets" => $option["targets"],
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "targets" => isset($option["targets"]) ? $option["targets"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1197,13 +1159,12 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return RoleAuthorizedResourcePaginatedRespDto
      */
-    public function getRoleAuthorizedResources($option = array())
-    {
+    public function getRoleAuthorizedResources($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
-            "resourceType" => $option["resourceType"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1227,17 +1188,16 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return UserPaginatedRespDto
      */
-    public function listRoleMembers($option = array())
-    {
+    public function listRoleMembers($option = array()) {
         // 组装请求
         $varGet = array(
-            "page" => $option["page"],
-            "limit" => $option["limit"],
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1258,14 +1218,13 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return RoleDepartmentListPaginatedRespDto
      */
-    public function listRoleDepartments($option = array())
-    {
+    public function listRoleDepartments($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1285,13 +1244,12 @@ class ManagementClient
      * @param string description 可选，角色描述，默认 null
      * @return RoleSingleRespDto
      */
-    public function createRole($option = array())
-    {
+    public function createRole($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
-            "description" => $option["description"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1311,13 +1269,12 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return RolePaginatedRespDto
      */
-    public function listRoles($option = array())
-    {
+    public function listRoles($option = array()) {
         // 组装请求
         $varGet = array(
-            "namespace" => $option["namespace"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1336,12 +1293,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteRolesBatch($option = array())
-    {
+    public function deleteRolesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "codeList" => $option["codeList"],
-            "namespace" => $option["namespace"],
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1359,11 +1315,10 @@ class ManagementClient
      * @param Array<RoleListItem> list 必须，角色列表
      * @return IsSuccessRespDto
      */
-    public function createRolesBatch($option = array())
-    {
+    public function createRolesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1384,14 +1339,13 @@ class ManagementClient
      * @param string description 可选，角色描述，默认 null
      * @return IsSuccessRespDto
      */
-    public function updateRole($option = array())
-    {
+    public function updateRole($option = array()) {
         // 组装请求
         $varPost = array(
-            "newCode" => $option["newCode"],
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
-            "description" => $option["description"],
+            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1410,12 +1364,11 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return OrganizationPaginatedRespDto
      */
-    public function listOrganizations($option = array())
-    {
+    public function listOrganizations($option = array()) {
         // 组装请求
         $varGet = array(
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1436,14 +1389,13 @@ class ManagementClient
      * @param string openDepartmentId 可选，根节点自定义 ID，默认 null
      * @return OrganizationSingleRespDto
      */
-    public function createOrganization($option = array())
-    {
+    public function createOrganization($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationName" => $option["organizationName"],
-            "organizationCode" => $option["organizationCode"],
-            "description" => $option["description"],
-            "openDepartmentId" => $option["openDepartmentId"],
+            "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1465,15 +1417,14 @@ class ManagementClient
      * @param string organizationName 可选，组织名称，默认 null
      * @return OrganizationSingleRespDto
      */
-    public function updateOrganization($option = array())
-    {
+    public function updateOrganization($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationCode" => $option["organizationCode"],
-            "description" => $option["description"],
-            "openDepartmentId" => $option["openDepartmentId"],
-            "organizationNewCode" => $option["organizationNewCode"],
-            "organizationName" => $option["organizationName"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
+            "organizationNewCode" => isset($option["organizationNewCode"]) ? $option["organizationNewCode"] : null,
+            "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1491,11 +1442,10 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @return IsSuccessRespDto
      */
-    public function deleteOrganization($option = array())
-    {
+    public function deleteOrganization($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationCode" => $option["organizationCode"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1515,13 +1465,12 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return DepartmentSingleRespDto
      */
-    public function getDepartment($option = array())
-    {
+    public function getDepartment($option = array()) {
         // 组装请求
         $varGet = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1546,18 +1495,17 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
      * @return DepartmentSingleRespDto
      */
-    public function createDepartment($option = array())
-    {
+    public function createDepartment($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationCode" => $option["organizationCode"],
-            "parentDepartmentId" => $option["parentDepartmentId"],
-            "name" => $option["name"],
-            "openDepartmentId" => $option["openDepartmentId"],
-            "description" => $option["description"],
-            "code" => $option["code"],
-            "leaderUserId" => $option["leaderUserId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "leaderUserId" => isset($option["leaderUserId"]) ? $option["leaderUserId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1582,18 +1530,17 @@ class ManagementClient
      * @param string parentDepartmentId 可选，父部门 id，默认 null
      * @return DepartmentSingleRespDto
      */
-    public function updateDepartment($option = array())
-    {
+    public function updateDepartment($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "description" => $option["description"],
-            "code" => $option["code"],
-            "leaderUserId" => $option["leaderUserId"],
-            "name" => $option["name"],
-            "departmentIdType" => $option["departmentIdType"],
-            "parentDepartmentId" => $option["parentDepartmentId"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "leaderUserId" => isset($option["leaderUserId"]) ? $option["leaderUserId"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1613,13 +1560,12 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteDepartment($option = array())
-    {
+    public function deleteDepartment($option = array()) {
         // 组装请求
         $varPost = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1638,12 +1584,11 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @return DepartmentListRespDto
      */
-    public function searchDepartments($option = array())
-    {
+    public function searchDepartments($option = array()) {
         // 组装请求
         $varPost = array(
-            "keywords" => $option["keywords"],
-            "organizationCode" => $option["organizationCode"],
+            "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1663,13 +1608,12 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return DepartmentPaginatedRespDto
      */
-    public function listChildrenDepartments($option = array())
-    {
+    public function listChildrenDepartments($option = array()) {
         // 组装请求
         $varGet = array(
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
-            "organizationCode" => $option["organizationCode"],
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1695,19 +1639,18 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserListRespDto
      */
-    public function listDepartmentMembers($option = array())
-    {
+    public function listDepartmentMembers($option = array()) {
         // 组装请求
         $varGet = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
-            "includeChildrenDepartments" => $option["includeChildrenDepartments"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
-            "withCustomData" => $option["withCustomData"],
-            "withIdentities" => $option["withIdentities"],
-            "withDepartmentIds" => $option["withDepartmentIds"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "includeChildrenDepartments" => isset($option["includeChildrenDepartments"]) ? $option["includeChildrenDepartments"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1727,13 +1670,12 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return UserIdListRespDto
      */
-    public function listDepartmentMemberIds($option = array())
-    {
+    public function listDepartmentMemberIds($option = array()) {
         // 组装请求
         $varGet = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1754,14 +1696,13 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function addDepartmentMembers($option = array())
-    {
+    public function addDepartmentMembers($option = array()) {
         // 组装请求
         $varPost = array(
-            "userIds" => $option["userIds"],
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1782,14 +1723,13 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function removeDepartmentMembers($option = array())
-    {
+    public function removeDepartmentMembers($option = array()) {
         // 组装请求
         $varPost = array(
-            "userIds" => $option["userIds"],
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1809,13 +1749,12 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return DepartmentSingleRespDto
      */
-    public function getParentDepartment($option = array())
-    {
+    public function getParentDepartment($option = array()) {
         // 组装请求
         $varGet = array(
-            "organizationCode" => $option["organizationCode"],
-            "departmentId" => $option["departmentId"],
-            "departmentIdType" => $option["departmentIdType"],
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1833,11 +1772,10 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpListPaginatedRespDto
      */
-    public function listExtIdp($option = array())
-    {
+    public function listExtIdp($option = array()) {
         // 组装请求
         $varGet = array(
-            "tenantId" => $option["tenantId"],
+            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1856,12 +1794,11 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpDetailSingleRespDto
      */
-    public function getExtIdp($option = array())
-    {
+    public function getExtIdp($option = array()) {
         // 组装请求
         $varGet = array(
-            "tenantId" => $option["tenantId"],
-            "id" => $option["id"],
+            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
+            "id" => isset($option["id"]) ? $option["id"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1881,13 +1818,12 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID，默认 null
      * @return ExtIdpSingleRespDto
      */
-    public function createExtIdp($option = array())
-    {
+    public function createExtIdp($option = array()) {
         // 组装请求
         $varPost = array(
-            "type" => $option["type"],
-            "name" => $option["name"],
-            "tenantId" => $option["tenantId"],
+            "type" => isset($option["type"]) ? $option["type"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1906,12 +1842,11 @@ class ManagementClient
      * @param string name 必须，名称
      * @return ExtIdpSingleRespDto
      */
-    public function updateExtIdp($option = array())
-    {
+    public function updateExtIdp($option = array()) {
         // 组装请求
         $varPost = array(
-            "id" => $option["id"],
-            "name" => $option["name"],
+            "id" => isset($option["id"]) ? $option["id"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1929,11 +1864,10 @@ class ManagementClient
      * @param string id 必须，身份源 ID
      * @return IsSuccessRespDto
      */
-    public function deleteExtIdp($option = array())
-    {
+    public function deleteExtIdp($option = array()) {
         // 组装请求
         $varPost = array(
-            "id" => $option["id"],
+            "id" => isset($option["id"]) ? $option["id"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1957,17 +1891,16 @@ class ManagementClient
      * @param string logo 可选，身份源图标，默认 null
      * @return ExtIdpConnDetailSingleRespDto
      */
-    public function createExtIdpConn($option = array())
-    {
+    public function createExtIdpConn($option = array()) {
         // 组装请求
         $varPost = array(
-            "fields" => $option["fields"],
-            "displayName" => $option["displayName"],
-            "identifier" => $option["identifier"],
-            "type" => $option["type"],
-            "extIdpId" => $option["extIdpId"],
-            "loginOnly" => $option["loginOnly"],
-            "logo" => $option["logo"],
+            "fields" => isset($option["fields"]) ? $option["fields"] : null,
+            "displayName" => isset($option["displayName"]) ? $option["displayName"] : null,
+            "identifier" => isset($option["identifier"]) ? $option["identifier"] : null,
+            "type" => isset($option["type"]) ? $option["type"] : null,
+            "extIdpId" => isset($option["extIdpId"]) ? $option["extIdpId"] : null,
+            "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
+            "logo" => isset($option["logo"]) ? $option["logo"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1989,15 +1922,14 @@ class ManagementClient
      * @param boolean loginOnly 可选，是否只支持登录，默认 null
      * @return ExtIdpConnDetailSingleRespDto
      */
-    public function updateExtIdpConn($option = array())
-    {
+    public function updateExtIdpConn($option = array()) {
         // 组装请求
         $varPost = array(
-            "fields" => $option["fields"],
-            "displayName" => $option["displayName"],
-            "id" => $option["id"],
-            "logo" => $option["logo"],
-            "loginOnly" => $option["loginOnly"],
+            "fields" => isset($option["fields"]) ? $option["fields"] : null,
+            "displayName" => isset($option["displayName"]) ? $option["displayName"] : null,
+            "id" => isset($option["id"]) ? $option["id"] : null,
+            "logo" => isset($option["logo"]) ? $option["logo"] : null,
+            "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2015,11 +1947,10 @@ class ManagementClient
      * @param string id 必须，身份源连接 ID
      * @return IsSuccessRespDto
      */
-    public function deleteExtIdpConn($option = array())
-    {
+    public function deleteExtIdpConn($option = array()) {
         // 组装请求
         $varPost = array(
-            "id" => $option["id"],
+            "id" => isset($option["id"]) ? $option["id"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2040,14 +1971,13 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID，默认 null
      * @return IsSuccessRespDto
      */
-    public function changeConnState($option = array())
-    {
+    public function changeConnState($option = array()) {
         // 组装请求
         $varPost = array(
-            "appId" => $option["appId"],
-            "enabled" => $option["enabled"],
-            "id" => $option["id"],
-            "tenantId" => $option["tenantId"],
+            "appId" => isset($option["appId"]) ? $option["appId"] : null,
+            "enabled" => isset($option["enabled"]) ? $option["enabled"] : null,
+            "id" => isset($option["id"]) ? $option["id"] : null,
+            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2065,11 +1995,10 @@ class ManagementClient
      * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组和部门
      * @return CustomFieldListRespDto
      */
-    public function getCustomFields($option = array())
-    {
+    public function getCustomFields($option = array()) {
         // 组装请求
         $varGet = array(
-            "targetType" => $option["targetType"],
+            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2087,11 +2016,10 @@ class ManagementClient
      * @param Array<SetCustomFieldDto> list 必须，自定义字段列表
      * @return CustomFieldListRespDto
      */
-    public function setCustomFields($option = array())
-    {
+    public function setCustomFields($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2112,14 +2040,13 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，当 target_type 为角色的时候需要填写，否则可以忽略。，默认 null
      * @return IsSuccessRespDto
      */
-    public function setCustomData($option = array())
-    {
+    public function setCustomData($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
-            "targetIdentifier" => $option["targetIdentifier"],
-            "targetType" => $option["targetType"],
-            "namespace" => $option["namespace"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
+            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
+            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2139,13 +2066,12 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，当 targetType 为角色的时候需要填写，否则可以忽略。
      * @return GetCustomDataRespDto
      */
-    public function getCustomData($option = array())
-    {
+    public function getCustomData($option = array()) {
         // 组装请求
         $varGet = array(
-            "targetType" => $option["targetType"],
-            "targetIdentifier" => $option["targetIdentifier"],
-            "namespace" => $option["namespace"],
+            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
+            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2168,16 +2094,15 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return ResourceRespDto
      */
-    public function createResource($option = array())
-    {
+    public function createResource($option = array()) {
         // 组装请求
         $varPost = array(
-            "type" => $option["type"],
-            "code" => $option["code"],
-            "description" => $option["description"],
-            "actions" => $option["actions"],
-            "apiIdentifier" => $option["apiIdentifier"],
-            "namespace" => $option["namespace"],
+            "type" => isset($option["type"]) ? $option["type"] : null,
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "actions" => isset($option["actions"]) ? $option["actions"] : null,
+            "apiIdentifier" => isset($option["apiIdentifier"]) ? $option["apiIdentifier"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2196,12 +2121,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function createResourcesBatch($option = array())
-    {
+    public function createResourcesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
-            "namespace" => $option["namespace"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2220,12 +2144,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return ResourceRespDto
      */
-    public function getResource($option = array())
-    {
+    public function getResource($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2244,12 +2167,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return ResourceListRespDto
      */
-    public function getResourcesBatch($option = array())
-    {
+    public function getResourcesBatch($option = array()) {
         // 组装请求
         $varGet = array(
-            "namespace" => $option["namespace"],
-            "codeList" => $option["codeList"],
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2270,14 +2192,13 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return ResourcePaginatedRespDto
      */
-    public function listResources($option = array())
-    {
+    public function listResources($option = array()) {
         // 组装请求
         $varGet = array(
-            "namespace" => $option["namespace"],
-            "type" => $option["type"],
-            "page" => $option["page"],
-            "limit" => $option["limit"],
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "type" => isset($option["type"]) ? $option["type"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2300,16 +2221,15 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' type 可选，资源类型，如数据、API、按钮、菜单，默认 null
      * @return ResourceRespDto
      */
-    public function updateResource($option = array())
-    {
+    public function updateResource($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
-            "description" => $option["description"],
-            "actions" => $option["actions"],
-            "apiIdentifier" => $option["apiIdentifier"],
-            "namespace" => $option["namespace"],
-            "type" => $option["type"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "actions" => isset($option["actions"]) ? $option["actions"] : null,
+            "apiIdentifier" => isset($option["apiIdentifier"]) ? $option["apiIdentifier"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "type" => isset($option["type"]) ? $option["type"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2328,12 +2248,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteResource($option = array())
-    {
+    public function deleteResource($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
-            "namespace" => $option["namespace"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2352,12 +2271,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteResourcesBatch($option = array())
-    {
+    public function deleteResourcesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "codeList" => $option["codeList"],
-            "namespace" => $option["namespace"],
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2377,13 +2295,12 @@ class ManagementClient
      * @param string description 可选，权限分组描述信息，默认 null
      * @return NamespaceRespDto
      */
-    public function createNamespace($option = array())
-    {
+    public function createNamespace($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
-            "name" => $option["name"],
-            "description" => $option["description"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2401,11 +2318,10 @@ class ManagementClient
      * @param Array<CreateNamespacesBatchItemDto> list 必须，权限分组列表
      * @return IsSuccessRespDto
      */
-    public function createNamespacesBatch($option = array())
-    {
+    public function createNamespacesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2423,11 +2339,10 @@ class ManagementClient
      * @param string code 必须，权限分组唯一标志符
      * @return NamespaceRespDto
      */
-    public function getNamespace($option = array())
-    {
+    public function getNamespace($option = array()) {
         // 组装请求
         $varGet = array(
-            "code" => $option["code"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2445,11 +2360,10 @@ class ManagementClient
      * @param Array<string> codeList 必须，资源 code 列表,批量可以使用逗号分隔
      * @return NamespaceListRespDto
      */
-    public function getNamespacesBatch($option = array())
-    {
+    public function getNamespacesBatch($option = array()) {
         // 组装请求
         $varGet = array(
-            "codeList" => $option["codeList"],
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2470,14 +2384,13 @@ class ManagementClient
      * @param string newCode 可选，权限分组新的唯一标志符，默认 null
      * @return UpdateNamespaceRespDto
      */
-    public function updateNamespace($option = array())
-    {
+    public function updateNamespace($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
-            "description" => $option["description"],
-            "name" => $option["name"],
-            "newCode" => $option["newCode"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
+            "description" => isset($option["description"]) ? $option["description"] : null,
+            "name" => isset($option["name"]) ? $option["name"] : null,
+            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2495,11 +2408,10 @@ class ManagementClient
      * @param string code 必须，权限分组唯一标志符
      * @return IsSuccessRespDto
      */
-    public function deleteNamespace($option = array())
-    {
+    public function deleteNamespace($option = array()) {
         // 组装请求
         $varPost = array(
-            "code" => $option["code"],
+            "code" => isset($option["code"]) ? $option["code"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2517,11 +2429,10 @@ class ManagementClient
      * @param Array<string> codeList 必须，权限分组 code 列表
      * @return IsSuccessRespDto
      */
-    public function deleteNamespacesBatch($option = array())
-    {
+    public function deleteNamespacesBatch($option = array()) {
         // 组装请求
         $varPost = array(
-            "codeList" => $option["codeList"],
+            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2540,12 +2451,11 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function authorizeResources($option = array())
-    {
+    public function authorizeResources($option = array()) {
         // 组装请求
         $varPost = array(
-            "list" => $option["list"],
-            "namespace" => $option["namespace"],
+            "list" => isset($option["list"]) ? $option["list"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -2566,14 +2476,13 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型，如数据、API、按钮、菜单
      * @return IsSuccessRespDto
      */
-    public function getTargetAuthorizedResources($option = array())
-    {
+    public function getTargetAuthorizedResources($option = array()) {
         // 组装请求
         $varGet = array(
-            "namespace" => $option["namespace"],
-            "targetType" => $option["targetType"],
-            "targetIdentifier" => $option["targetIdentifier"],
-            "resourceType" => $option["resourceType"],
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
+            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
+            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -2582,4 +2491,5 @@ class ManagementClient
         // 返回
         return $varReq["body"];
     }
+
 }
