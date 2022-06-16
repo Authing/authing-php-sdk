@@ -818,6 +818,27 @@ class ManagementClient
     }
 
     /**
+     * 获取用户曾经登录过的身份源
+     * @summary 获取用户曾经登录过的身份源
+     * @description 获取用户曾经登录过的身份源
+     * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户 ID
+     * @return UserLoggedInIdentitiesRespDto
+     */
+    public function getUserLoggedInIdentities($option = array()) {
+        // 组装请求
+        $varGet = array(
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+        );
+        // 规范请求
+        $varGet = $this->_formatRequest($varGet);
+        // 发送请求
+        $varReq = $this->_requests("/api/v3/get-user-logged-in-identities", $varGet, null);
+        // 返回
+        return $varReq["body"];
+    }
+
+    /**
      * 获取用户被授权的所有资源
      * @summary 获取用户被授权的所有资源
      * @description 获取用户被授权的所有资源，用户被授权的资源是用户自身被授予、通过分组继承、通过角色继承、通过组织机构继承的集合
@@ -1368,6 +1389,7 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param boolean fetchAll 可选，拉取所有，默认 false
      * @return OrganizationPaginatedRespDto
      */
     public function listOrganizations($option = array()) {
@@ -1375,6 +1397,7 @@ class ManagementClient
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "fetchAll" => isset($option["fetchAll"]) ? $option["fetchAll"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
@@ -1393,6 +1416,7 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @param string description 可选，组织描述信息，默认 null
      * @param string openDepartmentId 可选，根节点自定义 ID，默认 null
+     * @param OrganizationNameI18nDto i18n 可选，多语言设置，默认 null
      * @return OrganizationSingleRespDto
      */
     public function createOrganization($option = array()) {
@@ -1402,6 +1426,7 @@ class ManagementClient
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
             "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
+            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
         );
         // 规范请求
         $varPost = $this->_formatRequest($varPost);
@@ -1417,8 +1442,10 @@ class ManagementClient
      * @description 修改顶层组织机构
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string description 可选，组织描述信息，默认 null
+     * @param string description 可选，部门描述，默认 null
      * @param string openDepartmentId 可选，根节点自定义 ID，默认 null
+     * @param Array<string> leaderUserIds 可选，部门负责人 ID，默认 null
+     * @param OrganizationNameI18nDto i18n 可选，多语言设置，默认 null
      * @param string organizationNewCode 可选，新组织 code，默认 null
      * @param string organizationName 可选，组织名称，默认 null
      * @return OrganizationSingleRespDto
@@ -1429,6 +1456,8 @@ class ManagementClient
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
             "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
+            "leaderUserIds" => isset($option["leaderUserIds"]) ? $option["leaderUserIds"] : null,
+            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
             "organizationNewCode" => isset($option["organizationNewCode"]) ? $option["organizationNewCode"] : null,
             "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
         );
@@ -1497,7 +1526,7 @@ class ManagementClient
      * @param string openDepartmentId 可选，自定义部门 ID，用于存储自定义的 ID，默认 null
      * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
-     * @param string leaderUserId 可选，部门负责人 ID，默认 null
+     * @param I18nDto i18n 可选，多语言设置，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
      * @return DepartmentSingleRespDto
      */
@@ -1510,7 +1539,7 @@ class ManagementClient
             "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
-            "leaderUserId" => isset($option["leaderUserId"]) ? $option["leaderUserId"] : null,
+            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
         // 规范请求
@@ -1528,9 +1557,10 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
+     * @param Array<string> leaderUserIds 可选，部门负责人 ID，默认 null
      * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
-     * @param string leaderUserId 可选，部门负责人 ID，默认 null
+     * @param I18nDto i18n 可选，多语言设置，默认 null
      * @param string name 可选，部门名称，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @param string parentDepartmentId 可选，父部门 id，默认 null
@@ -1541,9 +1571,10 @@ class ManagementClient
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "leaderUserIds" => isset($option["leaderUserIds"]) ? $option["leaderUserIds"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
-            "leaderUserId" => isset($option["leaderUserId"]) ? $option["leaderUserId"] : null,
+            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
             "name" => isset($option["name"]) ? $option["name"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
             "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
@@ -1643,7 +1674,7 @@ class ManagementClient
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
-     * @return UserListRespDto
+     * @return UserPaginatedRespDto
      */
     public function listDepartmentMembers($option = array()) {
         // 组装请求
@@ -1819,7 +1850,7 @@ class ManagementClient
      * @summary 创建身份源
      * @description 创建身份源
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param 'oidc' | 'oauth2' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'wechat' | 'google' | 'qq' | 'wechatwork' | 'dingtalk' | 'weibo' | 'github' | 'alipay' | 'apple' | 'baidu' | 'lark' | 'gitlab' | 'twitter' | 'facebook' | 'slack' | 'linkedin' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' type 必须，身份源连接类型
+     * @param 'oidc' | 'oauth2' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'wechat' | 'google' | 'qq' | 'wechatwork' | 'dingtalk' | 'weibo' | 'github' | 'alipay' | 'apple' | 'baidu' | 'lark' | 'gitlab' | 'twitter' | 'facebook' | 'slack' | 'linkedin' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
      * @param string name 必须，身份源名称
      * @param string tenantId 可选，租户 ID，默认 null
      * @return ExtIdpSingleRespDto
@@ -1891,7 +1922,7 @@ class ManagementClient
      * @param any fields 必须，连接的自定义配置信息
      * @param string displayName 必须，连接在登录页的显示名称
      * @param string identifier 必须，身份源连接标识
-     * @param 'oidc' | 'oauth' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'alipay' | 'facebook' | 'twitter' | 'google' | 'wechat:pc' | 'wechat:mobile' | 'wechat:webpage-authorization' | 'wechatmp-qrcode' | 'wechat:miniprogram:default' | 'wechat:miniprogram:qrconnect' | 'wechat:miniprogram:app-launch' | 'github' | 'qq' | 'wechatwork:corp:qrconnect' | 'wechatwork:agency:qrconnect' | 'wechatwork:service-provider:qrconnect' | 'wechatwork:mobile' | 'dingtalk' | 'dingtalk:provider' | 'weibo' | 'apple' | 'apple:web' | 'baidu' | 'lark-internal' | 'lark-public' | 'gitlab' | 'linkedin' | 'slack' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' type 必须，身份源连接类型
+     * @param 'oidc' | 'oauth' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'alipay' | 'facebook' | 'twitter' | 'google' | 'wechat:pc' | 'wechat:mobile' | 'wechat:webpage-authorization' | 'wechatmp-qrcode' | 'wechat:miniprogram:default' | 'wechat:miniprogram:qrconnect' | 'wechat:miniprogram:app-launch' | 'github' | 'qq' | 'wechatwork:corp:qrconnect' | 'wechatwork:agency:qrconnect' | 'wechatwork:service-provider:qrconnect' | 'wechatwork:mobile' | 'dingtalk' | 'dingtalk:provider' | 'weibo' | 'apple' | 'apple:web' | 'baidu' | 'lark-internal' | 'lark-public' | 'gitlab' | 'linkedin' | 'slack' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
      * @param string extIdpId 必须，身份源连接 id
      * @param boolean loginOnly 可选，是否只支持登录，默认 null
      * @param string logo 可选，身份源图标，默认 null
@@ -2480,15 +2511,17 @@ class ManagementClient
      * @param string targetIdentifier 必须，目标对象唯一标志符
      * @param string namespace 可选，所属权限分组的 code
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型，如数据、API、按钮、菜单
-     * @return IsSuccessRespDto
+     * @param boolean withDenied 可选，是否获取被拒绝的资源，默认 false
+     * @return AuthorizedResourcePaginatedRespDto
      */
-    public function getTargetAuthorizedResources($option = array()) {
+    public function getAuthorizedResources($option = array()) {
         // 组装请求
         $varGet = array(
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
             "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
+            "withDenied" => isset($option["withDenied"]) ? $option["withDenied"] : null,
         );
         // 规范请求
         $varGet = $this->_formatRequest($varGet);
