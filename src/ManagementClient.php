@@ -39,19 +39,6 @@ class ManagementClient
     }
 
     /**
-     * 规范请求
-     */
-    private static function _formatRequest($varRequest)
-    {
-        foreach ($varRequest as $forKey => $forValue) {
-            if ($forValue === null) {
-                unset($varRequest[$forKey]);
-            }
-        }
-        return $varRequest;
-    }
-
-    /**
      * 请求HTTP
      */
     private static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
@@ -127,6 +114,19 @@ class ManagementClient
     }
 
     /**
+     * 规范数据
+     */
+    private static function _formatData($varData)
+    {
+        foreach ($varData as $forKey => $forValue) {
+            if ($forValue === null) {
+                unset($varData[$forKey]);
+            }
+        }
+        return $varData;
+    }
+
+    /**
      * 构造HTTP
      */
     private function _requests($parMethod, $parGet = [], $parPost = [])
@@ -137,7 +137,10 @@ class ManagementClient
             $this->_accessTokenTime = null;
             $this->_getAccessToken($this->_accessKey["id"],  $this->_accessKey["secret"]);
         }
-        //请求
+        //处理
+        if ($parGet != []) $parGet = $this->_formatData($parGet);
+        if ($parPost != []) $parPost = $this->_formatData($parPost);
+        //头部
         $varHearder = array(
             "Authorization" => "Bearer " . $this->_accessToken,
             "Content-Type" => "application/json",
@@ -145,6 +148,7 @@ class ManagementClient
             "x-authing-request-from" => "SDK",
             "x-authing-sdk-version" => "php:" . phpversion(),
         );
+        //请求
         $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHearder);
         return $varReq;
     }
@@ -174,8 +178,6 @@ class ManagementClient
             "accessKeySecret" => isset($option["accessKeySecret"]) ? $option["accessKeySecret"] : null,
             "accessKeyId" => isset($option["accessKeyId"]) ? $option["accessKeyId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-management-token", null, $varPost);
         // 返回
@@ -209,8 +211,6 @@ class ManagementClient
             "username" => isset($option["username"]) ? $option["username"] : null,
             "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user", $varGet, null);
         // 返回
@@ -236,8 +236,6 @@ class ManagementClient
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-batch", $varGet, null);
         // 返回
@@ -265,8 +263,6 @@ class ManagementClient
             "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-users", $varGet, null);
         // 返回
@@ -286,8 +282,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-identities", $varGet, null);
         // 返回
@@ -309,8 +303,6 @@ class ManagementClient
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-roles", $varGet, null);
         // 返回
@@ -330,8 +322,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-principal-authentication-info", $varGet, null);
         // 返回
@@ -351,8 +341,6 @@ class ManagementClient
         $varPost = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/reset-user-principal-authentication-info", null, $varPost);
         // 返回
@@ -372,8 +360,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-departments", $varGet, null);
         // 返回
@@ -395,8 +381,6 @@ class ManagementClient
             "departments" => isset($option["departments"]) ? $option["departments"] : null,
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-user-departments", null, $varPost);
         // 返回
@@ -416,8 +400,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-groups", $varGet, null);
         // 返回
@@ -437,8 +419,6 @@ class ManagementClient
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-users-batch", null, $varPost);
         // 返回
@@ -458,8 +438,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-mfa-info", $varGet, null);
         // 返回
@@ -481,8 +459,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-archived-users", $varGet, null);
         // 返回
@@ -504,8 +480,6 @@ class ManagementClient
             "appIds" => isset($option["appIds"]) ? $option["appIds"] : null,
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/kick-users", null, $varPost);
         // 返回
@@ -531,8 +505,6 @@ class ManagementClient
             "phone" => isset($option["phone"]) ? $option["phone"] : null,
             "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/is-user-exists", null, $varPost);
         // 返回
@@ -602,8 +574,6 @@ class ManagementClient
             "identities" => isset($option["identities"]) ? $option["identities"] : null,
             "options" => isset($option["options"]) ? $option["options"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-user", null, $varPost);
         // 返回
@@ -625,8 +595,6 @@ class ManagementClient
             "list" => isset($option["list"]) ? $option["list"] : null,
             "options" => isset($option["options"]) ? $option["options"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-users-batch", null, $varPost);
         // 返回
@@ -690,8 +658,6 @@ class ManagementClient
             "password" => isset($option["password"]) ? $option["password"] : null,
             "customData" => isset($option["customData"]) ? $option["customData"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-user", null, $varPost);
         // 返回
@@ -711,8 +677,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-accessible-apps", $varGet, null);
         // 返回
@@ -732,8 +696,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-authorized-apps", $varGet, null);
         // 返回
@@ -755,8 +717,6 @@ class ManagementClient
             "roles" => isset($option["roles"]) ? $option["roles"] : null,
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/has-any-role", null, $varPost);
         // 返回
@@ -788,8 +748,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-login-history", $varGet, null);
         // 返回
@@ -809,8 +767,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-loggedin-apps", $varGet, null);
         // 返回
@@ -830,8 +786,6 @@ class ManagementClient
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-logged-in-identities", $varGet, null);
         // 返回
@@ -855,8 +809,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-authorized-resources", $varGet, null);
         // 返回
@@ -876,8 +828,6 @@ class ManagementClient
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-group", $varGet, null);
         // 返回
@@ -899,8 +849,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-groups", $varGet, null);
         // 返回
@@ -924,8 +872,6 @@ class ManagementClient
             "name" => isset($option["name"]) ? $option["name"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-group", null, $varPost);
         // 返回
@@ -945,8 +891,6 @@ class ManagementClient
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-groups-batch", null, $varPost);
         // 返回
@@ -972,8 +916,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-group", null, $varPost);
         // 返回
@@ -993,8 +935,6 @@ class ManagementClient
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-groups-batch", null, $varPost);
         // 返回
@@ -1016,8 +956,6 @@ class ManagementClient
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/add-group-members", null, $varPost);
         // 返回
@@ -1039,8 +977,6 @@ class ManagementClient
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/remove-group-members", null, $varPost);
         // 返回
@@ -1070,8 +1006,6 @@ class ManagementClient
             "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-group-members", $varGet, null);
         // 返回
@@ -1095,8 +1029,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-group-authorized-resources", $varGet, null);
         // 返回
@@ -1118,8 +1050,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-role", $varGet, null);
         // 返回
@@ -1143,8 +1073,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/assign-role", null, $varPost);
         // 返回
@@ -1168,8 +1096,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/revoke-role", null, $varPost);
         // 返回
@@ -1193,8 +1119,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-role-authorized-resources", $varGet, null);
         // 返回
@@ -1226,8 +1150,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-role-members", $varGet, null);
         // 返回
@@ -1253,8 +1175,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-role-departments", $varGet, null);
         // 返回
@@ -1278,8 +1198,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-role", null, $varPost);
         // 返回
@@ -1303,8 +1221,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-roles", $varGet, null);
         // 返回
@@ -1326,8 +1242,6 @@ class ManagementClient
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-roles-batch", null, $varPost);
         // 返回
@@ -1347,8 +1261,6 @@ class ManagementClient
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-roles-batch", null, $varPost);
         // 返回
@@ -1374,8 +1286,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-role", null, $varPost);
         // 返回
@@ -1399,8 +1309,6 @@ class ManagementClient
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
             "fetchAll" => isset($option["fetchAll"]) ? $option["fetchAll"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-organizations", $varGet, null);
         // 返回
@@ -1428,8 +1336,6 @@ class ManagementClient
             "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
             "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-organization", null, $varPost);
         // 返回
@@ -1461,8 +1367,6 @@ class ManagementClient
             "organizationNewCode" => isset($option["organizationNewCode"]) ? $option["organizationNewCode"] : null,
             "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-organization", null, $varPost);
         // 返回
@@ -1482,8 +1386,6 @@ class ManagementClient
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-organization", null, $varPost);
         // 返回
@@ -1507,8 +1409,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-department", $varGet, null);
         // 返回
@@ -1542,8 +1442,6 @@ class ManagementClient
             "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-department", null, $varPost);
         // 返回
@@ -1579,8 +1477,6 @@ class ManagementClient
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
             "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-department", null, $varPost);
         // 返回
@@ -1604,8 +1500,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-department", null, $varPost);
         // 返回
@@ -1627,8 +1521,6 @@ class ManagementClient
             "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/search-departments", null, $varPost);
         // 返回
@@ -1652,8 +1544,6 @@ class ManagementClient
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-children-departments", $varGet, null);
         // 返回
@@ -1689,8 +1579,6 @@ class ManagementClient
             "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-members", $varGet, null);
         // 返回
@@ -1714,8 +1602,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-member-ids", $varGet, null);
         // 返回
@@ -1741,8 +1627,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/add-department-members", null, $varPost);
         // 返回
@@ -1768,8 +1652,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/remove-department-members", null, $varPost);
         // 返回
@@ -1793,8 +1675,6 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-parent-department", $varGet, null);
         // 返回
@@ -1814,8 +1694,6 @@ class ManagementClient
         $varGet = array(
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-ext-idp", $varGet, null);
         // 返回
@@ -1837,8 +1715,6 @@ class ManagementClient
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
             "id" => isset($option["id"]) ? $option["id"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-ext-idp", $varGet, null);
         // 返回
@@ -1862,8 +1738,6 @@ class ManagementClient
             "name" => isset($option["name"]) ? $option["name"] : null,
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-ext-idp", null, $varPost);
         // 返回
@@ -1885,8 +1759,6 @@ class ManagementClient
             "id" => isset($option["id"]) ? $option["id"] : null,
             "name" => isset($option["name"]) ? $option["name"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-ext-idp", null, $varPost);
         // 返回
@@ -1906,8 +1778,6 @@ class ManagementClient
         $varPost = array(
             "id" => isset($option["id"]) ? $option["id"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-ext-idp", null, $varPost);
         // 返回
@@ -1939,8 +1809,6 @@ class ManagementClient
             "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
             "logo" => isset($option["logo"]) ? $option["logo"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-ext-idp-conn", null, $varPost);
         // 返回
@@ -1968,8 +1836,6 @@ class ManagementClient
             "logo" => isset($option["logo"]) ? $option["logo"] : null,
             "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-ext-idp-conn", null, $varPost);
         // 返回
@@ -1989,8 +1855,6 @@ class ManagementClient
         $varPost = array(
             "id" => isset($option["id"]) ? $option["id"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-ext-idp-conn", null, $varPost);
         // 返回
@@ -2016,8 +1880,6 @@ class ManagementClient
             "id" => isset($option["id"]) ? $option["id"] : null,
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/enable-ext-idp-conn", null, $varPost);
         // 返回
@@ -2037,8 +1899,6 @@ class ManagementClient
         $varGet = array(
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-custom-fields", $varGet, null);
         // 返回
@@ -2058,8 +1918,6 @@ class ManagementClient
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-custom-fields", null, $varPost);
         // 返回
@@ -2085,8 +1943,6 @@ class ManagementClient
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-custom-data", null, $varPost);
         // 返回
@@ -2110,8 +1966,6 @@ class ManagementClient
             "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-custom-data", $varGet, null);
         // 返回
@@ -2141,8 +1995,6 @@ class ManagementClient
             "apiIdentifier" => isset($option["apiIdentifier"]) ? $option["apiIdentifier"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-resource", null, $varPost);
         // 返回
@@ -2164,8 +2016,6 @@ class ManagementClient
             "list" => isset($option["list"]) ? $option["list"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-resources-batch", null, $varPost);
         // 返回
@@ -2187,8 +2037,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-resource", $varGet, null);
         // 返回
@@ -2210,8 +2058,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-resources-batch", $varGet, null);
         // 返回
@@ -2237,8 +2083,6 @@ class ManagementClient
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-resources", $varGet, null);
         // 返回
@@ -2268,8 +2112,6 @@ class ManagementClient
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
             "type" => isset($option["type"]) ? $option["type"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-resource", null, $varPost);
         // 返回
@@ -2291,8 +2133,6 @@ class ManagementClient
             "code" => isset($option["code"]) ? $option["code"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-resource", null, $varPost);
         // 返回
@@ -2314,8 +2154,6 @@ class ManagementClient
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-resources-batch", null, $varPost);
         // 返回
@@ -2339,8 +2177,6 @@ class ManagementClient
             "name" => isset($option["name"]) ? $option["name"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-namespace", null, $varPost);
         // 返回
@@ -2360,8 +2196,6 @@ class ManagementClient
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-namespaces-batch", null, $varPost);
         // 返回
@@ -2381,8 +2215,6 @@ class ManagementClient
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-namespace", $varGet, null);
         // 返回
@@ -2402,8 +2234,6 @@ class ManagementClient
         $varGet = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-namespaces-batch", $varGet, null);
         // 返回
@@ -2429,8 +2259,6 @@ class ManagementClient
             "name" => isset($option["name"]) ? $option["name"] : null,
             "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-namespace", null, $varPost);
         // 返回
@@ -2450,8 +2278,6 @@ class ManagementClient
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-namespace", null, $varPost);
         // 返回
@@ -2471,8 +2297,6 @@ class ManagementClient
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-namespaces-batch", null, $varPost);
         // 返回
@@ -2494,8 +2318,6 @@ class ManagementClient
             "list" => isset($option["list"]) ? $option["list"] : null,
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
         );
-        // 规范请求
-        $varPost = $this->_formatRequest($varPost);
         // 发送请求
         $varReq = $this->_requests("/api/v3/authorize-resources", null, $varPost);
         // 返回
@@ -2523,8 +2345,6 @@ class ManagementClient
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
             "withDenied" => isset($option["withDenied"]) ? $option["withDenied"] : null,
         );
-        // 规范请求
-        $varGet = $this->_formatRequest($varGet);
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-authorized-resources", $varGet, null);
         // 返回
