@@ -39,6 +39,19 @@ class ManagementClient
     }
 
     /**
+     * 规范数据
+     */
+    private static function _formatData($varData)
+    {
+        foreach ($varData as $forKey => $forValue) {
+            if ($forValue === null) {
+                unset($varData[$forKey]);
+            }
+        }
+        return $varData;
+    }
+
+    /**
      * 请求HTTP
      */
     private static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
@@ -111,19 +124,6 @@ class ManagementClient
         //返回
         curl_close($varCurlObject);
         return $varRes;
-    }
-
-    /**
-     * 规范数据
-     */
-    private static function _formatData($varData)
-    {
-        foreach ($varData as $forKey => $forValue) {
-            if ($forValue === null) {
-                unset($varData[$forKey]);
-            }
-        }
-        return $varData;
     }
 
     /**
