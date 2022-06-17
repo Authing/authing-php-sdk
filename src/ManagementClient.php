@@ -87,14 +87,23 @@ class ManagementClient
         //配置-POST
         curl_setopt($varCurlObject, CURLOPT_POST, $parPost != [] ? true : false);
         if ($parPost != []) {
-            curl_setopt($varCurlObject, CURLOPT_POSTFIELDS, json_encode($parPost, JSON_UNESCAPED_UNICODE));
+            if ($parHeader != [] and isset($parHeader["Content-Type"])) {
+                switch ($parHeader["Content-Type"]) {
+                    case "application/x-www-form-urlencoded":
+                    $parPost = http_build_query($parPost);
+                    break;
+                    case "application/json":
+                    $parPost = json_encode($parPost, JSON_UNESCAPED_UNICODE);
+                    break;
+                }
+            }
+            curl_setopt($varCurlObject, CURLOPT_POSTFIELDS, $parPost);
         }
         //配置-Header
         if ($parHeader != []) {
             foreach ($parHeader as $forKey => $forValue) {
                 $varHeader[] = "$forKey: $forValue";
             }
-            $varHeader[] = "Expect:";
             curl_setopt($varCurlObject, CURLOPT_HTTPHEADER, $varHeader);
         }
         //配置-Cookie
@@ -1426,6 +1435,7 @@ class ManagementClient
      * @param string openDepartmentId 可选，自定义部门 ID，用于存储自定义的 ID，默认 null
      * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
+     * @param boolean isVirtualNode 可选，是否是虚拟部门，默认 null
      * @param I18nDto i18n 可选，多语言设置，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
      * @return DepartmentSingleRespDto
@@ -1439,6 +1449,7 @@ class ManagementClient
             "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
             "description" => isset($option["description"]) ? $option["description"] : null,
             "code" => isset($option["code"]) ? $option["code"] : null,
+            "isVirtualNode" => isset($option["isVirtualNode"]) ? $option["isVirtualNode"] : null,
             "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
         );
@@ -1535,6 +1546,7 @@ class ManagementClient
      * @param string departmentId 必须，需要获取的部门 ID
      * @param string organizationCode 必须，组织 code
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean excludeVirtualNode 可选，是否要排除虚拟组织，默认 false
      * @return DepartmentPaginatedRespDto
      */
     public function listChildrenDepartments($option = array()) {
@@ -1543,6 +1555,7 @@ class ManagementClient
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "excludeVirtualNode" => isset($option["excludeVirtualNode"]) ? $option["excludeVirtualNode"] : null,
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-children-departments", $varGet, null);
