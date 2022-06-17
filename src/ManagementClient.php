@@ -150,7 +150,7 @@ class ManagementClient
         if ($parGet != []) $parGet = $this->_formatData($parGet);
         if ($parPost != []) $parPost = $this->_formatData($parPost);
         //头部
-        $varHearder = array(
+        $varHeader = array(
             "Authorization" => "Bearer " . $this->_accessToken,
             "Content-Type" => "application/json",
             "x-authing-userpool-id" => $this->_userPoolID,
@@ -158,7 +158,7 @@ class ManagementClient
             "x-authing-sdk-version" => "php:" . phpversion(),
         );
         //请求
-        $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHearder);
+        $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         return $varReq;
     }
 
