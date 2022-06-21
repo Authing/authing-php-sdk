@@ -154,8 +154,8 @@ class ManagementClient
             "Authorization" => "Bearer " . $this->_accessToken,
             "Content-Type" => "application/json",
             "x-authing-userpool-id" => $this->_userPoolID,
-            "x-authing-request-from" => "SDK",
-            "x-authing-sdk-version" => "php:" . phpversion(),
+            "x-authing-request-from" => "php-sdk",
+            "x-authing-sdk-version" => "php:5.0.0",
         );
         //请求
         $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
