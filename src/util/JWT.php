@@ -12,12 +12,10 @@ class JWT
         "typ" => "JWT"    //类型
     );
 
-    //使用HMAC生成信息摘要时所使用的密钥
-    private static $key = "123456";
-
     /**
      * 获取token
      * @param array $payload jwt载荷，格式如下非必须
+     * @param string $key 使用HMAC生成信息摘要时所使用的密钥
      * [
      *  "iss"=>"jwt_admin",  //该JWT的签发者
      *  "iat"=>time(),  //签发时间
@@ -27,12 +25,12 @@ class JWT
      *  "jti"=>md5(uniqid("JWT").time())  //该token唯一标识
      * ]
      */
-    public static function getToken($payload)
+    public static function getToken($payload, $key)
     {
         if (is_array($payload)) {
             $base64header = self::base64UrlEncode(json_encode(self::$header, JSON_UNESCAPED_UNICODE));
             $base64payload = self::base64UrlEncode(json_encode($payload, JSON_UNESCAPED_UNICODE));
-            $token = $base64header . "." . $base64payload . "." . self::signature($base64header . "." . $base64payload, self::$key, self::$header["alg"]);
+            $token = $base64header . "." . $base64payload . "." . self::signature($base64header . "." . $base64payload, $key, self::$header["alg"]);
             return $token;
         } else {
             return false;
@@ -68,8 +66,9 @@ class JWT
     /**
      * 验证token
      * @param string $token 需要验证的token
+     * @param string $key 使用HMAC生成信息摘要时所使用的密钥
      */
-    public static function verifyToken($token)
+    public static function verifyToken($token, $key)
     {
         //分解
         $tokens = explode(".", $token);
@@ -85,7 +84,7 @@ class JWT
         if (empty($base64decodeheader["alg"])) return false;
 
         //签名验证
-        if (self::signature($base64header . "." . $base64payload, self::$key, $base64decodeheader["alg"]) !== $sign) return false;
+        if (self::signature($base64header . "." . $base64payload, $key, $base64decodeheader["alg"]) !== $sign) return false;
 
         //组装
         $payload = json_decode(self::base64UrlDecode($base64payload), JSON_OBJECT_AS_ARRAY);
