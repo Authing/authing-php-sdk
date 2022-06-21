@@ -1,8 +1,0 @@
-<phpunit>
-    <colors>true</colors>
-    <testsuites>
-        <testsuite name="ManagementClient">
-            <directory>test</directory>
-        </testsuite>
-    </testsuites>
-</phpunit>
