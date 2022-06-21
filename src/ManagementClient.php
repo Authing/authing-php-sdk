@@ -7,15 +7,26 @@
 namespace Authing;
 
 /**
+ * 导入
+ */
+
+require_once "util/Tool.php";
+
+/**
  * ManagementClient
  */
 
 class ManagementClient
 {
+    //域名
     public $_url;
+    //AccessKey
     public $_accessKey;
+    //AccessToken
     public $_accessToken;
+    //AccessToken超时时间
     public $_accessTokenTime;
+    //用户池ID
     public $_userPoolID;
 
     /**
@@ -30,113 +41,7 @@ class ManagementClient
     }
 
     /**
-     * 是否为JSON数据
-     */
-    private static function _isJson($parString)
-    {
-        json_decode($parString);
-        return (json_last_error() == JSON_ERROR_NONE);
-    }
-
-    /**
-     * 规范数据
-     */
-    private static function _formatData($varData)
-    {
-        foreach ($varData as $forKey => $forValue) {
-            if ($forValue === null) {
-                unset($varData[$forKey]);
-            }
-        }
-        return $varData;
-    }
-
-    /**
-     * 请求HTTP
-     */
-    private static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
-    {
-        //配置-其他
-        $varCurlObject = curl_init();
-        curl_setopt($varCurlObject, CURLOPT_URL, $parUrl); //配置URL
-        curl_setopt($varCurlObject, CURLOPT_CONNECTTIMEOUT, 20); //连接前等待时间
-        curl_setopt($varCurlObject, CURLOPT_TIMEOUT, 60); //连接后等待时间
-        curl_setopt($varCurlObject, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); //使用IPv4协议
-        curl_setopt($varCurlObject, CURLOPT_RETURNTRANSFER, true); //获取的信息以文件流的形式返回
-        curl_setopt($varCurlObject, CURLOPT_HEADER, true); //返回Header
-        curl_setopt($varCurlObject, CURLOPT_ENCODING, ""); //支持所有编码
-        curl_setopt($varCurlObject, CURLOPT_FOLLOWLOCATION, true); //跟踪爬取重定向页面
-        curl_setopt($varCurlObject, CURLOPT_MAXREDIRS, 10); //指定重定向的最大值
-        curl_setopt($varCurlObject, CURLOPT_AUTOREFERER, true); // 自动配置Referer
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYPEER, false); //禁止验证对等证书
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYHOST, false); //禁止检测域名与证书是否一致
-        curl_setopt($varCurlObject, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"); //配置UserAgent
-        //配置-Get
-        if ($parGet != []) {
-            foreach ($parGet as $forKey => $forValue) {
-                if (is_array($forValue)) {
-                    foreach ($forValue as $forValues) {
-                        $varGet[] = "$forKey=$forValues";
-                    }
-                } else {
-                    $varGet[] = "$forKey=$forValue";
-                }
-            }
-            curl_setopt($varCurlObject, CURLOPT_URL, $parUrl . "?" . implode("&", $varGet));
-        }
-        //配置-POST
-        curl_setopt($varCurlObject, CURLOPT_POST, $parPost != [] ? true : false);
-        if ($parPost != []) {
-            if ($parHeader != [] and isset($parHeader["Content-Type"])) {
-                switch ($parHeader["Content-Type"]) {
-                    case "application/x-www-form-urlencoded":
-                    $parPost = http_build_query($parPost);
-                    break;
-                    case "application/json":
-                    $parPost = json_encode($parPost, JSON_UNESCAPED_UNICODE);
-                    break;
-                }
-            }
-            curl_setopt($varCurlObject, CURLOPT_POSTFIELDS, $parPost);
-        }
-        //配置-Header
-        if ($parHeader != []) {
-            foreach ($parHeader as $forKey => $forValue) {
-                $varHeader[] = "$forKey: $forValue";
-            }
-            curl_setopt($varCurlObject, CURLOPT_HTTPHEADER, $varHeader);
-        }
-        //配置-Cookie
-        if ($parCookie != []) {
-            foreach ($parCookie as $forKey => $forValue) {
-                $varCookie[] = "$forKey=$forValue";
-            }
-            curl_setopt($varCurlObject, CURLOPT_COOKIE, implode(";", $varCookie));
-        }
-        //请求
-        $tempCurlRes = curl_exec($varCurlObject);
-        //组装-error
-        $varRes["error"] = curl_error($varCurlObject);
-        //组装-code
-        $varRes["code"] = curl_getinfo($varCurlObject, CURLINFO_HTTP_CODE);
-        //组装-header
-        $tempHeaderSize = curl_getinfo($varCurlObject, CURLINFO_HEADER_SIZE);
-        $varRes["header"]  = trim(substr($tempCurlRes, 0, $tempHeaderSize));
-        //组装-body
-        $tempBody = substr($tempCurlRes, $tempHeaderSize);
-        if (ManagementClient::_isJson($tempBody)) $tempBody = json_decode($tempBody, true);
-        $varRes["body"] = $tempBody;
-        //组装-cookie
-        preg_match_all("/set\-cookie:([^\r\n]*)/i", $varRes["header"], $tempCookie);
-        $tempCookie = implode(";", $tempCookie[1]);
-        $varRes["cookie"] = !empty($tempCookie) ? trim($tempCookie) : "";
-        //返回
-        curl_close($varCurlObject);
-        return $varRes;
-    }
-
-    /**
-     * 构造HTTP
+     * 构造请求
      */
     private function _requests($parMethod, $parGet = [], $parPost = [])
     {
@@ -147,8 +52,8 @@ class ManagementClient
             $this->_getAccessToken($this->_accessKey["id"],  $this->_accessKey["secret"]);
         }
         //处理
-        if ($parGet != []) $parGet = $this->_formatData($parGet);
-        if ($parPost != []) $parPost = $this->_formatData($parPost);
+        if ($parGet != []) $parGet = \Tool::formatData($parGet);
+        if ($parPost != []) $parPost = \Tool::formatData($parPost);
         //头部
         $varHeader = array(
             "Authorization" => "Bearer " . $this->_accessToken,
@@ -158,7 +63,7 @@ class ManagementClient
             "x-authing-sdk-version" => "php:5.0.0",
         );
         //请求
-        $varReq = ManagementClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        $varReq = \Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         return $varReq;
     }
 
@@ -181,7 +86,8 @@ class ManagementClient
      * @param string accessKeyId 必须，AccessKey ID: 如果是以用户池全局 AK/SK 初始化，为用户池 ID；如果是以协作管理员的 AK/SK 初始化，为协作管理员的 AccessKey ID。
      * @return GetManagementTokenRespDto
      */
-    public function getManagementToken($option = array()) {
+    public function getManagementToken($option = array())
+    {
         // 组装请求
         $varPost = array(
             "accessKeySecret" => isset($option["accessKeySecret"]) ? $option["accessKeySecret"] : null,
@@ -208,7 +114,8 @@ class ManagementClient
      * @param string externalId 可选，原系统 ID
      * @return UserSingleRespDto
      */
-    public function getUser($option = array()) {
+    public function getUser($option = array())
+    {
         // 组装请求
         $varGet = array(
             "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
@@ -237,7 +144,8 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserListRespDto
      */
-    public function getUserBatch($option = array()) {
+    public function getUserBatch($option = array())
+    {
         // 组装请求
         $varGet = array(
             "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
@@ -263,7 +171,8 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
-    public function listUsers($option = array()) {
+    public function listUsers($option = array())
+    {
         // 组装请求
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
@@ -286,7 +195,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IdentityListRespDto
      */
-    public function getUserIdentities($option = array()) {
+    public function getUserIdentities($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -306,7 +216,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return RolePaginatedRespDto
      */
-    public function getUserRoles($option = array()) {
+    public function getUserRoles($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -326,7 +237,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return PrincipalAuthenticationInfoPaginatedRespDto
      */
-    public function getUserPrincipalAuthenticationInfo($option = array()) {
+    public function getUserPrincipalAuthenticationInfo($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -345,7 +257,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function resetUserPrincipalAuthenticationInfo($option = array()) {
+    public function resetUserPrincipalAuthenticationInfo($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -364,7 +277,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserDepartmentPaginatedRespDto
      */
-    public function getUserDepartments($option = array()) {
+    public function getUserDepartments($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -384,7 +298,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function setUserDepartment($option = array()) {
+    public function setUserDepartment($option = array())
+    {
         // 组装请求
         $varPost = array(
             "departments" => isset($option["departments"]) ? $option["departments"] : null,
@@ -404,7 +319,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return GroupPaginatedRespDto
      */
-    public function getUserGroups($option = array()) {
+    public function getUserGroups($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -423,7 +339,8 @@ class ManagementClient
      * @param Array<string> userIds 必须，用户 ID 列表
      * @return IsSuccessRespDto
      */
-    public function deleteUsersBatch($option = array()) {
+    public function deleteUsersBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
@@ -442,7 +359,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserMfaSingleRespDto
      */
-    public function getUserMfaInfo($option = array()) {
+    public function getUserMfaInfo($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -462,7 +380,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return ListArchivedUsersSingleRespDto
      */
-    public function listArchivedUsers($option = array()) {
+    public function listArchivedUsers($option = array())
+    {
         // 组装请求
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
@@ -483,7 +402,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function kickUsers($option = array()) {
+    public function kickUsers($option = array())
+    {
         // 组装请求
         $varPost = array(
             "appIds" => isset($option["appIds"]) ? $option["appIds"] : null,
@@ -506,7 +426,8 @@ class ManagementClient
      * @param string externalId 可选，第三方外部 ID，默认 null
      * @return IsUserExistsRespDto
      */
-    public function isUserExists($option = array()) {
+    public function isUserExists($option = array())
+    {
         // 组装请求
         $varPost = array(
             "username" => isset($option["username"]) ? $option["username"] : null,
@@ -553,7 +474,8 @@ class ManagementClient
      * @param CreateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserSingleRespDto
      */
-    public function createUser($option = array()) {
+    public function createUser($option = array())
+    {
         // 组装请求
         $varPost = array(
             "status" => isset($option["status"]) ? $option["status"] : null,
@@ -598,7 +520,8 @@ class ManagementClient
      * @param CreateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserListRespDto
      */
-    public function createUserBatch($option = array()) {
+    public function createUserBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -640,7 +563,8 @@ class ManagementClient
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @return UserSingleRespDto
      */
-    public function updateUser($option = array()) {
+    public function updateUser($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -681,7 +605,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return AppListRespDto
      */
-    public function getUserAccessibleApps($option = array()) {
+    public function getUserAccessibleApps($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -700,7 +625,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return AppListRespDto
      */
-    public function getUserAuthorizedApps($option = array()) {
+    public function getUserAuthorizedApps($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -720,7 +646,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return HasAnyRoleRespDto
      */
-    public function hasAnyRole($option = array()) {
+    public function hasAnyRole($option = array())
+    {
         // 组装请求
         $varPost = array(
             "roles" => isset($option["roles"]) ? $option["roles"] : null,
@@ -746,7 +673,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return UserLoginHistoryPaginatedRespDto
      */
-    public function getUserLoginHistory($option = array()) {
+    public function getUserLoginHistory($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -771,7 +699,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserLoggedInAppsListRespDto
      */
-    public function getUserLoggedInApps($option = array()) {
+    public function getUserLoggedInApps($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -790,7 +719,8 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserLoggedInIdentitiesRespDto
      */
-    public function getUserLoggedInIdentities($option = array()) {
+    public function getUserLoggedInIdentities($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -811,7 +741,8 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return AuthorizedResourcePaginatedRespDto
      */
-    public function getUserAuthorizedResources($option = array()) {
+    public function getUserAuthorizedResources($option = array())
+    {
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
@@ -832,7 +763,8 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return GroupSingleRespDto
      */
-    public function getGroup($option = array()) {
+    public function getGroup($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -852,7 +784,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return GroupPaginatedRespDto
      */
-    public function listGroups($option = array()) {
+    public function listGroups($option = array())
+    {
         // 组装请求
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
@@ -874,7 +807,8 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return GroupSingleRespDto
      */
-    public function createGroup($option = array()) {
+    public function createGroup($option = array())
+    {
         // 组装请求
         $varPost = array(
             "description" => isset($option["description"]) ? $option["description"] : null,
@@ -895,7 +829,8 @@ class ManagementClient
      * @param Array<CreateGroupReqDto> list 必须，批量分组
      * @return GroupListRespDto
      */
-    public function createGroupsBatch($option = array()) {
+    public function createGroupsBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -917,7 +852,8 @@ class ManagementClient
      * @param string newCode 可选，分组新的 code，默认 null
      * @return GroupSingleRespDto
      */
-    public function updateGroup($option = array()) {
+    public function updateGroup($option = array())
+    {
         // 组装请求
         $varPost = array(
             "description" => isset($option["description"]) ? $option["description"] : null,
@@ -939,7 +875,8 @@ class ManagementClient
      * @param Array<string> codeList 必须，分组 code 列表
      * @return IsSuccessRespDto
      */
-    public function deleteGroupsBatch($option = array()) {
+    public function deleteGroupsBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
@@ -959,7 +896,8 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return IsSuccessRespDto
      */
-    public function addGroupMembers($option = array()) {
+    public function addGroupMembers($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
@@ -980,7 +918,8 @@ class ManagementClient
      * @param string code 必须，分组 code
      * @return IsSuccessRespDto
      */
-    public function removeGroupMembers($option = array()) {
+    public function removeGroupMembers($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
@@ -1005,7 +944,8 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
-    public function listGroupMembers($option = array()) {
+    public function listGroupMembers($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1031,7 +971,8 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return AuthorizedResourceListRespDto
      */
-    public function getGroupAuthorizedResources($option = array()) {
+    public function getGroupAuthorizedResources($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1053,7 +994,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return RoleSingleRespDto
      */
-    public function getRole($option = array()) {
+    public function getRole($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1075,7 +1017,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function assignRole($option = array()) {
+    public function assignRole($option = array())
+    {
         // 组装请求
         $varPost = array(
             "targets" => isset($option["targets"]) ? $option["targets"] : null,
@@ -1098,7 +1041,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function revokeRole($option = array()) {
+    public function revokeRole($option = array())
+    {
         // 组装请求
         $varPost = array(
             "targets" => isset($option["targets"]) ? $option["targets"] : null,
@@ -1121,7 +1065,8 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
      * @return RoleAuthorizedResourcePaginatedRespDto
      */
-    public function getRoleAuthorizedResources($option = array()) {
+    public function getRoleAuthorizedResources($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1148,7 +1093,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return UserPaginatedRespDto
      */
-    public function listRoleMembers($option = array()) {
+    public function listRoleMembers($option = array())
+    {
         // 组装请求
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
@@ -1176,7 +1122,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return RoleDepartmentListPaginatedRespDto
      */
-    public function listRoleDepartments($option = array()) {
+    public function listRoleDepartments($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1200,7 +1147,8 @@ class ManagementClient
      * @param string description 可选，角色描述，默认 null
      * @return RoleSingleRespDto
      */
-    public function createRole($option = array()) {
+    public function createRole($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -1223,7 +1171,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return RolePaginatedRespDto
      */
-    public function listRoles($option = array()) {
+    public function listRoles($option = array())
+    {
         // 组装请求
         $varGet = array(
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
@@ -1245,7 +1194,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteRolesBatch($option = array()) {
+    public function deleteRolesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
@@ -1265,7 +1215,8 @@ class ManagementClient
      * @param Array<RoleListItem> list 必须，角色列表
      * @return IsSuccessRespDto
      */
-    public function createRolesBatch($option = array()) {
+    public function createRolesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -1287,7 +1238,8 @@ class ManagementClient
      * @param string description 可选，角色描述，默认 null
      * @return IsSuccessRespDto
      */
-    public function updateRole($option = array()) {
+    public function updateRole($option = array())
+    {
         // 组装请求
         $varPost = array(
             "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
@@ -1311,7 +1263,8 @@ class ManagementClient
      * @param boolean fetchAll 可选，拉取所有，默认 false
      * @return OrganizationPaginatedRespDto
      */
-    public function listOrganizations($option = array()) {
+    public function listOrganizations($option = array())
+    {
         // 组装请求
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
@@ -1336,7 +1289,8 @@ class ManagementClient
      * @param OrganizationNameI18nDto i18n 可选，多语言设置，默认 null
      * @return OrganizationSingleRespDto
      */
-    public function createOrganization($option = array()) {
+    public function createOrganization($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
@@ -1365,7 +1319,8 @@ class ManagementClient
      * @param string organizationName 可选，组织名称，默认 null
      * @return OrganizationSingleRespDto
      */
-    public function updateOrganization($option = array()) {
+    public function updateOrganization($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1390,7 +1345,8 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @return IsSuccessRespDto
      */
-    public function deleteOrganization($option = array()) {
+    public function deleteOrganization($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1411,7 +1367,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return DepartmentSingleRespDto
      */
-    public function getDepartment($option = array()) {
+    public function getDepartment($option = array())
+    {
         // 组装请求
         $varGet = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1440,7 +1397,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
      * @return DepartmentSingleRespDto
      */
-    public function createDepartment($option = array()) {
+    public function createDepartment($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1475,7 +1433,8 @@ class ManagementClient
      * @param string parentDepartmentId 可选，父部门 id，默认 null
      * @return DepartmentSingleRespDto
      */
-    public function updateDepartment($option = array()) {
+    public function updateDepartment($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1504,7 +1463,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteDepartment($option = array()) {
+    public function deleteDepartment($option = array())
+    {
         // 组装请求
         $varPost = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1526,7 +1486,8 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @return DepartmentListRespDto
      */
-    public function searchDepartments($option = array()) {
+    public function searchDepartments($option = array())
+    {
         // 组装请求
         $varPost = array(
             "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
@@ -1549,7 +1510,8 @@ class ManagementClient
      * @param boolean excludeVirtualNode 可选，是否要排除虚拟组织，默认 false
      * @return DepartmentPaginatedRespDto
      */
-    public function listChildrenDepartments($option = array()) {
+    public function listChildrenDepartments($option = array())
+    {
         // 组装请求
         $varGet = array(
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
@@ -1579,7 +1541,8 @@ class ManagementClient
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
-    public function listDepartmentMembers($option = array()) {
+    public function listDepartmentMembers($option = array())
+    {
         // 组装请求
         $varGet = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1608,7 +1571,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return UserIdListRespDto
      */
-    public function listDepartmentMemberIds($option = array()) {
+    public function listDepartmentMemberIds($option = array())
+    {
         // 组装请求
         $varGet = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1632,7 +1596,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function addDepartmentMembers($option = array()) {
+    public function addDepartmentMembers($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
@@ -1657,7 +1622,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
-    public function removeDepartmentMembers($option = array()) {
+    public function removeDepartmentMembers($option = array())
+    {
         // 组装请求
         $varPost = array(
             "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
@@ -1681,7 +1647,8 @@ class ManagementClient
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return DepartmentSingleRespDto
      */
-    public function getParentDepartment($option = array()) {
+    public function getParentDepartment($option = array())
+    {
         // 组装请求
         $varGet = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
@@ -1702,7 +1669,8 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpListPaginatedRespDto
      */
-    public function listExtIdp($option = array()) {
+    public function listExtIdp($option = array())
+    {
         // 组装请求
         $varGet = array(
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
@@ -1722,7 +1690,8 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpDetailSingleRespDto
      */
-    public function getExtIdp($option = array()) {
+    public function getExtIdp($option = array())
+    {
         // 组装请求
         $varGet = array(
             "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
@@ -1744,7 +1713,8 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID，默认 null
      * @return ExtIdpSingleRespDto
      */
-    public function createExtIdp($option = array()) {
+    public function createExtIdp($option = array())
+    {
         // 组装请求
         $varPost = array(
             "type" => isset($option["type"]) ? $option["type"] : null,
@@ -1766,7 +1736,8 @@ class ManagementClient
      * @param string name 必须，名称
      * @return ExtIdpSingleRespDto
      */
-    public function updateExtIdp($option = array()) {
+    public function updateExtIdp($option = array())
+    {
         // 组装请求
         $varPost = array(
             "id" => isset($option["id"]) ? $option["id"] : null,
@@ -1786,7 +1757,8 @@ class ManagementClient
      * @param string id 必须，身份源 ID
      * @return IsSuccessRespDto
      */
-    public function deleteExtIdp($option = array()) {
+    public function deleteExtIdp($option = array())
+    {
         // 组装请求
         $varPost = array(
             "id" => isset($option["id"]) ? $option["id"] : null,
@@ -1811,7 +1783,8 @@ class ManagementClient
      * @param string logo 可选，身份源图标，默认 null
      * @return ExtIdpConnDetailSingleRespDto
      */
-    public function createExtIdpConn($option = array()) {
+    public function createExtIdpConn($option = array())
+    {
         // 组装请求
         $varPost = array(
             "fields" => isset($option["fields"]) ? $option["fields"] : null,
@@ -1840,7 +1813,8 @@ class ManagementClient
      * @param boolean loginOnly 可选，是否只支持登录，默认 null
      * @return ExtIdpConnDetailSingleRespDto
      */
-    public function updateExtIdpConn($option = array()) {
+    public function updateExtIdpConn($option = array())
+    {
         // 组装请求
         $varPost = array(
             "fields" => isset($option["fields"]) ? $option["fields"] : null,
@@ -1863,7 +1837,8 @@ class ManagementClient
      * @param string id 必须，身份源连接 ID
      * @return IsSuccessRespDto
      */
-    public function deleteExtIdpConn($option = array()) {
+    public function deleteExtIdpConn($option = array())
+    {
         // 组装请求
         $varPost = array(
             "id" => isset($option["id"]) ? $option["id"] : null,
@@ -1885,7 +1860,8 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID，默认 null
      * @return IsSuccessRespDto
      */
-    public function changeConnState($option = array()) {
+    public function changeConnState($option = array())
+    {
         // 组装请求
         $varPost = array(
             "appId" => isset($option["appId"]) ? $option["appId"] : null,
@@ -1907,7 +1883,8 @@ class ManagementClient
      * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组和部门
      * @return CustomFieldListRespDto
      */
-    public function getCustomFields($option = array()) {
+    public function getCustomFields($option = array())
+    {
         // 组装请求
         $varGet = array(
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
@@ -1926,7 +1903,8 @@ class ManagementClient
      * @param Array<SetCustomFieldDto> list 必须，自定义字段列表
      * @return CustomFieldListRespDto
      */
-    public function setCustomFields($option = array()) {
+    public function setCustomFields($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -1948,7 +1926,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，当 target_type 为角色的时候需要填写，否则可以忽略。，默认 null
      * @return IsSuccessRespDto
      */
-    public function setCustomData($option = array()) {
+    public function setCustomData($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -1972,7 +1951,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，当 targetType 为角色的时候需要填写，否则可以忽略。
      * @return GetCustomDataRespDto
      */
-    public function getCustomData($option = array()) {
+    public function getCustomData($option = array())
+    {
         // 组装请求
         $varGet = array(
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
@@ -1998,7 +1978,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return ResourceRespDto
      */
-    public function createResource($option = array()) {
+    public function createResource($option = array())
+    {
         // 组装请求
         $varPost = array(
             "type" => isset($option["type"]) ? $option["type"] : null,
@@ -2023,7 +2004,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function createResourcesBatch($option = array()) {
+    public function createResourcesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -2044,7 +2026,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return ResourceRespDto
      */
-    public function getResource($option = array()) {
+    public function getResource($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2065,7 +2048,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code
      * @return ResourceListRespDto
      */
-    public function getResourcesBatch($option = array()) {
+    public function getResourcesBatch($option = array())
+    {
         // 组装请求
         $varGet = array(
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
@@ -2088,7 +2072,8 @@ class ManagementClient
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return ResourcePaginatedRespDto
      */
-    public function listResources($option = array()) {
+    public function listResources($option = array())
+    {
         // 组装请求
         $varGet = array(
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
@@ -2115,7 +2100,8 @@ class ManagementClient
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' type 可选，资源类型，如数据、API、按钮、菜单，默认 null
      * @return ResourceRespDto
      */
-    public function updateResource($option = array()) {
+    public function updateResource($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2140,7 +2126,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteResource($option = array()) {
+    public function deleteResource($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2161,7 +2148,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function deleteResourcesBatch($option = array()) {
+    public function deleteResourcesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
@@ -2183,7 +2171,8 @@ class ManagementClient
      * @param string description 可选，权限分组描述信息，默认 null
      * @return NamespaceRespDto
      */
-    public function createNamespace($option = array()) {
+    public function createNamespace($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2204,7 +2193,8 @@ class ManagementClient
      * @param Array<CreateNamespacesBatchItemDto> list 必须，权限分组列表
      * @return IsSuccessRespDto
      */
-    public function createNamespacesBatch($option = array()) {
+    public function createNamespacesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -2223,7 +2213,8 @@ class ManagementClient
      * @param string code 必须，权限分组唯一标志符
      * @return NamespaceRespDto
      */
-    public function getNamespace($option = array()) {
+    public function getNamespace($option = array())
+    {
         // 组装请求
         $varGet = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2242,7 +2233,8 @@ class ManagementClient
      * @param Array<string> codeList 必须，资源 code 列表,批量可以使用逗号分隔
      * @return NamespaceListRespDto
      */
-    public function getNamespacesBatch($option = array()) {
+    public function getNamespacesBatch($option = array())
+    {
         // 组装请求
         $varGet = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
@@ -2264,7 +2256,8 @@ class ManagementClient
      * @param string newCode 可选，权限分组新的唯一标志符，默认 null
      * @return UpdateNamespaceRespDto
      */
-    public function updateNamespace($option = array()) {
+    public function updateNamespace($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2286,7 +2279,8 @@ class ManagementClient
      * @param string code 必须，权限分组唯一标志符
      * @return IsSuccessRespDto
      */
-    public function deleteNamespace($option = array()) {
+    public function deleteNamespace($option = array())
+    {
         // 组装请求
         $varPost = array(
             "code" => isset($option["code"]) ? $option["code"] : null,
@@ -2305,7 +2299,8 @@ class ManagementClient
      * @param Array<string> codeList 必须，权限分组 code 列表
      * @return IsSuccessRespDto
      */
-    public function deleteNamespacesBatch($option = array()) {
+    public function deleteNamespacesBatch($option = array())
+    {
         // 组装请求
         $varPost = array(
             "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
@@ -2325,7 +2320,8 @@ class ManagementClient
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
-    public function authorizeResources($option = array()) {
+    public function authorizeResources($option = array())
+    {
         // 组装请求
         $varPost = array(
             "list" => isset($option["list"]) ? $option["list"] : null,
@@ -2349,7 +2345,8 @@ class ManagementClient
      * @param boolean withDenied 可选，是否获取被拒绝的资源，默认 false
      * @return AuthorizedResourcePaginatedRespDto
      */
-    public function getAuthorizedResources($option = array()) {
+    public function getAuthorizedResources($option = array())
+    {
         // 组装请求
         $varGet = array(
             "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,

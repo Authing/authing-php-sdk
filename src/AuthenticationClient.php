@@ -6,11 +6,11 @@
 
 namespace Authing;
 
-
 /**
  * 导入
  */
 
+require_once "util/Tool.php";
 require_once "util/JWT.php";
 
 /**
@@ -62,133 +62,13 @@ class AuthenticationClient
     }
 
     /**
-     * 是否为JSON数据
-     */
-    private static function _isJson($parString)
-    {
-        json_decode($parString);
-        return (json_last_error() == JSON_ERROR_NONE);
-    }
-
-    /**
-     * 规范数据
-     */
-    private static function _formatData($varData)
-    {
-        foreach ($varData as $forKey => $forValue) {
-            if ($forValue === null) {
-                unset($varData[$forKey]);
-            }
-        }
-        return $varData;
-    }
-
-    /**
-     * 规范数据
-     */
-    private static function _getUrlParam($parUrl, $parKey)
-    {
-        $varRes = substr($parUrl, strripos($parUrl, "?") + 1);
-        $varRes = explode("&", $varRes);
-        foreach ($varRes as $forValue) {
-            list($listKey, $listValue) = explode("=", $forValue);
-            $varRet[$listKey] = $listValue;
-        }
-        return isset($varRet[$parKey]) ? $varRet[$parKey] : "";
-    }
-
-    /**
-     * 请求HTTP
-     */
-    private static function _request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
-    {
-        //配置-其他
-        $varCurlObject = curl_init();
-        curl_setopt($varCurlObject, CURLOPT_URL, $parUrl); //配置URL
-        curl_setopt($varCurlObject, CURLOPT_CONNECTTIMEOUT, 20); //连接前等待时间
-        curl_setopt($varCurlObject, CURLOPT_TIMEOUT, 60); //连接后等待时间
-        curl_setopt($varCurlObject, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); //使用IPv4协议
-        curl_setopt($varCurlObject, CURLOPT_RETURNTRANSFER, true); //获取的信息以文件流的形式返回
-        curl_setopt($varCurlObject, CURLOPT_HEADER, true); //返回Header
-        curl_setopt($varCurlObject, CURLOPT_ENCODING, ""); //支持所有编码
-        curl_setopt($varCurlObject, CURLOPT_FOLLOWLOCATION, true); //跟踪爬取重定向页面
-        curl_setopt($varCurlObject, CURLOPT_MAXREDIRS, 10); //指定重定向的最大值
-        curl_setopt($varCurlObject, CURLOPT_AUTOREFERER, true); // 自动配置Referer
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYPEER, false); //禁止验证对等证书
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYHOST, false); //禁止检测域名与证书是否一致
-        curl_setopt($varCurlObject, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"); //配置UserAgent
-        //配置-Get
-        if ($parGet != []) {
-            foreach ($parGet as $forKey => $forValue) {
-                if (is_array($forValue)) {
-                    foreach ($forValue as $forValues) {
-                        $varGet[] = "$forKey=$forValues";
-                    }
-                } else {
-                    $varGet[] = "$forKey=$forValue";
-                }
-            }
-            curl_setopt($varCurlObject, CURLOPT_URL, $parUrl . "?" . implode("&", $varGet));
-        }
-        //配置-POST
-        curl_setopt($varCurlObject, CURLOPT_POST, $parPost != [] ? true : false);
-        if ($parPost != []) {
-            if ($parHeader != [] and isset($parHeader["Content-Type"])) {
-                switch ($parHeader["Content-Type"]) {
-                    case "application/x-www-form-urlencoded":
-                        $parPost = http_build_query($parPost);
-                        break;
-                    case "application/json":
-                        $parPost = json_encode($parPost, JSON_UNESCAPED_UNICODE);
-                        break;
-                }
-            }
-            curl_setopt($varCurlObject, CURLOPT_POSTFIELDS, $parPost);
-        }
-        //配置-Header
-        if ($parHeader != []) {
-            foreach ($parHeader as $forKey => $forValue) {
-                $varHeader[] = "$forKey: $forValue";
-            }
-            curl_setopt($varCurlObject, CURLOPT_HTTPHEADER, $varHeader);
-        }
-        //配置-Cookie
-        if ($parCookie != []) {
-            foreach ($parCookie as $forKey => $forValue) {
-                $varCookie[] = "$forKey=$forValue";
-            }
-            curl_setopt($varCurlObject, CURLOPT_COOKIE, implode(";", $varCookie));
-        }
-        //请求
-        $tempCurlRes = curl_exec($varCurlObject);
-        //组装-error
-        $varRes["error"] = curl_error($varCurlObject);
-        //组装-code
-        $varRes["code"] = curl_getinfo($varCurlObject, CURLINFO_HTTP_CODE);
-        //组装-header
-        $tempHeaderSize = curl_getinfo($varCurlObject, CURLINFO_HEADER_SIZE);
-        $varRes["header"]  = trim(substr($tempCurlRes, 0, $tempHeaderSize));
-        //组装-body
-        $tempBody = substr($tempCurlRes, $tempHeaderSize);
-        if (AuthenticationClient::_isJson($tempBody)) $tempBody = json_decode($tempBody, true);
-        $varRes["body"] = $tempBody;
-        //组装-cookie
-        preg_match_all("/set\-cookie:([^\r\n]*)/i", $varRes["header"], $tempCookie);
-        $tempCookie = implode(";", $tempCookie[1]);
-        $varRes["cookie"] = !empty($tempCookie) ? trim($tempCookie) : "";
-        //返回
-        curl_close($varCurlObject);
-        return $varRes;
-    }
-
-    /**
-     * 构造HTTP
+     * 构造请求
      */
     private function _requests($parMethod, $parGet = [], $parPost = [], $parHeader = [])
     {
         //处理
-        if ($parGet != []) $parGet = $this->_formatData($parGet);
-        if ($parPost != []) $parPost = $this->_formatData($parPost);
+        if ($parGet != []) $parGet = \Tool::formatData($parGet);
+        if ($parPost != []) $parPost = \Tool::formatData($parPost);
         //头部
         $varHeader = array(
             "Content-Type" => "application/x-www-form-urlencoded",
@@ -197,7 +77,7 @@ class AuthenticationClient
         );
         $varHeader = array_merge($varHeader, $parHeader);
         //请求
-        $varReq = AuthenticationClient::_request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        $varReq = \Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         return $varReq;
     }
 
@@ -334,12 +214,12 @@ class AuthenticationClient
     public function handleRedirectCallback($req, $res)
     {
         $url = "http://dummy" . $req["url"];
-        $error = $this->_getUrlParam($url, "error");
+        $error = \Tool::getUrlParam($url, "error");
         if ($error) {
-            throw new \Exception("认证服务器返回错误 " . $error . ":" . $this->_getUrlParam($url, "error_description"));
+            throw new \Exception("认证服务器返回错误 " . $error . ":" . \Tool::getUrlParam($url, "error_description"));
         }
 
-        $code = $this->_getUrlParam($url, "code");
+        $code = \Tool::getUrlParam($url, "code");
         if (!$code) {
             throw new \Exception("认证服务器未返回授权码");
         }
@@ -360,7 +240,7 @@ class AuthenticationClient
         $tx = json_decode((\JWT::base64UrlDecode($txStr)), true);
         header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
 
-        $state = $this->_getUrlParam($url, "state");
+        $state = \Tool::getUrlParam($url, "state");
         if ($state !== $tx["state"]) {
             throw new \Exception("state 验证失败");
         }
@@ -456,7 +336,7 @@ class AuthenticationClient
             "redirectUri" => !empty($redirectUri) ? $redirectUri : null,
             "state" => !empty($state) ? $state : null,
         );
-        $option = $this->_formatData($option);
+        $option = \Tool::formatData($option);
         header("Location:" . $this->buildLogoutUrl($option), true, 302);
     }
 
@@ -481,7 +361,7 @@ class AuthenticationClient
                 "id_token_hint" => $idToken,
             );
         }
-        $params = $this->_formatData($params);
+        $params = \Tool::formatData($params);
         return $this->_host . "/oidc/session/end?" . $this->_createQueryParams($params);
     }
 
