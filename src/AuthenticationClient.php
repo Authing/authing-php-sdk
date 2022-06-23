@@ -40,8 +40,8 @@ class AuthenticationClient
      */
     public function __construct($option)
     {
-        $option["cookieKey"] = empty($option["cookieKey"]) ? "X-Authing-Node-OIDC-State" : $option["cookieKey"];
-        $option["scope"] = empty($option["scope"]) ? "openid profile" : $option["scope"];
+        $option["cookieKey"] = \Tool::getNotEmpty($option["cookieKey"], "X-Authing-Node-OIDC-State");
+        $option["scope"] = \Tool::getNotEmpty($option["scope"], "openid profile");
 
         if (isset($option["scope"]) and strpos($option["scope"], "openid") === false) {
             throw new \Exception("scope 中必须包含 openid");
@@ -91,7 +91,7 @@ class AuthenticationClient
         }
         preg_match("/^(((?:http)|(?:https)):\/\/)?((?:[\w\-_]+)(?:\.[\w\-_]+)+)(:\d{1,6})?(?:\/.*)?$/", $domain, $matchRes);
         if ($matchRes && $matchRes[3]) {
-            $tempA = !empty($matchRes[1]) ? $matchRes[1] : "https://";
+            $tempA = \Tool::getNotEmpty($matchRes[1], "https://");
             $tempB = $matchRes[4] ? "" : $matchRes[4];
             return $tempA . $matchRes[3] . $tempB;
         }
@@ -148,17 +148,17 @@ class AuthenticationClient
     public function loginWithRedirect($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
     {
         $res = $this->buildAuthUrl(
-            !empty($scope) ? $scope : null,
-            !empty($state) ? $state : null,
-            !empty($nonce) ? $nonce : null,
-            !empty($redirectUri) ? $redirectUri : null,
-            !empty($forced) ? $forced : null
+            \Tool::getNotEmpty($scope),
+            \Tool::getNotEmpty($state),
+            \Tool::getNotEmpty($nonce),
+            \Tool::getNotEmpty($redirectUri),
+            \Tool::getNotEmpty($forced)
         );
 
         $tx = array(
             "state" => $res["state"],
             "nonce" => $res["nonce"],
-            "redirectUri" => empty($redirectUri) ? $this->_option["redirectUri"] : $redirectUri,
+            "redirectUri" => \Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
         );
 
         $ret["cookie"] = $this->_option["cookieKey"] . "=" . \JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
@@ -180,12 +180,12 @@ class AuthenticationClient
      */
     public function buildAuthUrl($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
     {
-        $state = empty($state) ? $this->_generateRandomString(16) : $state;
-        $nonce = empty($nonce) ? $this->_generateRandomString(16) : $nonce;
-        $scope = empty($scope) ? $this->_option["scope"] : $scope;
+        $state = \Tool::getNotEmpty($state, $this->_generateRandomString(16));
+        $nonce = \Tool::getNotEmpty($nonce, $this->_generateRandomString(16));
+        $scope = \Tool::getNotEmpty($scope, $this->_option["scope"]);
 
         $params = array(
-            "redirect_uri" => empty($redirectUri) ? $this->_option["redirectUri"] : $redirectUri,
+            "redirect_uri" => \Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
             "response_mode" => "query",
             "response_type" => "code",
             "client_id" => $this->_option["appId"],
@@ -333,11 +333,11 @@ class AuthenticationClient
     public function logoutWithRedirect($idToken = null, $redirectUri = null, $state = null)
     {
         $option = array(
-            "idToken" => !empty($idToken) ? $idToken : null,
-            "redirectUri" => !empty($redirectUri) ? $redirectUri : null,
-            "state" => !empty($state) ? $state : null,
+            "idToken" => \Tool::getNotEmpty($idToken),
+            "redirectUri" => \Tool::getNotEmpty($redirectUri),
+            "state" => \Tool::getNotEmpty($state),
         );
-        
+
         header("Location:" . $this->buildLogoutUrl($option["idToken"], $option["redirectUri"], $option["state"]), true, 302);
 
         return $option;
@@ -351,7 +351,7 @@ class AuthenticationClient
      */
     public function buildLogoutUrl($idToken = null, $redirectUri = null, $state = null)
     {
-        $redirectUri = empty($redirectUri) ? $this->_option["logoutRedirectUri"] : $redirectUri;
+        $redirectUri = \Tool::getNotEmpty($redirectUri, $this->_option["logoutRedirectUri"]);
         if ($redirectUri) {
             $params = array(
                 "redirectUri" => $redirectUri,

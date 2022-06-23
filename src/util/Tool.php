@@ -6,6 +6,14 @@
 class Tool
 {
     /**
+     * 获取非空数据
+     */
+    public static function getNotEmpty($parData, $parDefault = null)
+    {
+        return !empty($parData) ? $parData : $parDefault;
+    }
+
+    /**
      * 获取URL参数
      */
     public static function getUrlParam($parUrl, $parKey)
