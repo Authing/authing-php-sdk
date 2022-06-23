@@ -103,13 +103,7 @@ class AuthenticationClient
      */
     private static function _parseJWKS($jwks)
     {
-        foreach ($jwks["keys"] as $forValue) {
-            $res[] = array(
-                "id" => $forValue["kid"],
-                "key" => \JWT::parseToken($forValue),
-            );
-        }
-        return $res;
+        return \JWT::parseJWKS($jwks);
     }
 
     /**
@@ -138,7 +132,7 @@ class AuthenticationClient
         $characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         $charactersLength = strlen($characters);
         for ($i = 0; $i < $length; $i++) {
-            $result += substr($characters, floor(rand() * $charactersLength), 1);
+            $result .= substr($characters, floor(rand(1, 10) / 10 * $charactersLength), 1);
         }
         return $result;
     }
@@ -153,20 +147,27 @@ class AuthenticationClient
      */
     public function loginWithRedirect($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
     {
-        $res = $this->buildAuthUrl(array(
-            "scope" => !empty($scope) ? $scope : null,
-            "state" => !empty($state) ? $state : null,
-            "nonce" => !empty($nonce) ? $nonce : null,
-            "redirectUri" => !empty($redirectUri) ? $redirectUri : null,
-            "forced" => !empty($forced) ? $forced : null,
-        ));
+        $res = $this->buildAuthUrl(
+            !empty($scope) ? $scope : null,
+            !empty($state) ? $state : null,
+            !empty($nonce) ? $nonce : null,
+            !empty($redirectUri) ? $redirectUri : null,
+            !empty($forced) ? $forced : null
+        );
 
-        header("Set-Cookie:" . $this->_options["cookieKey"] . "=" . \JWT::base64UrlEncode(json_encode(array(
+        $tx = array(
             "state" => $res["state"],
             "nonce" => $res["nonce"],
-            "redirectUri" => empty($redirectUri) ? $this->options["redirectUri"] : $redirectUri,
-        ))) . "; HttpOnly; SameSite=Lax");
-        header("Location:" . $res["url"]);
+            "redirectUri" => empty($redirectUri) ? $this->_option["redirectUri"] : $redirectUri,
+        );
+
+        $ret["cookie"] = $this->_option["cookieKey"] . "=" . \JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
+        $ret["url"] = $res["url"];
+
+        header("Set-Cookie:" . $ret["cookie"]);
+        header("Location:" . $ret["url"]);
+
+        return $ret;
     }
 
     /**
@@ -208,12 +209,12 @@ class AuthenticationClient
 
     /**
      * 在应用回调端点处理认证返回结果，利用 Cookie 中传递的上下文信息进行安全验证，并获取用户登录态
-     * @param object $req http 请求对象，用于获取认证结果和上下文 Cookie
-     * @param object $res http 响应对象，只用于清除上下文 Cookie
+     * @param string $url url
+     * @param string $cookie cookie
      */
-    public function handleRedirectCallback($req, $res)
+    public function handleRedirectCallback($url, $cookie)
     {
-        $url = "http://dummy" . $req["url"];
+        $url = "http://dummy" . $url;
         $error = \Tool::getUrlParam($url, "error");
         if ($error) {
             throw new \Exception("认证服务器返回错误 " . $error . ":" . \Tool::getUrlParam($url, "error_description"));
@@ -225,11 +226,11 @@ class AuthenticationClient
         }
 
         $cookieKey = $this->_option["cookieKey"] . "=";
-        $txStr = isset($req["headers"]["cookie"]) ? $req["headers"]["cookie"] : $req["headers"]["Cookie"];
+        $txStr = $cookie;
         $txStr = explode("; ", $txStr);
         foreach ($txStr as $forValue) {
             if (substr($forValue, 0, strlen($cookieKey)) === $cookieKey) {
-                $txStr = substr($forValue, 0, strlen($cookieKey));
+                $txStr = substr($forValue, strlen($cookieKey));
             }
         }
 
@@ -336,8 +337,10 @@ class AuthenticationClient
             "redirectUri" => !empty($redirectUri) ? $redirectUri : null,
             "state" => !empty($state) ? $state : null,
         );
-        $option = \Tool::formatData($option);
-        header("Location:" . $this->buildLogoutUrl($option), true, 302);
+        
+        header("Location:" . $this->buildLogoutUrl($option["idToken"], $option["redirectUri"], $option["state"]), true, 302);
+
+        return $option;
     }
 
     /**
