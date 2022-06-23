@@ -4,8 +4,6 @@
  * 导入
  */
 
-require_once __DIR__ . "/../../vendor/autoload.php";
-
 use Firebase\JWT\JWK as FirebaseJWK;
 use Firebase\JWT\JWT as FirebaseJWT;
 use Firebase\JWT\Key as FirebaseKey;
