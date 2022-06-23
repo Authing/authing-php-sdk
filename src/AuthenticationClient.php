@@ -111,6 +111,7 @@ class AuthenticationClient
      */
     private static function _createQueryParams($params)
     {
+        if (empty($params)) return "";
         foreach ($params as $forKey => $forValue) {
             if (is_array($forValue)) {
                 foreach ($forValue as $forValues) {
