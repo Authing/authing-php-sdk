@@ -89,13 +89,13 @@ class AuthenticationClient
         if (strpos($domain, "http://localhost:") === 0 or strpos($domain, "localhost:") === 0) {
             return $domain;
         }
-        $matchRes = preg_match("/^(((?:http)|(?:https)):\/\/)?((?:[\w-_]+)(?:\.[\w-_]+)+)(:\d{1,6})?(?:\/.*)?$/", $domain);
+        preg_match("/^(((?:http)|(?:https)):\/\/)?((?:[\w\-_]+)(?:\.[\w\-_]+)+)(:\d{1,6})?(?:\/.*)?$/", $domain, $matchRes);
         if ($matchRes && $matchRes[3]) {
             $tempA = !empty($matchRes[1]) ? $matchRes[1] : "https://";
             $tempB = $matchRes[4] ? "" : $matchRes[4];
             return $tempA . $matchRes[3] . $tempB;
         }
-        throw new \Exception(`无效的域名配置: ` . $domain);
+        throw new \Exception("无效的域名配置: " . $domain);
     }
 
     /**
