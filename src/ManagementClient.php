@@ -166,6 +166,9 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态
+     * @param number updatedAtStart 可选，用户创建、修改开始时间，为精确到秒的 UNIX 时间戳；支持获取从某一段时间之后的增量数据。
+     * @param number updatedAtEnd 可选，用户创建、修改终止时间，为精确到秒的 UNIX 时间戳；支持获取某一段时间内的增量数据。默认为当前时间。
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
@@ -177,6 +180,9 @@ class ManagementClient
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "status" => isset($option["status"]) ? $option["status"] : null,
+            "updatedAtStart" => isset($option["updatedAtStart"]) ? $option["updatedAtStart"] : null,
+            "updatedAtEnd" => isset($option["updatedAtEnd"]) ? $option["updatedAtEnd"] : null,
             "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
             "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
@@ -275,6 +281,11 @@ class ManagementClient
      * @description 获取用户部门列表
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
+     * @param 'DepartmentCreatedAt' | 'JoinDepartmentAt' | 'DepartmentName' | 'DepartmemtCode' sortBy 必须，排序依据，默认 'JoinDepartmentAt'
+     * @param 'Asc' | 'Desc' orderBy 必须，增序还是倒序，默认 'Desc'
      * @return UserDepartmentPaginatedRespDto
      */
     public function getUserDepartments($option = array())
@@ -282,6 +293,11 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "sortBy" => isset($option["sortBy"]) ? $option["sortBy"] : null,
+            "orderBy" => isset($option["orderBy"]) ? $option["orderBy"] : null,
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-departments", $varGet, null);
@@ -378,6 +394,7 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param number startAt 可选，开始时间，为精确到秒的 UNIX 时间戳，默认不指定。
      * @return ListArchivedUsersSingleRespDto
      */
     public function listArchivedUsers($option = array())
@@ -386,6 +403,7 @@ class ManagementClient
         $varGet = array(
             "page" => isset($option["page"]) ? $option["page"] : null,
             "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "startAt" => isset($option["startAt"]) ? $option["startAt"] : null,
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-archived-users", $varGet, null);
@@ -446,7 +464,7 @@ class ManagementClient
      * @summary 创建用户
      * @description 创建用户，邮箱、手机号、用户名必须包含其中一个
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param 'Deleted' | 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，默认 null
+     * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，默认 null
      * @param string email 可选，邮箱，默认 null
      * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，加密类型，默认 null
      * @param string phone 可选，手机号，默认 null
@@ -544,7 +562,7 @@ class ManagementClient
      * @param string nickname 可选，昵称，默认 null
      * @param string photo 可选，头像链接，默认 null
      * @param string externalId 可选，第三方外部 ID，默认 null
-     * @param 'Deleted' | 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，默认 null
+     * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，默认 null
      * @param boolean emailVerified 可选，邮箱是否验证，默认 null
      * @param boolean phoneVerified 可选，手机号是否验证，默认 null
      * @param string birthdate 可选，出生日期，默认 null
@@ -1363,8 +1381,10 @@ class ManagementClient
      * @description 获取部门信息
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id，根部门传 `root`
+     * @param string departmentId 可选，部门 id，根部门传 `root`。departmentId 和 departmentCode 必传其一。
+     * @param string departmentCode 可选，部门 code。departmentId 和 departmentCode 必传其一。
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @return DepartmentSingleRespDto
      */
     public function getDepartment($option = array())
@@ -1373,7 +1393,9 @@ class ManagementClient
         $varGet = array(
             "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
             "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentCode" => isset($option["departmentCode"]) ? $option["departmentCode"] : null,
             "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-department", $varGet, null);
@@ -1539,6 +1561,8 @@ class ManagementClient
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
+     * @param 'Default' | 'JoinDepartmentAt' sortBy 必须，排序依据，默认 'JoinDepartmentAt'
+     * @param 'Asc' | 'Desc' orderBy 必须，增序还是倒序，默认 'Desc'
      * @return UserPaginatedRespDto
      */
     public function listDepartmentMembers($option = array())
@@ -1554,6 +1578,8 @@ class ManagementClient
             "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
             "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
             "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "sortBy" => isset($option["sortBy"]) ? $option["sortBy"] : null,
+            "orderBy" => isset($option["orderBy"]) ? $option["orderBy"] : null,
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-members", $varGet, null);
@@ -1581,6 +1607,42 @@ class ManagementClient
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-member-ids", $varGet, null);
+        // 返回
+        return $varReq["body"];
+    }
+
+    /**
+     * 搜索部门下的成员
+     * @summary 搜索部门下的成员
+     * @description 搜索部门下的成员
+     * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
+     * @param string keywords 必须，搜索关键词
+     * @param string organizationCode 必须，组织 code
+     * @param string departmentId 必须，部门 id，根部门传 `root`
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean includeChildrenDepartments 可选，是否包含子部门的成员，默认 false
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
+     * @param boolean withIdentities 可选，是否获取 identities，默认 false
+     * @return UserPaginatedRespDto
+     */
+    public function searchDepartmentMembers($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "page" => isset($option["page"]) ? $option["page"] : null,
+            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
+            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
+            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "includeChildrenDepartments" => isset($option["includeChildrenDepartments"]) ? $option["includeChildrenDepartments"] : null,
+            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+        );
+        // 发送请求
+        $varReq = $this->_requests("/api/v3/search-department-members", $varGet, null);
         // 返回
         return $varReq["body"];
     }
@@ -2341,7 +2403,8 @@ class ManagementClient
      * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型
      * @param string targetIdentifier 必须，目标对象唯一标志符
      * @param string namespace 可选，所属权限分组的 code
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型，如数据、API、按钮、菜单
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，限定资源类型，如数据、API、按钮、菜单
+     * @param Array<string> resourceList 可选，限定查询的资源列表，如果指定，只会返回所指定的资源列表。
      * @param boolean withDenied 可选，是否获取被拒绝的资源，默认 false
      * @return AuthorizedResourcePaginatedRespDto
      */
@@ -2353,6 +2416,7 @@ class ManagementClient
             "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
             "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
             "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
+            "resourceList" => isset($option["resourceList"]) ? $option["resourceList"] : null,
             "withDenied" => isset($option["withDenied"]) ? $option["withDenied"] : null,
         );
         // 发送请求
