@@ -52,8 +52,8 @@ class ManagementClient
             $this->_getAccessToken($this->_accessKey["id"],  $this->_accessKey["secret"]);
         }
         //处理
-        if ($parGet != []) $parGet = \Tool::formatData($parGet);
-        if ($parPost != []) $parPost = \Tool::formatData($parPost);
+        if ($parGet != []) $parGet = Util\Tool::formatData($parGet);
+        if ($parPost != []) $parPost = Util\Tool::formatData($parPost);
         //头部
         $varHeader = array(
             "Authorization" => "Bearer " . $this->_accessToken,
@@ -63,7 +63,7 @@ class ManagementClient
             "x-authing-sdk-version" => "php:5.0.0",
         );
         //请求
-        $varReq = \Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        $varReq = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         return $varReq;
     }
 
@@ -2421,6 +2421,32 @@ class ManagementClient
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-authorized-resources", $varGet, null);
+        // 返回
+        return $varReq["body"];
+    }
+
+    /**
+     * 判断用户是否对某个资源的某个操作有权限
+     * @summary 判断用户是否对某个资源的某个操作有权限
+     * @description 判断用户是否对某个资源的某个操作有权限
+     * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
+     * @param string action 必须，资源对应的操作
+     * @param string resource 必须，资源标识符
+     * @param string userId 必须，用户 ID
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @return IsActionAllowedRespDtp
+     */
+    public function isActionAllowed($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "action" => isset($option["action"]) ? $option["action"] : null,
+            "resource" => isset($option["resource"]) ? $option["resource"] : null,
+            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+        );
+        // 发送请求
+        $varReq = $this->_requests("/api/v3/is-action-allowed", null, $varPost);
         // 返回
         return $varReq["body"];
     }

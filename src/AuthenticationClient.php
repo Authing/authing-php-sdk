@@ -40,8 +40,8 @@ class AuthenticationClient
      */
     public function __construct($option)
     {
-        $option["cookieKey"] = \Tool::getNotEmpty($option["cookieKey"], "X-Authing-Node-OIDC-State");
-        $option["scope"] = \Tool::getNotEmpty($option["scope"], "openid profile");
+        $option["cookieKey"] = Util\Tool::getNotEmpty($option["cookieKey"], "X-Authing-Node-OIDC-State");
+        $option["scope"] = Util\Tool::getNotEmpty($option["scope"], "openid profile");
 
         if (isset($option["scope"]) and strpos($option["scope"], "openid") === false) {
             throw new \Exception("scope 中必须包含 openid");
@@ -67,8 +67,8 @@ class AuthenticationClient
     private function _requests($parMethod, $parGet = [], $parPost = [], $parHeader = [])
     {
         //处理
-        if ($parGet != []) $parGet = \Tool::formatData($parGet);
-        if ($parPost != []) $parPost = \Tool::formatData($parPost);
+        if ($parGet != []) $parGet = Util\Tool::formatData($parGet);
+        if ($parPost != []) $parPost = Util\Tool::formatData($parPost);
         //头部
         $varHeader = array(
             "Content-Type" => "application/x-www-form-urlencoded",
@@ -77,7 +77,7 @@ class AuthenticationClient
         );
         $varHeader = array_merge($varHeader, $parHeader);
         //请求
-        $varReq = \Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        $varReq = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         return $varReq;
     }
 
@@ -91,7 +91,7 @@ class AuthenticationClient
         }
         preg_match("/^(((?:http)|(?:https)):\/\/)?((?:[\w\-_]+)(?:\.[\w\-_]+)+)(:\d{1,6})?(?:\/.*)?$/", $domain, $matchRes);
         if ($matchRes && $matchRes[3]) {
-            $tempA = \Tool::getNotEmpty($matchRes[1], "https://");
+            $tempA = Util\Tool::getNotEmpty($matchRes[1], "https://");
             $tempB = $matchRes[4] ? "" : $matchRes[4];
             return $tempA . $matchRes[3] . $tempB;
         }
@@ -103,7 +103,7 @@ class AuthenticationClient
      */
     private static function _parseJWKS($jwks)
     {
-        return \JWT::parseJWKS($jwks);
+        return Util\JWT::parseJWKS($jwks);
     }
 
     /**
@@ -149,20 +149,20 @@ class AuthenticationClient
     public function loginWithRedirect($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
     {
         $res = $this->buildAuthUrl(
-            \Tool::getNotEmpty($scope),
-            \Tool::getNotEmpty($state),
-            \Tool::getNotEmpty($nonce),
-            \Tool::getNotEmpty($redirectUri),
-            \Tool::getNotEmpty($forced)
+            Util\Tool::getNotEmpty($scope),
+            Util\Tool::getNotEmpty($state),
+            Util\Tool::getNotEmpty($nonce),
+            Util\Tool::getNotEmpty($redirectUri),
+            Util\Tool::getNotEmpty($forced)
         );
 
         $tx = array(
             "state" => $res["state"],
             "nonce" => $res["nonce"],
-            "redirectUri" => \Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
+            "redirectUri" => Util\Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
         );
 
-        $ret["cookie"] = $this->_option["cookieKey"] . "=" . \JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
+        $ret["cookie"] = $this->_option["cookieKey"] . "=" . Util\JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
         $ret["url"] = $res["url"];
 
         header("Set-Cookie:" . $ret["cookie"]);
@@ -181,12 +181,12 @@ class AuthenticationClient
      */
     public function buildAuthUrl($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
     {
-        $state = \Tool::getNotEmpty($state, $this->_generateRandomString(16));
-        $nonce = \Tool::getNotEmpty($nonce, $this->_generateRandomString(16));
-        $scope = \Tool::getNotEmpty($scope, $this->_option["scope"]);
+        $state = Util\Tool::getNotEmpty($state, $this->_generateRandomString(16));
+        $nonce = Util\Tool::getNotEmpty($nonce, $this->_generateRandomString(16));
+        $scope = Util\Tool::getNotEmpty($scope, $this->_option["scope"]);
 
         $params = array(
-            "redirect_uri" => \Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
+            "redirect_uri" => Util\Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
             "response_mode" => "query",
             "response_type" => "code",
             "client_id" => $this->_option["appId"],
@@ -216,12 +216,12 @@ class AuthenticationClient
     public function handleRedirectCallback($url, $cookie)
     {
         $url = "http://dummy" . $url;
-        $error = \Tool::getUrlParam($url, "error");
+        $error = Util\Tool::getUrlParam($url, "error");
         if ($error) {
-            throw new \Exception("认证服务器返回错误 " . $error . ":" . \Tool::getUrlParam($url, "error_description"));
+            throw new \Exception("认证服务器返回错误 " . $error . ":" . Util\Tool::getUrlParam($url, "error_description"));
         }
 
-        $code = \Tool::getUrlParam($url, "code");
+        $code = Util\Tool::getUrlParam($url, "code");
         if (!$code) {
             throw new \Exception("认证服务器未返回授权码");
         }
@@ -239,10 +239,10 @@ class AuthenticationClient
             throw new \Exception("Cookie 中没有中间态，认证失败");
         }
 
-        $tx = json_decode((\JWT::base64UrlDecode($txStr)), true);
+        $tx = json_decode((Util\JWT::base64UrlDecode($txStr)), true);
         header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
 
-        $state = \Tool::getUrlParam($url, "state");
+        $state = Util\Tool::getUrlParam($url, "state");
         if ($state !== $tx["state"]) {
             throw new \Exception("state 验证失败");
         }
@@ -279,7 +279,7 @@ class AuthenticationClient
      */
     public function parseAccessToken($token)
     {
-        $res = \JWT::verifyToken($token, $this->_jwks[0]["key"]);
+        $res = Util\JWT::verifyToken($token, $this->_jwks[0]["key"]);
         if ($res === false) {
             throw new \Exception("校验不通过");
         }
@@ -292,7 +292,7 @@ class AuthenticationClient
      */
     public function parseIDToken($token)
     {
-        $res = \JWT::verifyToken($token, $this->_jwks[0]["key"]);
+        $res = Util\JWT::verifyToken($token, $this->_jwks[0]["key"]);
         if ($res === false) {
             throw new \Exception("校验不通过");
         }
@@ -334,9 +334,9 @@ class AuthenticationClient
     public function logoutWithRedirect($idToken = null, $redirectUri = null, $state = null)
     {
         $option = array(
-            "idToken" => \Tool::getNotEmpty($idToken),
-            "redirectUri" => \Tool::getNotEmpty($redirectUri),
-            "state" => \Tool::getNotEmpty($state),
+            "idToken" => Util\Tool::getNotEmpty($idToken),
+            "redirectUri" => Util\Tool::getNotEmpty($redirectUri),
+            "state" => Util\Tool::getNotEmpty($state),
         );
 
         header("Location:" . $this->buildLogoutUrl($option["idToken"], $option["redirectUri"], $option["state"]), true, 302);
@@ -352,7 +352,7 @@ class AuthenticationClient
      */
     public function buildLogoutUrl($idToken = null, $redirectUri = null, $state = null)
     {
-        $redirectUri = \Tool::getNotEmpty($redirectUri, $this->_option["logoutRedirectUri"]);
+        $redirectUri = Util\Tool::getNotEmpty($redirectUri, $this->_option["logoutRedirectUri"]);
         if ($redirectUri) {
             $params = array(
                 "redirectUri" => $redirectUri,
@@ -365,7 +365,7 @@ class AuthenticationClient
                 "id_token_hint" => $idToken,
             );
         }
-        $params = \Tool::formatData($params);
+        $params = Util\Tool::formatData($params);
         return $this->_host . "/oidc/session/end?" . $this->_createQueryParams($params);
     }
 

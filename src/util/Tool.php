@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * 命名空间
+ */
+
+namespace Authing\Util;
+
+/**
  * 工具
  */
 class Tool

@@ -1,6 +1,12 @@
 <?php
 
 /**
+ * 命名空间
+ */
+
+namespace Authing\Util;
+
+/**
  * 导入
  */
 
