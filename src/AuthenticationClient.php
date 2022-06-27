@@ -55,7 +55,9 @@ class AuthenticationClient
         } else {
             $varReq = $this->_requests($this->_host . "/oidc/.well-known/jwks.json");
             if ($varReq["error"]) {
-                throw new \Exception("自动获取认证服务器 JWKS 公钥失败, 请检查域名是否正确, 或手动指定 serverJWKS 参数: " . $varReq["error"]);
+                throw new \Exception("请求错误：" . $varReq["error"]);
+            } else if ($varReq["body"]["error"]) {
+                throw new \Exception("自动获取认证服务器 JWKS 公钥失败, 请检查域名是否正确, 或手动指定 serverJWKS 参数: " . $varReq["body"]["error"]);
             }
             $this->_jwks = $this->_parseJWKS($varReq["body"]);
         }
@@ -270,6 +272,11 @@ class AuthenticationClient
             "grant_type" => "authorization_code",
         );
         $varReq = $this->_requests($this->_host . "/oidc/token", null, $tokenParam);
+        if ($varReq["error"]) {
+            throw new \Exception("请求错误：" . $varReq["error"]);
+        } else if ($varReq["body"]["error"]) {
+            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
+        }
         return $this->buildLoginState($varReq["body"]);
     }
 
@@ -306,6 +313,11 @@ class AuthenticationClient
     public function getUserInfo($accessToken)
     {
         $varReq = $this->_requests($this->_host . "/oidc/me", null, null, array("Authorization" => "Bearer " . $accessToken));
+        if ($varReq["error"]) {
+            throw new \Exception("请求错误：" . $varReq["error"]);
+        } else if ($varReq["body"]["error"]) {
+            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
+        }
         return $varReq["body"];
     }
 
@@ -322,6 +334,11 @@ class AuthenticationClient
             "grant_type" => "refresh_token",
         );
         $varReq = $this->_requests($this->_host . "/oidc/token", null, $tokenParam);
+        if ($varReq["error"]) {
+            throw new \Exception("请求错误：" . $varReq["error"]);
+        } else if ($varReq["body"]["error"]) {
+            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
+        }
         return $this->buildLoginState($varReq["body"]);
     }
 
