@@ -117,9 +117,11 @@ class AuthenticationClient
         foreach ($params as $forKey => $forValue) {
             if (is_array($forValue)) {
                 foreach ($forValue as $forValues) {
+                    $forValues = urlencode($forValues);
                     $varParams[] = "$forKey=$forValues";
                 }
             } else {
+                $forValue = urlencode($forValue);
                 $varParams[] = "$forKey=$forValue";
             }
         }
