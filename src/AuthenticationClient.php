@@ -105,7 +105,7 @@ class AuthenticationClient
      */
     private static function _parseJWKS($jwks)
     {
-        return Util\JWT::parseJWKS($jwks);
+        return $jwks;
     }
 
     /**
@@ -243,7 +243,7 @@ class AuthenticationClient
         }
 
         $tx = json_decode((Util\JWT::base64UrlDecode($txStr)), true);
-        
+
         header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
 
         $state = Util\Tool::getUrlParam($url, "state");
@@ -288,8 +288,8 @@ class AuthenticationClient
      */
     public function parseAccessToken($token)
     {
-        $res = Util\JWT::verifyToken($token, $this->_jwks);
-        if ($res === false) {
+        $res = Util\JWT::parse($token);
+        if (!$res) {
             throw new \Exception("校验不通过");
         }
         return $res;
@@ -301,8 +301,8 @@ class AuthenticationClient
      */
     public function parseIDToken($token)
     {
-        $res = Util\JWT::verifyToken($token, $this->_jwks);
-        if ($res === false) {
+        $res = Util\JWT::parse($token, $this->_option["appSecret"]);
+        if (!$res) {
             throw new \Exception("校验不通过");
         }
         return $res;
@@ -397,7 +397,7 @@ class AuthenticationClient
         return array(
             "accessToken" => $tokenRes["access_token"],
             "idToken" => $tokenRes["id_token"],
-            "refreshToken" => $tokenRes["refresh_token"],
+            "refreshToken" => Util\Tool::getSet($tokenRes["refresh_token"]),
             "expireAt" => $tokenRes["expires_in"],
             "parsedIDToken" => $this->parseIDToken($tokenRes["id_token"]),
             "parsedAccessToken" => $this->parseAccessToken($tokenRes["access_token"]),

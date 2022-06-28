@@ -20,6 +20,14 @@ class Tool
     }
 
     /**
+     * 获取已赋值数据
+     */
+    public static function getSet($parData, $parDefault = null)
+    {
+        return isset($parData) ? $parData : $parDefault;
+    }
+
+    /**
      * 获取URL参数
      */
     public static function getUrlParam($parUrl, $parKey)

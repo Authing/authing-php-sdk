@@ -7,9 +7,7 @@
         "php": ">=5.6",
         "ext-curl": "*",
         "ext-json": "*",
-        "ext-openssl": "*",
-        "firebase/php-jwt": "^6.1",
-        "paragonie/sodium_compat": "^1.17"
+        "ext-openssl": "*"
     },
     "license": "MIT",
     "authors": [
