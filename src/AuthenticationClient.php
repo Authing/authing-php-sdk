@@ -288,7 +288,7 @@ class AuthenticationClient
      */
     public function parseAccessToken($token)
     {
-        $res = Util\JWT::verifyToken($token, $this->_jwks[0]["key"]);
+        $res = Util\JWT::verifyToken($token, $this->_jwks);
         if ($res === false) {
             throw new \Exception("校验不通过");
         }
@@ -301,7 +301,7 @@ class AuthenticationClient
      */
     public function parseIDToken($token)
     {
-        $res = Util\JWT::verifyToken($token, $this->_jwks[0]["key"]);
+        $res = Util\JWT::verifyToken($token, $this->_jwks);
         if ($res === false) {
             throw new \Exception("校验不通过");
         }

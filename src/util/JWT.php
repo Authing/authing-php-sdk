@@ -12,7 +12,6 @@ namespace Authing\Util;
 
 use Firebase\JWT\JWK as FirebaseJWK;
 use Firebase\JWT\JWT as FirebaseJWT;
-use Firebase\JWT\Key as FirebaseKey;
 
 /**
  * Json Web Token
@@ -35,7 +34,7 @@ class JWT
      */
     public static function verifyToken($token, $key)
     {
-        return FirebaseJWT::decode($token, new FirebaseKey($key, 'HS256'));
+        return FirebaseJWT::decode($token, $key);
     }
 
     /**
