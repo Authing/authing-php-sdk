@@ -219,10 +219,9 @@ class AuthenticationClient
      */
     public function handleRedirectCallback($url, $cookie)
     {
-        $url = "http://dummy" . $url;
         $error = Util\Tool::getUrlParam($url, "error");
         if ($error) {
-            throw new \Exception("认证服务器返回错误 " . $error . ":" . Util\Tool::getUrlParam($url, "error_description"));
+            throw new \Exception("认证服务器返回错误 " . $error . " :" . Util\Tool::getUrlParam($url, "error_description"));
         }
 
         $code = Util\Tool::getUrlParam($url, "code");
@@ -244,6 +243,7 @@ class AuthenticationClient
         }
 
         $tx = json_decode((Util\JWT::base64UrlDecode($txStr)), true);
+        
         header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
 
         $state = Util\Tool::getUrlParam($url, "state");
@@ -352,15 +352,15 @@ class AuthenticationClient
      */
     public function logoutWithRedirect($idToken = null, $redirectUri = null, $state = null)
     {
-        $option = array(
-            "idToken" => Util\Tool::getNotEmpty($idToken),
-            "redirectUri" => Util\Tool::getNotEmpty($redirectUri),
-            "state" => Util\Tool::getNotEmpty($state),
+        $res = $this->buildLogoutUrl(
+            Util\Tool::getNotEmpty($idToken),
+            Util\Tool::getNotEmpty($redirectUri),
+            Util\Tool::getNotEmpty($state)
         );
 
-        header("Location:" . $this->buildLogoutUrl($option["idToken"], $option["redirectUri"], $option["state"]), true, 302);
+        header("Location:" . $res);
 
-        return $option;
+        return $res;
     }
 
     /**
