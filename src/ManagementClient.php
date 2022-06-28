@@ -90,8 +90,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "accessKeySecret" => isset($option["accessKeySecret"]) ? $option["accessKeySecret"] : null,
-            "accessKeyId" => isset($option["accessKeyId"]) ? $option["accessKeyId"] : null,
+            "accessKeySecret" => Util\Tool::getSet($option["accessKeySecret"]),
+            "accessKeyId" => Util\Tool::getSet($option["accessKeyId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-management-token", null, $varPost);
@@ -118,14 +118,14 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "phone" => isset($option["phone"]) ? $option["phone"] : null,
-            "email" => isset($option["email"]) ? $option["email"] : null,
-            "username" => isset($option["username"]) ? $option["username"] : null,
-            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "phone" => Util\Tool::getSet($option["phone"]),
+            "email" => Util\Tool::getSet($option["email"]),
+            "username" => Util\Tool::getSet($option["username"]),
+            "externalId" => Util\Tool::getSet($option["externalId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user", $varGet, null);
@@ -148,10 +148,10 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
+            "userIds" => Util\Tool::getSet($option["userIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-batch", $varGet, null);
@@ -178,14 +178,14 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "status" => isset($option["status"]) ? $option["status"] : null,
-            "updatedAtStart" => isset($option["updatedAtStart"]) ? $option["updatedAtStart"] : null,
-            "updatedAtEnd" => isset($option["updatedAtEnd"]) ? $option["updatedAtEnd"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "status" => Util\Tool::getSet($option["status"]),
+            "updatedAtStart" => Util\Tool::getSet($option["updatedAtStart"]),
+            "updatedAtEnd" => Util\Tool::getSet($option["updatedAtEnd"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-users", $varGet, null);
@@ -205,7 +205,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-identities", $varGet, null);
@@ -226,8 +226,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-roles", $varGet, null);
@@ -247,7 +247,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-principal-authentication-info", $varGet, null);
@@ -267,7 +267,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/reset-user-principal-authentication-info", null, $varPost);
@@ -292,12 +292,12 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "sortBy" => isset($option["sortBy"]) ? $option["sortBy"] : null,
-            "orderBy" => isset($option["orderBy"]) ? $option["orderBy"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "sortBy" => Util\Tool::getSet($option["sortBy"]),
+            "orderBy" => Util\Tool::getSet($option["orderBy"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-departments", $varGet, null);
@@ -318,8 +318,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "departments" => isset($option["departments"]) ? $option["departments"] : null,
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "departments" => Util\Tool::getSet($option["departments"]),
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-user-departments", null, $varPost);
@@ -339,7 +339,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-groups", $varGet, null);
@@ -359,7 +359,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
+            "userIds" => Util\Tool::getSet($option["userIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-users-batch", null, $varPost);
@@ -379,7 +379,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-mfa-info", $varGet, null);
@@ -401,9 +401,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "startAt" => isset($option["startAt"]) ? $option["startAt"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "startAt" => Util\Tool::getSet($option["startAt"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-archived-users", $varGet, null);
@@ -424,8 +424,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "appIds" => isset($option["appIds"]) ? $option["appIds"] : null,
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "appIds" => Util\Tool::getSet($option["appIds"]),
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/kick-users", null, $varPost);
@@ -448,10 +448,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "username" => isset($option["username"]) ? $option["username"] : null,
-            "email" => isset($option["email"]) ? $option["email"] : null,
-            "phone" => isset($option["phone"]) ? $option["phone"] : null,
-            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
+            "username" => Util\Tool::getSet($option["username"]),
+            "email" => Util\Tool::getSet($option["email"]),
+            "phone" => Util\Tool::getSet($option["phone"]),
+            "externalId" => Util\Tool::getSet($option["externalId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/is-user-exists", null, $varPost);
@@ -496,32 +496,32 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "status" => isset($option["status"]) ? $option["status"] : null,
-            "email" => isset($option["email"]) ? $option["email"] : null,
-            "passwordEncryptType" => isset($option["passwordEncryptType"]) ? $option["passwordEncryptType"] : null,
-            "phone" => isset($option["phone"]) ? $option["phone"] : null,
-            "phoneCountryCode" => isset($option["phoneCountryCode"]) ? $option["phoneCountryCode"] : null,
-            "username" => isset($option["username"]) ? $option["username"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "nickname" => isset($option["nickname"]) ? $option["nickname"] : null,
-            "photo" => isset($option["photo"]) ? $option["photo"] : null,
-            "gender" => isset($option["gender"]) ? $option["gender"] : null,
-            "emailVerified" => isset($option["emailVerified"]) ? $option["emailVerified"] : null,
-            "phoneVerified" => isset($option["phoneVerified"]) ? $option["phoneVerified"] : null,
-            "birthdate" => isset($option["birthdate"]) ? $option["birthdate"] : null,
-            "country" => isset($option["country"]) ? $option["country"] : null,
-            "province" => isset($option["province"]) ? $option["province"] : null,
-            "city" => isset($option["city"]) ? $option["city"] : null,
-            "address" => isset($option["address"]) ? $option["address"] : null,
-            "streetAddress" => isset($option["streetAddress"]) ? $option["streetAddress"] : null,
-            "postalCode" => isset($option["postalCode"]) ? $option["postalCode"] : null,
-            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
-            "departmentIds" => isset($option["departmentIds"]) ? $option["departmentIds"] : null,
-            "customData" => isset($option["customData"]) ? $option["customData"] : null,
-            "password" => isset($option["password"]) ? $option["password"] : null,
-            "tenantIds" => isset($option["tenantIds"]) ? $option["tenantIds"] : null,
-            "identities" => isset($option["identities"]) ? $option["identities"] : null,
-            "options" => isset($option["options"]) ? $option["options"] : null,
+            "status" => Util\Tool::getSet($option["status"]),
+            "email" => Util\Tool::getSet($option["email"]),
+            "passwordEncryptType" => Util\Tool::getSet($option["passwordEncryptType"]),
+            "phone" => Util\Tool::getSet($option["phone"]),
+            "phoneCountryCode" => Util\Tool::getSet($option["phoneCountryCode"]),
+            "username" => Util\Tool::getSet($option["username"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "nickname" => Util\Tool::getSet($option["nickname"]),
+            "photo" => Util\Tool::getSet($option["photo"]),
+            "gender" => Util\Tool::getSet($option["gender"]),
+            "emailVerified" => Util\Tool::getSet($option["emailVerified"]),
+            "phoneVerified" => Util\Tool::getSet($option["phoneVerified"]),
+            "birthdate" => Util\Tool::getSet($option["birthdate"]),
+            "country" => Util\Tool::getSet($option["country"]),
+            "province" => Util\Tool::getSet($option["province"]),
+            "city" => Util\Tool::getSet($option["city"]),
+            "address" => Util\Tool::getSet($option["address"]),
+            "streetAddress" => Util\Tool::getSet($option["streetAddress"]),
+            "postalCode" => Util\Tool::getSet($option["postalCode"]),
+            "externalId" => Util\Tool::getSet($option["externalId"]),
+            "departmentIds" => Util\Tool::getSet($option["departmentIds"]),
+            "customData" => Util\Tool::getSet($option["customData"]),
+            "password" => Util\Tool::getSet($option["password"]),
+            "tenantIds" => Util\Tool::getSet($option["tenantIds"]),
+            "identities" => Util\Tool::getSet($option["identities"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-user", null, $varPost);
@@ -542,8 +542,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
-            "options" => isset($option["options"]) ? $option["options"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-users-batch", null, $varPost);
@@ -585,29 +585,29 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "phoneCountryCode" => isset($option["phoneCountryCode"]) ? $option["phoneCountryCode"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "nickname" => isset($option["nickname"]) ? $option["nickname"] : null,
-            "photo" => isset($option["photo"]) ? $option["photo"] : null,
-            "externalId" => isset($option["externalId"]) ? $option["externalId"] : null,
-            "status" => isset($option["status"]) ? $option["status"] : null,
-            "emailVerified" => isset($option["emailVerified"]) ? $option["emailVerified"] : null,
-            "phoneVerified" => isset($option["phoneVerified"]) ? $option["phoneVerified"] : null,
-            "birthdate" => isset($option["birthdate"]) ? $option["birthdate"] : null,
-            "country" => isset($option["country"]) ? $option["country"] : null,
-            "province" => isset($option["province"]) ? $option["province"] : null,
-            "city" => isset($option["city"]) ? $option["city"] : null,
-            "address" => isset($option["address"]) ? $option["address"] : null,
-            "streetAddress" => isset($option["streetAddress"]) ? $option["streetAddress"] : null,
-            "postalCode" => isset($option["postalCode"]) ? $option["postalCode"] : null,
-            "gender" => isset($option["gender"]) ? $option["gender"] : null,
-            "username" => isset($option["username"]) ? $option["username"] : null,
-            "passwordEncryptType" => isset($option["passwordEncryptType"]) ? $option["passwordEncryptType"] : null,
-            "email" => isset($option["email"]) ? $option["email"] : null,
-            "phone" => isset($option["phone"]) ? $option["phone"] : null,
-            "password" => isset($option["password"]) ? $option["password"] : null,
-            "customData" => isset($option["customData"]) ? $option["customData"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "phoneCountryCode" => Util\Tool::getSet($option["phoneCountryCode"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "nickname" => Util\Tool::getSet($option["nickname"]),
+            "photo" => Util\Tool::getSet($option["photo"]),
+            "externalId" => Util\Tool::getSet($option["externalId"]),
+            "status" => Util\Tool::getSet($option["status"]),
+            "emailVerified" => Util\Tool::getSet($option["emailVerified"]),
+            "phoneVerified" => Util\Tool::getSet($option["phoneVerified"]),
+            "birthdate" => Util\Tool::getSet($option["birthdate"]),
+            "country" => Util\Tool::getSet($option["country"]),
+            "province" => Util\Tool::getSet($option["province"]),
+            "city" => Util\Tool::getSet($option["city"]),
+            "address" => Util\Tool::getSet($option["address"]),
+            "streetAddress" => Util\Tool::getSet($option["streetAddress"]),
+            "postalCode" => Util\Tool::getSet($option["postalCode"]),
+            "gender" => Util\Tool::getSet($option["gender"]),
+            "username" => Util\Tool::getSet($option["username"]),
+            "passwordEncryptType" => Util\Tool::getSet($option["passwordEncryptType"]),
+            "email" => Util\Tool::getSet($option["email"]),
+            "phone" => Util\Tool::getSet($option["phone"]),
+            "password" => Util\Tool::getSet($option["password"]),
+            "customData" => Util\Tool::getSet($option["customData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-user", null, $varPost);
@@ -627,7 +627,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-accessible-apps", $varGet, null);
@@ -647,7 +647,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-authorized-apps", $varGet, null);
@@ -668,8 +668,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "roles" => isset($option["roles"]) ? $option["roles"] : null,
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "roles" => Util\Tool::getSet($option["roles"]),
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/has-any-role", null, $varPost);
@@ -695,13 +695,13 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "appId" => isset($option["appId"]) ? $option["appId"] : null,
-            "clientIp" => isset($option["clientIp"]) ? $option["clientIp"] : null,
-            "start" => isset($option["start"]) ? $option["start"] : null,
-            "end" => isset($option["end"]) ? $option["end"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "appId" => Util\Tool::getSet($option["appId"]),
+            "clientIp" => Util\Tool::getSet($option["clientIp"]),
+            "start" => Util\Tool::getSet($option["start"]),
+            "end" => Util\Tool::getSet($option["end"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-login-history", $varGet, null);
@@ -721,7 +721,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-loggedin-apps", $varGet, null);
@@ -741,7 +741,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-logged-in-identities", $varGet, null);
@@ -763,9 +763,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "resourceType" => Util\Tool::getSet($option["resourceType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-authorized-resources", $varGet, null);
@@ -785,7 +785,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-group", $varGet, null);
@@ -806,8 +806,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-groups", $varGet, null);
@@ -829,9 +829,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "description" => Util\Tool::getSet($option["description"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-group", null, $varPost);
@@ -851,7 +851,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-groups-batch", null, $varPost);
@@ -874,10 +874,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
+            "description" => Util\Tool::getSet($option["description"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "newCode" => Util\Tool::getSet($option["newCode"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-group", null, $varPost);
@@ -897,7 +897,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "codeList" => Util\Tool::getSet($option["codeList"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-groups-batch", null, $varPost);
@@ -918,8 +918,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "userIds" => Util\Tool::getSet($option["userIds"]),
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/add-group-members", null, $varPost);
@@ -940,8 +940,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "userIds" => Util\Tool::getSet($option["userIds"]),
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/remove-group-members", null, $varPost);
@@ -966,12 +966,12 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-group-members", $varGet, null);
@@ -993,9 +993,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "resourceType" => Util\Tool::getSet($option["resourceType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-group-authorized-resources", $varGet, null);
@@ -1016,8 +1016,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-role", $varGet, null);
@@ -1039,9 +1039,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "targets" => isset($option["targets"]) ? $option["targets"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "targets" => Util\Tool::getSet($option["targets"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/assign-role", null, $varPost);
@@ -1063,9 +1063,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "targets" => isset($option["targets"]) ? $option["targets"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "targets" => Util\Tool::getSet($option["targets"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/revoke-role", null, $varPost);
@@ -1087,9 +1087,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "resourceType" => Util\Tool::getSet($option["resourceType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-role-authorized-resources", $varGet, null);
@@ -1115,13 +1115,13 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-role-members", $varGet, null);
@@ -1144,10 +1144,10 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-role-departments", $varGet, null);
@@ -1169,9 +1169,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "description" => Util\Tool::getSet($option["description"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-role", null, $varPost);
@@ -1193,9 +1193,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-roles", $varGet, null);
@@ -1216,8 +1216,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "codeList" => Util\Tool::getSet($option["codeList"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-roles-batch", null, $varPost);
@@ -1237,7 +1237,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-roles-batch", null, $varPost);
@@ -1260,10 +1260,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
+            "newCode" => Util\Tool::getSet($option["newCode"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "description" => Util\Tool::getSet($option["description"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-role", null, $varPost);
@@ -1285,9 +1285,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "fetchAll" => isset($option["fetchAll"]) ? $option["fetchAll"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "fetchAll" => Util\Tool::getSet($option["fetchAll"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-organizations", $varGet, null);
@@ -1311,11 +1311,11 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
-            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
+            "organizationName" => Util\Tool::getSet($option["organizationName"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "openDepartmentId" => Util\Tool::getSet($option["openDepartmentId"]),
+            "i18n" => Util\Tool::getSet($option["i18n"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-organization", null, $varPost);
@@ -1341,13 +1341,13 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
-            "leaderUserIds" => isset($option["leaderUserIds"]) ? $option["leaderUserIds"] : null,
-            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
-            "organizationNewCode" => isset($option["organizationNewCode"]) ? $option["organizationNewCode"] : null,
-            "organizationName" => isset($option["organizationName"]) ? $option["organizationName"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "openDepartmentId" => Util\Tool::getSet($option["openDepartmentId"]),
+            "leaderUserIds" => Util\Tool::getSet($option["leaderUserIds"]),
+            "i18n" => Util\Tool::getSet($option["i18n"]),
+            "organizationNewCode" => Util\Tool::getSet($option["organizationNewCode"]),
+            "organizationName" => Util\Tool::getSet($option["organizationName"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-organization", null, $varPost);
@@ -1367,7 +1367,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-organization", null, $varPost);
@@ -1391,11 +1391,11 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentCode" => isset($option["departmentCode"]) ? $option["departmentCode"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentCode" => Util\Tool::getSet($option["departmentCode"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-department", $varGet, null);
@@ -1423,15 +1423,15 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "openDepartmentId" => isset($option["openDepartmentId"]) ? $option["openDepartmentId"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "isVirtualNode" => isset($option["isVirtualNode"]) ? $option["isVirtualNode"] : null,
-            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "parentDepartmentId" => Util\Tool::getSet($option["parentDepartmentId"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "openDepartmentId" => Util\Tool::getSet($option["openDepartmentId"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "isVirtualNode" => Util\Tool::getSet($option["isVirtualNode"]),
+            "i18n" => Util\Tool::getSet($option["i18n"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-department", null, $varPost);
@@ -1459,15 +1459,15 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "leaderUserIds" => isset($option["leaderUserIds"]) ? $option["leaderUserIds"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "i18n" => isset($option["i18n"]) ? $option["i18n"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
-            "parentDepartmentId" => isset($option["parentDepartmentId"]) ? $option["parentDepartmentId"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "leaderUserIds" => Util\Tool::getSet($option["leaderUserIds"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "i18n" => Util\Tool::getSet($option["i18n"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "parentDepartmentId" => Util\Tool::getSet($option["parentDepartmentId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-department", null, $varPost);
@@ -1489,9 +1489,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-department", null, $varPost);
@@ -1512,8 +1512,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
+            "keywords" => Util\Tool::getSet($option["keywords"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/search-departments", null, $varPost);
@@ -1536,10 +1536,10 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "excludeVirtualNode" => isset($option["excludeVirtualNode"]) ? $option["excludeVirtualNode"] : null,
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "excludeVirtualNode" => Util\Tool::getSet($option["excludeVirtualNode"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-children-departments", $varGet, null);
@@ -1569,17 +1569,17 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
-            "includeChildrenDepartments" => isset($option["includeChildrenDepartments"]) ? $option["includeChildrenDepartments"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
-            "withDepartmentIds" => isset($option["withDepartmentIds"]) ? $option["withDepartmentIds"] : null,
-            "sortBy" => isset($option["sortBy"]) ? $option["sortBy"] : null,
-            "orderBy" => isset($option["orderBy"]) ? $option["orderBy"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "includeChildrenDepartments" => Util\Tool::getSet($option["includeChildrenDepartments"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
+            "sortBy" => Util\Tool::getSet($option["sortBy"]),
+            "orderBy" => Util\Tool::getSet($option["orderBy"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-members", $varGet, null);
@@ -1601,9 +1601,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-department-member-ids", $varGet, null);
@@ -1631,15 +1631,15 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
-            "keywords" => isset($option["keywords"]) ? $option["keywords"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
-            "includeChildrenDepartments" => isset($option["includeChildrenDepartments"]) ? $option["includeChildrenDepartments"] : null,
-            "withCustomData" => isset($option["withCustomData"]) ? $option["withCustomData"] : null,
-            "withIdentities" => isset($option["withIdentities"]) ? $option["withIdentities"] : null,
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+            "keywords" => Util\Tool::getSet($option["keywords"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "includeChildrenDepartments" => Util\Tool::getSet($option["includeChildrenDepartments"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
+            "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/search-department-members", $varGet, null);
@@ -1662,10 +1662,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "userIds" => Util\Tool::getSet($option["userIds"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/add-department-members", null, $varPost);
@@ -1688,10 +1688,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "userIds" => isset($option["userIds"]) ? $option["userIds"] : null,
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "userIds" => Util\Tool::getSet($option["userIds"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/remove-department-members", null, $varPost);
@@ -1713,9 +1713,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "organizationCode" => isset($option["organizationCode"]) ? $option["organizationCode"] : null,
-            "departmentId" => isset($option["departmentId"]) ? $option["departmentId"] : null,
-            "departmentIdType" => isset($option["departmentIdType"]) ? $option["departmentIdType"] : null,
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-parent-department", $varGet, null);
@@ -1735,7 +1735,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
+            "tenantId" => Util\Tool::getSet($option["tenantId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-ext-idp", $varGet, null);
@@ -1756,8 +1756,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
-            "id" => isset($option["id"]) ? $option["id"] : null,
+            "tenantId" => Util\Tool::getSet($option["tenantId"]),
+            "id" => Util\Tool::getSet($option["id"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-ext-idp", $varGet, null);
@@ -1779,9 +1779,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "type" => isset($option["type"]) ? $option["type"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
+            "type" => Util\Tool::getSet($option["type"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "tenantId" => Util\Tool::getSet($option["tenantId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-ext-idp", null, $varPost);
@@ -1802,8 +1802,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "id" => isset($option["id"]) ? $option["id"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
+            "id" => Util\Tool::getSet($option["id"]),
+            "name" => Util\Tool::getSet($option["name"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-ext-idp", null, $varPost);
@@ -1823,7 +1823,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "id" => isset($option["id"]) ? $option["id"] : null,
+            "id" => Util\Tool::getSet($option["id"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-ext-idp", null, $varPost);
@@ -1849,13 +1849,13 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "fields" => isset($option["fields"]) ? $option["fields"] : null,
-            "displayName" => isset($option["displayName"]) ? $option["displayName"] : null,
-            "identifier" => isset($option["identifier"]) ? $option["identifier"] : null,
-            "type" => isset($option["type"]) ? $option["type"] : null,
-            "extIdpId" => isset($option["extIdpId"]) ? $option["extIdpId"] : null,
-            "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
-            "logo" => isset($option["logo"]) ? $option["logo"] : null,
+            "fields" => Util\Tool::getSet($option["fields"]),
+            "displayName" => Util\Tool::getSet($option["displayName"]),
+            "identifier" => Util\Tool::getSet($option["identifier"]),
+            "type" => Util\Tool::getSet($option["type"]),
+            "extIdpId" => Util\Tool::getSet($option["extIdpId"]),
+            "loginOnly" => Util\Tool::getSet($option["loginOnly"]),
+            "logo" => Util\Tool::getSet($option["logo"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-ext-idp-conn", null, $varPost);
@@ -1879,11 +1879,11 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "fields" => isset($option["fields"]) ? $option["fields"] : null,
-            "displayName" => isset($option["displayName"]) ? $option["displayName"] : null,
-            "id" => isset($option["id"]) ? $option["id"] : null,
-            "logo" => isset($option["logo"]) ? $option["logo"] : null,
-            "loginOnly" => isset($option["loginOnly"]) ? $option["loginOnly"] : null,
+            "fields" => Util\Tool::getSet($option["fields"]),
+            "displayName" => Util\Tool::getSet($option["displayName"]),
+            "id" => Util\Tool::getSet($option["id"]),
+            "logo" => Util\Tool::getSet($option["logo"]),
+            "loginOnly" => Util\Tool::getSet($option["loginOnly"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-ext-idp-conn", null, $varPost);
@@ -1903,7 +1903,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "id" => isset($option["id"]) ? $option["id"] : null,
+            "id" => Util\Tool::getSet($option["id"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-ext-idp-conn", null, $varPost);
@@ -1926,10 +1926,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "appId" => isset($option["appId"]) ? $option["appId"] : null,
-            "enabled" => isset($option["enabled"]) ? $option["enabled"] : null,
-            "id" => isset($option["id"]) ? $option["id"] : null,
-            "tenantId" => isset($option["tenantId"]) ? $option["tenantId"] : null,
+            "appId" => Util\Tool::getSet($option["appId"]),
+            "enabled" => Util\Tool::getSet($option["enabled"]),
+            "id" => Util\Tool::getSet($option["id"]),
+            "tenantId" => Util\Tool::getSet($option["tenantId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/enable-ext-idp-conn", null, $varPost);
@@ -1949,7 +1949,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
+            "targetType" => Util\Tool::getSet($option["targetType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-custom-fields", $varGet, null);
@@ -1969,7 +1969,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-custom-fields", null, $varPost);
@@ -1992,10 +1992,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
-            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
-            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
+            "targetIdentifier" => Util\Tool::getSet($option["targetIdentifier"]),
+            "targetType" => Util\Tool::getSet($option["targetType"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-custom-data", null, $varPost);
@@ -2017,9 +2017,9 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
-            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "targetType" => Util\Tool::getSet($option["targetType"]),
+            "targetIdentifier" => Util\Tool::getSet($option["targetIdentifier"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-custom-data", $varGet, null);
@@ -2044,12 +2044,12 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "type" => isset($option["type"]) ? $option["type"] : null,
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "actions" => isset($option["actions"]) ? $option["actions"] : null,
-            "apiIdentifier" => isset($option["apiIdentifier"]) ? $option["apiIdentifier"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "type" => Util\Tool::getSet($option["type"]),
+            "code" => Util\Tool::getSet($option["code"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "actions" => Util\Tool::getSet($option["actions"]),
+            "apiIdentifier" => Util\Tool::getSet($option["apiIdentifier"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-resource", null, $varPost);
@@ -2070,8 +2070,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-resources-batch", null, $varPost);
@@ -2092,8 +2092,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-resource", $varGet, null);
@@ -2114,8 +2114,8 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "codeList" => Util\Tool::getSet($option["codeList"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-resources-batch", $varGet, null);
@@ -2138,10 +2138,10 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "type" => isset($option["type"]) ? $option["type"] : null,
-            "page" => isset($option["page"]) ? $option["page"] : null,
-            "limit" => isset($option["limit"]) ? $option["limit"] : null,
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "type" => Util\Tool::getSet($option["type"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-resources", $varGet, null);
@@ -2166,12 +2166,12 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "actions" => isset($option["actions"]) ? $option["actions"] : null,
-            "apiIdentifier" => isset($option["apiIdentifier"]) ? $option["apiIdentifier"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "type" => isset($option["type"]) ? $option["type"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "actions" => Util\Tool::getSet($option["actions"]),
+            "apiIdentifier" => Util\Tool::getSet($option["apiIdentifier"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "type" => Util\Tool::getSet($option["type"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-resource", null, $varPost);
@@ -2192,8 +2192,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-resource", null, $varPost);
@@ -2214,8 +2214,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "codeList" => Util\Tool::getSet($option["codeList"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-resources-batch", null, $varPost);
@@ -2237,9 +2237,9 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "description" => Util\Tool::getSet($option["description"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-namespace", null, $varPost);
@@ -2259,7 +2259,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/create-namespaces-batch", null, $varPost);
@@ -2279,7 +2279,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-namespace", $varGet, null);
@@ -2299,7 +2299,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "codeList" => Util\Tool::getSet($option["codeList"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-namespaces-batch", $varGet, null);
@@ -2322,10 +2322,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
-            "description" => isset($option["description"]) ? $option["description"] : null,
-            "name" => isset($option["name"]) ? $option["name"] : null,
-            "newCode" => isset($option["newCode"]) ? $option["newCode"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
+            "description" => Util\Tool::getSet($option["description"]),
+            "name" => Util\Tool::getSet($option["name"]),
+            "newCode" => Util\Tool::getSet($option["newCode"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-namespace", null, $varPost);
@@ -2345,7 +2345,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "code" => isset($option["code"]) ? $option["code"] : null,
+            "code" => Util\Tool::getSet($option["code"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-namespace", null, $varPost);
@@ -2365,7 +2365,7 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "codeList" => isset($option["codeList"]) ? $option["codeList"] : null,
+            "codeList" => Util\Tool::getSet($option["codeList"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-namespaces-batch", null, $varPost);
@@ -2386,8 +2386,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "list" => isset($option["list"]) ? $option["list"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "list" => Util\Tool::getSet($option["list"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/authorize-resources", null, $varPost);
@@ -2412,12 +2412,12 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
-            "targetType" => isset($option["targetType"]) ? $option["targetType"] : null,
-            "targetIdentifier" => isset($option["targetIdentifier"]) ? $option["targetIdentifier"] : null,
-            "resourceType" => isset($option["resourceType"]) ? $option["resourceType"] : null,
-            "resourceList" => isset($option["resourceList"]) ? $option["resourceList"] : null,
-            "withDenied" => isset($option["withDenied"]) ? $option["withDenied"] : null,
+            "namespace" => Util\Tool::getSet($option["namespace"]),
+            "targetType" => Util\Tool::getSet($option["targetType"]),
+            "targetIdentifier" => Util\Tool::getSet($option["targetIdentifier"]),
+            "resourceType" => Util\Tool::getSet($option["resourceType"]),
+            "resourceList" => Util\Tool::getSet($option["resourceList"]),
+            "withDenied" => Util\Tool::getSet($option["withDenied"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-authorized-resources", $varGet, null);
@@ -2440,10 +2440,10 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "action" => isset($option["action"]) ? $option["action"] : null,
-            "resource" => isset($option["resource"]) ? $option["resource"] : null,
-            "userId" => isset($option["userId"]) ? $option["userId"] : null,
-            "namespace" => isset($option["namespace"]) ? $option["namespace"] : null,
+            "action" => Util\Tool::getSet($option["action"]),
+            "resource" => Util\Tool::getSet($option["resource"]),
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/is-action-allowed", null, $varPost);
