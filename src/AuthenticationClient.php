@@ -109,7 +109,7 @@ class AuthenticationClient
     }
 
     /**
-     * 拼接处理 query 参数
+     * 拼接请求参数
      */
     private static function _createQueryParams($params)
     {
@@ -129,7 +129,7 @@ class AuthenticationClient
     }
 
     /**
-     * 拼接处理 query 参数
+     * 获取随机字符串
      */
     private static function _generateRandomString($length = 30)
     {
