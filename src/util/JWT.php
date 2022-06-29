@@ -26,11 +26,11 @@ class JWT
     }
 
     /**
-     * 解析
+     * 解析Token
      * @param string $token 需要被解析的token
      * @param string $key 密钥，为空则不进行验证
      */
-    public static function parse($token, $key = null)
+    public static function parseToken($token, $key = null)
     {
         //分割
         $tokens = explode(".", $token);
