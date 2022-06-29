@@ -143,6 +143,48 @@ class AuthenticationClient
     }
 
     /**
+     * 生成登录状态
+     * @param array $tokenRes 必须，tokenRes
+     */
+    private function _buildLoginState($tokenRes)
+    {
+        return array(
+            "accessToken" => $tokenRes["access_token"],
+            "idToken" => $tokenRes["id_token"],
+            "refreshToken" => Util\Tool::getSet($tokenRes["refresh_token"]),
+            "expireAt" => $tokenRes["expires_in"],
+            "parsedIDToken" => $this->_parseIDToken($tokenRes["id_token"]),
+            "parsedAccessToken" => $this->_parseAccessToken($tokenRes["access_token"]),
+        );
+    }
+
+    /**
+     * 验证并解析 ID Token
+     * @param string $token 必须，ID Token
+     */
+    private function _parseIDToken($token)
+    {
+        $res = Util\JWT::parseToken($token, $this->_option["appSecret"]);
+        if (!$res) {
+            throw new \Exception("校验不通过");
+        }
+        return $res;
+    }
+
+    /**
+     * 验证并解析 Access Token
+     * @param string $token 必须，Access Token
+     */
+    private function _parseAccessToken($token)
+    {
+        $res = Util\JWT::parseToken($token);
+        if (!$res) {
+            throw new \Exception("校验不通过");
+        }
+        return $res;
+    }
+
+    /**
      * 将用户浏览器重定向到 Authing 的认证发起 URL 进行认证，利用 Cookie 将上下文信息传递到应用回调端点
      * @param string $scope 可选，应用侧向 Authing 请求的权限，覆盖初始化参数中的对应设置
      * @param string $state 可选，中间状态标识符，默认自动生成
@@ -279,33 +321,7 @@ class AuthenticationClient
         } else if ($varReq["body"]["error"]) {
             throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
         }
-        return $this->buildLoginState($varReq["body"]);
-    }
-
-    /**
-     * 验证并解析 Access Token
-     * @param string $token 必须，Access Token
-     */
-    public function parseAccessToken($token)
-    {
-        $res = Util\JWT::parseToken($token);
-        if (!$res) {
-            throw new \Exception("校验不通过");
-        }
-        return $res;
-    }
-
-    /**
-     * 验证并解析 ID Token
-     * @param string $token 必须，ID Token
-     */
-    public function parseIDToken($token)
-    {
-        $res = Util\JWT::parseToken($token, $this->_option["appSecret"]);
-        if (!$res) {
-            throw new \Exception("校验不通过");
-        }
-        return $res;
+        return $this->_buildLoginState($varReq["body"]);
     }
 
     /**
@@ -341,7 +357,7 @@ class AuthenticationClient
         } else if ($varReq["body"]["error"]) {
             throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
         }
-        return $this->buildLoginState($varReq["body"]);
+        return $this->_buildLoginState($varReq["body"]);
     }
 
     /**
@@ -386,21 +402,5 @@ class AuthenticationClient
         }
         $params = Util\Tool::formatData($params);
         return $this->_host . "/oidc/session/end?" . $this->_createQueryParams($params);
-    }
-
-    /**
-     * 生成登录状态
-     * @param array $tokenRes 必须，tokenRes
-     */
-    private function buildLoginState($tokenRes)
-    {
-        return array(
-            "accessToken" => $tokenRes["access_token"],
-            "idToken" => $tokenRes["id_token"],
-            "refreshToken" => Util\Tool::getSet($tokenRes["refresh_token"]),
-            "expireAt" => $tokenRes["expires_in"],
-            "parsedIDToken" => $this->parseIDToken($tokenRes["id_token"]),
-            "parsedAccessToken" => $this->parseAccessToken($tokenRes["access_token"]),
-        );
     }
 }
