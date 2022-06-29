@@ -185,39 +185,6 @@ class AuthenticationClient
     }
 
     /**
-     * 将用户浏览器重定向到 Authing 的认证发起 URL 进行认证，利用 Cookie 将上下文信息传递到应用回调端点
-     * @param string $scope 可选，应用侧向 Authing 请求的权限，覆盖初始化参数中的对应设置
-     * @param string $state 可选，中间状态标识符，默认自动生成
-     * @param string $nonce 可选，出现在 ID Token 中的随机字符串，默认自动生成
-     * @param string $redirectUri 可选，回调地址，覆盖初始化参数中的对应设置
-     * @param boolean $forced 可选，即便用户已经登录也强制显示登录页
-     */
-    public function loginWithRedirect($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
-    {
-        $res = $this->buildAuthUrl(
-            Util\Tool::getNotEmpty($scope),
-            Util\Tool::getNotEmpty($state),
-            Util\Tool::getNotEmpty($nonce),
-            Util\Tool::getNotEmpty($redirectUri),
-            Util\Tool::getNotEmpty($forced)
-        );
-
-        $tx = array(
-            "state" => $res["state"],
-            "nonce" => $res["nonce"],
-            "redirectUri" => Util\Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
-        );
-
-        $ret["cookie"] = $this->_option["cookieKey"] . "=" . Util\JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
-        $ret["url"] = $res["url"];
-
-        header("Set-Cookie:" . $ret["cookie"]);
-        header("Location:" . $ret["url"]);
-
-        return $ret;
-    }
-
-    /**
      * 生成认证发起 URL
      * @param string $scope 可选，本次认证中请求获得的权限，覆盖初始化参数中的对应设置
      * @param string $state 可选，中间状态标识符，默认自动生成
@@ -252,53 +219,6 @@ class AuthenticationClient
             "state" => $state,
             "nonce" => $nonce,
         );
-    }
-
-    /**
-     * 在应用回调端点处理认证返回结果，利用 Cookie 中传递的上下文信息进行安全验证，并获取用户登录态
-     * @param string $url url
-     * @param string $cookie cookie
-     */
-    public function handleRedirectCallback($url, $cookie)
-    {
-        $error = Util\Tool::getUrlParam($url, "error");
-        if ($error) {
-            throw new \Exception("认证服务器返回错误 " . $error . " :" . Util\Tool::getUrlParam($url, "error_description"));
-        }
-
-        $code = Util\Tool::getUrlParam($url, "code");
-        if (!$code) {
-            throw new \Exception("认证服务器未返回授权码");
-        }
-
-        $cookieKey = $this->_option["cookieKey"] . "=";
-        $txStr = $cookie;
-        $txStr = explode("; ", $txStr);
-        foreach ($txStr as $forValue) {
-            if (substr($forValue, 0, strlen($cookieKey)) === $cookieKey) {
-                $txStr = substr($forValue, strlen($cookieKey));
-            }
-        }
-
-        if (!$txStr) {
-            throw new \Exception("Cookie 中没有中间态，认证失败");
-        }
-
-        $tx = json_decode((Util\JWT::base64UrlDecode($txStr)), true);
-
-        header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
-
-        $state = Util\Tool::getUrlParam($url, "state");
-        if ($state !== $tx["state"]) {
-            throw new \Exception("state 验证失败");
-        }
-
-        $loginState = $this->getLoginStateByAuthCode($code, $tx["redirectUri"]);
-        if ($loginState["parsedIDToken"]["nonce"] !== $tx["nonce"]) {
-            throw new \Exception("nonce 校验失败");
-        }
-
-        return $loginState;
     }
 
     /**
@@ -361,25 +281,6 @@ class AuthenticationClient
     }
 
     /**
-     * 将浏览器重定向到 Authing 的登出发起 URL 进行登出
-     * @param string $idToken 可选，用户登录时获取的 ID Token，用于无效化用户 Token，建议传入
-     * @param string $redirectUri 可选，登出完成后的重定向目标 URL，覆盖初始化参数中的对应设置
-     * @param string $state 可选，传递到目标 URL 的中间状态标识符
-     */
-    public function logoutWithRedirect($idToken = null, $redirectUri = null, $state = null)
-    {
-        $res = $this->buildLogoutUrl(
-            Util\Tool::getNotEmpty($idToken),
-            Util\Tool::getNotEmpty($redirectUri),
-            Util\Tool::getNotEmpty($state)
-        );
-
-        header("Location:" . $res);
-
-        return $res;
-    }
-
-    /**
      * 生成登出 URL
      * @param string $idToken 可选，用户登录时获取的 ID Token，用于无效化用户 Token，建议传入
      * @param string $redirectUri 可选，登出完成后的重定向目标 URL，覆盖初始化参数中的对应设置
@@ -402,5 +303,104 @@ class AuthenticationClient
         }
         $params = Util\Tool::formatData($params);
         return $this->_host . "/oidc/session/end?" . $this->_createQueryParams($params);
+    }
+
+    /**
+     * 将用户浏览器重定向到 Authing 的认证发起 URL 进行认证，利用 Cookie 将上下文信息传递到应用回调端点
+     * @param string $scope 可选，应用侧向 Authing 请求的权限，覆盖初始化参数中的对应设置
+     * @param string $state 可选，中间状态标识符，默认自动生成
+     * @param string $nonce 可选，出现在 ID Token 中的随机字符串，默认自动生成
+     * @param string $redirectUri 可选，回调地址，覆盖初始化参数中的对应设置
+     * @param boolean $forced 可选，即便用户已经登录也强制显示登录页
+     */
+    public function loginWithRedirect($scope = null, $state = null, $nonce = null, $redirectUri = null, $forced = null)
+    {
+        $res = $this->buildAuthUrl(
+            Util\Tool::getNotEmpty($scope),
+            Util\Tool::getNotEmpty($state),
+            Util\Tool::getNotEmpty($nonce),
+            Util\Tool::getNotEmpty($redirectUri),
+            Util\Tool::getNotEmpty($forced)
+        );
+
+        $tx = array(
+            "state" => $res["state"],
+            "nonce" => $res["nonce"],
+            "redirectUri" => Util\Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
+        );
+
+        $ret["cookie"] = $this->_option["cookieKey"] . "=" . Util\JWT::base64UrlEncode(json_encode($tx)) . "; HttpOnly; SameSite=Lax";
+        $ret["url"] = $res["url"];
+
+        header("Set-Cookie:" . $ret["cookie"]);
+        header("Location:" . $ret["url"]);
+
+        return $ret;
+    }
+
+    /**
+     * 在应用回调端点处理认证返回结果，利用 Cookie 中传递的上下文信息进行安全验证，并获取用户登录态
+     * @param string $url url
+     * @param string $cookie cookie
+     */
+    public function handleRedirectCallback($url, $cookie)
+    {
+        $error = Util\Tool::getUrlParam($url, "error");
+        if ($error) {
+            throw new \Exception("认证服务器返回错误 " . $error . " :" . Util\Tool::getUrlParam($url, "error_description"));
+        }
+
+        $code = Util\Tool::getUrlParam($url, "code");
+        if (!$code) {
+            throw new \Exception("认证服务器未返回授权码");
+        }
+
+        $cookieKey = $this->_option["cookieKey"] . "=";
+        $txStr = $cookie;
+        $txStr = explode("; ", $txStr);
+        foreach ($txStr as $forValue) {
+            if (substr($forValue, 0, strlen($cookieKey)) === $cookieKey) {
+                $txStr = substr($forValue, strlen($cookieKey));
+            }
+        }
+
+        if (!$txStr) {
+            throw new \Exception("Cookie 中没有中间态，认证失败");
+        }
+
+        $tx = json_decode((Util\JWT::base64UrlDecode($txStr)), true);
+
+        header("Set-Cookie:" . $this->_option["cookieKey"] . "=;  HttpOnly; SameSite=Lax; Max-Age=0");
+
+        $state = Util\Tool::getUrlParam($url, "state");
+        if ($state !== $tx["state"]) {
+            throw new \Exception("state 验证失败");
+        }
+
+        $loginState = $this->getLoginStateByAuthCode($code, $tx["redirectUri"]);
+        if ($loginState["parsedIDToken"]["nonce"] !== $tx["nonce"]) {
+            throw new \Exception("nonce 校验失败");
+        }
+
+        return $loginState;
+    }
+
+    /**
+     * 将浏览器重定向到 Authing 的登出发起 URL 进行登出
+     * @param string $idToken 可选，用户登录时获取的 ID Token，用于无效化用户 Token，建议传入
+     * @param string $redirectUri 可选，登出完成后的重定向目标 URL，覆盖初始化参数中的对应设置
+     * @param string $state 可选，传递到目标 URL 的中间状态标识符
+     */
+    public function logoutWithRedirect($idToken = null, $redirectUri = null, $state = null)
+    {
+        $res = $this->buildLogoutUrl(
+            Util\Tool::getNotEmpty($idToken),
+            Util\Tool::getNotEmpty($redirectUri),
+            Util\Tool::getNotEmpty($state)
+        );
+
+        header("Location:" . $res);
+
+        return $res;
     }
 }
