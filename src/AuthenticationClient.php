@@ -22,7 +22,7 @@ class AuthenticationClient
     //数据
     private $_option;
     //域名
-    private $_host;
+    private $_url;
     //JWKS
     private $_jwks;
 
@@ -48,12 +48,12 @@ class AuthenticationClient
         }
 
         $this->_option = $option;
-        $this->_host = $this->_domainC14n($option["host"]);
+        $this->_url = $this->_domainC14n($option["host"]);
 
         if ($option["serverJWKS"]) {
             $this->_jwks = $this->_parseJWKS($option["serverJWKS"]);
         } else {
-            $varReq = $this->_requests($this->_host . "/oidc/.well-known/jwks.json");
+            $varReq = $this->_requests("/oidc/.well-known/jwks.json");
             if ($varReq["error"]) {
                 throw new \Exception("请求错误：" . $varReq["error"]);
             } else if ($varReq["body"]["error"]) {
@@ -215,7 +215,7 @@ class AuthenticationClient
         }
 
         return array(
-            "url" => $this->_host . "/oidc/auth?" . $this->_createQueryParams($params),
+            "url" => $this->_url . "/oidc/auth?" . $this->_createQueryParams($params),
             "state" => $state,
             "nonce" => $nonce,
         );
@@ -235,7 +235,7 @@ class AuthenticationClient
             "redirect_uri" => $redirectUri,
             "grant_type" => "authorization_code",
         );
-        $varReq = $this->_requests($this->_host . "/oidc/token", null, $tokenParam);
+        $varReq = $this->_requests("/oidc/token", null, $tokenParam);
         if ($varReq["error"]) {
             throw new \Exception("请求错误：" . $varReq["error"]);
         } else if ($varReq["body"]["error"]) {
@@ -250,7 +250,7 @@ class AuthenticationClient
      */
     public function getUserInfo($accessToken)
     {
-        $varReq = $this->_requests($this->_host . "/oidc/me", null, null, array("Authorization" => "Bearer " . $accessToken));
+        $varReq = $this->_requests("/oidc/me", null, null, array("Authorization" => "Bearer " . $accessToken));
         if ($varReq["error"]) {
             throw new \Exception("请求错误：" . $varReq["error"]);
         } else if ($varReq["body"]["error"]) {
@@ -271,7 +271,7 @@ class AuthenticationClient
             "refresh_token" => $refreshToken,
             "grant_type" => "refresh_token",
         );
-        $varReq = $this->_requests($this->_host . "/oidc/token", null, $tokenParam);
+        $varReq = $this->_requests("/oidc/token", null, $tokenParam);
         if ($varReq["error"]) {
             throw new \Exception("请求错误：" . $varReq["error"]);
         } else if ($varReq["body"]["error"]) {
@@ -302,7 +302,7 @@ class AuthenticationClient
             );
         }
         $params = Util\Tool::formatData($params);
-        return $this->_host . "/oidc/session/end?" . $this->_createQueryParams($params);
+        return $this->_url . "/oidc/session/end?" . $this->_createQueryParams($params);
     }
 
     /**
