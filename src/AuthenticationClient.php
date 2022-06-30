@@ -226,15 +226,15 @@ class AuthenticationClient
     /**
      * 用授权码获取用户登录态
      * @param string $code 必须，Authing 返回的授权码
-     * @param string $redirectUri 必须，发起认证时传入的回调地址
+     * @param string $redirectUri 可选，发起认证时传入的回调地址
      */
-    public function getLoginStateByAuthCode($code, $redirectUri)
+    public function getLoginStateByAuthCode($code, $redirectUri = null)
     {
         $tokenParam = array(
             "code" => $code,
             "client_id" => $this->_option["appId"],
             "client_secret" => $this->_option["appSecret"],
-            "redirect_uri" => $redirectUri,
+            "redirect_uri" => Util\Tool::getNotEmpty($redirectUri, $this->_option["redirectUri"]),
             "grant_type" => "authorization_code",
         );
         $varReq = $this->_requests("/oidc/token", null, $tokenParam);
