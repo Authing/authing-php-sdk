@@ -54,11 +54,6 @@ class AuthenticationClient
             $this->_jwks = $this->_parseJWKS($option["serverJWKS"]);
         } else {
             $varReq = $this->_requests("/oidc/.well-known/jwks.json");
-            if ($varReq["error"]) {
-                throw new \Exception("请求错误：" . $varReq["error"]);
-            } else if ($varReq["body"]["error"]) {
-                throw new \Exception("自动获取认证服务器 JWKS 公钥失败, 请检查域名是否正确, 或手动指定 serverJWKS 参数: " . $varReq["body"]["error"]);
-            }
             $this->_jwks = $this->_parseJWKS($varReq["body"]);
         }
     }
@@ -80,6 +75,13 @@ class AuthenticationClient
         $varHeader = array_merge($varHeader, $parHeader);
         //请求
         $varReq = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        //错误
+        if ($varReq["error"]) {
+            throw new \Exception("请求错误：" . $varReq["error"]);
+        } else if ($varReq["body"]["error"]) {
+            throw new \Exception("业务错误：" . $varReq["body"]["error"]);
+        }
+        //返回
         return $varReq;
     }
 
@@ -236,11 +238,6 @@ class AuthenticationClient
             "grant_type" => "authorization_code",
         );
         $varReq = $this->_requests("/oidc/token", null, $tokenParam);
-        if ($varReq["error"]) {
-            throw new \Exception("请求错误：" . $varReq["error"]);
-        } else if ($varReq["body"]["error"]) {
-            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
-        }
         return $this->_buildLoginState($varReq["body"]);
     }
 
@@ -251,11 +248,6 @@ class AuthenticationClient
     public function getUserInfo($accessToken)
     {
         $varReq = $this->_requests("/oidc/me", null, null, array("Authorization" => "Bearer " . $accessToken));
-        if ($varReq["error"]) {
-            throw new \Exception("请求错误：" . $varReq["error"]);
-        } else if ($varReq["body"]["error"]) {
-            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
-        }
         return $varReq["body"];
     }
 
@@ -272,11 +264,6 @@ class AuthenticationClient
             "grant_type" => "refresh_token",
         );
         $varReq = $this->_requests("/oidc/token", null, $tokenParam);
-        if ($varReq["error"]) {
-            throw new \Exception("请求错误：" . $varReq["error"]);
-        } else if ($varReq["body"]["error"]) {
-            throw new \Exception("业务错误：" . $varReq["body"]["error"] . " ( " . $varReq["body"]["error_description"] . " )");
-        }
         return $this->_buildLoginState($varReq["body"]);
     }
 
