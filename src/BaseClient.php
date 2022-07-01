@@ -89,8 +89,8 @@ PUBLICKKEY;
                 $this->appId = $this->options->appId;
             }
 
-            if (isset($this->options->host)) {
-                $this->host = $this->options->host;
+            if (isset($this->options->appHost)) {
+                $this->host = $this->options->appHost;
             }
         }
         if (is_null($this->userPoolId) && is_null($this->appId)) {
@@ -100,7 +100,7 @@ PUBLICKKEY;
         // 设置默认值
         self::initDefaultOptions($this->options);
 
-        $this->naiveHttpClient = new Client(['base_uri' => $this->options->host ?? $this->host]);
+        $this->naiveHttpClient = new Client(['base_uri' => $this->options->appHost ?? $this->host]);
     }
 
     private static function initDefaultOptions($options) {
