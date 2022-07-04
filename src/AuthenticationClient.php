@@ -79,7 +79,7 @@ class AuthenticationClient
         if ($varReq["error"]) {
             throw new \Exception("请求错误：" . $varReq["error"]);
         } else if ($varReq["body"]["error"]) {
-            throw new \Exception("业务错误：" . $varReq["body"]["error"]);
+            throw new \Exception("错误：" . $varReq["body"]["error"]);
         }
         //返回
         return $varReq;

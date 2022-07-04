@@ -64,6 +64,13 @@ class ManagementClient
         );
         //请求
         $varReq = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
+        //错误
+        if ($varReq["error"]) {
+            throw new \Exception("请求错误：" . $varReq["error"]);
+        } else if ($varReq["body"]["statusCode"] != 200) {
+            throw new \Exception("错误：" . $varReq["body"]["statusCode"] . " " . $varReq["body"]["message"]);
+        }
+        //返回
         return $varReq;
     }
 
