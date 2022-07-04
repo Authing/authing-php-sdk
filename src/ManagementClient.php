@@ -104,10 +104,10 @@ class ManagementClient
      * @summary 获取用户信息
      * @description 通过 id、username、email、phone、email、externalId 获取用户详情
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户 ID
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
+     * @param string userId 可选，用户 ID
      * @param string phone 可选，手机号
      * @param string email 可选，邮箱
      * @param string username 可选，用户名
@@ -314,7 +314,7 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return IsSuccessRespDto
      */
-    public function setUserDepartment($option = array())
+    public function setUserDepartments($option = array())
     {
         // 组装请求
         $varPost = array(
@@ -538,7 +538,7 @@ class ManagementClient
      * @param CreateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserListRespDto
      */
-    public function createUserBatch($option = array())
+    public function createUsersBatch($option = array())
     {
         // 组装请求
         $varPost = array(
@@ -579,6 +579,7 @@ class ManagementClient
      * @param string phone 可选，手机号，默认 null
      * @param string password 可选，密码。可选加密方式进行加密，默认为未加密，默认 null
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
+     * @param UpdateUserOptionsDto options 可选，附加选项，默认 null
      * @return UserSingleRespDto
      */
     public function updateUser($option = array())
@@ -608,6 +609,7 @@ class ManagementClient
             "phone" => Util\Tool::getSet($option["phone"]),
             "password" => Util\Tool::getSet($option["password"]),
             "customData" => Util\Tool::getSet($option["customData"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-user", null, $varPost);
@@ -1376,6 +1378,30 @@ class ManagementClient
     }
 
     /**
+     * 搜索顶层组织机构列表
+     * @summary 搜索顶层组织机构列表
+     * @description 搜索顶层组织机构列表
+     * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
+     * @param string keywords 必须，搜索关键词
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @return OrganizationPaginatedRespDto
+     */
+    public function searchOrganizations($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "keywords" => Util\Tool::getSet($option["keywords"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
+        );
+        // 发送请求
+        $varReq = $this->_requests("/api/v3/search-organizations", $varGet, null);
+        // 返回
+        return $varReq["body"];
+    }
+
+    /**
      * 获取部门信息
      * @summary 获取部门信息
      * @description 获取部门信息
@@ -1408,14 +1434,15 @@ class ManagementClient
      * @summary 创建部门
      * @description 创建部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string organizationCode 必须，组织 code
      * @param string parentDepartmentId 必须，父部门 id
      * @param string name 必须，部门名称
+     * @param string organizationCode 必须，组织 Code（organizationCode）
      * @param string openDepartmentId 可选，自定义部门 ID，用于存储自定义的 ID，默认 null
      * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
      * @param boolean isVirtualNode 可选，是否是虚拟部门，默认 null
      * @param I18nDto i18n 可选，多语言设置，默认 null
+     * @param any customData 可选，部门的扩展字段数据，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的父部门 ID 的类型，默认 null
      * @return DepartmentSingleRespDto
      */
@@ -1423,14 +1450,15 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "parentDepartmentId" => Util\Tool::getSet($option["parentDepartmentId"]),
             "name" => Util\Tool::getSet($option["name"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "openDepartmentId" => Util\Tool::getSet($option["openDepartmentId"]),
             "description" => Util\Tool::getSet($option["description"]),
             "code" => Util\Tool::getSet($option["code"]),
             "isVirtualNode" => Util\Tool::getSet($option["isVirtualNode"]),
             "i18n" => Util\Tool::getSet($option["i18n"]),
+            "customData" => Util\Tool::getSet($option["customData"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
@@ -1444,8 +1472,8 @@ class ManagementClient
      * @summary 修改部门
      * @description 修改部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
+     * @param string organizationCode 必须，组织 Code（organizationCode）
      * @param Array<string> leaderUserIds 可选，部门负责人 ID，默认 null
      * @param string description 可选，部门描述，默认 null
      * @param string code 可选，部门识别码，默认 null
@@ -1453,14 +1481,15 @@ class ManagementClient
      * @param string name 可选，部门名称，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @param string parentDepartmentId 可选，父部门 id，默认 null
+     * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @return DepartmentSingleRespDto
      */
     public function updateDepartment($option = array())
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "leaderUserIds" => Util\Tool::getSet($option["leaderUserIds"]),
             "description" => Util\Tool::getSet($option["description"]),
             "code" => Util\Tool::getSet($option["code"]),
@@ -1468,6 +1497,7 @@ class ManagementClient
             "name" => Util\Tool::getSet($option["name"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
             "parentDepartmentId" => Util\Tool::getSet($option["parentDepartmentId"]),
+            "customData" => Util\Tool::getSet($option["customData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/update-department", null, $varPost);
@@ -1480,8 +1510,8 @@ class ManagementClient
      * @summary 删除部门
      * @description 删除部门
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
+     * @param string organizationCode 必须，组织 Code（organizationCode）
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
      * @return IsSuccessRespDto
      */
@@ -1489,8 +1519,8 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
         );
         // 发送请求
@@ -1506,6 +1536,7 @@ class ManagementClient
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
      * @param string keywords 必须，搜索关键词
      * @param string organizationCode 必须，组织 code
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 null
      * @return DepartmentListRespDto
      */
     public function searchDepartments($option = array())
@@ -1514,6 +1545,7 @@ class ManagementClient
         $varPost = array(
             "keywords" => Util\Tool::getSet($option["keywords"]),
             "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/search-departments", null, $varPost);
@@ -1526,20 +1558,22 @@ class ManagementClient
      * @summary 获取子部门列表
      * @description 获取子部门列表
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string departmentId 必须，需要获取的部门 ID
      * @param string organizationCode 必须，组织 code
+     * @param string departmentId 必须，需要获取的部门 ID
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean excludeVirtualNode 可选，是否要排除虚拟组织，默认 false
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @return DepartmentPaginatedRespDto
      */
     public function listChildrenDepartments($option = array())
     {
         // 组装请求
         $varGet = array(
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
-            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "excludeVirtualNode" => Util\Tool::getSet($option["excludeVirtualNode"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/list-children-departments", $varGet, null);
@@ -1616,30 +1650,32 @@ class ManagementClient
      * @summary 搜索部门下的成员
      * @description 搜索部门下的成员
      * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
-     * @param string keywords 必须，搜索关键词
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门 id，根部门传 `root`
+     * @param string keywords 必须，搜索关键词
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean includeChildrenDepartments 可选，是否包含子部门的成员，默认 false
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
+     * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
      * @return UserPaginatedRespDto
      */
     public function searchDepartmentMembers($option = array())
     {
         // 组装请求
         $varGet = array(
-            "page" => Util\Tool::getSet($option["page"]),
-            "limit" => Util\Tool::getSet($option["limit"]),
-            "keywords" => Util\Tool::getSet($option["keywords"]),
             "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "keywords" => Util\Tool::getSet($option["keywords"]),
+            "page" => Util\Tool::getSet($option["page"]),
+            "limit" => Util\Tool::getSet($option["limit"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
             "includeChildrenDepartments" => Util\Tool::getSet($option["includeChildrenDepartments"]),
             "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
             "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
+            "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/search-department-members", $varGet, null);
@@ -1707,6 +1743,7 @@ class ManagementClient
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，部门 id
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @return DepartmentSingleRespDto
      */
     public function getParentDepartment($option = array())
@@ -1716,9 +1753,38 @@ class ManagementClient
             "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-parent-department", $varGet, null);
+        // 返回
+        return $varReq["body"];
+    }
+
+    /**
+     * 判断用户是否在某个部门下
+     * @summary 判断用户是否在某个部门下
+     * @description 判断用户是否在某个部门下
+     * @param array $option 可选，用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户 ID
+     * @param string organizationCode 必须，组织 code
+     * @param string departmentId 必须，部门 id，根部门传 `root`。departmentId 和 departmentCode 必传其一。
+     * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
+     * @param boolean includeChildrenDepartments 可选，是否包含子部门，默认 false
+     * @return IsUserInDepartmentRespDto
+     */
+    public function isUserInDepartment($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "organizationCode" => Util\Tool::getSet($option["organizationCode"]),
+            "departmentId" => Util\Tool::getSet($option["departmentId"]),
+            "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
+            "includeChildrenDepartments" => Util\Tool::getSet($option["includeChildrenDepartments"]),
+        );
+        // 发送请求
+        $varReq = $this->_requests("/api/v3/is-user-in-department", $varGet, null);
         // 返回
         return $varReq["body"];
     }
