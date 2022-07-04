@@ -102,7 +102,7 @@ $management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECR
 - [官网](https://authing.cn)
 - [开发者文档](https://docs.authing.cn/)
 - [Authing Open API](https://api.authing.cn/openapi/)
-- [SDK 文档](https://authing-open-api.readme.io/reference/php)
+- [SDK 文档](https://docs.authing.cn/v2/reference-new/sdk-v5/php/install.html)
 - [论坛社区](https://forum.authing.cn/)
 
 ## 获取帮助
