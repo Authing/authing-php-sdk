@@ -316,7 +316,7 @@ class AuthenticationClient extends BaseClient
      * @author Xintao Li -- lixintao2@authing.cn
      * @since 4.2.0
      */
-    public function sendSmsCode(string $phone) : SimpleMessage
+    public function sendSmsCode(string $phone): SimpleMessage
     {
         $res = $this->httpPost("/api/v2/sms/send", [
             "phone" => $phone,
@@ -483,7 +483,7 @@ class AuthenticationClient extends BaseClient
         return $this->request($param->createRequest());
     }
 
-    public function ResetPasswordByFirstLoginToken(string $token,string $password)
+    public function ResetPasswordByFirstLoginToken(string $token, string $password)
     {
         $newPassword = $this->encrypt($password);
         $param = (new ResetPasswordByFirstLoginTokenParam($token, $newPassword));
@@ -723,11 +723,9 @@ class AuthenticationClient extends BaseClient
     public function unLinkAccount(array $options)
     {
         $api = '/api/v2/users/unlink';
-        $req = new Request('POST', $api, [
-            'body' => [
-                'primaryUserToken' => $options['primaryUserToken'],
-                'provider' => $options['provider'],
-            ],
+        $req = new Request('POST', $api, [], [
+            'primaryUserToken' => $options['primaryUserToken'],
+            'provider' => $options['provider'],
         ]);
         $tokenSet = $this->httpSend($req);
         return (object) [
@@ -1024,7 +1022,7 @@ class AuthenticationClient extends BaseClient
         if (count($options) === 0) {
             throw new Error(
                 '请在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
-            // '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数或者在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
+                // '请在初始化 AuthenticationClient 时传入 appId 和 secret 参数或者在调用本方法时传入 { accessKey: string, accessSecret: string }，请看文档：https://docs.authing.cn/v2/guides/authorization/m2m-authz.html'
             );
         }
         $this->options->accessKey
@@ -1242,12 +1240,8 @@ class AuthenticationClient extends BaseClient
             'refresh_token' => $refreshToken,
         ]);
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-        ]);
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ], $qstr);
 
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
@@ -1266,12 +1260,8 @@ class AuthenticationClient extends BaseClient
             'refresh_token' => $refreshToken,
         ]);
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Authorization' => $this->_generateBasicAuthToken(),
-            ],
-        ]);
+            'Authorization' => $this->_generateBasicAuthToken(),
+        ], $qstr);
 
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
@@ -1291,9 +1281,7 @@ class AuthenticationClient extends BaseClient
             'refresh_token' => $refreshToken,
         ]);
         echo $qstr;
-        $req = new Request('POST', $api, [
-            'body' => $qstr,
-        ]);
+        $req = new Request('POST', $api, [], $qstr);
 
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
@@ -1339,12 +1327,8 @@ class AuthenticationClient extends BaseClient
             $api = '/oauth/token/introspection';
         }
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-        ]);
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1361,12 +1345,8 @@ class AuthenticationClient extends BaseClient
             $api = '/oauth/token/introspection';
         }
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Authorization' => $this->_generateBasicAuthToken(),
-            ],
-        ]);
+            'Authorization' => $this->_generateBasicAuthToken(),
+        ], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1383,9 +1363,7 @@ class AuthenticationClient extends BaseClient
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/token/introspection';
         }
-        $req = new Request('POST', $api, [
-            'body' => $qstr,
-        ]);
+        $req = new Request('POST', $api, [], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1471,12 +1449,8 @@ class AuthenticationClient extends BaseClient
             $api = '/oauth/token/revocation';
         }
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-        ]);
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1493,9 +1467,7 @@ class AuthenticationClient extends BaseClient
         } elseif ($this->options->protocol === 'oauth') {
             $api = '/oauth/token/revocation';
         }
-        $req = new Request('POST', $api, [
-            'body' => $qstr,
-        ]);
+        $req = new Request('POST', $api, [], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1514,12 +1486,8 @@ class AuthenticationClient extends BaseClient
             );
         }
         $req = new Request('POST', $api, [
-            'body' => $qstr,
-            'headers' =>
-            [
-                'Authorization' => $this->_generateBasicAuthToken(),
-            ],
-        ]);
+            'Authorization' => $this->_generateBasicAuthToken(),
+        ], $qstr);
         $tokenSet = $this->httpSend($req);
         return $tokenSet;
     }
@@ -1527,11 +1495,11 @@ class AuthenticationClient extends BaseClient
     public function validateTicketV1(string $ticket, string $service)
     {
         $api = '/cas-idp/' . $this->options->appId . '/validate?service=' . $service . '&ticket=' . $ticket;
-        $req = new Request('GET', $api, [
-            'headers' => array_merge(
-                $this->getOidcHeaders()
-            ),
-        ]);
+        $req = new Request(
+            'GET',
+            $api,
+            array_merge($this->getOidcHeaders()),
+        );
 
         $res = $this->httpSend($req);
         [$valid, $username] = explode('\n', (string)$res);

@@ -2,6 +2,7 @@
 
 
 namespace Authing\Auth;
+
 use Error;
 use stdClass;
 use Exception;
@@ -75,7 +76,8 @@ class MFAAuthenticationClient
      * @return User
      * @throws Exception
      */
-    function getCurrentUser() {
+    function getCurrentUser()
+    {
         $param = new UserParam();
         $user = $this->client->request($param->createRequest());
         $this->accessToken = $user->token ?: $this->accessToken;
@@ -89,7 +91,8 @@ class MFAAuthenticationClient
      * @return User
      * @throws Exception
      */
-    function setCurrentUser() {
+    function setCurrentUser()
+    {
         $param = new UserParam();
         $user = $this->client->request($param->createRequest());
         $this->accessToken = $user->token ?: $this->accessToken;
@@ -257,13 +260,9 @@ class MFAAuthenticationClient
     {
         $api = '/api/v2/mfa/face/verify';
         $req = new Request('POST', $api, [
-            'body' => (object)[
-                'photo' => $photo
-            ],
-            'headers' =>
-                [
-                    'Authorization' => "Bearer $mfaToken"
-                ],
+            'Authorization' => "Bearer $mfaToken"
+        ], [
+            'photo' => $photo
         ]);
         $data = $this->client->httpSend($req);
         return $data;
@@ -271,12 +270,10 @@ class MFAAuthenticationClient
 
     public function associateFaceByBlob(array $options)
     {
-        
     }
 
     public function associateFaceByLocalFile(string $mfaToken)
     {
-        
     }
 
     public function associateFaceByUrl(array $options)
@@ -287,15 +284,11 @@ class MFAAuthenticationClient
         extract($options);
         $api = '/api/v2/mfa/face/associate';
         $req = new Request('POST', $api, [
-            'body' => (object) [
-                'photoA' => $photoA,
-                'photoB' => $photoB ?? $photoA,
-                'isExternal' => true,
-            ],
-            'headers' =>
-                [
-                    'Authorization' => "Bearer $mfaToken",
-                ],
+            'Authorization' => "Bearer $mfaToken",
+        ], [
+            'photoA' => $photoA,
+            'photoB' => $photoB ?? $photoA,
+            'isExternal' => true,
         ]);
         $data = $this->client->httpSend($req);
         return $data;
