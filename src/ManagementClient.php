@@ -66,9 +66,9 @@ class ManagementClient
         $varReq = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
         //错误
         if ($varReq["error"]) {
-            throw new \Exception("请求错误：" . $varReq["error"]);
+            throw new \Exception("请求错误：" . $varReq["error"], $varReq["code"]);
         } else if ($varReq["body"]["statusCode"] != 200) {
-            throw new \Exception("错误：" . $varReq["body"]["statusCode"] . " " . $varReq["body"]["message"]);
+            throw new \Exception("错误：" . $varReq["body"]["message"], $varReq["body"]["statusCode"]);
         }
         //返回
         return $varReq;
@@ -726,7 +726,7 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserLoggedInAppsListRespDto
      */
-    public function getUserLoggedInApps($option = array())
+    public function getUserLoggedinApps($option = array())
     {
         // 组装请求
         $varGet = array(
@@ -746,7 +746,7 @@ class ManagementClient
      * @param string userId 必须，用户 ID
      * @return UserLoggedInIdentitiesRespDto
      */
-    public function getUserLoggedInIdentities($option = array())
+    public function getUserLoggedinIdentities($option = array())
     {
         // 组装请求
         $varGet = array(
