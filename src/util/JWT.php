@@ -13,16 +13,22 @@ class JWT
 {
     /**
      * 签名
-     * @param string $data header + payload
+     * @param string $data header . payload
      * @param string $key 密钥
      * @param string $alg 算法
      */
     private static function _signature($data, $key, $alg = "HS256")
     {
-        $alg_config = array(
-            "HS256" => "sha256",
-        );
-        return self::base64UrlEncode(hash_hmac($alg_config[$alg], $data, $key, true));
+        if (empty($alg)) return false;
+        switch ($alg) {
+            case "HS256":
+                $ret = self::base64UrlEncode(hash_hmac("sha256", $data, $key, true));
+                break;
+            default:
+                $ret = self::base64UrlEncode(hash_hmac("sha256", $data, $key, true));
+                break;
+        }
+        return $ret;
     }
 
     /**
@@ -35,18 +41,16 @@ class JWT
         //分割
         $tokens = explode(".", $token);
         if (count($tokens) != 3) return false;
-        list($base64header, $base64payload, $signA) = $tokens;
+        list($base64Header, $base64Payload, $signature) = $tokens;
 
-        //解析数据
-        $payload = json_decode(self::base64UrlDecode($base64payload), JSON_OBJECT_AS_ARRAY);
+        //解析
+        $header = json_decode(self::base64UrlDecode($base64Header), JSON_OBJECT_AS_ARRAY);
+        $payload = json_decode(self::base64UrlDecode($base64Payload), JSON_OBJECT_AS_ARRAY);
 
         //验证
         if ($key !== null) {
             //签名验证
-            $base64decodeheader = json_decode(self::base64UrlDecode($base64header), JSON_OBJECT_AS_ARRAY);
-            if (empty($base64decodeheader["alg"])) return false;
-            $signB = self::_signature($base64header . "." . $base64payload, $key, $base64decodeheader["alg"]);
-            if ($signB !== $signA) return false;
+            if ($signature !== self::_signature($base64Header . "." . $base64Payload, $key, $header["alg"])) return false;
 
             //签发时间不能大于当前服务器时间
             if (isset($payload["iat"]) && $payload["iat"] > time()) return false;
