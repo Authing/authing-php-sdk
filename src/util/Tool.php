@@ -68,20 +68,20 @@ class Tool
      */
     public static function request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
     {
-        //配置-其他
+        //配置-基础
         $varCurlObject = curl_init();
         curl_setopt($varCurlObject, CURLOPT_URL, $parUrl); //配置URL
         curl_setopt($varCurlObject, CURLOPT_CONNECTTIMEOUT, 20); //连接前等待时间
         curl_setopt($varCurlObject, CURLOPT_TIMEOUT, 60); //连接后等待时间
         curl_setopt($varCurlObject, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); //使用IPv4协议
-        curl_setopt($varCurlObject, CURLOPT_RETURNTRANSFER, true); //获取的信息以文件流的形式返回
+        curl_setopt($varCurlObject, CURLOPT_RETURNTRANSFER, true); //返回文件流
         curl_setopt($varCurlObject, CURLOPT_HEADER, true); //返回Header
         curl_setopt($varCurlObject, CURLOPT_ENCODING, ""); //支持所有编码
-        curl_setopt($varCurlObject, CURLOPT_FOLLOWLOCATION, true); //跟踪爬取重定向页面
+        curl_setopt($varCurlObject, CURLOPT_FOLLOWLOCATION, true); //跟踪重定向
         curl_setopt($varCurlObject, CURLOPT_MAXREDIRS, 10); //指定重定向的最大值
         curl_setopt($varCurlObject, CURLOPT_AUTOREFERER, true); // 自动配置Referer
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYPEER, false); //禁止验证对等证书
-        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYHOST, false); //禁止检测域名与证书是否一致
+        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYPEER, false); //禁止校验对等证书
+        curl_setopt($varCurlObject, CURLOPT_SSL_VERIFYHOST, false); //禁止校验域名与证书的一致性
         curl_setopt($varCurlObject, CURLOPT_USERAGENT, "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"); //配置UserAgent
         //配置-Get
         if ($parGet != []) {
