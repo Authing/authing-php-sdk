@@ -87,7 +87,7 @@ class ManagementClient
     /**
      * 获取 Management API Token
      * @summary 获取 Management API Token
-     * @description 获取 Management API Token
+     * @description 通过 AccessKey ID 与 AccessKey Secret 获取 Management API Token，此 Token 可以用来操作 Management API。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string accessKeySecret 必须，AccessKey Secret: 如果是以用户池全局 AK/SK 初始化，为用户池密钥；如果是以协作管理员的 AK/SK 初始化，为协作管理员的 SK。
      * @param string accessKeyId 必须，AccessKey ID: 如果是以用户池全局 AK/SK 初始化，为用户池 ID；如果是以协作管理员的 AK/SK 初始化，为协作管理员的 AccessKey ID。
@@ -109,30 +109,24 @@ class ManagementClient
     /**
      * 获取用户信息
      * @summary 获取用户信息
-     * @description 通过 id、username、email、phone、email、externalId 获取用户详情
+     * @description 通过用户 ID，获取用户详情，可以选择获取自定义数据、identities、选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
-     * @param string userId 可选，用户 ID
-     * @param string phone 可选，手机号
-     * @param string email 可选，邮箱
-     * @param string username 可选，用户名
-     * @param string externalId 可选，原系统 ID
      * @return UserSingleRespDto
      */
     public function getUser($option = array())
     {
         // 组装请求
         $varGet = array(
+            "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
             "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
             "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
-            "userId" => Util\Tool::getSet($option["userId"]),
-            "phone" => Util\Tool::getSet($option["phone"]),
-            "email" => Util\Tool::getSet($option["email"]),
-            "username" => Util\Tool::getSet($option["username"]),
-            "externalId" => Util\Tool::getSet($option["externalId"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user", $varGet, null);
@@ -143,9 +137,10 @@ class ManagementClient
     /**
      * 批量获取用户信息
      * @summary 批量获取用户信息
-     * @description 根据用户 id 批量获取用户信息
+     * @description 通过用户 ID 列表，批量获取用户信息，可以选择获取自定义数据、identities、选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 数组
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
@@ -155,10 +150,11 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
+            "userIds" => Util\Tool::getSet($option["userIds"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
             "withIdentities" => Util\Tool::getSet($option["withIdentities"]),
             "withDepartmentIds" => Util\Tool::getSet($option["withDepartmentIds"]),
-            "userIds" => Util\Tool::getSet($option["userIds"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-batch", $varGet, null);
@@ -169,13 +165,13 @@ class ManagementClient
     /**
      * 获取用户列表
      * @summary 获取用户列表
-     * @description 获取用户列表接口，支持分页
+     * @description 获取用户列表接口，支持分页，可以选择获取自定义数据、identities 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
-     * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态
-     * @param number updatedAtStart 可选，用户创建、修改开始时间，为精确到秒的 UNIX 时间戳；支持获取从某一段时间之后的增量数据。
-     * @param number updatedAtEnd 可选，用户创建、修改终止时间，为精确到秒的 UNIX 时间戳；支持获取某一段时间内的增量数据。默认为当前时间。
+     * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，如 已停用、已离职、正常状态、已归档
+     * @param number updatedAtStart 可选，用户创建、修改开始时间，为精确到秒的 UNIX 时间戳；支持获取从某一段时间之后的增量数据
+     * @param number updatedAtEnd 可选，用户创建、修改终止时间，为精确到秒的 UNIX 时间戳；支持获取某一段时间内的增量数据。默认为当前时间
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @param boolean withIdentities 可选，是否获取 identities，默认 false
      * @param boolean withDepartmentIds 可选，是否获取部门 ID 列表，默认 false
@@ -203,9 +199,10 @@ class ManagementClient
     /**
      * 获取用户的外部身份源
      * @summary 获取用户的外部身份源
-     * @description 获取用户的外部身份源
+     * @description 通过用户 ID，获取用户的外部身份源、选择指定用户 ID 类型。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return IdentityListRespDto
      */
     public function getUserIdentities($option = array())
@@ -213,6 +210,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-identities", $varGet, null);
@@ -223,9 +221,10 @@ class ManagementClient
     /**
      * 获取用户角色列表
      * @summary 获取用户角色列表
-     * @description 获取用户角色列表
+     * @description 通过用户 ID，获取用户角色列表，可以选择所属权限分组 code、选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param string namespace 可选，所属权限分组的 code
      * @return RolePaginatedRespDto
      */
@@ -234,6 +233,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "namespace" => Util\Tool::getSet($option["namespace"]),
         );
         // 发送请求
@@ -245,9 +245,10 @@ class ManagementClient
     /**
      * 获取用户实名认证信息
      * @summary 获取用户实名认证信息
-     * @description 获取用户实名认证信息
+     * @description 通过用户 ID，获取用户实名认证信息，可以选择指定用户 ID 类型。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return PrincipalAuthenticationInfoPaginatedRespDto
      */
     public function getUserPrincipalAuthenticationInfo($option = array())
@@ -255,6 +256,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-principal-authentication-info", $varGet, null);
@@ -265,9 +267,10 @@ class ManagementClient
     /**
      * 删除用户实名认证信息
      * @summary 删除用户实名认证信息
-     * @description 删除用户实名认证信息
+     * @description 通过用户 ID，删除用户实名认证信息，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param ResetUserPrincipalAuthenticationInfoOptionsDto options 可选，可选参数，默认 null
      * @return IsSuccessRespDto
      */
     public function resetUserPrincipalAuthenticationInfo($option = array())
@@ -275,6 +278,7 @@ class ManagementClient
         // 组装请求
         $varPost = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/reset-user-principal-authentication-info", null, $varPost);
@@ -285,14 +289,15 @@ class ManagementClient
     /**
      * 获取用户部门列表
      * @summary 获取用户部门列表
-     * @description 获取用户部门列表
+     * @description 通过用户 ID，获取用户部门列表，支持分页，可以选择获取自定义数据、选择指定用户 ID 类型、增序或降序等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
-     * @param 'DepartmentCreatedAt' | 'JoinDepartmentAt' | 'DepartmentName' | 'DepartmemtCode' sortBy 必须，排序依据，默认 'JoinDepartmentAt'
-     * @param 'Asc' | 'Desc' orderBy 必须，增序还是倒序，默认 'Desc'
+     * @param 'DepartmentCreatedAt' | 'JoinDepartmentAt' | 'DepartmentName' | 'DepartmemtCode' sortBy 可选，排序依据，如 部门创建时间、加入部门时间、部门名称、部门标志符，默认 'JoinDepartmentAt'
+     * @param 'Asc' | 'Desc' orderBy 可选，增序或降序，默认 'Desc'
      * @return UserDepartmentPaginatedRespDto
      */
     public function getUserDepartments($option = array())
@@ -300,6 +305,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "page" => Util\Tool::getSet($option["page"]),
             "limit" => Util\Tool::getSet($option["limit"]),
             "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
@@ -315,10 +321,11 @@ class ManagementClient
     /**
      * 设置用户所在部门
      * @summary 设置用户所在部门
-     * @description 设置用户所在部门
+     * @description 通过用户 ID，设置用户所在部门，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<SetUserDepartmentDto> departments 必须，部门信息
      * @param string userId 必须，用户 ID
+     * @param SetUserDepartmentsOptionsDto options 可选，可选参数，默认 null
      * @return IsSuccessRespDto
      */
     public function setUserDepartments($option = array())
@@ -327,6 +334,7 @@ class ManagementClient
         $varPost = array(
             "departments" => Util\Tool::getSet($option["departments"]),
             "userId" => Util\Tool::getSet($option["userId"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/set-user-departments", null, $varPost);
@@ -337,9 +345,10 @@ class ManagementClient
     /**
      * 获取用户分组列表
      * @summary 获取用户分组列表
-     * @description 获取用户分组列表
+     * @description 通过用户 ID，获取用户分组列表，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return GroupPaginatedRespDto
      */
     public function getUserGroups($option = array())
@@ -347,6 +356,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-groups", $varGet, null);
@@ -357,9 +367,10 @@ class ManagementClient
     /**
      * 删除用户
      * @summary 删除用户
-     * @description 删除用户（支持批量删除）
+     * @description 通过用户 ID 列表，删除用户，支持批量删除，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 列表
+     * @param DeleteUsersBatchOptionsDto options 可选，可选参数，默认 null
      * @return IsSuccessRespDto
      */
     public function deleteUsersBatch($option = array())
@@ -367,6 +378,7 @@ class ManagementClient
         // 组装请求
         $varPost = array(
             "userIds" => Util\Tool::getSet($option["userIds"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/delete-users-batch", null, $varPost);
@@ -377,9 +389,10 @@ class ManagementClient
     /**
      * 获取用户 MFA 绑定信息
      * @summary 获取用户 MFA 绑定信息
-     * @description 获取用户 MFA 绑定信息
+     * @description 通过用户 ID，获取用户 MFA 绑定信息，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return UserMfaSingleRespDto
      */
     public function getUserMfaInfo($option = array())
@@ -387,6 +400,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-mfa-info", $varGet, null);
@@ -397,11 +411,11 @@ class ManagementClient
     /**
      * 获取已归档的用户列表
      * @summary 获取已归档的用户列表
-     * @description 获取已归档的用户列表
+     * @description 获取已归档的用户列表，支持分页，可以筛选开始时间等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
-     * @param number startAt 可选，开始时间，为精确到秒的 UNIX 时间戳，默认不指定。
+     * @param number startAt 可选，开始时间，为精确到秒的 UNIX 时间戳，默认不指定
      * @return ListArchivedUsersSingleRespDto
      */
     public function listArchivedUsers($option = array())
@@ -421,10 +435,11 @@ class ManagementClient
     /**
      * 强制下线用户
      * @summary 强制下线用户
-     * @description 强制下线用户
+     * @description 通过用户 ID、App ID 列表，强制让用户下线，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> appIds 必须，APP ID 集合
+     * @param Array<string> appIds 必须，APP ID 列表
      * @param string userId 必须，用户 ID
+     * @param KickUsersOptionsDto options 可选，可选参数，默认 null
      * @return IsSuccessRespDto
      */
     public function kickUsers($option = array())
@@ -433,6 +448,7 @@ class ManagementClient
         $varPost = array(
             "appIds" => Util\Tool::getSet($option["appIds"]),
             "userId" => Util\Tool::getSet($option["userId"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/kick-users", null, $varPost);
@@ -443,7 +459,7 @@ class ManagementClient
     /**
      * 判断用户是否存在
      * @summary 判断用户是否存在
-     * @description 根据条件判断用户是否存在
+     * @description 根据条件判断用户是否存在，可以筛选用户名、邮箱、手机号、第三方外部 ID 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string username 可选，用户名，用户池内唯一，默认 null
      * @param string email 可选，邮箱，默认 null
@@ -469,11 +485,11 @@ class ManagementClient
     /**
      * 创建用户
      * @summary 创建用户
-     * @description 创建用户，邮箱、手机号、用户名必须包含其中一个
+     * @description 创建用户，邮箱、手机号、用户名必须包含其中一个，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份创建用户因此不需要进行手机号验证码检验等安全检测。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' status 可选，账户当前状态，默认 null
      * @param string email 可选，邮箱，默认 null
-     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，加密类型，默认 null
+     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，密码加密类型，支持 sm2 和 rsa，默认 null
      * @param string phone 可选，手机号，默认 null
      * @param string phoneCountryCode 可选，手机区号，默认 null
      * @param string username 可选，用户名，用户池内唯一，默认 null
@@ -493,10 +509,11 @@ class ManagementClient
      * @param string externalId 可选，第三方外部 ID，默认 null
      * @param Array<string> departmentIds 可选，用户所属部门 ID 列表，默认 null
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
-     * @param string password 可选，密码。可选加密方式进行加密，默认为未加密，默认 null
+     * @param string password 可选，密码。可选加密方式进行加密，通过 passwordEncryptType 参数进行加密方法选择，默认为未加密，默认 null
+     * @param boolean resetPasswordOnFisrtLogin 可选，是否首次登录时重新设置密码，默认 null
      * @param Array<string> tenantIds 可选，租户 ID，默认 null
      * @param Array<CreateIdentityDto> identities 可选，第三方身份源（建议调用绑定接口进行绑定），默认 null
-     * @param CreateUserOptionsDto options 可选，附加选项，默认 null
+     * @param CreateUserOptionsDto options 可选，可选参数，默认 null
      * @return UserSingleRespDto
      */
     public function createUser($option = array())
@@ -526,6 +543,7 @@ class ManagementClient
             "departmentIds" => Util\Tool::getSet($option["departmentIds"]),
             "customData" => Util\Tool::getSet($option["customData"]),
             "password" => Util\Tool::getSet($option["password"]),
+            "resetPasswordOnFisrtLogin" => Util\Tool::getSet($option["resetPasswordOnFisrtLogin"]),
             "tenantIds" => Util\Tool::getSet($option["tenantIds"]),
             "identities" => Util\Tool::getSet($option["identities"]),
             "options" => Util\Tool::getSet($option["options"]),
@@ -539,10 +557,10 @@ class ManagementClient
     /**
      * 批量创建用户
      * @summary 批量创建用户
-     * @description 此接口将以管理员身份批量创建用户，不需要进行手机号验证码检验等安全检测。用户的手机号、邮箱、用户名、externalId 用户池内唯一。
+     * @description 批量创建用户，邮箱、手机号、用户名必须包含其中一个，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份批量创建用户因此不需要进行手机号验证码检验等安全检测。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<CreateUserInfoDto> list 必须，批量用户
-     * @param CreateUserOptionsDto options 可选，附加选项，默认 null
+     * @param Array<CreateUserInfoDto> list 必须，用户列表
+     * @param CreateUserOptionsDto options 可选，可选参数，默认 null
      * @return UserListRespDto
      */
     public function createUsersBatch($option = array())
@@ -561,7 +579,7 @@ class ManagementClient
     /**
      * 修改用户资料
      * @summary 修改用户资料
-     * @description 修改用户资料
+     * @description 通过用户 ID，修改用户资料，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份修改用户资料因此不需要进行手机号验证码检验等安全检测。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
      * @param string phoneCountryCode 可选，手机区号，默认 null
@@ -581,12 +599,12 @@ class ManagementClient
      * @param string postalCode 可选，邮政编码号，默认 null
      * @param 'M' | 'W' | 'U' gender 可选，性别，默认 null
      * @param string username 可选，用户名，用户池内唯一，默认 null
-     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，加密类型，默认 null
+     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，密码加密类型，支持 sm2 和 rsa，默认 null
      * @param string email 可选，邮箱，默认 null
      * @param string phone 可选，手机号，默认 null
-     * @param string password 可选，密码。可选加密方式进行加密，默认为未加密，默认 null
+     * @param string password 可选，密码。可选加密方式进行加密，通过 passwordEncryptType 参数进行加密方法选择，默认为未加密，默认 null
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
-     * @param UpdateUserOptionsDto options 可选，附加选项，默认 null
+     * @param UpdateUserOptionsDto options 可选，可选参数，默认 null
      * @return UserSingleRespDto
      */
     public function updateUser($option = array())
@@ -625,11 +643,12 @@ class ManagementClient
     }
 
     /**
-     * 获取用户可访问应用
-     * @summary 获取用户可访问应用
-     * @description 获取用户可访问应用
+     * 获取用户可访问的应用
+     * @summary 获取用户可访问的应用
+     * @description 通过用户 ID，获取用户可访问的应用，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return AppListRespDto
      */
     public function getUserAccessibleApps($option = array())
@@ -637,6 +656,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-accessible-apps", $varGet, null);
@@ -647,9 +667,10 @@ class ManagementClient
     /**
      * 获取用户授权的应用
      * @summary 获取用户授权的应用
-     * @description 获取用户授权的应用
+     * @description 通过用户 ID，获取用户授权的应用，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return AppListRespDto
      */
     public function getUserAuthorizedApps($option = array())
@@ -657,6 +678,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-authorized-apps", $varGet, null);
@@ -667,10 +689,11 @@ class ManagementClient
     /**
      * 判断用户是否有某个角色
      * @summary 判断用户是否有某个角色
-     * @description 判断用户是否有某个角色，支持同时传入多个角色进行判断
+     * @description 通过用户 ID，判断用户是否有某个角色，支持传入多个角色，可以选择指定用户 ID 类型等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<HasRoleRolesDto> roles 必须，角色列表
      * @param string userId 必须，用户 ID
+     * @param HasAnyRoleOptionsDto options 可选，可选参数，默认 null
      * @return HasAnyRoleRespDto
      */
     public function hasAnyRole($option = array())
@@ -679,6 +702,7 @@ class ManagementClient
         $varPost = array(
             "roles" => Util\Tool::getSet($option["roles"]),
             "userId" => Util\Tool::getSet($option["userId"]),
+            "options" => Util\Tool::getSet($option["options"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/has-any-role", null, $varPost);
@@ -689,9 +713,10 @@ class ManagementClient
     /**
      * 获取用户的登录历史记录
      * @summary 获取用户的登录历史记录
-     * @description 获取用户登录历史记录
+     * @description 通过用户 ID，获取用户登录历史记录，支持分页，可以选择指定用户 ID 类型、应用 ID、开始与结束时间戳等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param string appId 可选，应用 ID
      * @param string clientIp 可选，客户端 IP
      * @param number start 可选，开始时间戳（毫秒）
@@ -705,6 +730,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "appId" => Util\Tool::getSet($option["appId"]),
             "clientIp" => Util\Tool::getSet($option["clientIp"]),
             "start" => Util\Tool::getSet($option["start"]),
@@ -719,11 +745,12 @@ class ManagementClient
     }
 
     /**
-     * 获取用户曾经登录过的应用
-     * @summary 获取用户曾经登录过的应用
+     * 通过用户 ID，获取用户曾经登录过的应用，可以选择指定用户 ID 类型等。
+     * @summary 通过用户 ID，获取用户曾经登录过的应用，可以选择指定用户 ID 类型等。
      * @description 获取用户曾经登录过的应用
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return UserLoggedInAppsListRespDto
      */
     public function getUserLoggedinApps($option = array())
@@ -731,6 +758,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-loggedin-apps", $varGet, null);
@@ -739,11 +767,12 @@ class ManagementClient
     }
 
     /**
-     * 获取用户曾经登录过的身份源
-     * @summary 获取用户曾经登录过的身份源
+     * 通过用户 ID，获取用户曾经登录过的身份源，可以选择指定用户 ID 类型等。
+     * @summary 通过用户 ID，获取用户曾经登录过的身份源，可以选择指定用户 ID 类型等。
      * @description 获取用户曾经登录过的身份源
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @return UserLoggedInIdentitiesRespDto
      */
     public function getUserLoggedinIdentities($option = array())
@@ -751,6 +780,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
         );
         // 发送请求
         $varReq = $this->_requests("/api/v3/get-user-logged-in-identities", $varGet, null);
@@ -761,11 +791,12 @@ class ManagementClient
     /**
      * 获取用户被授权的所有资源
      * @summary 获取用户被授权的所有资源
-     * @description 获取用户被授权的所有资源，用户被授权的资源是用户自身被授予、通过分组继承、通过角色继承、通过组织机构继承的集合
+     * @description 通过用户 ID，获取用户被授权的所有资源，可以选择指定用户 ID 类型等，用户被授权的资源是用户自身被授予、通过分组继承、通过角色继承、通过组织机构继承的集合。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' userIdType 可选，用户 ID 类型，可以指定为用户 ID、手机号、邮箱、用户名和 externalId。，默认 'user_id'
      * @param string namespace 可选，所属权限分组的 code
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型，如 数据、API、菜单、按钮
      * @return AuthorizedResourcePaginatedRespDto
      */
     public function getUserAuthorizedResources($option = array())
@@ -773,6 +804,7 @@ class ManagementClient
         // 组装请求
         $varGet = array(
             "userId" => Util\Tool::getSet($option["userId"]),
+            "userIdType" => Util\Tool::getSet($option["userIdType"]),
             "namespace" => Util\Tool::getSet($option["namespace"]),
             "resourceType" => Util\Tool::getSet($option["resourceType"]),
         );
@@ -785,7 +817,7 @@ class ManagementClient
     /**
      * 获取分组详情
      * @summary 获取分组详情
-     * @description 获取分组详情，通过 code 唯一标志用户池中的一个分组
+     * @description 通过分组 code，获取分组详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，分组 code
      * @return GroupSingleRespDto
@@ -805,7 +837,7 @@ class ManagementClient
     /**
      * 获取分组列表
      * @summary 获取分组列表
-     * @description 获取分组列表接口，支持分页
+     * @description 获取分组列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
@@ -827,7 +859,7 @@ class ManagementClient
     /**
      * 创建分组
      * @summary 创建分组
-     * @description 创建分组，一个分组必须包含一个用户池全局唯一的标志符（code），此标志符必须为一个合法的英文标志符，如 developers；以及分组名称
+     * @description 创建分组，一个分组必须包含分组名称与唯一标志符 code，且必须为一个合法的英文标志符，如 developers。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string description 必须，分组描述
      * @param string name 必须，分组名称
@@ -851,7 +883,7 @@ class ManagementClient
     /**
      * 批量创建分组
      * @summary 批量创建分组
-     * @description 批量创建分组
+     * @description 批量创建分组，一个分组必须包含分组名称与唯一标志符 code，且必须为一个合法的英文标志符，如 developers。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<CreateGroupReqDto> list 必须，批量分组
      * @return GroupListRespDto
@@ -871,7 +903,7 @@ class ManagementClient
     /**
      * 修改分组
      * @summary 修改分组
-     * @description 修改分组，通过 code 唯一标志用户池中的一个分组。你可以修改此分组的 code
+     * @description 通过分组 code，修改分组，可以修改此分组的 code。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string description 必须，分组描述
      * @param string name 必须，分组名称
@@ -897,7 +929,7 @@ class ManagementClient
     /**
      * 批量删除分组
      * @summary 批量删除分组
-     * @description 批量删除分组
+     * @description 通过分组 code，批量删除分组。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> codeList 必须，分组 code 列表
      * @return IsSuccessRespDto
@@ -917,7 +949,7 @@ class ManagementClient
     /**
      * 添加分组成员
      * @summary 添加分组成员
-     * @description 添加分组成员
+     * @description 添加分组成员，成员以用户 ID 数组形式传递。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 数组
      * @param string code 必须，分组 code
@@ -939,7 +971,7 @@ class ManagementClient
     /**
      * 批量移除分组成员
      * @summary 批量移除分组成员
-     * @description 批量移除分组成员
+     * @description 批量移除分组成员，成员以用户 ID 数组形式传递。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 数组
      * @param string code 必须，分组 code
@@ -961,7 +993,7 @@ class ManagementClient
     /**
      * 获取分组成员列表
      * @summary 获取分组成员列表
-     * @description 获取分组成员列表
+     * @description 通过分组 code，获取分组成员列表，支持分页，可以获取自定义数据、identities、部门 ID 列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，分组 code
      * @param number page 可选，当前页数，从 1 开始，默认 1
@@ -991,7 +1023,7 @@ class ManagementClient
     /**
      * 获取分组被授权的资源列表
      * @summary 获取分组被授权的资源列表
-     * @description 获取分组被授权的资源列表
+     * @description 通过分组 code，获取分组被授权的资源列表，可以通过资源类型、权限分组 code 筛选。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，分组 code
      * @param string namespace 可选，所属权限分组的 code
@@ -1015,7 +1047,7 @@ class ManagementClient
     /**
      * 获取角色详情
      * @summary 获取角色详情
-     * @description 获取角色详情
+     * @description 通过权限分组内角色 code，获取角色详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组内角色的唯一标识符
      * @param string namespace 可选，所属权限分组的 code
@@ -1037,7 +1069,7 @@ class ManagementClient
     /**
      * 分配角色
      * @summary 分配角色
-     * @description 分配角色，被分配者可以是用户，可以是部门
+     * @description 通过权限分组内角色 code，分配角色，被分配者可以是用户或部门。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<TargetDto> targets 必须，目标对象
      * @param string code 必须，权限分组内角色的唯一标识符
@@ -1061,7 +1093,7 @@ class ManagementClient
     /**
      * 移除分配的角色
      * @summary 移除分配的角色
-     * @description 移除分配的角色，被分配者可以是用户，可以是部门
+     * @description 通过权限分组内角色 code，移除分配的角色，被分配者可以是用户或部门。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<TargetDto> targets 必须，移除角色的目标
      * @param string code 必须，权限分组内角色的唯一标识符
@@ -1083,13 +1115,13 @@ class ManagementClient
     }
 
     /**
-     * 角色被授权的资源列表
-     * @summary 角色被授权的资源列表
-     * @description 角色被授权的资源列表
+     * 获取角色被授权的资源列表
+     * @summary 获取角色被授权的资源列表
+     * @description 通过权限分组内角色 code，获取角色被授权的资源列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组内角色的唯一标识符
      * @param string namespace 可选，所属权限分组的 code
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' resourceType 可选，资源类型，如 数据、API、按钮、菜单
      * @return RoleAuthorizedResourcePaginatedRespDto
      */
     public function getRoleAuthorizedResources($option = array())
@@ -1109,7 +1141,7 @@ class ManagementClient
     /**
      * 获取角色成员列表
      * @summary 获取角色成员列表
-     * @description 获取角色成员列表
+     * @description 通过权限分组内内角色 code，获取角色成员列表，支持分页，可以选择或获取自定义数据、identities 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组内角色的唯一标识符
      * @param number page 可选，当前页数，从 1 开始，默认 1
@@ -1141,7 +1173,7 @@ class ManagementClient
     /**
      * 获取角色的部门列表
      * @summary 获取角色的部门列表
-     * @description 获取角色的部门列表
+     * @description 通过权限分组内角色 code，获取角色的部门列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组内角色的唯一标识符
      * @param string namespace 可选，所属权限分组的 code
@@ -1167,7 +1199,7 @@ class ManagementClient
     /**
      * 创建角色
      * @summary 创建角色
-     * @description 创建角色，可以指定不同的权限分组
+     * @description 通过权限分组内角色 code，创建角色，可以选择权限分组、角色描述等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组内角色的唯一标识符
      * @param string namespace 可选，所属权限分组的 code，默认 null
@@ -1191,7 +1223,7 @@ class ManagementClient
     /**
      * 获取角色列表
      * @summary 获取角色列表
-     * @description 获取角色列表
+     * @description 获取角色列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string namespace 可选，所属权限分组的 code，默认 'default'
      * @param number page 可选，当前页数，从 1 开始，默认 1
@@ -1213,11 +1245,11 @@ class ManagementClient
     }
 
     /**
-     * （批量）删除角色
-     * @summary （批量）删除角色
-     * @description 删除角色
+     * 删除角色
+     * @summary 删除角色
+     * @description 删除角色，可以批量删除。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> codeList 必须，角色 code 集合
+     * @param Array<string> codeList 必须，角色 code 列表
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
@@ -1237,7 +1269,7 @@ class ManagementClient
     /**
      * 批量创建角色
      * @summary 批量创建角色
-     * @description 批量创建角色
+     * @description 批量创建角色，可以选择权限分组、角色描述等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<RoleListItem> list 必须，角色列表
      * @return IsSuccessRespDto
@@ -1257,7 +1289,7 @@ class ManagementClient
     /**
      * 修改角色
      * @summary 修改角色
-     * @description 修改角色
+     * @description 通过权限分组内角色新旧 code，修改角色，可以选择角色描述等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string newCode 必须，角色新的权限分组内唯一识别码
      * @param string code 必须，权限分组内角色的唯一标识符
@@ -1283,7 +1315,7 @@ class ManagementClient
     /**
      * 获取顶层组织机构列表
      * @summary 获取顶层组织机构列表
-     * @description 获取顶层组织机构列表
+     * @description 获取顶层组织机构列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
@@ -1307,7 +1339,7 @@ class ManagementClient
     /**
      * 创建顶层组织机构
      * @summary 创建顶层组织机构
-     * @description 创建组织机构，会创建一个只有一个节点的组织机构
+     * @description 创建组织机构，会创建一个只有一个节点的组织机构，可以选择组织描述信息、根节点自定义 ID、多语言等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationName 必须，组织名称
      * @param string organizationCode 必须，组织 code
@@ -1335,7 +1367,7 @@ class ManagementClient
     /**
      * 修改顶层组织机构
      * @summary 修改顶层组织机构
-     * @description 修改顶层组织机构
+     * @description 通过组织 code，修改顶层组织机构，可以选择部门描述、新组织 code、组织名称等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string description 可选，部门描述，默认 null
@@ -1367,7 +1399,7 @@ class ManagementClient
     /**
      * 删除组织机构
      * @summary 删除组织机构
-     * @description 删除组织机构树
+     * @description 通过组织 code，删除组织机构树。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @return IsSuccessRespDto
@@ -1387,9 +1419,9 @@ class ManagementClient
     /**
      * 搜索顶层组织机构列表
      * @summary 搜索顶层组织机构列表
-     * @description 搜索顶层组织机构列表
+     * @description 通过搜索关键词，搜索顶层组织机构列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string keywords 必须，搜索关键词
+     * @param string keywords 必须，搜索关键词，如组织机构名称
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return OrganizationPaginatedRespDto
@@ -1411,10 +1443,10 @@ class ManagementClient
     /**
      * 获取部门信息
      * @summary 获取部门信息
-     * @description 获取部门信息
+     * @description 通过组织 code 以及 部门 ID 或 部门 code，获取部门信息，可以获取自定义数据。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 可选，部门 id，根部门传 `root`。departmentId 和 departmentCode 必传其一。
+     * @param string departmentId 可选，部门 ID，根部门传 `root`。departmentId 和 departmentCode 必传其一。
      * @param string departmentCode 可选，部门 code。departmentId 和 departmentCode 必传其一。
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
@@ -1439,7 +1471,7 @@ class ManagementClient
     /**
      * 创建部门
      * @summary 创建部门
-     * @description 创建部门
+     * @description 通过组织 code、部门名称、父部门 ID，创建部门，可以设置多种参数。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string parentDepartmentId 必须，父部门 id
      * @param string name 必须，部门名称
@@ -1477,7 +1509,7 @@ class ManagementClient
     /**
      * 修改部门
      * @summary 修改部门
-     * @description 修改部门
+     * @description 通过组织 code、部门 ID，修改部门，可以设置多种参数。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
      * @param string organizationCode 必须，组织 Code（organizationCode）
@@ -1487,7 +1519,7 @@ class ManagementClient
      * @param I18nDto i18n 可选，多语言设置，默认 null
      * @param string name 可选，部门名称，默认 null
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 null
-     * @param string parentDepartmentId 可选，父部门 id，默认 null
+     * @param string parentDepartmentId 可选，父部门 ID，默认 null
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @return DepartmentSingleRespDto
      */
@@ -1515,7 +1547,7 @@ class ManagementClient
     /**
      * 删除部门
      * @summary 删除部门
-     * @description 删除部门
+     * @description 通过组织 code、部门 ID，删除部门。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string departmentId 必须，部门系统 ID（为 Authing 系统自动生成，不可修改）
      * @param string organizationCode 必须，组织 Code（organizationCode）
@@ -1539,9 +1571,9 @@ class ManagementClient
     /**
      * 搜索部门
      * @summary 搜索部门
-     * @description 搜索部门
+     * @description 通过组织 code、搜索关键词，搜索部门，可以搜索组织名称等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string keywords 必须，搜索关键词
+     * @param string keywords 必须，搜索关键词，如组织名称等
      * @param string organizationCode 必须，组织 code
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 null
      * @return DepartmentListRespDto
@@ -1563,12 +1595,13 @@ class ManagementClient
     /**
      * 获取子部门列表
      * @summary 获取子部门列表
-     * @description 获取子部门列表
+     * @description 通过组织 code、部门 ID，获取子部门列表，可以选择获取自定义数据、虚拟组织等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string departmentId 必须，需要获取的部门 ID
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean excludeVirtualNode 可选，是否要排除虚拟组织，默认 false
+     * @param boolean onlyVirtualNode 可选，是否只包含虚拟组织，默认 false
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @return DepartmentPaginatedRespDto
      */
@@ -1580,6 +1613,7 @@ class ManagementClient
             "departmentId" => Util\Tool::getSet($option["departmentId"]),
             "departmentIdType" => Util\Tool::getSet($option["departmentIdType"]),
             "excludeVirtualNode" => Util\Tool::getSet($option["excludeVirtualNode"]),
+            "onlyVirtualNode" => Util\Tool::getSet($option["onlyVirtualNode"]),
             "withCustomData" => Util\Tool::getSet($option["withCustomData"]),
         );
         // 发送请求
@@ -1591,10 +1625,10 @@ class ManagementClient
     /**
      * 获取部门成员列表
      * @summary 获取部门成员列表
-     * @description 获取部门成员列表
+     * @description 通过组织 code、部门 ID、排序，获取部门成员列表，支持分页，可以选择获取自定义数据、identities 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id，根部门传 `root`
+     * @param string departmentId 必须，部门 ID，根部门传 `root`
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean includeChildrenDepartments 可选，是否包含子部门的成员，默认 false
      * @param number page 可选，当前页数，从 1 开始，默认 1
@@ -1631,10 +1665,10 @@ class ManagementClient
     /**
      * 获取部门直属成员 ID 列表
      * @summary 获取部门直属成员 ID 列表
-     * @description 获取部门直属成员 ID 列表
+     * @description 通过组织 code、部门 ID，获取部门直属成员 ID 列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id，根部门传 `root`
+     * @param string departmentId 必须，部门 ID，根部门传 `root`
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @return UserIdListRespDto
      */
@@ -1655,11 +1689,11 @@ class ManagementClient
     /**
      * 搜索部门下的成员
      * @summary 搜索部门下的成员
-     * @description 搜索部门下的成员
+     * @description 通过组织 code、部门 ID、搜索关键词，搜索部门下的成员，支持分页，可以选择获取自定义数据、identities 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id，根部门传 `root`
-     * @param string keywords 必须，搜索关键词
+     * @param string departmentId 必须，部门 ID，根部门传 `root`
+     * @param string keywords 必须，搜索关键词，如成员名称
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
@@ -1693,7 +1727,7 @@ class ManagementClient
     /**
      * 部门下添加成员
      * @summary 部门下添加成员
-     * @description 部门下添加成员
+     * @description 通过部门 ID、组织 code，添加部门下成员。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 列表
      * @param string organizationCode 必须，组织 code
@@ -1719,7 +1753,7 @@ class ManagementClient
     /**
      * 部门下删除成员
      * @summary 部门下删除成员
-     * @description 部门下删除成员
+     * @description 通过部门 ID、组织 code，删除部门下成员。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> userIds 必须，用户 ID 列表
      * @param string organizationCode 必须，组织 code
@@ -1745,10 +1779,10 @@ class ManagementClient
     /**
      * 获取父部门信息
      * @summary 获取父部门信息
-     * @description 获取父部门信息
+     * @description 通过组织 code、部门 ID，获取父部门信息，可以选择获取自定义数据等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id
+     * @param string departmentId 必须，部门 ID
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
      * @return DepartmentSingleRespDto
@@ -1771,11 +1805,11 @@ class ManagementClient
     /**
      * 判断用户是否在某个部门下
      * @summary 判断用户是否在某个部门下
-     * @description 判断用户是否在某个部门下
+     * @description 通过组织 code、部门 ID，判断用户是否在某个部门下，可以选择包含子部门。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string userId 必须，用户 ID
      * @param string organizationCode 必须，组织 code
-     * @param string departmentId 必须，部门 id，根部门传 `root`。departmentId 和 departmentCode 必传其一。
+     * @param string departmentId 必须，部门 ID，根部门传 `root`。departmentId 和 departmentCode 必传其一。
      * @param 'department_id' | 'open_department_id' departmentIdType 可选，此次调用中使用的部门 ID 的类型，默认 'department_id'
      * @param boolean includeChildrenDepartments 可选，是否包含子部门，默认 false
      * @return IsUserInDepartmentRespDto
@@ -1799,7 +1833,7 @@ class ManagementClient
     /**
      * 获取身份源列表
      * @summary 获取身份源列表
-     * @description 获取身份源列表
+     * @description 获取身份源列表，可以指定 租户 ID 筛选。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpListPaginatedRespDto
@@ -1819,9 +1853,9 @@ class ManagementClient
     /**
      * 获取身份源详情
      * @summary 获取身份源详情
-     * @description 获取身份源详情
+     * @description 通过 身份源 ID，获取身份源详情，可以指定 租户 ID 筛选。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string id 必须，身份源 id
+     * @param string id 必须，身份源 ID
      * @param string tenantId 可选，租户 ID
      * @return ExtIdpDetailSingleRespDto
      */
@@ -1841,7 +1875,7 @@ class ManagementClient
     /**
      * 创建身份源
      * @summary 创建身份源
-     * @description 创建身份源
+     * @description 创建身份源，可以设置身份源名称、连接类型、租户 ID 等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param 'oidc' | 'oauth2' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'wechat' | 'google' | 'qq' | 'wechatwork' | 'dingtalk' | 'weibo' | 'github' | 'alipay' | 'apple' | 'baidu' | 'lark' | 'gitlab' | 'twitter' | 'facebook' | 'slack' | 'linkedin' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
      * @param string name 必须，身份源名称
@@ -1865,7 +1899,7 @@ class ManagementClient
     /**
      * 更新身份源配置
      * @summary 更新身份源配置
-     * @description 更新身份源配置
+     * @description 更新身份源配置，可以设置身份源 ID 与 名称。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string id 必须，身份源 ID
      * @param string name 必须，名称
@@ -1887,7 +1921,7 @@ class ManagementClient
     /**
      * 删除身份源
      * @summary 删除身份源
-     * @description 删除身份源
+     * @description 通过身份源 ID，删除身份源。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string id 必须，身份源 ID
      * @return IsSuccessRespDto
@@ -1907,13 +1941,13 @@ class ManagementClient
     /**
      * 在某个已有身份源下创建新连接
      * @summary 在某个已有身份源下创建新连接
-     * @description 在某个已有身份源下创建新连接
+     * @description 在某个已有身份源下创建新连接，可以设置身份源图标、是否只支持登录等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param any fields 必须，连接的自定义配置信息
      * @param string displayName 必须，连接在登录页的显示名称
      * @param string identifier 必须，身份源连接标识
      * @param 'oidc' | 'oauth' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'alipay' | 'facebook' | 'twitter' | 'google' | 'wechat:pc' | 'wechat:mobile' | 'wechat:webpage-authorization' | 'wechatmp-qrcode' | 'wechat:miniprogram:default' | 'wechat:miniprogram:qrconnect' | 'wechat:miniprogram:app-launch' | 'github' | 'qq' | 'wechatwork:corp:qrconnect' | 'wechatwork:agency:qrconnect' | 'wechatwork:service-provider:qrconnect' | 'wechatwork:mobile' | 'dingtalk' | 'dingtalk:provider' | 'weibo' | 'apple' | 'apple:web' | 'baidu' | 'lark-internal' | 'lark-public' | 'gitlab' | 'linkedin' | 'slack' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
-     * @param string extIdpId 必须，身份源连接 id
+     * @param string extIdpId 必须，身份源连接 ID
      * @param boolean loginOnly 可选，是否只支持登录，默认 null
      * @param string logo 可选，身份源图标，默认 null
      * @return ExtIdpConnDetailSingleRespDto
@@ -1939,7 +1973,7 @@ class ManagementClient
     /**
      * 更新身份源连接
      * @summary 更新身份源连接
-     * @description 更新身份源连接
+     * @description 更新身份源连接，可以设置身份源图标、是否只支持登录等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param any fields 必须，身份源连接自定义参数（增量修改）
      * @param string displayName 必须，身份源连接显示名称
@@ -1967,7 +2001,7 @@ class ManagementClient
     /**
      * 删除身份源连接
      * @summary 删除身份源连接
-     * @description 删除身份源连接
+     * @description 通过身份源连接 ID，删除身份源连接。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string id 必须，身份源连接 ID
      * @return IsSuccessRespDto
@@ -1987,7 +2021,7 @@ class ManagementClient
     /**
      * 身份源连接开关
      * @summary 身份源连接开关
-     * @description 身份源连接开关
+     * @description 身份源连接开关，可以打开或关闭身份源连接。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string appId 必须，应用 ID
      * @param boolean enabled 必须，是否开启身份源连接
@@ -2013,9 +2047,9 @@ class ManagementClient
     /**
      * 获取用户池配置的自定义字段列表
      * @summary 获取用户池配置的自定义字段列表
-     * @description 获取用户池配置的自定义字段列表
+     * @description 通过主体类型，获取用户池配置的自定义字段列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组和部门
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
      * @return CustomFieldListRespDto
      */
     public function getCustomFields($option = array())
@@ -2057,8 +2091,8 @@ class ManagementClient
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<SetCustomDataDto> list 必须，自定义数据列表
      * @param string targetIdentifier 必须，主体类型的唯一标志符。如果是用户则为用户 ID，角色为角色的 code，部门为部门的 ID
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组和部门
-     * @param string namespace 可选，所属权限分组的 code，当 target_type 为角色的时候需要填写，否则可以忽略。，默认 null
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
+     * @param string namespace 可选，所属权限分组的 code，当 target_type 为角色的时候需要填写，否则可以忽略，默认 null
      * @return IsSuccessRespDto
      */
     public function setCustomData($option = array())
@@ -2079,11 +2113,11 @@ class ManagementClient
     /**
      * 获取用户、分组、角色、组织机构的自定义字段值
      * @summary 获取用户、分组、角色、组织机构的自定义字段值
-     * @description 获取用户、分组、角色、组织机构的自定义字段值
+     * @description 通过筛选条件，获取用户、分组、角色、组织机构的自定义字段值。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组和部门
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
      * @param string targetIdentifier 必须，目标对象唯一标志符
-     * @param string namespace 可选，所属权限分组的 code，当 targetType 为角色的时候需要填写，否则可以忽略。
+     * @param string namespace 可选，所属权限分组的 code，当 targetType 为角色的时候需要填写，否则可以忽略
      * @return GetCustomDataRespDto
      */
     public function getCustomData($option = array())
@@ -2103,7 +2137,7 @@ class ManagementClient
     /**
      * 创建资源
      * @summary 创建资源
-     * @description 创建资源
+     * @description 创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' type 必须，资源类型，如数据、API、按钮、菜单
      * @param string code 必须，资源唯一标志符
@@ -2133,7 +2167,7 @@ class ManagementClient
     /**
      * 批量创建资源
      * @summary 批量创建资源
-     * @description 批量创建资源
+     * @description 批量创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<CreateResourceBatchItemDto> list 必须，资源列表
      * @param string namespace 可选，所属权限分组的 code，默认 null
@@ -2155,7 +2189,7 @@ class ManagementClient
     /**
      * 获取资源详情
      * @summary 获取资源详情
-     * @description 获取资源详情
+     * @description 根据筛选条件，获取资源详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，资源唯一标志符
      * @param string namespace 可选，所属权限分组的 code
@@ -2177,9 +2211,9 @@ class ManagementClient
     /**
      * 批量获取资源详情
      * @summary 批量获取资源详情
-     * @description 批量获取资源详情
+     * @description 根据筛选条件，批量获取资源详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> codeList 必须，资源 code 列表,批量可以使用逗号分隔
+     * @param Array<string> codeList 必须，资源 code 列表，批量可以使用逗号分隔
      * @param string namespace 可选，所属权限分组的 code
      * @return ResourceListRespDto
      */
@@ -2199,7 +2233,7 @@ class ManagementClient
     /**
      * 分页获取资源列表
      * @summary 分页获取资源列表
-     * @description 分页获取资源列表
+     * @description 根据筛选条件，分页获取资源详情列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string namespace 可选，所属权限分组的 code
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' type 可选，资源类型
@@ -2225,7 +2259,7 @@ class ManagementClient
     /**
      * 修改资源
      * @summary 修改资源
-     * @description 修改资源（Pratial Update）
+     * @description 修改资源，可以设置资源的描述、定义的操作类型、URL 标识等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，资源唯一标志符
      * @param string description 可选，资源描述，默认 null
@@ -2255,7 +2289,7 @@ class ManagementClient
     /**
      * 删除资源
      * @summary 删除资源
-     * @description 删除资源
+     * @description 通过资源唯一标志符以及所属权限分组，删除资源。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，资源唯一标志符
      * @param string namespace 可选，所属权限分组的 code，默认 null
@@ -2277,7 +2311,7 @@ class ManagementClient
     /**
      * 批量删除资源
      * @summary 批量删除资源
-     * @description 批量删除资源
+     * @description 通过资源唯一标志符以及所属权限分组，批量删除资源
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> codeList 必须，资源 code 列表
      * @param string namespace 可选，所属权限分组的 code，默认 null
@@ -2299,7 +2333,7 @@ class ManagementClient
     /**
      * 创建权限分组
      * @summary 创建权限分组
-     * @description 创建权限分组
+     * @description 创建权限分组，可以设置分组名称与描述信息。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组唯一标志符
      * @param string name 可选，权限分组名称，默认 null
@@ -2323,7 +2357,7 @@ class ManagementClient
     /**
      * 批量创建权限分组
      * @summary 批量创建权限分组
-     * @description 批量创建权限分组
+     * @description 批量创建权限分组，可以分别设置分组名称与描述信息。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<CreateNamespacesBatchItemDto> list 必须，权限分组列表
      * @return IsSuccessRespDto
@@ -2343,7 +2377,7 @@ class ManagementClient
     /**
      * 获取权限分组详情
      * @summary 获取权限分组详情
-     * @description 获取权限分组详情
+     * @description 通过权限分组唯一标志符，获取权限分组详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组唯一标志符
      * @return NamespaceRespDto
@@ -2363,9 +2397,9 @@ class ManagementClient
     /**
      * 批量获取权限分组详情
      * @summary 批量获取权限分组详情
-     * @description 批量获取权限分组详情
+     * @description 分别通过权限分组唯一标志符，批量获取权限分组详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> codeList 必须，资源 code 列表,批量可以使用逗号分隔
+     * @param Array<string> codeList 必须，资源 code 列表，批量可以使用逗号分隔
      * @return NamespaceListRespDto
      */
     public function getNamespacesBatch($option = array())
@@ -2383,7 +2417,7 @@ class ManagementClient
     /**
      * 修改权限分组信息
      * @summary 修改权限分组信息
-     * @description 修改权限分组信息
+     * @description 修改权限分组信息，可以修改名称、描述信息以及新的唯一标志符。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组唯一标志符
      * @param string description 可选，权限分组描述信息，默认 null
@@ -2409,7 +2443,7 @@ class ManagementClient
     /**
      * 删除权限分组信息
      * @summary 删除权限分组信息
-     * @description 删除权限分组信息
+     * @description 通过权限分组唯一标志符，删除权限分组信息。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string code 必须，权限分组唯一标志符
      * @return IsSuccessRespDto
@@ -2429,7 +2463,7 @@ class ManagementClient
     /**
      * 批量删除权限分组
      * @summary 批量删除权限分组
-     * @description 批量删除权限分组
+     * @description 分别通过权限分组唯一标志符，批量删除权限分组。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> codeList 必须，权限分组 code 列表
      * @return IsSuccessRespDto
@@ -2449,9 +2483,9 @@ class ManagementClient
     /**
      * 授权资源
      * @summary 授权资源
-     * @description 给多个主体同时授权多个资源
+     * @description 将一个/多个资源授权给用户、角色、分组、组织机构等主体，且可以分别指定不同的操作权限。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<AuthorizeResourceItem> list 必须，授权列表
+     * @param Array<AuthorizeResourceItem> list 必须，授权资源列表
      * @param string namespace 可选，所属权限分组的 code，默认 null
      * @return IsSuccessRespDto
      */
@@ -2471,7 +2505,7 @@ class ManagementClient
     /**
      * 获取某个主体被授权的资源列表
      * @summary 获取某个主体被授权的资源列表
-     * @description 获取某个主体被授权的资源列表
+     * @description 根据筛选条件，获取某个主体被授权的资源列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型
      * @param string targetIdentifier 必须，目标对象唯一标志符
@@ -2501,7 +2535,7 @@ class ManagementClient
     /**
      * 判断用户是否对某个资源的某个操作有权限
      * @summary 判断用户是否对某个资源的某个操作有权限
-     * @description 判断用户是否对某个资源的某个操作有权限
+     * @description 判断用户是否对某个资源的某个操作有权限。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string action 必须，资源对应的操作
      * @param string resource 必须，资源标识符
