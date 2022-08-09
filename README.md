@@ -1,177 +1,50 @@
 # Authing - PHP
 
-<div align="center">
-  <a href="https://authing.cn"><img width="300" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg?a=1" alt="Authing" /></a>
+<div align=center>
+  <img width="250" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg" />
 </div>
-<br/>
 
-该分支将完成 php-8 的迁移，同时完全按照严格模式进行相关编码。
+<div align="center">
+    <a href="https://forum.authing.cn/" target="_blank"><img src="https://img.shields.io/badge/chat-forum-blue" /></a>
+    <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-success" alt="License"></a>
+</div>
 
-Authing PHP SDK 由两部分组成：`ManagementClient` 和 `AuthenticationClient`。`ManagementClient` 中进行的所有操作均以管理员的身份进行，包含管理用户、管理角色、管理权限策略、管理用户池配置等模块。`AuthenticationClient` 中的所有操作以当前终端用户的身份进行，包含登录、注册、修改用户资料、退出登录等方法。
+**English** | [简体中文](./README.zh_CN.md)
 
-你应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次），而 `AuthenticationClient` 应该每次请求初始化一个。
+## Introduction
 
-## 安装
+You can use the Authing PHP SDK to quickly integrate authentication capabilities for new or existing Back End applications
 
-我们推荐使用 `composer` 进行安装， 它可以与一些模块打包工具很好地配合使用。
+## Documentation
+
+- [Authing - PHP](https://docs.authing.cn/v2/en/reference/sdk-for-php/)
+## Install
+
+We recommend using `composer` for installation, it can work well with some module packaging tools.
 
 ```shell
 # latest stable
 $ composer require authing-sdk/php
 ```
 
-## 使用管理模块
+## Questions
 
-初始化 `ManagementClient` 需要 `userPoolId`（用户池 ID） 和 `secret`（用户池密钥）:
+For questions and support please use the [official forum](https://forum.authing.cn/). The issue list of this repo is exclusively for bug reports and feature requests.
 
-> 你可以在此[了解如何获取 UserPoolId 和 Secret](https://docs.authing.cn/v2/guides/faqs/get-userpool-id-and-secret.html) .
+## Contribution
 
-```php
-use Authing\Mgmt\ManagementClient;
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push -u origin my-new-feature)
+- Create new Pull Request
+## Contribute
 
-$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
-// 获取管理员权限
-$management->requestToken();
-```
+https://github.com/Authing/.github/blob/main/CONTRIBUTING.md#English
 
-现在 `managementClient` 实例就可以使用了。例如可以获取用户池中的用户列表：
 
-```php
-use Authing\Mgmt\ManagementClient;
+## License
 
-$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
-// 获取管理员权限
-$management->requestToken();
-$users = $management->users()->paginate();
-```
+[MIT](https://opensource.org/licenses/MIT)
 
-## 使用认证模块
-
-初始化 `AuthenticationClient` 需要 `appId`（应用 ID）：
-
-> 你可以在此[了解如何获取 AppId](/guides/faqs/get-app-id-and-secret.md) .
-
-```php
-use Authing\Auth\AuthenticationClient;
-
-$authentication = new AuthenticationClient(function ($ops) {
-    $ops->appId = "---";
-});
-```
-
-接下来可以进行注册登录等操作：
-
-```php
-use Authing\Auth\AuthenticationClient;
-use Authing\Types\LoginByEmailInput;
-
-$authentication = new AuthenticationClient(function ($ops) {
-    $ops->appId = "---";
-});
-$user = $authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
-```
-
-完成登录之后，`update_profile` 等要求用户登录的方法就可用了：
-
-```php
-use Authing\Auth\AuthenticationClient;
-use Authing\Types\LoginByEmailInput;
-use Authing\Types\UpdateUserInput;
-
-$authentication = new AuthenticationClient(function ($ops) {
-    $ops->appId = "---";
-});
-$authentication->loginByEmail(new LoginByEmailInput("test@example.com", "123456"));
-
-$user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
-```
-
-你也可以在初始化后设置 `AccessToken` 参数, 不需要每次都调用 `LoginByXXX` 方法:
-
-```php
-use Authing\Auth\AuthenticationClient;
-
-$authentication = new AuthenticationClient(function ($ops) {
-    $ops->appId = "---";
-});
-$authentication->setAccessToken("ACCESS_TOKEN");
-```
-
-再次执行 `UpdateProfile` 方法，发现也成功了:
-
-```php
-use Authing\Auth\AuthenticationClient;
-use Authing\Types\UpdateUserInput;
-
-$authentication = new AuthenticationClient(function ($ops) {
-    $ops->appId = "---";
-});
-$authentication->setAccessToken("ACCESS_TOKEN");
-
-$user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
-```
-
-## 错误处理
-
-统一使用 try catch 处理：
-
-```php
-use Authing\Auth\AuthenticationClient;
-use Authing\Types\UpdateUserInput;
-
-$authentication = new AuthenticationClient("AUTHING_USERPOOL_ID");
-$authentication->setAccessToken("ACCESS_TOKEN");
-
-try {
-    $user = $authentication->updateProfile((new UpdateUserInput())->withNickname("nickname"));
-} catch (Exception $e) {
-    print_r($e);
-}
-```
-
-## 私有化部署
-
-**私有化部署**场景需要指定你私有化的 Authing 服务的 GraphQL 端点（**不带协议头和 Path**），如果你不清楚可以联系 Authing IDaaS 服务管理员。
-
-## 接口索引
-
-可用的 Authentication 方法
-
-- 获取当前用户的用户资料: `getCurrentUser`
-- 使用邮箱注册: `registerByEmail`
-- 使用用户名注册: `registerByUsername`
-- 使用手机号验证码注册: `registerByPhoneCode`
-- 使用邮箱登录: `loginByEmail`
-- 使用用户名登录: `loginByUsername`
-- 使用手机号验证码登录 `loginByPhoneCode`
-- 使用手机号密码登录: `loginByPhonePassword`
-- 发送邮件: `sendEmail`
-- 发送短信验证码: `sendSmsCode`
-- 检查 token 的有效状态: `checkLoginStatus`
-- 使用手机号验证码重置密码: `resetPasswordByPhoneCode`
-- 使用邮件验证码重置密码: `resetPasswordByEmailCode`
-- 更新用户资料: `updateProfile`
-- 更新密码: `updatePassword`
-- 更新手机号: `updatePhone`
-- 更新邮箱: `updateEmail`
-- 刷新 token: `refreshToken`
-- 绑定手机号: `bindPhone`
-- 解绑手机号: `unbindPhone`
-
-详情请见：
-[用户认证模块](https://docs.authing.cn/v2/reference/sdk-for-php/authentication/)
-
-管理模块包含以下子模块：
-[管理用户](https://docs.authing.cn/v2/reference/sdk-for-php/management/UsersManagementClient.html)
-
-[管理角色](https://docs.authing.cn/v2/reference/sdk-for-php/management/RolesManagementClient.html)
-
-[管理策略](https://docs.authing.cn/v2/reference/sdk-for-php/management/PoliciesManagementClient.html)
-
-[管理权限、访问控制](https://docs.authing.cn/v2/reference/sdk-for-php/management/AclManagementClient.html)
-
-[管理用户自定义字段](https://docs.authing.cn/v2/reference/sdk-for-php/management/UdfManagementClient.html)
-
-## 获取帮助
-
-Join us on forum: [#authing-chat](https://forum.authing.cn/)
+Copyright (c) 2019-present, Authing
