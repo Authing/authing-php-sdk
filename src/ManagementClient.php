@@ -510,7 +510,6 @@ class ManagementClient
      * @param Array<string> departmentIds 可选，用户所属部门 ID 列表，默认 null
      * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @param string password 可选，密码。可选加密方式进行加密，通过 passwordEncryptType 参数进行加密方法选择，默认为未加密，默认 null
-     * @param boolean resetPasswordOnFisrtLogin 可选，是否首次登录时重新设置密码，默认 null
      * @param Array<string> tenantIds 可选，租户 ID，默认 null
      * @param Array<CreateIdentityDto> identities 可选，第三方身份源（建议调用绑定接口进行绑定），默认 null
      * @param CreateUserOptionsDto options 可选，可选参数，默认 null
@@ -543,7 +542,6 @@ class ManagementClient
             "departmentIds" => Util\Tool::getSet($option["departmentIds"]),
             "customData" => Util\Tool::getSet($option["customData"]),
             "password" => Util\Tool::getSet($option["password"]),
-            "resetPasswordOnFisrtLogin" => Util\Tool::getSet($option["resetPasswordOnFisrtLogin"]),
             "tenantIds" => Util\Tool::getSet($option["tenantIds"]),
             "identities" => Util\Tool::getSet($option["identities"]),
             "options" => Util\Tool::getSet($option["options"]),
@@ -839,6 +837,7 @@ class ManagementClient
      * @summary 获取分组列表
      * @description 获取分组列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string keywords 可选，搜索分组 code 或分组名称
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return GroupPaginatedRespDto
@@ -847,6 +846,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
+            "keywords" => Util\Tool::getSet($option["keywords"]),
             "page" => Util\Tool::getSet($option["page"]),
             "limit" => Util\Tool::getSet($option["limit"]),
         );
@@ -1225,6 +1225,7 @@ class ManagementClient
      * @summary 获取角色列表
      * @description 获取角色列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string keywords 可选，搜索角色 code
      * @param string namespace 可选，所属权限分组的 code，默认 'default'
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
@@ -1234,6 +1235,7 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
+            "keywords" => Util\Tool::getSet($option["keywords"]),
             "namespace" => Util\Tool::getSet($option["namespace"]),
             "page" => Util\Tool::getSet($option["page"]),
             "limit" => Util\Tool::getSet($option["limit"]),
@@ -1946,7 +1948,7 @@ class ManagementClient
      * @param any fields 必须，连接的自定义配置信息
      * @param string displayName 必须，连接在登录页的显示名称
      * @param string identifier 必须，身份源连接标识
-     * @param 'oidc' | 'oauth' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'alipay' | 'facebook' | 'twitter' | 'google' | 'wechat:pc' | 'wechat:mobile' | 'wechat:webpage-authorization' | 'wechatmp-qrcode' | 'wechat:miniprogram:default' | 'wechat:miniprogram:qrconnect' | 'wechat:miniprogram:app-launch' | 'github' | 'qq' | 'wechatwork:corp:qrconnect' | 'wechatwork:agency:qrconnect' | 'wechatwork:service-provider:qrconnect' | 'wechatwork:mobile' | 'dingtalk' | 'dingtalk:provider' | 'weibo' | 'apple' | 'apple:web' | 'baidu' | 'lark-internal' | 'lark-public' | 'gitlab' | 'linkedin' | 'slack' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
+     * @param 'oidc' | 'oauth' | 'saml' | 'ldap' | 'ad' | 'cas' | 'azure-ad' | 'alipay' | 'facebook' | 'twitter' | 'google' | 'wechat:pc' | 'wechat:mobile' | 'wechat:webpage-authorization' | 'wechatmp-qrcode' | 'wechat:miniprogram:default' | 'wechat:miniprogram:qrconnect' | 'wechat:miniprogram:app-launch' | 'github' | 'qq' | 'wechatwork:corp:qrconnect' | 'wechatwork:agency:qrconnect' | 'wechatwork:service-provider:qrconnect' | 'wechatwork:mobile' | 'wechatwork:agency:mobile' | 'dingtalk' | 'dingtalk:provider' | 'weibo' | 'apple' | 'apple:web' | 'baidu' | 'lark-internal' | 'lark-public' | 'gitlab' | 'linkedin' | 'slack' | 'yidun' | 'qingcloud' | 'gitee' | 'instagram' | 'welink' type 必须，身份源连接类型
      * @param string extIdpId 必须，身份源连接 ID
      * @param boolean loginOnly 可选，是否只支持登录，默认 null
      * @param string logo 可选，身份源图标，默认 null
