@@ -19,7 +19,6 @@ class JWT
      */
     private static function _signature($data, $key, $alg = "HS256")
     {
-        if (empty($alg)) return false;
         switch ($alg) {
             case "HS256":
                 $ret = self::base64UrlEncode(hash_hmac("sha256", $data, $key, true));
