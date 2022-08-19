@@ -309,7 +309,13 @@ PUBLICKKEY;
      */
     private function objectToArray($data)
     {
-        $arr = array_filter((array) $data);
+        $arr = array_filter((array) $data, function ($item) {
+            if ($item === null) {
+                return false;
+            } else {
+                return true;
+            }
+        });
         foreach ($arr as $k => $v) {
             if (gettype($v) == 'array' || getType($v) == 'object') {
                 $arr[$k] = $this->objectToArray($v);
