@@ -11,6 +11,18 @@ namespace Authing\Util;
  */
 class Tool
 {
+
+   public static function RandomString($length = 32)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     /**
      * 获取非空数据
      */
@@ -22,9 +34,9 @@ class Tool
     /**
      * 获取已赋值数据
      */
-    public static function getSet($parData, $parDefault = null)
+    public static function getOrDefault($parObj, $parKey, $parDefault = null)
     {
-        return isset($parData) ? $parData : $parDefault;
+        return isset($parObj[$parKey]) ? $parObj[$parKey] : $parDefault;
     }
 
     /**
@@ -66,13 +78,13 @@ class Tool
     /**
      * 请求HTTP
      */
-    public static function request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [])
+    public static function request($parUrl, $parGet = [], $parPost = [], $parHeader = [], $parCookie = [], $parTimeout = 10)
     {
         //配置-基础
         $varCurlObject = curl_init();
         curl_setopt($varCurlObject, CURLOPT_URL, $parUrl); //配置URL
-        curl_setopt($varCurlObject, CURLOPT_CONNECTTIMEOUT, 20); //连接前等待时间
-        curl_setopt($varCurlObject, CURLOPT_TIMEOUT, 60); //连接后等待时间
+        curl_setopt($varCurlObject, CURLOPT_CONNECTTIMEOUT, $parTimeout); //连接前等待时间
+        curl_setopt($varCurlObject, CURLOPT_TIMEOUT, $parTimeout); //连接后等待时间
         curl_setopt($varCurlObject, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4); //使用IPv4协议
         curl_setopt($varCurlObject, CURLOPT_RETURNTRANSFER, true); //返回文件流
         curl_setopt($varCurlObject, CURLOPT_HEADER, true); //返回Header
@@ -119,12 +131,12 @@ class Tool
             curl_setopt($varCurlObject, CURLOPT_HTTPHEADER, $varHeader);
         }
         //配置-Cookie
-        if ($parCookie != []) {
-            foreach ($parCookie as $forKey => $forValue) {
-                $varCookie[] = "$forKey=$forValue";
-            }
-            curl_setopt($varCurlObject, CURLOPT_COOKIE, implode(";", $varCookie));
-        }
+//        if ($parCookie != []) {
+//            foreach ($parCookie as $forKey => $forValue) {
+//                $varCookie[] = "$forKey=$forValue";
+//            }
+//            curl_setopt($varCurlObject, CURLOPT_COOKIE, implode(";", $varCookie));
+//        }
         //请求
         $tempCurlRes = curl_exec($varCurlObject);
         //组装-error
