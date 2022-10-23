@@ -92,9 +92,9 @@ class ManagementClient
             "Content-Type" => "application/json",
             "x-authing-userpool-id" => $this->_userPoolID,
             "x-authing-request-from" => "php-sdk",
-            "x-authing-sdk-version" => "php:5.0.0",
+            "x-authing-sdk-version" => "authing-php-sdk:5.0.0",
         );
-        //请求
+        // 请求
         $varRes = Util\Tool::request($parMethod, $this->_url . $parPath, $parGet, $parPost, $varHeader, $this->_timeout);
         return $varRes;
     }

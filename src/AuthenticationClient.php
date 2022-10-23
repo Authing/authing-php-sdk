@@ -121,7 +121,7 @@ class AuthenticationClient
         $varHeader = array(
             "Content-Type" => "application/json",
             "x-authing-request-from" => "SDK",
-            "x-authing-sdk-version" => "php:" . phpversion(),
+            "x-authing-sdk-version" => "authing-php-sdk:" . phpversion(),
             "x-authing-app-id" => $this->_option["appId"],
         );
 

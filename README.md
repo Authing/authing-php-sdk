@@ -1,110 +1,42 @@
-# authing-php-sdk
+<div align=center>
+  <img width="250" src="https://files.authing.co/authing-console/authing-logo-new-20210924.svg" />
+</div>
+<div align="center">
+  <a href="javascript:;"><img src="https://img.shields.io/badge/test-passing-brightgreen" /></a>
+  <a href="https://forum.authing.cn/" target="_blank"><img src="https://img.shields.io/badge/chat-forum-blue" /></a>
+  <a href="https://console.authing.cn/openapi/" target="_blank"><img src="https://img.shields.io/badge/docs-passing-brightgreen" /></a>
+  <a href="javascript:;"><img src="https://img.shields.io/badge/License-MIT-success" alt="License"></a>
+</div>
 
-[Authing](https://authing.cn/) 身份云 `PHP` 语言客户端，包含 [Authing Open API](https://api.authing.cn/openapi/) 所有 Management API 的请求方法。
+English | [简体中文](./README-zh_CN.md)
 
-此模块一般用于后端服务器环境，以管理员（Administrator）的身份进行请求，用于管理 Authing 用户、角色、分组、组织机构等资源；一般来说，你在 Authing 控制台中能做的所有操作，都能用此模块完成。
+You can use the Authing PHP SDK to quickly integrate authentication capabilities for new or existing Back End applications.
 
-如果你需要以终端用户（End User）的身份进行登录、注册、登出等操作，请使用 [Guard](https://www.authing.cn/learn/guard) .
 
-## 安装
+## 📚 Documentation
 
-我们推荐使用 `composer` 进行安装，它可以与一些模块打包工具很好地配合使用。
+To check out documentation, please refer to [docs](https://docs.authing.cn/v3/reference/sdk/php/install.html).
 
-```bash
-$ composer require authing-sdk/php
-```
+This SDK is built upon [Authing Management API(v3)](https://api.authing.cn/openapi/v3/management/) and [Authing Authentication API(v3)](https://api.authing.cn/openapi/v3/authentication/), for older version, please refers to [older version docs](https://docs.authing.cn/v2/reference/sdk-for-php/).
 
-## 初始化
+## ❓ Questions
 
-初始化 `ManagementClient` 需要使用 `accessKeyId` 和 `accessKeySecret` 参数，并且应该将初始化过后的 `ManagementClient` 实例设置为一个全局变量（只初始化一次）:
+For questions and support please use the [official forum](https://forum.authing.cn/). The issue list of this repo is exclusively for bug reports and feature requests.
 
-```php
-require "vendor/autoload.php";
+## 🤝 Contribution
 
-use Authing\ManagementClient;
+- Fork it
+- Create your feature branch (git checkout -b my-new-feature)
+- Commit your changes (git commit -am 'Add some feature')
+- Push to the branch (git push -u origin my-new-feature)
+- Create new Pull Request
 
-$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
-```
+Thank you to all the people who already contributed to PHP SDK !
 
-`ManagementClient` 会自动从 Authing 服务器获取  Management API Token，并通过返回的 Token 过期时间自动对 Token 进行缓存。
+[Contributing to Authing Open Source Repos](https://github.com/Authing/.github/blob/main/CONTRIBUTING.md#English)
 
-完整的参数和释义如下：
+## 🎁 License
 
-- `accessKeyId`: Authing 用户池 ID；
-- `accessKeySecret`: Authing 用户池密钥；
-- `host`: Authing 服务器地址，默认为 `https://api.authing.cn`。如果你使用的是 Authing 公有云版本，请忽略此参数。如果你使用的是私有化部署的版本，此参数必填，格式如下: https://authing-api.my-authing-service.com （最后不带斜杠 / ）。
+[MIT](https://opensource.org/licenses/MIT)
 
-## 快速开始
-
-初始化完成 `ManagementClient`  之后，你可以获取 `ManagementClient` 的实例，然后调用此实例上的方法。例如：
-
-- 获取用户列表
-
-```php
-$users = $management->listUsers();
-```
-- 获取用户
-
-```php
-$user = $management->getUser(array(
-    "userId" => "62559df6b2xxxx259877b5f4"
-));
-```
-
-完整的接口列表，你可以在 [Authing Open API](https://api.authing.cn/openapi/) 和 [SDK 文档](https://authing-open-api.readme.io/reference/php) 中获取。
-
-## 错误处理
-
-`ManagementClient` 中的每个方法，遵循统一的返回结构：
-
-- `statusCode`: 请求是否成功状态码，当 `statusCode` 为 200 时，表示操作成功，非 200 全部为失败。
-- `apiCode`: 细分错误码，当 `apiCode` 非 200 时，可通过此错误码得到具体的错误类型。
-- `message`: 具体的错误信息。
-- `data`: 具体返回的接口数据。
-
-一般情况下，如果你只需要判断操作是否成功，只需要对比一下 `code` 是否为 200。如果非 200，可以在代码中通抛出异常或者任何你项目中使用的异常处理方式。
-
-```php
-require "vendor/autoload.php";
-
-use Authing\ManagementClient;
-
-$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET");
-
-try {
-    $user = $management->getUser(array(
-        "userId" => "62559df6b2xxxx259877b5f4"
-    ));
-    if ($user["code"] != 200) {
-        throw new Exception("Error"); // 抛出异常，由 全局异常捕捉 或 try catch 进行异常捕捉
-    }
-} catch (\Throwable $th) {
-    print_r($e);
-}
-```
-
-## 私有化部署
-
-如果你使用的是私有化部署的 Authing IDaaS 服务，需要指定此 Authing 私有化实例的 `host`，如：
-
-```php
-require "vendor/autoload.php";
-
-use Authing\ManagementClient;
-
-$management = new ManagementClient("AUTHING_USERPOOL_ID", "AUTHING_USERPOOL_SECRET", "https://authing-api.my-authing-service.com");
-```
-
-如果你不清楚如何获取，可以联系 Authing IDaaS 服务管理员。
-
-## 资源
-
-- [官网](https://authing.cn)
-- [开发者文档](https://docs.authing.cn/)
-- [Authing Open API](https://api.authing.cn/openapi/)
-- [SDK 文档](https://docs.authing.cn/v2/reference-new/sdk-v5/php/install.html)
-- [论坛社区](https://forum.authing.cn/)
-
-## 获取帮助
-
-有任何疑问，可以在 Authing 论坛提出: [#authing-forum](https://forum.authing.cn/)
+Copyright (c) 2019 Authing
