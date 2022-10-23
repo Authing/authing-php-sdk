@@ -27,6 +27,8 @@ class ManagementClient
     public $_accessTokenTime;
     //用户池ID
     public $_userPoolID;
+    // 超时时间
+    public $_timeout;
 
     /**
      * 构造函数
@@ -34,7 +36,7 @@ class ManagementClient
      * @param string accessKeyId 必须，应用 ID
      * @param string accessKeySecret 必须，应用 Secret
      * @param string host 必须，应用域名，例如 example.authing.cn
-     * @param integer timeout 可选，超时时间，单位为毫秒，默认为 10000（10 秒）
+     * @param integer timeout 可选，超时时间，单位为秒，默认为 10
      * @throws \Exception
      */
     public function __construct($option)
@@ -57,16 +59,23 @@ class ManagementClient
             $option["host"] = "https://api.authing.cn";
         }
 
+        if (
+            !isset($option["timeout"])
+        ) {
+            $option["timeout"] = 10;
+        }
+
         $this->_url = $option["host"];
         $this->_accessKey = array("id" => $option["accessKeyId"], "secret" => $option["accessKeySecret"]);
         $this->_userPoolID = $option["accessKeyId"];
+        $this->_timeout = $option["timeout"];
         $this->_getAccessToken($this->_accessKey["id"], $this->_accessKey["secret"]);
     }
 
     /**
      * 构造请求
      */
-    private function _requests($parMethod, $parGet = [], $parPost = [])
+    private function request($parMethod, $parPath, $parGet = [], $parPost = [])
     {
         //过期
         if (!empty($this->_accessTokenTime) and time() >= $this->_accessTokenTime) {
@@ -86,14 +95,7 @@ class ManagementClient
             "x-authing-sdk-version" => "php:5.0.0",
         );
         //请求
-        $varRes = Util\Tool::request($this->_url . $parMethod, $parGet, $parPost, $varHeader);
-        //错误
-        if ($varRes["error"]) {
-            throw new \Exception("请求错误：" . $varRes["error"], $varRes["code"]);
-        } else if ($varRes["body"]["statusCode"] != 200) {
-            throw new \Exception("错误：" . $varRes["body"]["message"], $varRes["body"]["statusCode"]);
-        }
-        //返回
+        $varRes = Util\Tool::request($parMethod, $this->_url . $parPath, $parGet, $parPost, $varHeader, $this->_timeout);
         return $varRes;
     }
 
@@ -105,7 +107,7 @@ class ManagementClient
             "accessKeyId" => $option["accessKeyId"],
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-management-token", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/get-management-token", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -120,6 +122,7 @@ class ManagementClient
         $this->_accessTokenTime = time() + $tempAccessToken["expires_in"];
     }
 
+
     /**
      * 获取/搜索用户列表
      * @summary 获取/搜索用户列表
@@ -133,7 +136,7 @@ class ManagementClient
      *
      * ```json
      * {
-     * "query": "北京",
+     * "keywords": "北京",
      * "options": {
      * "fuzzySearchOn": [
      * "address"
@@ -174,6 +177,20 @@ class ManagementClient
      * "field": "email",
      * "operator": "CONTAINS",
      * "value": "@example.com"
+     * }
+     * ]
+     * }
+     * ```
+     *
+     * #### 根据用户的任意扩展字段进行搜索
+     *
+     * ```json
+     * {
+     * "advancedFilter": [
+     * {
+     * "field": "some-custom-key",
+     * "operator": "EQUAL",
+     * "value": "some-value"
      * }
      * ]
      * }
@@ -284,7 +301,7 @@ class ManagementClient
      *
      *
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string query 可选，模糊搜索关键字，默认 null
+     * @param string keywords 可选，模糊搜索关键字，默认 null
      * @param Array<ListUsersAdvancedFilterItemDto> advancedFilter 可选，高级搜索，默认 null
      * @param ListUsersOptionsDto options 可选，可选项，默认 null
      * @return UserPaginatedRespDto
@@ -293,12 +310,12 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "query" => Util\Tool::getOrDefault($option, "query", null),
+            "keywords" => Util\Tool::getOrDefault($option, "keywords", null),
             "advancedFilter" => Util\Tool::getOrDefault($option, "advancedFilter", null),
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-users", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/list-users", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -333,7 +350,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-users", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-users", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -369,7 +386,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -405,341 +422,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-batch", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户的外部身份源
-     * @summary 获取用户的外部身份源
-     * @description 通过用户 ID，获取用户的外部身份源、选择指定用户 ID 类型。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @return IdentityListRespDto
-     */
-    public function getUserIdentities($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-identities", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户角色列表
-     * @summary 获取用户角色列表
-     * @description 通过用户 ID，获取用户角色列表，可以选择所属权限分组 code、选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @param string namespace 可选，所属权限分组的 code
-     * @return RolePaginatedRespDto
-     */
-    public function getUserRoles($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-roles", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户实名认证信息
-     * @summary 获取用户实名认证信息
-     * @description 通过用户 ID，获取用户实名认证信息，可以选择指定用户 ID 类型。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @return PrincipalAuthenticationInfoPaginatedRespDto
-     */
-    public function getUserPrincipalAuthenticationInfo($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-principal-authentication-info", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 删除用户实名认证信息
-     * @summary 删除用户实名认证信息
-     * @description 通过用户 ID，删除用户实名认证信息，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param ResetUserPrincipalAuthenticationInfoOptionsDto options 可选，可选参数，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function resetUserPrincipalAuthenticationInfo($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "options" => Util\Tool::getOrDefault($option, "options", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/reset-user-principal-authentication-info", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户部门列表
-     * @summary 获取用户部门列表
-     * @description 通过用户 ID，获取用户部门列表，支持分页，可以选择获取自定义数据、选择指定用户 ID 类型、增序或降序等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @param number page 可选，当前页数，从 1 开始，默认 1
-     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
-     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
-     * @param 'DepartmentCreatedAt' | 'JoinDepartmentAt' | 'DepartmentName' | 'DepartmemtCode' sortBy 可选，排序依据，如 部门创建时间、加入部门时间、部门名称、部门标志符，默认 'JoinDepartmentAt'
-     * @param 'Asc' | 'Desc' orderBy 可选，增序或降序，默认 'Desc'
-     * @return UserDepartmentPaginatedRespDto
-     */
-    public function getUserDepartments($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-            "page" => Util\Tool::getOrDefault($option, "page", null),
-            "limit" => Util\Tool::getOrDefault($option, "limit", null),
-            "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
-            "sortBy" => Util\Tool::getOrDefault($option, "sortBy", null),
-            "orderBy" => Util\Tool::getOrDefault($option, "orderBy", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-departments", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 设置用户所在部门
-     * @summary 设置用户所在部门
-     * @description 通过用户 ID，设置用户所在部门，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<SetUserDepartmentDto> departments 必须，部门信息
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param SetUserDepartmentsOptionsDto options 可选，可选参数，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function setUserDepartments($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "departments" => Util\Tool::getOrDefault($option, "departments", null),
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "options" => Util\Tool::getOrDefault($option, "options", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/set-user-departments", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户分组列表
-     * @summary 获取用户分组列表
-     * @description 通过用户 ID，获取用户分组列表，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @return GroupPaginatedRespDto
-     */
-    public function getUserGroups($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-groups", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 删除用户
-     * @summary 删除用户
-     * @description 通过用户 ID 列表，删除用户，支持批量删除，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> userIds 必须，用户 ID 列表
-     * @param DeleteUsersBatchOptionsDto options 可选，可选参数，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function deleteUsersBatch($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "userIds" => Util\Tool::getOrDefault($option, "userIds", null),
-            "options" => Util\Tool::getOrDefault($option, "options", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-users-batch", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取用户 MFA 绑定信息
-     * @summary 获取用户 MFA 绑定信息
-     * @description 通过用户 ID，获取用户 MFA 绑定信息，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
-     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
-     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
-     * - `phone`: 用户手机号
-     * - `email`: 用户邮箱
-     * - `username`: 用户名
-     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
-     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
-     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
-     * ，默认 'user_id'
-     * @return UserMfaSingleRespDto
-     */
-    public function getUserMfaInfo($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-mfa-info", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 获取已归档的用户列表
-     * @summary 获取已归档的用户列表
-     * @description 获取已归档的用户列表，支持分页，可以筛选开始时间等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param number page 可选，当前页数，从 1 开始，默认 1
-     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
-     * @param number startAt 可选，开始时间，为精确到秒的 UNIX 时间戳，默认不指定
-     * @return ListArchivedUsersSingleRespDto
-     */
-    public function listArchivedUsers($option = array())
-    {
-        // 组装请求
-        $varGet = array(
-            "page" => Util\Tool::getOrDefault($option, "page", null),
-            "limit" => Util\Tool::getOrDefault($option, "limit", null),
-            "startAt" => Util\Tool::getOrDefault($option, "startAt", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/list-archived-users", $varGet, null);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 强制下线用户
-     * @summary 强制下线用户
-     * @description 通过用户 ID、App ID 列表，强制让用户下线，可以选择指定用户 ID 类型等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> appIds 必须，APP ID 列表
-     * @param string userId 必须，用户 ID
-     * @param KickUsersOptionsDto options 可选，可选参数，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function kickUsers($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "appIds" => Util\Tool::getOrDefault($option, "appIds", null),
-            "userId" => Util\Tool::getOrDefault($option, "userId", null),
-            "options" => Util\Tool::getOrDefault($option, "options", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/kick-users", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 判断用户是否存在
-     * @summary 判断用户是否存在
-     * @description 根据条件判断用户是否存在，可以筛选用户名、邮箱、手机号、第三方外部 ID 等。
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string username 可选，用户名，用户池内唯一，默认 null
-     * @param string email 可选，邮箱，不区分大小写，默认 null
-     * @param string phone 可选，手机号，不带区号。如果是国外手机号，请在 phoneCountryCode 参数中指定区号。，默认 null
-     * @param string externalId 可选，第三方外部 ID，默认 null
-     * @return IsUserExistsRespDto
-     */
-    public function isUserExists($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "username" => Util\Tool::getOrDefault($option, "username", null),
-            "email" => Util\Tool::getOrDefault($option, "email", null),
-            "phone" => Util\Tool::getOrDefault($option, "phone", null),
-            "externalId" => Util\Tool::getOrDefault($option, "externalId", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/is-user-exists", null, $varPost);
+        $varRes = $this->request("GET", "/api/v3/get-user-batch", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -751,7 +434,6 @@ class ManagementClient
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param 'Suspended' | 'Resigned' | 'Activated' | 'Archived' | 'Deactivated' status 可选，账户当前状态，默认 null
      * @param string email 可选，邮箱，不区分大小写，默认 null
-     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，密码加密类型，支持 sm2 和 rsa，默认 null
      * @param string phone 可选，手机号，不带区号。如果是国外手机号，请在 phoneCountryCode 参数中指定区号。，默认 null
      * @param string phoneCountryCode 可选，手机区号，中国大陆手机号可不填。Authing 短信服务暂不内置支持国际手机号，你需要在 Authing 控制台配置对应的国际短信服务。完整的手机区号列表可参阅 https://en.wikipedia.org/wiki/List_of_country_calling_codes。，默认 null
      * @param string username 可选，用户名，用户池内唯一，默认 null
@@ -782,12 +464,12 @@ class ManagementClient
      * @param string locale 可选，Locale，默认 null
      * @param string formatted 可选，标准的完整地址，默认 null
      * @param string region 可选，用户所在区域，默认 null
-     * @param Array<string> departmentIds 可选，用户所属部门 ID 列表，默认 null
-     * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
-     * @param string password 可选，密码。可选加密方式进行加密，通过 passwordEncryptType 参数进行加密方法选择，默认为未加密，默认 null
+     * @param string password 可选，用户密码。我们使用 HTTPS 协议对密码进行安全传输，可以在一定程度上保证安全性。如果你还需要更高级别的安全性，我们还支持 RSA256 和国密 SM2 两种方式对密码进行加密。详情见 `passwordEncryptType` 参数。，默认 null
      * @param string salt 可选，加密用户密码的盐，默认 null
      * @param Array<string> tenantIds 可选，租户 ID，默认 null
      * @param CreateUserOtpDto otp 可选，用户的 OTP 验证器，默认 null
+     * @param Array<string> departmentIds 可选，用户所属部门 ID 列表，默认 null
+     * @param any customData 可选，自定义数据，传入的对象中的 key 必须先在用户池定义相关自定义字段，默认 null
      * @param Array<CreateIdentityDto> identities 可选，第三方身份源（建议调用绑定接口进行绑定），默认 null
      * @param CreateUserOptionsDto options 可选，可选参数，默认 null
      * @return UserSingleRespDto
@@ -798,7 +480,6 @@ class ManagementClient
         $varPost = array(
             "status" => Util\Tool::getOrDefault($option, "status", null),
             "email" => Util\Tool::getOrDefault($option, "email", null),
-            "passwordEncryptType" => Util\Tool::getOrDefault($option, "passwordEncryptType", null),
             "phone" => Util\Tool::getOrDefault($option, "phone", null),
             "phoneCountryCode" => Util\Tool::getOrDefault($option, "phoneCountryCode", null),
             "username" => Util\Tool::getOrDefault($option, "username", null),
@@ -829,17 +510,17 @@ class ManagementClient
             "locale" => Util\Tool::getOrDefault($option, "locale", null),
             "formatted" => Util\Tool::getOrDefault($option, "formatted", null),
             "region" => Util\Tool::getOrDefault($option, "region", null),
-            "departmentIds" => Util\Tool::getOrDefault($option, "departmentIds", null),
-            "customData" => Util\Tool::getOrDefault($option, "customData", null),
             "password" => Util\Tool::getOrDefault($option, "password", null),
             "salt" => Util\Tool::getOrDefault($option, "salt", null),
             "tenantIds" => Util\Tool::getOrDefault($option, "tenantIds", null),
             "otp" => Util\Tool::getOrDefault($option, "otp", null),
+            "departmentIds" => Util\Tool::getOrDefault($option, "departmentIds", null),
+            "customData" => Util\Tool::getOrDefault($option, "customData", null),
             "identities" => Util\Tool::getOrDefault($option, "identities", null),
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-user", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-user", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -847,7 +528,7 @@ class ManagementClient
     /**
      * 批量创建用户
      * @summary 批量创建用户
-     * @description 批量创建用户，邮箱、手机号、用户名必须包含其中一个，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份批量创建用户因此不需要进行手机号验证码检验等安全检测。
+     * @description 批量创建用户，邮箱、手机号、用户名必须包含其中一个，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份创建用户因此不需要进行手机号验证码检验等安全检测。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<CreateUserInfoDto> list 必须，用户列表
      * @param CreateUserOptionsDto options 可选，可选参数，默认 null
@@ -861,7 +542,7 @@ class ManagementClient
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-users-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-users-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -889,10 +570,9 @@ class ManagementClient
      * @param string postalCode 可选，邮政编码号，默认 null
      * @param 'M' | 'F' | 'U' gender 可选，性别，默认 null
      * @param string username 可选，用户名，用户池内唯一，默认 null
-     * @param 'sm2' | 'rsa' | 'none' passwordEncryptType 可选，密码加密类型，支持 sm2 和 rsa，默认 null
      * @param string email 可选，邮箱，不区分大小写，默认 null
      * @param string phone 可选，手机号，不带区号。如果是国外手机号，请在 phoneCountryCode 参数中指定区号。，默认 null
-     * @param string password 可选，密码。可选加密方式进行加密，通过 passwordEncryptType 参数进行加密方法选择，默认为未加密，默认 null
+     * @param string password 可选，用户密码。我们使用 HTTPS 协议对密码进行安全传输，可以在一定程度上保证安全性。如果你还需要更高级别的安全性，我们还支持 RSA256 和国密 SM2 两种方式对密码进行加密。详情见 `passwordEncryptType` 参数。，默认 null
      * @param string company 可选，所在公司，默认 null
      * @param string browser 可选，最近一次登录时使用的浏览器 UA，默认 null
      * @param string device 可选，最近一次登录时使用的设备，默认 null
@@ -932,7 +612,6 @@ class ManagementClient
             "postalCode" => Util\Tool::getOrDefault($option, "postalCode", null),
             "gender" => Util\Tool::getOrDefault($option, "gender", null),
             "username" => Util\Tool::getOrDefault($option, "username", null),
-            "passwordEncryptType" => Util\Tool::getOrDefault($option, "passwordEncryptType", null),
             "email" => Util\Tool::getOrDefault($option, "email", null),
             "phone" => Util\Tool::getOrDefault($option, "phone", null),
             "password" => Util\Tool::getOrDefault($option, "password", null),
@@ -953,15 +632,15 @@ class ManagementClient
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-user", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-user", null, $varPost);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 修改用户资料
-     * @summary 修改用户资料
-     * @description 通过用户 ID，修改用户资料，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份修改用户资料因此不需要进行手机号验证码检验等安全检测。
+     * 批量修改用户资料
+     * @summary 批量修改用户资料
+     * @description 批量修改用户资料，邮箱、手机号、用户名、externalId 用户池内唯一，此接口将以管理员身份修改用户资料因此不需要进行手机号验证码检验等安全检测。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<UpdateUserInfoDto> list 必须，用户列表
      * @param UpdateUserBatchOptionsDto options 可选，可选参数，默认 null
@@ -975,7 +654,341 @@ class ManagementClient
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-user-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-user-batch", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 删除用户
+     * @summary 删除用户
+     * @description 通过用户 ID 列表，删除用户，支持批量删除，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<string> userIds 必须，用户 ID 列表
+     * @param DeleteUsersBatchOptionsDto options 可选，可选参数，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function deleteUsersBatch($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "userIds" => Util\Tool::getOrDefault($option, "userIds", null),
+            "options" => Util\Tool::getOrDefault($option, "options", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/delete-users-batch", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户的外部身份源
+     * @summary 获取用户的外部身份源
+     * @description 通过用户 ID，获取用户的外部身份源、选择指定用户 ID 类型。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @return IdentityListRespDto
+     */
+    public function getUserIdentities($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-identities", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户角色列表
+     * @summary 获取用户角色列表
+     * @description 通过用户 ID，获取用户角色列表，可以选择所属权限分组 code、选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @param string namespace 可选，所属权限分组的 code
+     * @return RolePaginatedRespDto
+     */
+    public function getUserRoles($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-roles", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户实名认证信息
+     * @summary 获取用户实名认证信息
+     * @description 通过用户 ID，获取用户实名认证信息，可以选择指定用户 ID 类型。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @return PrincipalAuthenticationInfoPaginatedRespDto
+     */
+    public function getUserPrincipalAuthenticationInfo($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-principal-authentication-info", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 删除用户实名认证信息
+     * @summary 删除用户实名认证信息
+     * @description 通过用户 ID，删除用户实名认证信息，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param ResetUserPrincipalAuthenticationInfoOptionsDto options 可选，可选参数，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function resetUserPrincipalAuthenticationInfo($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "options" => Util\Tool::getOrDefault($option, "options", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/reset-user-principal-authentication-info", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户部门列表
+     * @summary 获取用户部门列表
+     * @description 通过用户 ID，获取用户部门列表，支持分页，可以选择获取自定义数据、选择指定用户 ID 类型、增序或降序等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param boolean withCustomData 可选，是否获取自定义数据，默认 false
+     * @param 'DepartmentCreatedAt' | 'JoinDepartmentAt' | 'DepartmentName' | 'DepartmemtCode' sortBy 可选，排序依据，如 部门创建时间、加入部门时间、部门名称、部门标志符，默认 'JoinDepartmentAt'
+     * @param 'Asc' | 'Desc' orderBy 可选，增序或降序，默认 'Desc'
+     * @return UserDepartmentPaginatedRespDto
+     */
+    public function getUserDepartments($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+            "page" => Util\Tool::getOrDefault($option, "page", null),
+            "limit" => Util\Tool::getOrDefault($option, "limit", null),
+            "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
+            "sortBy" => Util\Tool::getOrDefault($option, "sortBy", null),
+            "orderBy" => Util\Tool::getOrDefault($option, "orderBy", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-departments", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 设置用户所在部门
+     * @summary 设置用户所在部门
+     * @description 通过用户 ID，设置用户所在部门，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<SetUserDepartmentDto> departments 必须，部门信息
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param SetUserDepartmentsOptionsDto options 可选，可选参数，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function setUserDepartments($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "departments" => Util\Tool::getOrDefault($option, "departments", null),
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "options" => Util\Tool::getOrDefault($option, "options", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/set-user-departments", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户分组列表
+     * @summary 获取用户分组列表
+     * @description 通过用户 ID，获取用户分组列表，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @return GroupPaginatedRespDto
+     */
+    public function getUserGroups($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-groups", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取用户 MFA 绑定信息
+     * @summary 获取用户 MFA 绑定信息
+     * @description 通过用户 ID，获取用户 MFA 绑定信息，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string userId 必须，用户唯一标志，可以是用户 ID、用户名、邮箱、手机号、外部 ID、在外部身份源的 ID。
+     * @param 'user_id' | 'external_id' | 'phone' | 'email' | 'username' | 'identity' userIdType 可选，用户 ID 类型，默认值为 `user_id`，可选值为：
+     * - `user_id`: Authing 用户 ID，如 `6319a1504f3xxxxf214dd5b7`
+     * - `phone`: 用户手机号
+     * - `email`: 用户邮箱
+     * - `username`: 用户名
+     * - `external_id`: 用户在外部系统的 ID，对应 Authing 用户信息的 `externalId` 字段
+     * - `identity`: 用户的外部身份源信息，格式为 `<extIdpId>:<userIdInIdp>`，其中 `<extIdpId>` 为 Authing 身份源的 ID，`<userIdInIdp>` 为用户在外部身份源的 ID。
+     * 示例值：`62f20932716fbcc10d966ee5:ou_8bae746eac07cd2564654140d2a9ac61`。
+     * ，默认 'user_id'
+     * @return UserMfaSingleRespDto
+     */
+    public function getUserMfaInfo($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-user-mfa-info", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取已归档的用户列表
+     * @summary 获取已归档的用户列表
+     * @description 获取已归档的用户列表，支持分页，可以筛选开始时间等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @param number startAt 可选，开始时间，为精确到秒的 UNIX 时间戳，默认不指定
+     * @return ListArchivedUsersSingleRespDto
+     */
+    public function listArchivedUsers($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "page" => Util\Tool::getOrDefault($option, "page", null),
+            "limit" => Util\Tool::getOrDefault($option, "limit", null),
+            "startAt" => Util\Tool::getOrDefault($option, "startAt", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/list-archived-users", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 强制下线用户
+     * @summary 强制下线用户
+     * @description 通过用户 ID、App ID 列表，强制让用户下线，可以选择指定用户 ID 类型等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<string> appIds 必须，APP ID 列表
+     * @param string userId 必须，用户 ID
+     * @param KickUsersOptionsDto options 可选，可选参数，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function kickUsers($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "appIds" => Util\Tool::getOrDefault($option, "appIds", null),
+            "userId" => Util\Tool::getOrDefault($option, "userId", null),
+            "options" => Util\Tool::getOrDefault($option, "options", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/kick-users", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 判断用户是否存在
+     * @summary 判断用户是否存在
+     * @description 根据条件判断用户是否存在，可以筛选用户名、邮箱、手机号、第三方外部 ID 等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string username 可选，用户名，用户池内唯一，默认 null
+     * @param string email 可选，邮箱，不区分大小写，默认 null
+     * @param string phone 可选，手机号，不带区号。如果是国外手机号，请在 phoneCountryCode 参数中指定区号。，默认 null
+     * @param string externalId 可选，第三方外部 ID，默认 null
+     * @return IsUserExistsRespDto
+     */
+    public function isUserExists($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "username" => Util\Tool::getOrDefault($option, "username", null),
+            "email" => Util\Tool::getOrDefault($option, "email", null),
+            "phone" => Util\Tool::getOrDefault($option, "phone", null),
+            "externalId" => Util\Tool::getOrDefault($option, "externalId", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/is-user-exists", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1005,7 +1018,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-accessible-apps", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-accessible-apps", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1035,7 +1048,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-authorized-apps", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-authorized-apps", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1059,7 +1072,7 @@ class ManagementClient
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/has-any-role", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/has-any-role", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1101,7 +1114,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-login-history", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-login-history", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1131,7 +1144,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-loggedin-apps", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-loggedin-apps", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1161,7 +1174,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-logged-in-identities", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-logged-in-identities", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1191,7 +1204,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/resign-user", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/resign-user", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1221,7 +1234,7 @@ class ManagementClient
             "userIdType" => Util\Tool::getOrDefault($option, "userIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/resign-user-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/resign-user-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1255,7 +1268,7 @@ class ManagementClient
             "resourceType" => Util\Tool::getOrDefault($option, "resourceType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-authorized-resources", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-authorized-resources", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1277,7 +1290,7 @@ class ManagementClient
             "userId" => Util\Tool::getOrDefault($option, "userId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/check-session-status", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/check-session-status", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1297,7 +1310,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/import-otp", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/import-otp", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1319,7 +1332,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-organization", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-organization", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1341,15 +1354,15 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-organization-batch", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-organization-batch", $varGet, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 获取顶层组织机构列表
-     * @summary 获取顶层组织机构列表
-     * @description 获取顶层组织机构列表，支持分页。
+     * 获取组织机构列表
+     * @summary 获取组织机构列表
+     * @description 获取组织机构列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
@@ -1367,14 +1380,14 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-organizations", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-organizations", $varGet, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 创建顶层组织机构
-     * @summary 创建顶层组织机构
+     * 创建组织机构
+     * @summary 创建组织机构
      * @description 创建组织机构，会创建一个只有一个节点的组织机构，可以选择组织描述信息、根节点自定义 ID、多语言等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationName 必须，组织名称
@@ -1395,15 +1408,15 @@ class ManagementClient
             "i18n" => Util\Tool::getOrDefault($option, "i18n", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-organization", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-organization", null, $varPost);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 修改顶层组织机构
-     * @summary 修改顶层组织机构
-     * @description 通过组织 code，修改顶层组织机构，可以选择部门描述、新组织 code、组织名称等。
+     * 修改组织机构
+     * @summary 修改组织机构
+     * @description 通过组织 code，修改组织机构，可以选择部门描述、新组织 code、组织名称等。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string organizationCode 必须，组织 code
      * @param string description 可选，部门描述，默认 null
@@ -1427,7 +1440,7 @@ class ManagementClient
             "organizationName" => Util\Tool::getOrDefault($option, "organizationName", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-organization", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-organization", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1447,15 +1460,15 @@ class ManagementClient
             "organizationCode" => Util\Tool::getOrDefault($option, "organizationCode", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-organization", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-organization", null, $varPost);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 搜索顶层组织机构列表
-     * @summary 搜索顶层组织机构列表
-     * @description 通过搜索关键词，搜索顶层组织机构列表，支持分页。
+     * 搜索组织机构列表
+     * @summary 搜索组织机构列表
+     * @description 通过搜索关键词，搜索组织机构列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string keywords 必须，搜索关键词，如组织机构名称
      * @param number page 可选，当前页数，从 1 开始，默认 1
@@ -1473,7 +1486,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/search-organizations", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/search-organizations", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1501,7 +1514,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-department", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-department", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1539,7 +1552,7 @@ class ManagementClient
             "departmentIdType" => Util\Tool::getOrDefault($option, "departmentIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-department", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-department", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1577,7 +1590,7 @@ class ManagementClient
             "customData" => Util\Tool::getOrDefault($option, "customData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-department", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-department", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1601,7 +1614,7 @@ class ManagementClient
             "departmentIdType" => Util\Tool::getOrDefault($option, "departmentIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-department", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-department", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1625,7 +1638,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/search-departments", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/search-departments", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1655,7 +1668,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-children-departments", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-children-departments", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1695,7 +1708,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-department-members", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-department-members", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1719,7 +1732,7 @@ class ManagementClient
             "departmentIdType" => Util\Tool::getOrDefault($option, "departmentIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-department-member-ids", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-department-member-ids", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1757,7 +1770,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/search-department-members", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/search-department-members", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1783,7 +1796,7 @@ class ManagementClient
             "departmentIdType" => Util\Tool::getOrDefault($option, "departmentIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/add-department-members", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/add-department-members", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1809,7 +1822,7 @@ class ManagementClient
             "departmentIdType" => Util\Tool::getOrDefault($option, "departmentIdType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/remove-department-members", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/remove-department-members", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1835,7 +1848,7 @@ class ManagementClient
             "withCustomData" => Util\Tool::getOrDefault($option, "withCustomData", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-parent-department", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-parent-department", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1863,7 +1876,7 @@ class ManagementClient
             "includeChildrenDepartments" => Util\Tool::getOrDefault($option, "includeChildrenDepartments", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/is-user-in-department", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/is-user-in-department", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1883,7 +1896,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-group", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-group", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1907,7 +1920,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-groups", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-groups", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -1931,7 +1944,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-group", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-group", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1951,7 +1964,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-groups-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-groups-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1962,8 +1975,8 @@ class ManagementClient
      * @description 通过分组 code，修改分组，可以修改此分组的 code。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string description 必须，分组描述
-     * @param string name 必须，分组名称
      * @param string code 必须，分组 code
+     * @param string name 可选，分组名称，默认 null
      * @param string newCode 可选，分组新的 code，默认 null
      * @return GroupSingleRespDto
      */
@@ -1972,12 +1985,12 @@ class ManagementClient
         // 组装请求
         $varPost = array(
             "description" => Util\Tool::getOrDefault($option, "description", null),
-            "name" => Util\Tool::getOrDefault($option, "name", null),
             "code" => Util\Tool::getOrDefault($option, "code", null),
+            "name" => Util\Tool::getOrDefault($option, "name", null),
             "newCode" => Util\Tool::getOrDefault($option, "newCode", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-group", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-group", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -1997,7 +2010,7 @@ class ManagementClient
             "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-groups-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-groups-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2019,7 +2032,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/add-group-members", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/add-group-members", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2041,7 +2054,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/remove-group-members", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/remove-group-members", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2071,7 +2084,7 @@ class ManagementClient
             "withDepartmentIds" => Util\Tool::getOrDefault($option, "withDepartmentIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-group-members", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-group-members", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2095,7 +2108,7 @@ class ManagementClient
             "resourceType" => Util\Tool::getOrDefault($option, "resourceType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-group-authorized-resources", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-group-authorized-resources", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2117,7 +2130,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-role", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-role", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2141,7 +2154,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/assign-role", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/assign-role", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2165,7 +2178,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/revoke-role", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/revoke-role", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2189,7 +2202,7 @@ class ManagementClient
             "resourceType" => Util\Tool::getOrDefault($option, "resourceType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-role-authorized-resources", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-role-authorized-resources", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2221,7 +2234,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-role-members", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-role-members", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2247,7 +2260,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-role-departments", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-role-departments", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2271,7 +2284,7 @@ class ManagementClient
             "description" => Util\Tool::getOrDefault($option, "description", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-role", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-role", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2281,7 +2294,7 @@ class ManagementClient
      * @summary 获取角色列表
      * @description 获取角色列表，支持分页。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string keywords 可选，搜索角色 code
+     * @param string keywords 可选，用于根据角色的 code 进行模糊搜索，可选。
      * @param string namespace 可选，所属权限分组的 code，默认 'default'
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
@@ -2297,7 +2310,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-roles", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-roles", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2319,7 +2332,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-roles-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-roles-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2339,7 +2352,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-roles-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-roles-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2365,7 +2378,7 @@ class ManagementClient
             "description" => Util\Tool::getOrDefault($option, "description", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-role", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-role", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2387,7 +2400,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-ext-idp", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-ext-idp", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2413,7 +2426,7 @@ class ManagementClient
             "type" => Util\Tool::getOrDefault($option, "type", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-ext-idp", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-ext-idp", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2437,7 +2450,7 @@ class ManagementClient
             "tenantId" => Util\Tool::getOrDefault($option, "tenantId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-ext-idp", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-ext-idp", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2459,7 +2472,7 @@ class ManagementClient
             "name" => Util\Tool::getOrDefault($option, "name", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-ext-idp", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-ext-idp", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2479,7 +2492,7 @@ class ManagementClient
             "id" => Util\Tool::getOrDefault($option, "id", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-ext-idp", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-ext-idp", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2511,7 +2524,7 @@ class ManagementClient
             "logo" => Util\Tool::getOrDefault($option, "logo", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-ext-idp-conn", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-ext-idp-conn", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2539,7 +2552,7 @@ class ManagementClient
             "loginOnly" => Util\Tool::getOrDefault($option, "loginOnly", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-ext-idp-conn", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-ext-idp-conn", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2559,7 +2572,7 @@ class ManagementClient
             "id" => Util\Tool::getOrDefault($option, "id", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-ext-idp-conn", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-ext-idp-conn", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2569,25 +2582,25 @@ class ManagementClient
      * @summary 身份源连接开关
      * @description 身份源连接开关，可以打开或关闭身份源连接。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string appIds 必须，应用 ID
      * @param string appId 必须，应用 ID
      * @param boolean enabled 必须，是否开启身份源连接
      * @param string id 必须，身份源连接 ID
      * @param string tenantId 可选，租户 ID，默认 null
+     * @param Array<string> appIds 可选，应用 ID 列表，默认 null
      * @return IsSuccessRespDto
      */
-    public function changeConnState($option = array())
+    public function changeExtIdpConnState($option = array())
     {
         // 组装请求
         $varPost = array(
-            "appIds" => Util\Tool::getOrDefault($option, "appIds", null),
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
             "enabled" => Util\Tool::getOrDefault($option, "enabled", null),
             "id" => Util\Tool::getOrDefault($option, "id", null),
             "tenantId" => Util\Tool::getOrDefault($option, "tenantId", null),
+            "appIds" => Util\Tool::getOrDefault($option, "appIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/enable-ext-idp-conn", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/change-ext-idp-conn-state", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2602,7 +2615,7 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID，默认 null
      * @return IsSuccessRespDto
      */
-    public function changeAssociationState($option = array())
+    public function changeExtIdpConnAssociationState($option = array())
     {
         // 组装请求
         $varPost = array(
@@ -2611,7 +2624,7 @@ class ManagementClient
             "tenantId" => Util\Tool::getOrDefault($option, "tenantId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/association-ext-idp", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/change-ext-idp-conn-association-state", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2624,8 +2637,8 @@ class ManagementClient
      * @param string tenantId 可选，租户 ID
      * @param string appId 可选，应用 ID
      * @param 'social' | 'enterprise' type 可选，身份源类型
-     * @param string page 可选，页码
-     * @param string limit 可选，每页获取的数据量
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
      * @return ExtIdpListPaginatedRespDto
      */
     public function listTenantExtIdp($option = array())
@@ -2639,7 +2652,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-tenant-ext-idp", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-tenant-ext-idp", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2665,7 +2678,7 @@ class ManagementClient
             "type" => Util\Tool::getOrDefault($option, "type", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/ext-idp-conn-apps", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/ext-idp-conn-apps", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2680,7 +2693,7 @@ class ManagementClient
     public function getUserBaseFields($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-base-fields", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-user-base-fields", null, null);
         // 返回
         return $varRes["body"];
     }
@@ -2700,7 +2713,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/set-user-base-fields", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/set-user-base-fields", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2710,7 +2723,12 @@ class ManagementClient
      * @summary 获取自定义字段列表
      * @description 通过主体类型，获取用户、部门或角色的自定义字段列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型：
+     * - `USER`: 用户
+     * - `ROLE`: 角色
+     * - `GROUP`: 分组
+     * - `DEPARTMENT`: 部门
+     * ;该接口暂不支持分组(GROUP)
      * @return CustomFieldListRespDto
      */
     public function getCustomFields($option = array())
@@ -2720,7 +2738,7 @@ class ManagementClient
             "targetType" => Util\Tool::getOrDefault($option, "targetType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-custom-fields", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-custom-fields", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2740,7 +2758,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/set-custom-fields", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/set-custom-fields", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2751,8 +2769,18 @@ class ManagementClient
      * @description 给用户、角色或部门设置自定义字段的值，如果存在则更新，不存在则创建。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<SetCustomDataDto> list 必须，自定义数据列表
-     * @param string targetIdentifier 必须，主体类型的唯一标志符。如果是用户则为用户 ID，角色为角色的 code，部门为部门的 ID
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
+     * @param string targetIdentifier 必须，目标对象的唯一标志符：
+     * - 如果是用户，为用户的 ID，如 `6343b98b7cfxxx9366e9b7c`
+     * - 如果是角色，为角色的 code，如 `admin`
+     * - 如果是分组，为分组的 code，如 `developer`
+     * - 如果是部门，为部门的 ID，如 `6343bafc019xxxx889206c4c`
+     *
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型：
+     * - `USER`: 用户
+     * - `ROLE`: 角色
+     * - `GROUP`: 分组
+     * - `DEPARTMENT`: 部门
+     *
      * @param string namespace 可选，所属权限分组的 code，当 target_type 为角色的时候需要填写，否则可以忽略，默认 null
      * @return IsSuccessRespDto
      */
@@ -2766,7 +2794,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/set-custom-data", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/set-custom-data", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2776,8 +2804,18 @@ class ManagementClient
      * @summary 获取用户、分组、角色、组织机构的自定义字段值
      * @description 通过筛选条件，获取用户、分组、角色、组织机构的自定义字段值。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，主体类型，目前支持用户、角色、分组、部门
-     * @param string targetIdentifier 必须，目标对象唯一标志符
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型：
+     * - `USER`: 用户
+     * - `ROLE`: 角色
+     * - `GROUP`: 分组
+     * - `DEPARTMENT`: 部门
+     *
+     * @param string targetIdentifier 必须，目标对象的唯一标志符：
+     * - 如果是用户，为用户的 ID，如 `6343b98b7cfxxx9366e9b7c`
+     * - 如果是角色，为角色的 code，如 `admin`
+     * - 如果是分组，为分组的 code，如 `developer`
+     * - 如果是部门，为部门的 ID，如 `6343bafc019xxxx889206c4c`
+     *
      * @param string namespace 可选，所属权限分组的 code，当 targetType 为角色的时候需要填写，否则可以忽略
      * @return GetCustomDataRespDto
      */
@@ -2790,7 +2828,229 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-custom-data", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-custom-data", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 创建资源
+     * @summary 创建资源
+     * @description 创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 必须，资源类型，如数据、API、按钮、菜单
+     * @param string code 必须，资源唯一标志符
+     * @param string description 可选，资源描述，默认 null
+     * @param Array<ResourceAction> actions 可选，资源定义的操作类型，默认 null
+     * @param string apiIdentifier 可选，API 资源的 URL 标识，默认 null
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @return ResourceRespDto
+     */
+    public function createResource($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "type" => Util\Tool::getOrDefault($option, "type", null),
+            "code" => Util\Tool::getOrDefault($option, "code", null),
+            "description" => Util\Tool::getOrDefault($option, "description", null),
+            "actions" => Util\Tool::getOrDefault($option, "actions", null),
+            "apiIdentifier" => Util\Tool::getOrDefault($option, "apiIdentifier", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/create-resource", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 批量创建资源
+     * @summary 批量创建资源
+     * @description 批量创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<CreateResourceBatchItemDto> list 必须，资源列表
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function createResourcesBatch($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "list" => Util\Tool::getOrDefault($option, "list", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/create-resources-batch", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 获取资源详情
+     * @summary 获取资源详情
+     * @description 根据筛选条件，获取资源详情。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string code 必须，资源唯一标志符
+     * @param string namespace 可选，所属权限分组的 code
+     * @return ResourceRespDto
+     */
+    public function getResource($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "code" => Util\Tool::getOrDefault($option, "code", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-resource", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 批量获取资源详情
+     * @summary 批量获取资源详情
+     * @description 根据筛选条件，批量获取资源详情。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<string> codeList 必须，资源 code 列表，批量可以使用逗号分隔
+     * @param string namespace 可选，所属权限分组的 code
+     * @return ResourceListRespDto
+     */
+    public function getResourcesBatch($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+            "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/get-resources-batch", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 分页获取资源列表
+     * @summary 分页获取资源列表
+     * @description 根据筛选条件，分页获取资源详情列表。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string namespace 可选，所属权限分组的 code
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 可选，资源类型
+     * @param number page 可选，当前页数，从 1 开始，默认 1
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
+     * @return ResourcePaginatedRespDto
+     */
+    public function listResources($option = array())
+    {
+        // 组装请求
+        $varGet = array(
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+            "type" => Util\Tool::getOrDefault($option, "type", null),
+            "page" => Util\Tool::getOrDefault($option, "page", null),
+            "limit" => Util\Tool::getOrDefault($option, "limit", null),
+        );
+        // 发送请求
+        $varRes = $this->request("GET", "/api/v3/list-resources", $varGet, null);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 修改资源
+     * @summary 修改资源
+     * @description 修改资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string code 必须，资源唯一标志符
+     * @param string description 可选，资源描述，默认 null
+     * @param Array<ResourceAction> actions 可选，资源定义的操作类型，默认 null
+     * @param string apiIdentifier 可选，API 资源的 URL 标识，默认 null
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 可选，资源类型，如数据、API、按钮、菜单，默认 null
+     * @return ResourceRespDto
+     */
+    public function updateResource($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "code" => Util\Tool::getOrDefault($option, "code", null),
+            "description" => Util\Tool::getOrDefault($option, "description", null),
+            "actions" => Util\Tool::getOrDefault($option, "actions", null),
+            "apiIdentifier" => Util\Tool::getOrDefault($option, "apiIdentifier", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+            "type" => Util\Tool::getOrDefault($option, "type", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/update-resource", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 删除资源
+     * @summary 删除资源
+     * @description 通过资源唯一标志符以及所属权限分组，删除资源。
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string code 必须，资源唯一标志符
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function deleteResource($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "code" => Util\Tool::getOrDefault($option, "code", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/delete-resource", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 批量删除资源
+     * @summary 批量删除资源
+     * @description 通过资源唯一标志符以及所属权限分组，批量删除资源
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param Array<string> codeList 必须，资源 code 列表
+     * @param string namespace 可选，所属权限分组的 code，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function deleteResourcesBatch($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/delete-resources-batch", null, $varPost);
+        // 返回
+        return $varRes["body"];
+    }
+
+    /**
+     * 关联/取消关联应用资源到租户
+     * @summary 关联/取消关联应用资源到租户
+     * @description 通过资源唯一标识以及权限分组，关联或取消关联资源到租户
+     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
+     * @param string appId 必须，应用 ID
+     * @param boolean association 必须，是否关联应用资源
+     * @param string code 必须，资源 Code
+     * @param string tenantId 可选，租户 ID，默认 null
+     * @return IsSuccessRespDto
+     */
+    public function associateTenantResource($option = array())
+    {
+        // 组装请求
+        $varPost = array(
+            "appId" => Util\Tool::getOrDefault($option, "appId", null),
+            "association" => Util\Tool::getOrDefault($option, "association", null),
+            "code" => Util\Tool::getOrDefault($option, "code", null),
+            "tenantId" => Util\Tool::getOrDefault($option, "tenantId", null),
+        );
+        // 发送请求
+        $varRes = $this->request("POST", "/api/v3/associate-tenant-resource", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2814,7 +3074,7 @@ class ManagementClient
             "description" => Util\Tool::getOrDefault($option, "description", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-namespace", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-namespace", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2834,7 +3094,7 @@ class ManagementClient
             "list" => Util\Tool::getOrDefault($option, "list", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-namespaces-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-namespaces-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2854,7 +3114,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-namespace", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-namespace", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2874,7 +3134,7 @@ class ManagementClient
             "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-namespaces-batch", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-namespaces-batch", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -2900,7 +3160,7 @@ class ManagementClient
             "newCode" => Util\Tool::getOrDefault($option, "newCode", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-namespace", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-namespace", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2920,7 +3180,7 @@ class ManagementClient
             "code" => Util\Tool::getOrDefault($option, "code", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-namespace", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-namespace", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2940,7 +3200,7 @@ class ManagementClient
             "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-namespaces-batch", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-namespaces-batch", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2962,7 +3222,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/authorize-resources", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/authorize-resources", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -2972,8 +3232,18 @@ class ManagementClient
      * @summary 获取某个主体被授权的资源列表
      * @description 根据筛选条件，获取某个主体被授权的资源列表。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型
-     * @param string targetIdentifier 必须，目标对象唯一标志符
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 必须，目标对象类型：
+     * - `USER`: 用户
+     * - `ROLE`: 角色
+     * - `GROUP`: 分组
+     * - `DEPARTMENT`: 部门
+     *
+     * @param string targetIdentifier 必须，目标对象的唯一标志符：
+     * - 如果是用户，为用户的 ID，如 `6343b98b7cfxxx9366e9b7c`
+     * - 如果是角色，为角色的 code，如 `admin`
+     * - 如果是分组，为分组的 code，如 `developer`
+     * - 如果是部门，为部门的 ID，如 `6343bafc019xxxx889206c4c`
+     *
      * @param string namespace 可选，所属权限分组的 code
      * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' resourceType 可选，限定资源类型，如数据、API、按钮、菜单
      * @param Array<string> resourceList 可选，限定查询的资源列表，如果指定，只会返回所指定的资源列表。
@@ -2984,15 +3254,15 @@ class ManagementClient
     {
         // 组装请求
         $varGet = array(
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
             "targetType" => Util\Tool::getOrDefault($option, "targetType", null),
             "targetIdentifier" => Util\Tool::getOrDefault($option, "targetIdentifier", null),
+            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
             "resourceType" => Util\Tool::getOrDefault($option, "resourceType", null),
             "resourceList" => Util\Tool::getOrDefault($option, "resourceList", null),
             "withDenied" => Util\Tool::getOrDefault($option, "withDenied", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-authorized-resources", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-authorized-resources", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3018,7 +3288,7 @@ class ManagementClient
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/is-action-allowed", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/is-action-allowed", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3030,23 +3300,28 @@ class ManagementClient
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string resource 必须，资源
      * @param string namespace 可选，权限分组，默认 null
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' resourceType 可选，资源类型，默认 null
-     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 可选，主体类型，默认 null
-     * @param GetAuthorizedResourceActionDto actions 可选，Action 列表，默认 null
-     * @return GetAuthorizedTargetRespDto
+     * @param 'USER' | 'ROLE' | 'GROUP' | 'DEPARTMENT' targetType 可选，目标对象类型：
+     * - `USER`: 用户
+     * - `ROLE`: 角色
+     * - `GROUP`: 分组
+     * - `DEPARTMENT`: 部门
+     * ，默认 null
+     * @param number page 可选，当前页数，从 1 开始，默认 null
+     * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 null
+     * @return GetResourceAuthorizedTargetRespDto
      */
-    public function getAuthorizedTargets($option = array())
+    public function getResourceAuthorizedTargets($option = array())
     {
         // 组装请求
         $varPost = array(
             "resource" => Util\Tool::getOrDefault($option, "resource", null),
             "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-            "resourceType" => Util\Tool::getOrDefault($option, "resourceType", null),
             "targetType" => Util\Tool::getOrDefault($option, "targetType", null),
-            "actions" => Util\Tool::getOrDefault($option, "actions", null),
+            "page" => Util\Tool::getOrDefault($option, "page", null),
+            "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-authorized-targets", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/get-resource-authorized-targets", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3066,7 +3341,7 @@ class ManagementClient
             "syncTaskId" => Util\Tool::getOrDefault($option, "syncTaskId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-sync-task", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-sync-task", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3088,7 +3363,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-sync-tasks", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-sync-tasks", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3108,6 +3383,7 @@ class ManagementClient
      * - `upstream`: 作为上游，将数据同步到 Authing
      * - `downstream`: 作为下游，将 Authing 数据同步到此系统
      *
+     * @param SyncTaskClientConfig clientConfig 必须，同步任务配置信息
      * @param 'lark' | 'lark-international' | 'wechatwork' | 'dingtalk' | 'active-directory' | 'italent' | 'maycur' | 'ldap' | 'moka' | 'fxiaoke' | 'scim' | 'xiaoshouyi' | 'kayang' | 'custom' syncTaskType 必须，同步任务类型:
      * - `lark`: 飞书
      * - `lark-international`: 飞书国际版
@@ -3124,7 +3400,6 @@ class ManagementClient
      * - `scim`: 自定义同步源
      *
      * @param string syncTaskName 必须，同步任务名称
-     * @param SyncTaskClientConfig clientConfig 可选，同步任务配置信息，默认 null
      * @param string organizationCode 可选，此同步任务绑定的组织机构。针对上游同步，需执行一次同步任务之后才会绑定组织机构；针对下游同步，创建同步任务的时候就需要设置。，默认 null
      * @param SyncTaskProvisioningScope provisioningScope 可选，同步范围，**只针对下游同步任务有效**。为空表示同步整个组织机构。，默认 null
      * @param SyncTaskTimedScheduler timedScheduler 可选，定时同步时间设置，默认 null
@@ -3137,15 +3412,15 @@ class ManagementClient
             "fieldMapping" => Util\Tool::getOrDefault($option, "fieldMapping", null),
             "syncTaskTrigger" => Util\Tool::getOrDefault($option, "syncTaskTrigger", null),
             "syncTaskFlow" => Util\Tool::getOrDefault($option, "syncTaskFlow", null),
+            "clientConfig" => Util\Tool::getOrDefault($option, "clientConfig", null),
             "syncTaskType" => Util\Tool::getOrDefault($option, "syncTaskType", null),
             "syncTaskName" => Util\Tool::getOrDefault($option, "syncTaskName", null),
-            "clientConfig" => Util\Tool::getOrDefault($option, "clientConfig", null),
             "organizationCode" => Util\Tool::getOrDefault($option, "organizationCode", null),
             "provisioningScope" => Util\Tool::getOrDefault($option, "provisioningScope", null),
             "timedScheduler" => Util\Tool::getOrDefault($option, "timedScheduler", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-sync-task", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-sync-task", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3204,7 +3479,7 @@ class ManagementClient
             "timedScheduler" => Util\Tool::getOrDefault($option, "timedScheduler", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-sync-task", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-sync-task", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3224,7 +3499,7 @@ class ManagementClient
             "syncTaskId" => Util\Tool::getOrDefault($option, "syncTaskId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/trigger-sync-task", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/trigger-sync-task", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3244,7 +3519,7 @@ class ManagementClient
             "syncJobId" => Util\Tool::getOrDefault($option, "syncJobId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-sync-job", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-sync-job", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3274,7 +3549,7 @@ class ManagementClient
             "syncTrigger" => Util\Tool::getOrDefault($option, "syncTrigger", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-sync-jobs", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-sync-jobs", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3322,7 +3597,7 @@ class ManagementClient
             "objectType" => Util\Tool::getOrDefault($option, "objectType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-sync-job-logs", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-sync-job-logs", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3353,7 +3628,7 @@ class ManagementClient
             "objectType" => Util\Tool::getOrDefault($option, "objectType", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-sync-risk-operations", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-sync-risk-operations", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3373,7 +3648,7 @@ class ManagementClient
             "syncRiskOperationIds" => Util\Tool::getOrDefault($option, "syncRiskOperationIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/trigger-sync-risk-operations", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/trigger-sync-risk-operations", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3393,7 +3668,7 @@ class ManagementClient
             "syncRiskOperationIds" => Util\Tool::getOrDefault($option, "syncRiskOperationIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/cancel-sync-risk-operation", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/cancel-sync-risk-operation", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3429,7 +3704,7 @@ class ManagementClient
             "pagination" => Util\Tool::getOrDefault($option, "pagination", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-user-action-logs", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/get-user-action-logs", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3465,7 +3740,7 @@ class ManagementClient
             "pagination" => Util\Tool::getOrDefault($option, "pagination", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-admin-audit-logs", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/get-admin-audit-logs", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3480,7 +3755,7 @@ class ManagementClient
     public function getEmailTemplates($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-email-templates", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-email-templates", null, null);
         // 返回
         return $varRes["body"];
     }
@@ -3537,7 +3812,7 @@ class ManagementClient
             "tplEngine" => Util\Tool::getOrDefault($option, "tplEngine", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-email-template", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-email-template", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3547,7 +3822,6 @@ class ManagementClient
      * @summary 预览邮件模版
      * @description 预览邮件模版
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string sender 必须，邮件发件人名称，可选，如果不传默认使用用户池配置的邮件模版进行渲染。
      * @param 'WELCOME_EMAIL' | 'FIRST_CREATED_USER' | 'REGISTER_VERIFY_CODE' | 'LOGIN_VERIFY_CODE' | 'MFA_VERIFY_CODE' | 'INFORMATION_COMPLETION_VERIFY_CODE' | 'FIRST_EMAIL_LOGIN_VERIFY' | 'CONSOLE_CONDUCTED_VERIFY' | 'USER_PASSWORD_UPDATE_REMIND' | 'ADMIN_RESET_USER_PASSWORD_NOTIFICATION' | 'USER_PASSWORD_RESET_NOTIFICATION' | 'RESET_PASSWORD_VERIFY_CODE' | 'SELF_UNLOCKING_VERIFY_CODE' | 'EMAIL_BIND_VERIFY_CODE' | 'EMAIL_UNBIND_VERIFY_CODE' type 必须，模版类型:
      * - `WELCOME_EMAIL`: 欢迎邮件
      * - `FIRST_CREATED_USER`: 首次创建用户通知
@@ -3567,6 +3841,7 @@ class ManagementClient
      *
      * @param string content 可选，邮件内容模版，可选，如果不传默认使用用户池配置的邮件模版进行渲染。，默认 null
      * @param string subject 可选，邮件主题，可选，如果不传默认使用用户池配置的邮件模版进行渲染。，默认 null
+     * @param string sender 可选，邮件发件人名称，可选，如果不传默认使用用户池配置的邮件模版进行渲染。，默认 null
      * @param number expiresIn 可选，验证码/邮件有效时间，只有验证类邮件才有有效时间。可选，如果不传默认使用用户池配置的邮件模版进行渲染。，默认 null
      * @param 'handlebar' | 'ejs' tplEngine 可选，模版渲染引擎。Authing 邮件模版目前支持两种渲染引擎：
      * - `handlebar`: 详细使用方法请见：[handlebars 官方文档](https://handlebarsjs.com/)
@@ -3580,15 +3855,15 @@ class ManagementClient
     {
         // 组装请求
         $varPost = array(
-            "sender" => Util\Tool::getOrDefault($option, "sender", null),
             "type" => Util\Tool::getOrDefault($option, "type", null),
             "content" => Util\Tool::getOrDefault($option, "content", null),
             "subject" => Util\Tool::getOrDefault($option, "subject", null),
+            "sender" => Util\Tool::getOrDefault($option, "sender", null),
             "expiresIn" => Util\Tool::getOrDefault($option, "expiresIn", null),
             "tplEngine" => Util\Tool::getOrDefault($option, "tplEngine", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/preview-email-template", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/preview-email-template", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3598,12 +3873,12 @@ class ManagementClient
      * @summary 获取第三方邮件服务配置
      * @description 获取第三方邮件服务配置
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @return EmailProviderDto
+     * @return EmailProviderRespDto
      */
     public function getEmailProvider($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-email-provier", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-email-provider", null, null);
         // 返回
         return $varRes["body"];
     }
@@ -3613,10 +3888,10 @@ class ManagementClient
      * @summary 配置第三方邮件服务
      * @description 配置第三方邮件服务
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'smtp' | 'ali' | 'tencent' | 'sendgrid' type 必须，第三方邮件服务商类型:
-     * - `smtp`: 标准 SMTP 邮件服务
+     * @param 'ali' | 'qq' | 'sendgrid' | 'custom' type 必须，第三方邮件服务商类型:
+     * - `custom`: 自定义 SMTP 邮件服务
      * - `ali`: [阿里企业邮箱](https://www.ali-exmail.cn/Land/)
-     * - `tencent`: [腾讯企业邮箱](https://work.weixin.qq.com/mail/)
+     * - `qq`: [腾讯企业邮箱](https://work.weixin.qq.com/mail/)
      * - `sendgrid`: [SendGrid 邮件服务](https://sendgrid.com/)
      *
      * @param boolean enabled 必须，是否启用，如果不启用，将默认使用 Authing 内置的邮件服务
@@ -3624,7 +3899,7 @@ class ManagementClient
      * @param SendGridEmailProviderConfigInput sendGridConfig 可选，SendGrid 邮件服务配置，默认 null
      * @param AliExmailEmailProviderConfigInput aliExmailConfig 可选，阿里企业邮件服务配置，默认 null
      * @param TencentExmailEmailProviderConfigInput tencentExmailConfig 可选，腾讯企业邮件服务配置，默认 null
-     * @return EmailProviderDto
+     * @return EmailProviderRespDto
      */
     public function configEmailProvider($option = array())
     {
@@ -3638,7 +3913,7 @@ class ManagementClient
             "tencentExmailConfig" => Util\Tool::getOrDefault($option, "tencentExmailConfig", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/config-email-provier", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/config-email-provider", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3658,7 +3933,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-application", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-application", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3673,7 +3948,7 @@ class ManagementClient
      * @param boolean isIntegrateApp 可选，是否为集成应用，默认 false
      * @param boolean isSelfBuiltApp 可选，是否为自建应用，默认 false
      * @param boolean ssoEnabled 可选，是否开启单点登录，默认 false
-     * @param string keyword 可选，模糊搜索字符串
+     * @param string keywords 可选，模糊搜索字符串
      * @return ApplicationPaginatedRespDto
      */
     public function listApplications($option = array())
@@ -3685,10 +3960,10 @@ class ManagementClient
             "isIntegrateApp" => Util\Tool::getOrDefault($option, "isIntegrateApp", null),
             "isSelfBuiltApp" => Util\Tool::getOrDefault($option, "isSelfBuiltApp", null),
             "ssoEnabled" => Util\Tool::getOrDefault($option, "ssoEnabled", null),
-            "keyword" => Util\Tool::getOrDefault($option, "keyword", null),
+            "keywords" => Util\Tool::getOrDefault($option, "keywords", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-applications", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-applications", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3708,7 +3983,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-application-simple-info", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-application-simple-info", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3723,8 +3998,8 @@ class ManagementClient
      * @param boolean isIntegrateApp 可选，是否为集成应用，默认 false
      * @param boolean isSelfBuiltApp 可选，是否为自建应用，默认 false
      * @param boolean ssoEnabled 可选，是否开启单点登录，默认 false
-     * @param string keyword 可选，模糊搜索字符串
-     * @return ApplicationSimpleInfoSingleRespDto
+     * @param string keywords 可选，模糊搜索字符串
+     * @return ApplicationSimpleInfoPaginatedRespDto
      */
     public function listApplicationSimpleInfo($option = array())
     {
@@ -3735,10 +4010,10 @@ class ManagementClient
             "isIntegrateApp" => Util\Tool::getOrDefault($option, "isIntegrateApp", null),
             "isSelfBuiltApp" => Util\Tool::getOrDefault($option, "isSelfBuiltApp", null),
             "ssoEnabled" => Util\Tool::getOrDefault($option, "ssoEnabled", null),
-            "keyword" => Util\Tool::getOrDefault($option, "keyword", null),
+            "keywords" => Util\Tool::getOrDefault($option, "keywords", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-application-simple-info", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-application-simple-info", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3800,7 +4075,7 @@ class ManagementClient
             "brandingConfig" => Util\Tool::getOrDefault($option, "brandingConfig", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-application", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-application", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3820,7 +4095,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-application", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-application", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3840,7 +4115,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-application-secret", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-application-secret", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3860,7 +4135,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/refresh-application-secret", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/refresh-application-secret", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3882,7 +4157,7 @@ class ManagementClient
             "options" => Util\Tool::getOrDefault($option, "options", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-application-active-users", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/list-application-active-users", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3902,7 +4177,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-application-permission-strategy", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-application-permission-strategy", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -3924,7 +4199,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-application-permission-strategy", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-application-permission-strategy", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3932,7 +4207,7 @@ class ManagementClient
     /**
      * 授权应用访问权限
      * @summary 授权应用访问权限
-     * @description 给用户、分组、组织或角色授权应用访问权限
+     * @description 给用户、分组、组织或角色授权应用访问权限，如果用户、分组、组织或角色不存在，则跳过，进行下一步授权，不返回报错
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<ApplicationPermissionRecordItem> list 必须，授权主体列表，最多 10 条
      * @param string appId 必须，应用 ID
@@ -3946,7 +4221,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/add-application-permission-record", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/authorize-application-access", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3954,7 +4229,7 @@ class ManagementClient
     /**
      * 删除应用访问授权记录
      * @summary 删除应用访问授权记录
-     * @description 取消给用户、分组、组织或角色的应用访问权限授权
+     * @description 取消给用户、分组、组织或角色的应用访问权限授权,如果传入数据不存在，则返回数据不报错处理。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<DeleteApplicationPermissionRecordItem> list 必须，授权主体列表，最多 10 条
      * @param string appId 必须，应用 ID
@@ -3968,7 +4243,7 @@ class ManagementClient
             "appId" => Util\Tool::getOrDefault($option, "appId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-application-permission-record", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/revoke-application-access", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -3988,7 +4263,7 @@ class ManagementClient
             "domain" => Util\Tool::getOrDefault($option, "domain", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/check-domain-available", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/check-domain-available", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4003,7 +4278,7 @@ class ManagementClient
     public function getSecuritySettings($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-security-settings", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-security-settings", null, null);
         // 返回
         return $varRes["body"];
     }
@@ -4051,7 +4326,7 @@ class ManagementClient
             "qrcodeLoginStrategy" => Util\Tool::getOrDefault($option, "qrcodeLoginStrategy", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-security-settings", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-security-settings", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4066,7 +4341,7 @@ class ManagementClient
     public function getGlobalMfaSettings($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-global-mfa-settings", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-global-mfa-settings", null, null);
         // 返回
         return $varRes["body"];
     }
@@ -4074,7 +4349,7 @@ class ManagementClient
     /**
      * 修改全局多因素认证配置
      * @summary 修改全局多因素认证配置
-     * @description 传入 MFA 认证因素列表进行修改
+     * @description 传入 MFA 认证因素列表进行开启,
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<'OTP' | 'SMS' | 'EMAIL' | 'FACE'> enabledFactors 必须，开启的 MFA 认证因素列表
      * @return MFASettingsRespDto
@@ -4086,229 +4361,136 @@ class ManagementClient
             "enabledFactors" => Util\Tool::getOrDefault($option, "enabledFactors", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-global-mfa-settings", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-global-mfa-settings", null, $varPost);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 创建资源
-     * @summary 创建资源
-     * @description 创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * 获取套餐详情
+     * @summary 获取套餐详情
+     * @description 获取当前用户池套餐详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 必须，资源类型，如数据、API、按钮、菜单
-     * @param string code 必须，资源唯一标志符
-     * @param string description 可选，资源描述，默认 null
-     * @param Array<ResourceAction> actions 可选，资源定义的操作类型，默认 null
-     * @param string apiIdentifier 可选，API 资源的 URL 标识，默认 null
-     * @param string namespace 可选，所属权限分组的 code，默认 null
-     * @return ResourceRespDto
+     * @return CostGetCurrentPackageRespDto
      */
-    public function createResource($option = array())
+    public function getCurrentPackageInfo($option = array())
     {
-        // 组装请求
-        $varPost = array(
-            "type" => Util\Tool::getOrDefault($option, "type", null),
-            "code" => Util\Tool::getOrDefault($option, "code", null),
-            "description" => Util\Tool::getOrDefault($option, "description", null),
-            "actions" => Util\Tool::getOrDefault($option, "actions", null),
-            "apiIdentifier" => Util\Tool::getOrDefault($option, "apiIdentifier", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-        );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-resource", null, $varPost);
+        $varRes = $this->request("GET", "/api/v3/get-current-package-info", null, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 批量创建资源
-     * @summary 批量创建资源
-     * @description 批量创建资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * 获取用量详情
+     * @summary 获取用量详情
+     * @description 获取当前用户池用量详情。
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<CreateResourceBatchItemDto> list 必须，资源列表
-     * @param string namespace 可选，所属权限分组的 code，默认 null
-     * @return IsSuccessRespDto
+     * @return CostGetCurrentUsageRespDto
      */
-    public function createResourcesBatch($option = array())
+    public function getUsageInfo($option = array())
     {
-        // 组装请求
-        $varPost = array(
-            "list" => Util\Tool::getOrDefault($option, "list", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-        );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-resources-batch", null, $varPost);
+        $varRes = $this->request("GET", "/api/v3/get-usage-info", null, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 获取资源详情
-     * @summary 获取资源详情
-     * @description 根据筛选条件，获取资源详情。
+     * 获取 MAU 使用记录
+     * @summary 获取 MAU 使用记录
+     * @description 获取当前用户池 MAU 使用记录
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string code 必须，资源唯一标志符
-     * @param string namespace 可选，所属权限分组的 code
-     * @return ResourceRespDto
+     * @param string startTime 必须，起始时间（年月日）
+     * @param string endTime 必须，截止时间（年月日）
+     * @return CostGetMauPeriodUsageHistoryRespDto
      */
-    public function getResource($option = array())
+    public function getMauPeriodUsageHistory($option = array())
     {
         // 组装请求
         $varGet = array(
-            "code" => Util\Tool::getOrDefault($option, "code", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+            "startTime" => Util\Tool::getOrDefault($option, "startTime", null),
+            "endTime" => Util\Tool::getOrDefault($option, "endTime", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-resource", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-mau-period-usage-history", $varGet, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 批量获取资源详情
-     * @summary 批量获取资源详情
-     * @description 根据筛选条件，批量获取资源详情。
+     * 获取所有权益
+     * @summary 获取所有权益
+     * @description 获取当前用户池所有权益
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> codeList 必须，资源 code 列表，批量可以使用逗号分隔
-     * @param string namespace 可选，所属权限分组的 code
-     * @return ResourceListRespDto
+     * @return CostGetAllRightItemRespDto
      */
-    public function getResourcesBatch($option = array())
+    public function getAllRightsItem($option = array())
     {
-        // 组装请求
-        $varGet = array(
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-            "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
-        );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-resources-batch", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-all-rights-items", null, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 分页获取资源列表
-     * @summary 分页获取资源列表
-     * @description 根据筛选条件，分页获取资源详情列表。
+     * 获取订单列表
+     * @summary 获取订单列表
+     * @description 获取当前用户池订单列表
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string namespace 可选，所属权限分组的 code
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 可选，资源类型
      * @param number page 可选，当前页数，从 1 开始，默认 1
      * @param number limit 可选，每页数目，最大不能超过 50，默认为 10，默认 10
-     * @return ResourcePaginatedRespDto
+     * @return CostGetOrdersRespDto
      */
-    public function listResources($option = array())
+    public function getOrders($option = array())
     {
         // 组装请求
         $varGet = array(
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-            "type" => Util\Tool::getOrDefault($option, "type", null),
             "page" => Util\Tool::getOrDefault($option, "page", null),
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-resources", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-orders", $varGet, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 修改资源
-     * @summary 修改资源
-     * @description 修改资源，可以设置资源的描述、定义的操作类型、URL 标识等。
+     * 获取订单详情
+     * @summary 获取订单详情
+     * @description 获取当前用户池订单详情
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string code 必须，资源唯一标志符
-     * @param string description 可选，资源描述，默认 null
-     * @param Array<ResourceAction> actions 可选，资源定义的操作类型，默认 null
-     * @param string apiIdentifier 可选，API 资源的 URL 标识，默认 null
-     * @param string namespace 可选，所属权限分组的 code，默认 null
-     * @param 'DATA' | 'API' | 'MENU' | 'BUTTON' | 'UI' type 可选，资源类型，如数据、API、按钮、菜单，默认 null
-     * @return ResourceRespDto
+     * @param string orderNo 必须，订单号
+     * @return CostGetOrderDetailRespDto
      */
-    public function updateResource($option = array())
+    public function getOrderDetail($option = array())
     {
         // 组装请求
-        $varPost = array(
-            "code" => Util\Tool::getOrDefault($option, "code", null),
-            "description" => Util\Tool::getOrDefault($option, "description", null),
-            "actions" => Util\Tool::getOrDefault($option, "actions", null),
-            "apiIdentifier" => Util\Tool::getOrDefault($option, "apiIdentifier", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-            "type" => Util\Tool::getOrDefault($option, "type", null),
+        $varGet = array(
+            "orderNo" => Util\Tool::getOrDefault($option, "orderNo", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-resource", null, $varPost);
+        $varRes = $this->request("GET", "/api/v3/get-order-detail", $varGet, null);
         // 返回
         return $varRes["body"];
     }
 
     /**
-     * 删除资源
-     * @summary 删除资源
-     * @description 通过资源唯一标志符以及所属权限分组，删除资源。
+     * 获取订单支付明细
+     * @summary 获取订单支付明细
+     * @description 获取当前用户池订单支付明细
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string code 必须，资源唯一标志符
-     * @param string namespace 可选，所属权限分组的 code，默认 null
-     * @return IsSuccessRespDto
+     * @param string orderNo 必须，订单号
+     * @return CostGetOrderPayDetailRespDto
      */
-    public function deleteResource($option = array())
+    public function getOrderPayDetail($option = array())
     {
         // 组装请求
-        $varPost = array(
-            "code" => Util\Tool::getOrDefault($option, "code", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
+        $varGet = array(
+            "orderNo" => Util\Tool::getOrDefault($option, "orderNo", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-resource", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 批量删除资源
-     * @summary 批量删除资源
-     * @description 通过资源唯一标志符以及所属权限分组，批量删除资源
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param Array<string> codeList 必须，资源 code 列表
-     * @param string namespace 可选，所属权限分组的 code，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function deleteResourcesBatch($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "codeList" => Util\Tool::getOrDefault($option, "codeList", null),
-            "namespace" => Util\Tool::getOrDefault($option, "namespace", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-resources-batch", null, $varPost);
-        // 返回
-        return $varRes["body"];
-    }
-
-    /**
-     * 关联/取消关联应用资源到租户
-     * @summary 关联/取消关联应用资源到租户
-     * @description 通过资源唯一标识以及权限分组，关联或取消关联资源到租户
-     * @param array $option 用于传递参数，如 array("email" => "main@test.com")
-     * @param string appId 必须，应用 ID
-     * @param boolean association 必须，是否关联应用资源
-     * @param string code 必须，资源 Code
-     * @param string tenantId 可选，租户 ID，默认 null
-     * @return IsSuccessRespDto
-     */
-    public function associationResources($option = array())
-    {
-        // 组装请求
-        $varPost = array(
-            "appId" => Util\Tool::getOrDefault($option, "appId", null),
-            "association" => Util\Tool::getOrDefault($option, "association", null),
-            "code" => Util\Tool::getOrDefault($option, "code", null),
-            "tenantId" => Util\Tool::getOrDefault($option, "tenantId", null),
-        );
-        // 发送请求
-        $varRes = $this->_requests("/api/v3/associate-tenant-resource", null, $varPost);
+        $varRes = $this->request("GET", "/api/v3/get-order-pay-detail", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4331,7 +4513,7 @@ class ManagementClient
      * @param string funcName 必须，函数名称
      * @param string funcDescription 可选，函数描述，默认 null
      * @param boolean isAsynchronous 可选，是否异步执行。设置为异步执行的函数不会阻塞整个流程的执行，适用于异步通知的场景，比如飞书群通知、钉钉群通知等。，默认 null
-     * @param number timeout 可选，函数运行超时时间，最短为 1 秒，最长为 60 秒，默认为 3 秒。，默认 null
+     * @param number timeout 可选，函数运行超时时间，要求必须为整数，最短为 1 秒，最长为 60 秒，默认为 3 秒。，默认 null
      * @param boolean terminateOnTimeout 可选，如果函数运行超时，是否终止整个流程，默认为否。，默认 null
      * @param boolean enabled 可选，是否启用此 Pipeline，默认 null
      * @return PipelineFunctionSingleRespDto
@@ -4350,7 +4532,7 @@ class ManagementClient
             "enabled" => Util\Tool::getOrDefault($option, "enabled", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-pipeline-function", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-pipeline-function", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4370,7 +4552,7 @@ class ManagementClient
             "funcId" => Util\Tool::getOrDefault($option, "funcId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-pipeline-function", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-pipeline-function", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4390,7 +4572,7 @@ class ManagementClient
             "funcId" => Util\Tool::getOrDefault($option, "funcId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/reupload-pipeline-function", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/reupload-pipeline-function", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4424,7 +4606,7 @@ class ManagementClient
             "enabled" => Util\Tool::getOrDefault($option, "enabled", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-pipeline-function", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-pipeline-function", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4454,7 +4636,7 @@ class ManagementClient
             "scene" => Util\Tool::getOrDefault($option, "scene", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-pipeline-order", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-pipeline-order", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4474,7 +4656,7 @@ class ManagementClient
             "funcId" => Util\Tool::getOrDefault($option, "funcId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-pipeline-function", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-pipeline-function", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4502,7 +4684,7 @@ class ManagementClient
             "scene" => Util\Tool::getOrDefault($option, "scene", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-pipeline-function", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-pipeline-functions", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4526,7 +4708,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-pipeline-logs", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-pipeline-logs", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4556,7 +4738,7 @@ class ManagementClient
             "secret" => Util\Tool::getOrDefault($option, "secret", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/create-webhook", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/create-webhook", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4578,7 +4760,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/list-webhooks", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/list-webhooks", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4610,7 +4792,7 @@ class ManagementClient
             "secret" => Util\Tool::getOrDefault($option, "secret", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/update-webhook", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/update-webhook", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4618,7 +4800,7 @@ class ManagementClient
     /**
      * 删除 Webhook
      * @summary 删除 Webhook
-     * @description 通过指定多个 webhookId，以数组的形式进行 webhook 的删除
+     * @description 通过指定多个 webhookId,以数组的形式进行 webhook 的删除,如果 webhookId 不存在,不提示报错
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param Array<string> webhookIds 必须，webhookId 数组
      * @return DeleteWebhookRespDto
@@ -4630,7 +4812,7 @@ class ManagementClient
             "webhookIds" => Util\Tool::getOrDefault($option, "webhookIds", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/delete-webhook", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/delete-webhook", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4638,7 +4820,7 @@ class ManagementClient
     /**
      * 获取 Webhook 日志
      * @summary 获取 Webhook 日志
-     * @description 通过指定 webhookId，可选 page 和 limit 来获取 webhook 日志
+     * @description 通过指定 webhookId，可选 page 和 limit 来获取 webhook 日志,如果 webhookId 不存在,不返回报错信息
      * @param array $option 用于传递参数，如 array("email" => "main@test.com")
      * @param string webhookId 必须，Webhook ID
      * @param number page 可选，当前页数，从 1 开始，默认 null
@@ -4654,7 +4836,7 @@ class ManagementClient
             "limit" => Util\Tool::getOrDefault($option, "limit", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-webhook-logs", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/get-webhook-logs", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4678,7 +4860,7 @@ class ManagementClient
             "requestBody" => Util\Tool::getOrDefault($option, "requestBody", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/trigger-webhook", null, $varPost);
+        $varRes = $this->request("POST", "/api/v3/trigger-webhook", null, $varPost);
         // 返回
         return $varRes["body"];
     }
@@ -4698,7 +4880,7 @@ class ManagementClient
             "webhookId" => Util\Tool::getOrDefault($option, "webhookId", null),
         );
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-webhook", $varGet, null);
+        $varRes = $this->request("GET", "/api/v3/get-webhook", $varGet, null);
         // 返回
         return $varRes["body"];
     }
@@ -4713,7 +4895,7 @@ class ManagementClient
     public function getWebhookEventList($option = array())
     {
         // 发送请求
-        $varRes = $this->_requests("/api/v3/get-webhook-event-list", null, null);
+        $varRes = $this->request("GET", "/api/v3/get-webhook-event-list", null, null);
         // 返回
         return $varRes["body"];
     }
