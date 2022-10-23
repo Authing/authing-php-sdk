@@ -1,0 +1,29 @@
+{
+    "name": "authing-sdk/php",
+    "description": "Authing PHP SDK",
+    "minimum-stability": "stable",
+    "version": "5.0.0",
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-openssl": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HanFengkun",
+            "email": "hanfengkun@authing.cn"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Authing\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    }
+}
