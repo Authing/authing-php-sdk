@@ -164,4 +164,59 @@ class Tool
         curl_close($varCurlObject);
         return $varRes;
     }
+
+    /**
+     * Build Authorization
+     * 
+     * @param string $method 
+     * @param string $uri_pattern 
+     * @param array $headers 
+     * @param array $query 
+     * 
+     * @return string 
+     */
+    public static function buildAuthorization($_userPoolID, $_accessKeySecret, $method, $uri_pattern, $headers = [], $query = []) {
+        $filter = function($value) {
+            if (is_string($value)) {
+                return str_replace(["\t", "\n", "\r", "\f"], " ", $value);
+            }
+            return strval($value);
+        };
+
+        $keys = array_keys($headers);
+        $canonicalizedKeys = [];
+        foreach ($keys as $key) {
+            if (strpos($key, "x-authing-") === 0 || $key === "date") {
+                array_push($canonicalizedKeys, $key);
+            }
+        }
+        sort($canonicalizedKeys);
+
+        $result = "";
+        foreach ($canonicalizedKeys as $key) {
+            $result .= $key . ":" . trim($filter($headers[$key])) . "\n";
+        }
+        $header = $method . "\n";
+        $canonicalizedHeaders = $result;
+
+        $keys = array_keys($query);
+        sort($keys);
+        $result = [];
+        foreach ($keys as $key) {
+            $value = $query[$key];
+            if ($value === null) {
+                continue;
+            }
+            if (is_array($value)) {
+                $value = json_encode($value);
+            }
+            array_push($result, $key . "=" . $value);
+        }
+
+        $canonicalizedResource = $uri_pattern . "?" . implode("&", $result);
+        $stringToSign = $header . $canonicalizedHeaders . $canonicalizedResource;
+        $signature = hash_hmac("sha1", $stringToSign, $_accessKeySecret, true);
+        $signature = base64_encode($signature);
+        return "authing " . $_userPoolID . ":" . $signature;
+    }
 }
