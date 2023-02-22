@@ -4926,7 +4926,7 @@ class ManagementClient
      */
     private function _initWebsocket($eventCode, $retry=false) {
         if (!isset($this->_socketClient) || $retry) {
-            $this->_socketClient = new Client(new Version2X($this->_socketHost), false);
+            $this->_socketClient = new Client(new Version2X($this->_socketHost), null);
             $headers = [
                 "authorization" => Util\Tool::buildAuthorization($this->_userPoolID, $this->_accessKeySecret, "websocket", $this->_socketHost)
             ];
