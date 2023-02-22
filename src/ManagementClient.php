@@ -4932,8 +4932,6 @@ class ManagementClient
             ];
             $this->_socketClient->initialize();
             $this->_socketClient->emit("register", $eventCode, $headers);
-            $this->_socketClient->emit("join", "admin", $headers);
-            $this->_socketClient->emit("join", "client", $headers);
         }
     }
 
