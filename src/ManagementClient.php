@@ -6,6 +6,11 @@
 
 namespace Authing;
 
+use Ratchet\Client\WebSocket;
+use Ratchet\Client\Connector;
+use React\EventLoop\Loop;
+use React\Socket\Connector as ReactConnector;
+
 /**
  * 导入
  */
@@ -29,6 +34,14 @@ class ManagementClient
     public $_userPoolID;
     // 超时时间
     public $_timeout;
+    //事件订阅地址
+    public $_socketHost;
+    //private
+    private $_wsMap;
+    private $_eventBus;
+    private $_wsLoop;
+    private $_websocketEndpoint;
+    public $_accessKeySecret;
 
     /**
      * 构造函数
@@ -68,8 +81,14 @@ class ManagementClient
         $this->_url = $option["host"];
         $this->_accessKey = array("id" => $option["accessKeyId"], "secret" => $option["accessKeySecret"]);
         $this->_userPoolID = $option["accessKeyId"];
+        $this->_accessKeySecret = $option["accessKeySecret"];
         $this->_timeout = $option["timeout"];
         $this->_getAccessToken($this->_accessKey["id"], $this->_accessKey["secret"]);
+        $this->_socketHost = $option["websocket_host"] ?: "wss://events.authing.cn";
+        $this->_websocketEndpoint = $option["websocket_endpoint"] ?: "/events/v1/management/sub";
+        $this->_wsMap = [];
+        $this->_eventBus = [];
+        $this->_wsLoop = \React\EventLoop\Loop::get();
     }
 
     /**
@@ -117,6 +136,7 @@ class ManagementClient
      */
     private function _getAccessToken($accessKeyId, $accessKeySecret)
     {
+
         $tempAccessToken = $this->getManagementToken(array("accessKeyId" => $accessKeyId, "accessKeySecret" => $accessKeySecret))["data"];
         $this->_accessToken = $tempAccessToken["access_token"];
         $this->_accessTokenTime = time() + $tempAccessToken["expires_in"];
@@ -4900,4 +4920,103 @@ class ManagementClient
         return $varRes["body"];
     }
 
+     /**
+     * 初始化 Authing 事件订阅 websocket
+     * 
+     * @param string $eventCode
+     * @param boolean $retry 
+     * 
+     * @return resource 
+     */
+    private function initWebsocket($eventCode) {
+        if (!array_key_exists($eventCode, $this->_wsMap)) {
+            $_header = [
+                "authorization" => Util\Tool::getWebsocketAuthorization($this->_userPoolID, $this->_accessKeySecret)
+            ];
+            $reactConnector = new ReactConnector([
+                'timeout' => 10
+            ]);
+            $_connector = new Connector($this->_wsLoop, $reactConnector);
+            $_connector("{$this->_socketHost}{$this->_websocketEndpoint}?code={$eventCode}", [], $_header)
+                ->then(function (WebSocket $conn) use ($eventCode) {
+                    $this->_wsMap[$eventCode]['socket'] = $conn;
+                    $this->_wsMap[$eventCode]['time_connect'] = 0;
+                    $this->_wsMap[$eventCode]['lock_connect'] = false;
+                    $conn->on('message', function (\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($eventCode, $conn) {
+                        if (array_key_exists($eventCode, $this->_eventBus)) {
+                            foreach ($this->_eventBus[$eventCode] as list($callback, $errCallback)) {
+                                $callback($msg);
+                            }
+                        } else {
+                            echo "未订阅的事件：" . $eventCode . "\n";
+                        }
+                    });
+                    $conn->on('close', function ($code = null, $reason = null) use ($eventCode) {
+                        echo "与 Authing 的事件订阅 Websocket 连接已断开！\n";
+                        $this->reconnect($eventCode);
+                    });
+                }, function (\Exception $e) {
+                    if (preg_match("/401 Unauthorized/", $e->getMessage())) {
+                        echo "与 Authing 事件订阅 Websocket 连接失败: 401 Unauthorized 请检查用户池 ID 和秘钥\n";
+                    } else {
+                        echo "与 Authing 事件订阅 Websocket 连接失败: \n" . $e->getMessage();
+                    }
+                });
+        }
+    }
+
+    /**
+     * 重连 Authing 事件订阅 websocket
+     * 
+     * @param string $eventCode 
+     */
+    private function reconnect($eventCode) {
+        if (!array_key_exists($eventCode, $this->_wsMap)) {
+            return;
+        }
+        if ($this->_wsMap[$eventCode]['time_connect'] < 10) {
+            if (!$this->_wsMap[$eventCode]['lock_connect']) {
+                $this->_wsMap[$eventCode]['lock_connect'] = true;
+                $this->_wsMap[$eventCode]['time_connect'] += 1;
+                echo "Authing 事件订阅 Websocket 服务第 " . $this->_wsMap[$eventCode]['time_connect'] . " 次重连。\n";
+                $this->_wsLoop->addTimer(2, function () use ($eventCode) {
+                    $this->_wsMap[$eventCode]['lock_connect'] = false;
+                    $this->initWebsocket($eventCode, true);
+                });
+            }
+        } else {
+            throw new \Exception("Authing 事件订阅 Websocket 服务连接超时");
+        }
+    }
+    
+
+    /**
+     * Authing 事件订阅方法
+     * 
+     * @param string $eventCode 订阅事件 Code
+     * @param callable $callback 消息回调
+     * @param callable $errCallback 错误回调
+     * @param integer $delay 轮询延迟
+     */
+    public function sub($eventCode, $callback, $errCallback, $delay = 10000) {
+        if (!is_string($eventCode)) {
+            throw new \TypeError("订阅事件名称为 string 类型");
+        }
+        if (!is_callable($callback)) {
+            throw new \TypeError("订阅事件回调函数需要为 function 类型");
+        }
+        if (!$this->_socketHost) {
+            echo "请先配置 Authing 事件订阅 Websocket !\n";
+            return;
+        }
+        $this->initWebsocket($eventCode);
+        if (array_key_exists($eventCode, $this->_eventBus)) {
+            $this->_eventBus[$eventCode][] = [$callback, $errCallback];
+        } else {
+            $this->_eventBus[$eventCode] = [[$callback, $errCallback]];
+        }
+        $this->_wsLoop->addPeriodicTimer($delay / 1000, function () use ($eventCode) {
+            $this->reconnect($eventCode);
+        });
+    }
 }

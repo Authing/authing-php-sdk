@@ -164,4 +164,12 @@ class Tool
         curl_close($varCurlObject);
         return $varRes;
     }
+
+    public static function getWebsocketAuthorization($_userPoolID, $_accessKeySecret) {
+        $signa = "websocket" . "\n";
+        $hmac_code = hash_hmac('sha1', $signa, $_accessKeySecret, true);
+        $signature = base64_encode($hmac_code);
+        return "authing " . $_userPoolID . ":" . $signature;
+    }
+
 }
