@@ -4941,7 +4941,7 @@ class ManagementClient
                 ->then(function (WebSocket $conn) use ($eventCode) {
                     $this->_wsMap[$eventCode]['socket'] = $conn;
                     $this->_wsMap[$eventCode]['time_connect'] = 0;
-                    $this->_wsMap[$eventCode]['lock_connect'] = false;
+                    $this->_wsMap[$eventCode]['lock_connect'] = true;
                     $conn->on('message', function (\Ratchet\RFC6455\Messaging\MessageInterface $msg) use ($eventCode, $conn) {
                         if (array_key_exists($eventCode, $this->_eventBus)) {
                             foreach ($this->_eventBus[$eventCode] as list($callback, $errCallback)) {
@@ -5018,5 +5018,21 @@ class ManagementClient
         $this->_wsLoop->addPeriodicTimer($delay / 1000, function () use ($eventCode) {
             $this->reconnect($eventCode);
         });
+    }
+
+    /**
+     * Authing 事件发布方法
+    */
+    public function pub($eventCode, $data) {
+        if (!is_string($eventCode)) {
+            throw new \TypeError("发布事件名称为 string 类型");
+        }
+        if (!is_array($data)) {
+            throw new \TypeError("发布事件数据为 array 类型");
+        }
+        return $this->request("POST", "/api/v3/pub-event", null, array(
+            "eventType" => $eventCode,
+            "eventData" => $data
+        ))["body"];
     }
 }
